@@ -11,7 +11,7 @@ function App() {
     <>
       <Header />
 
-      <main id="main" className="pt-24 px-12 max-w-7xl mx-auto">
+      <main id="main" className="px-12 max-w-7xl mx-auto">
         <VantaDotsBG />
         <Home />
         <About />

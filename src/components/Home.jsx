@@ -2,7 +2,7 @@ import PageSection from "./common/PageSection"
 
 const Home = () => {
     return (
-        <PageSection id="home">
+        <PageSection id="home" additionalClasses="flex items-center justify-center">
             <div className="w-full">
                 <h1 className="font-heading uppercase mb-6">
                     <span className="text-6xl block">Richard Han</span>
