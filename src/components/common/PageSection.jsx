@@ -4,7 +4,7 @@ const PageSection = ({ id, children, additionalClasses }) => {
     return (
         <section
             id={id}
-            className={cn("w-full min-h-screen pt-24", {
+            className={cn("w-full min-h-screen mt-24", {
                 [additionalClasses]: additionalClasses
             })}
         >
