@@ -4,13 +4,15 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import VantaDotsBG from "./components/common/VantaBackground"
 
 function App() {
   return (
     <>
       <Header />
 
-      <main id="main" className="pt-24 bg-black/80">
+      <main id="main" className="pt-24 px-12 max-w-7xl mx-auto">
+        <VantaDotsBG />
         <Home />
         <About />
         <Projects />
