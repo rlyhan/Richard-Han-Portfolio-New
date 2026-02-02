@@ -15,7 +15,7 @@ const PROJECTS = [
         "technologies": [
             "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
         ],
-        "images": ["thakeham.png"]
+        "images": ["thakeham.webp"]
     },
     {
         "name": "G.Network",
@@ -35,7 +35,7 @@ const PROJECTS = [
         "technologies": [
             "React", "Next.js", "Kontent.ai"
         ],
-        "images": ["gnetwork.png"]
+        "images": ["gnetwork.webp"]
     },
     {
         "name": "Study With New Zealand",
@@ -52,7 +52,7 @@ const PROJECTS = [
             "Collaborating on API development with backend engineers",
             "Contentful CMS development",
         ],
-        "images": ["studywithnz.png"]
+        "images": ["studywithnz.webp"]
     },
     {
         "name": "Deadly Ponies",
@@ -67,7 +67,7 @@ const PROJECTS = [
             "Front end functionality and styling",
             "Back end development including highly customisable content management system, data optimisation, e-commerce integration"
         ],
-        "images": ["deadlyponies_01.png", "deadlyponies_02.png"]
+        "images": ["deadlyponies.webp"]
     },
     {
         "name": "Neat Places",
@@ -84,7 +84,7 @@ const PROJECTS = [
             "Integrating APIs such as Instagram",
             "Back end development including highly customisable content management system, data optimisation"
         ],
-        "images": ["neatplaces_01.png", "neatplaces_02.png"]
+        "images": ["neatplaces.webp"]
     },
     {
         "name": "The Physics Room",
@@ -100,7 +100,7 @@ const PROJECTS = [
             "Fully customisable content management system to add various media including articles, videos, audio",
             "Full e-commerce integration"
         ],
-        "images": ["physicsroom_01.png", "physicsroom_02.png"]
+        "images": ["physicsroom.webp"]
     },
     {
         "name": "Coloursmith",
@@ -115,19 +115,19 @@ const PROJECTS = [
             "Front end functionality and styling",
             "Back end development including highly customisable content management system, data optimisation"
         ],
-        "images": ["coloursmith_01.png", "coloursmith_02.png"]
+        "images": ["coloursmith.webp"]
     },
     {
         "name": "Gigs of London",
         "id": "gigs-of-london",
         "url": "https://gigs-of-london.vercel.app/",
-        "featured": false,
+        "featured": true,
         "category": "Events",
         "client": false,
         "association": "Personal",
         "description": "Find events in London on a map",
         "work_involved": [],
-        "images": ["gigsoflondon.png"]
+        "images": ["gigsoflondon.webp"]
     },
     {
         "name": "ECC",
@@ -161,7 +161,7 @@ const PROJECTS = [
         "name": "James Dunlop Textiles",
         "id": "james-dunlop-textiles",
         "url": "https://www.jamesdunloptextiles.com/",
-        "featured": false,
+        "featured": true,
         "category": "Textiles",
         "client": true,
         "association": "Sons & Co.",
@@ -169,6 +169,9 @@ const PROJECTS = [
         "work_involved": [
             "Front end functionality and styling",
             "Back end development including highly customisable content management system, data optimisation"
+        ],
+        "images": [
+            "jamesdunlop.webp"
         ]
     },
     {
