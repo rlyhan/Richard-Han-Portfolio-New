@@ -1,11 +1,16 @@
+import classNames from "classnames"
 import Image from "../Image"
 import Pill from "../Pill"
 import List from "../List"
 import LinkButton from "../Buttons/LinkButton"
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, isModalContent = false }) => {
     return (
-        <article className="flex flex-col overflow-hidden rounded-lg gap-4 border border-solid border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+        <article className={classNames("flex flex-col overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.04)]",
+            {
+                "border border-solid border-white/10 rounded-lg gap-4": !isModalContent
+            }
+        )}>
             {project.images?.[0] && (
                 <a
                     href={project.url}

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import classNames from "classnames"
 import PageSection from "./layout/PageSection"
 import SectionHeading from "./common/SectionHeading"
@@ -7,6 +7,7 @@ import PROJECTS from "../data/projects.data"
 import ProjectCard from "./common/Cards/ProjectCard"
 import ProjectCardGallery from "./common/Cards/ProjectCardGallery"
 import IconButton from "./common/Buttons/IconButton"
+import Modal from "./common/Modal"
 
 const tabs = [
     {
@@ -26,6 +27,8 @@ const tabs = [
 const Projects = () => {
     const [activeTab, setActiveTab] = useState("projects-all")
     const [displayMode, setDisplayMode] = useState("default")
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [selectedProject, setSelectedProject] = useState(null)
 
     const projectList = useMemo(() => {
         if (activeTab === "projects-all") return PROJECTS;
@@ -34,6 +37,21 @@ const Projects = () => {
     }, [activeTab]);
 
     const featuredProjects = useMemo(() => projectList.filter(project => project.featured), [projectList])
+
+    const openProject = (project) => {
+        setSelectedProject(project);
+        setIsModalOpen(true);
+    };
+
+    const closeProject = () => {
+        setIsModalOpen(false);
+        setSelectedProject(null);
+    };
+
+    useEffect(() => {
+        document.body.classList.toggle("overflow-hidden", isModalOpen);
+        return () => document.body.classList.remove("overflow-hidden");
+    }, [isModalOpen]);
 
     return (
         <PageSection id="projects">
@@ -61,13 +79,19 @@ const Projects = () => {
                 })}>
                     {featuredProjects.map((project) =>
                         displayMode === "gallery" ? (
-                            <ProjectCardGallery key={project.id} project={project} />
+                            <ProjectCardGallery key={project.id} project={project} onClick={() => openProject(project)} />
                         ) : (
                             <ProjectCard key={project.id} project={project} />
                         )
                     )}
                 </div>
             </div>
+            {/* Modal */}
+            {isModalOpen && selectedProject && (
+                <Modal project={selectedProject} modalTitle={selectedProject.name} isOpen={isModalOpen} onClose={closeProject}>
+                    <ProjectCard project={selectedProject} isModalContent={true} />
+                </Modal>
+            )}
         </PageSection>
     )
 }
