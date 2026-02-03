@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
-const Modal = ({ isOpen, onClose, modalTitle, children }) => {
+const Modal = ({ isOpen, onClose, children }) => {
     const [entered, setEntered] = useState(false);
 
     useEffect(() => {
@@ -47,13 +47,9 @@ const Modal = ({ isOpen, onClose, modalTitle, children }) => {
                 onMouseDown={(e) => e.stopPropagation()}
             >
                 <div className="p-4 flex items-center justify-between">
-                    <h2 id="modal-title" className="text-white font-semibold">
-                        {modalTitle}
-                    </h2>
-
                     <button
                         type="button"
-                        className="text-black/60 hover:text-black rounded-full bg-white w-9 h-9 p-0"
+                        className="text-black/60 hover:text-black rounded-full bg-white w-9 h-9 p-0 ml-auto"
                         aria-label="Close modal"
                         onClick={onClose}
                     >

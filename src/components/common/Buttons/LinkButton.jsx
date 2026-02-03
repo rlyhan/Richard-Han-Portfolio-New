@@ -1,7 +1,7 @@
 import ExternalLinkIcon from "../../icons/ExternalLinkIcon";
 
 const themeMapping = {
-    "default": "bg-yellow-400 text-neutral-950 font-bold",
+    "default": "border border-gray-100 text-gray-100 font-bold",
     "secondary": "bg-transparent border border-white/20 text-white/80"
 }
 

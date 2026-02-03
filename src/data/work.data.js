@@ -16,7 +16,7 @@ const WORK = [
         subheading: "2022 - 2023 · Front End Developer",
         listItems: [
             "Built large scale component libraries and features for Education New Zealand websites",
-            "Mentored developers, ",
+            "Mentored developers new to React and NextJS",
             "Partnered with backend engineers on API development",
         ]
     },
@@ -38,79 +38,97 @@ const TECH = [
         heading: "Languages",
         listItems: [
             "JavaScript ES6", "TypeScript", "HTML5", "CSS", "SASS", "Python", "PHP"
-        ]
+        ],
+        icon: "code"
     },
     {
         id: "frameworks-libraries",
         heading: "Frameworks & Libraries",
         listItems: [
-            "React", "NextJS", "Redux", "Django", "Wordpress", "Tailwind"
-        ]
+            "React", "NextJS", "Redux", "Django", "Wordpress", "Tailwind", "Cypress", "Storybook", "Jest", "React Testing Library"
+        ],
+        icon: "book"
     },
     {
         id: "cms",
         heading: "CMS",
         listItems: [
             "Contentful", "Kontent.ai", "DatoCMS", "Strapi", "WordPress"
-        ]
+        ],
+        icon: "file"
+    },
+    {
+        id: "database",
+        heading: "Databases",
+        listItems: [
+            "MongoDB", "PostgreSQL", "MySQL"
+        ],
+        icon: "server"
     },
     {
         id: "seo-analytics",
         heading: "SEO & Analytics",
         listItems: [
             "Google Analytics", "Screaming Frog"
-        ]
+        ],
+        icon: "search"
     },
     {
         id: "cloud-infrastructure",
         heading: "Cloud & Infrastructure",
         listItems: [
             "Azure", "Cloudflare", "Vercel"
-        ]
+        ],
+        icon: "cloud"
     },
     {
         id: "devops",
         heading: "DevOps, CI/CD, Tools",
         listItems: [
             "GitHub Actions", "Docker", "Sentry"
-        ]
+        ],
+        icon: "tool"
     },
     {
         id: "design",
         heading: "Design",
         listItems: [
             "Figma", "Photoshop"
-        ]
+        ],
+        icon: "pen"
     }
 ]
 
 const SKILLS = [
     {
         id: "solution-skill",
-        heading: "Solution Finder",
+        heading: "Solutions",
         listItems: [
-            "Using the right tools and an engineering mindset to achieve purpose and scalability",
-            "An ability to adapt quickly to client's preferred technologies",
-            "Debugging complex issues through a step-by-step process"
-        ]
+            "Uses the right tools and an engineering mindset to achieve purpose and scalability",
+            "Adapts quickly to client's preferred technologies",
+            "Debugs complex issues through a step-by-step process"
+        ],
+        icon: "tool"
     },
     {
         id: "collaboration-skill",
         heading: "Collaboration",
         listItems: [
-            "Regular communication with product stakeholders to accurately capture business needs",
-            "Reviewing wireframes with designers to achieve pixel-perfect vision and brand identity whilst retaining technical viability",
-            "Engaging in pair programming and enthusiastic about mentoring others",
-        ]
+            "Regularly communicates with product stakeholders to capture business requirements accurately",
+            "Reviews wireframes with designers to achieve pixel-perfect vision and brand identity whilst retaining technical viability",
+            "Engages in pair programming and enthusiastic about helping others with their growth",
+        ],
+        icon: "users"
     },
     {
-        id: "auditing-skill",
-        heading: "Auditing your app",
+        id: "optimisation-skill",
+        heading: "Optimisation",
         listItems: [
-            "Analysing and improving scores for SEO, Performance, Accessibility and Web Core Vitals",
-            "Implementing analytics tracking and A/B testing to find how user engagement can be optimised",
-            "Thoroughly testing site interactivity to ensure a smooth user experience"
-        ]
+            "Audits and improves scores for SEO, Performance, Accessibility and Web Core Vitals",
+            "Implements analytics tracking and A/B testing to help inform business decisions",
+            "Thoroughly tests site interactivity to achieve a coherent user experience"
+        ],
+        icon: "search"
     },
 ]
 

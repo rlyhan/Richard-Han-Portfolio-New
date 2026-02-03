@@ -18,7 +18,7 @@ const Header = () => {
     }, []);
 
     return (
-        <header className="fixed top-0 left-0 w-full z-50 bg-black/60" ref={headerRef}>
+        <header className="fixed top-0 left-0 w-full z-50 bg-black shadow-xl/20" ref={headerRef}>
             <nav className="max-w-7xl mx-auto flex items-center justify-end px-6 py-4">
                 <ul className="flex gap-6 text-sm">
                     <li><button onClick={() => scrollToSection("#home")} className="text-white hover:text-gray-400">Home</button></li>

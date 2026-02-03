@@ -28,7 +28,7 @@ const PROJECTS = [
         "association": "Voyage",
         "description": "Government website for the New Zealand education sector.",
         "work_involved": [
-            "Developed dashboard allowing prospective students to fill their details and fetch personalises study recommendations.",
+            "Developed dashboard allowing prospective students to fill their details and fetch personalised study recommendations",
             "Negotiated API design with backend engineers",
             "High-level Contentful CMS development and search indexing",
         ],

@@ -29,18 +29,28 @@ const ProjectCard = ({ project, isModalContent = false }) => {
                     />
                 </a>
             )}
-            <div className="p-6 flex flex-col flex-1 min-w-0 gap-4">
+            <div className="p-6 flex flex-col flex-1 min-w-0 gap-6">
                 <header className="flex flex-col gap-4">
-                    <h3 className="text-3xl text-white font-bold">{project.name}</h3>
+                    {isModalContent ? (
+                        <h2 className="text-3xl text-white font-bold" id="modal-title">{project.name}</h2>
+                    ) : (
+                        <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <h3 className="text-3xl text-white font-bold">{project.name}</h3>
+                        </a>
+                    )}
                     <div className="flex gap-2">
                         {project.award && <Pill label={project.award.description} theme="award" />}
                         <Pill label={project.client ? "Client" : "Personal"} />
                     </div>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white/80 text-md leading-relaxed">
                         {project.description}
                     </p>
                 </header>
-                <List listItems={project.work_involved} keyPrefix={`${project.id}-point`} />
+                <List listItems={project.work_involved} keyPrefix={`${project.id}-point`} iconType="tick" />
                 <div className="mt-auto flex gap-2">
                     <LinkButton href={project.url} label="Visit Site" />
                     {project.award && <LinkButton href={project.award.url} label="View Award" />}
