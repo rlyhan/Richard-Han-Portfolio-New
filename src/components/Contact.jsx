@@ -1,10 +1,11 @@
-import PageSection from "./common/PageSection"
+import PageSection from "./layout/PageSection"
+import SectionHeading from "./common/SectionHeading"
 
 const Contact = () => {
     return (
         <PageSection id="contact">
             <div className="max-w-xl mx-auto text-center">
-                <h2 className="text-3xl font-semibold mb-4">Contact</h2>
+                <SectionHeading label="Contact" />
                 <p className="text-gray-400 mb-6">
                     Want to work together or just say hi?
                 </p>

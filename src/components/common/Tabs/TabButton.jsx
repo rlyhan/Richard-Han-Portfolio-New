@@ -8,7 +8,7 @@ const TabButton = ({ id, tabName, activeTab, setActiveTab }) => {
             className={`border transition-colors hover:border-yellow-300 px-4 py-2 rounded-md
         ${isActive
                     ? "bg-yellow-300 text-black border-yellow-300"
-                    : "bg-[#1a1a1a] border-[#1a1a1a] text-white"
+                    : "bg-transparent border-white/20 text-white"
                 }`}
         >
             {tabName}

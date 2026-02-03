@@ -1,6 +1,7 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useMemo } from "react"
 import classNames from "classnames"
-import PageSection from "./common/PageSection"
+import PageSection from "./layout/PageSection"
+import SectionHeading from "./common/SectionHeading"
 import TabButton from "./common/Tabs/TabButton"
 import PROJECTS from "../data/projects.data"
 import ProjectCard from "./common/Cards/ProjectCard"
@@ -37,7 +38,7 @@ const Projects = () => {
     return (
         <PageSection id="projects">
             <div className="max-w-6xl mx-auto w-full">
-                <h2 className="text-3xl font-semibold mb-8">Projects</h2>
+                <SectionHeading label="Projects" />
                 <div className="flex justify-between">
                     <div role="tablist" className="flex gap-4 mb-6">
                         {tabs.map((t) => (
@@ -55,7 +56,7 @@ const Projects = () => {
                         <IconButton type="gallery" onClick={() => setDisplayMode("gallery")} isActive={displayMode === "gallery"} />
                     </div>
                 </div>
-                <div className={classNames("grid grid-cols-1 gap-6", {
+                <div className={classNames("grid grid-cols-1 md:grid-cols-2 gap-6", {
                     "md:grid-cols-3": displayMode === "gallery",
                 })}>
                     {featuredProjects.map((project) =>

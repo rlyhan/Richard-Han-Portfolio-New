@@ -4,7 +4,7 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import VantaDotsBG from "./components/common/VantaBackground"
+import VantaDotsBG from "./components/layout/VantaBackground"
 
 function App() {
   return (

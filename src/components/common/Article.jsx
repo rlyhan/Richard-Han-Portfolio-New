@@ -1,3 +1,5 @@
+import List from "./List"
+
 const Article = ({ item }) => {
     const { id, heading, listItems } = item
     return (
@@ -9,11 +11,7 @@ const Article = ({ item }) => {
                 </p> : <></>}
             </header>
 
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-                {listItems.length && listItems.map((listItem, i) => (
-                    <li key={i}>{listItem}</li>
-                ))}
-            </ul>
+            <List listItems={listItems} keyPrefix={`${id}-articleitem`} />
         </article>
     )
 }

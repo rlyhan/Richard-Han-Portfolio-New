@@ -1,4 +1,4 @@
-const GalleryIcon = ({ className = "" }) => (
+const AwardIcon = ({ className = "" }) => (
     <svg
         className={className}
         xmlns="http://www.w3.org/2000/svg"
@@ -10,11 +10,9 @@ const GalleryIcon = ({ className = "" }) => (
         strokeLinejoin="round"
         aria-hidden="true"
     >
-        <rect x="3" y="3" width="7" height="7" />
-        <rect x="14" y="3" width="7" height="7" />
-        <rect x="14" y="14" width="7" height="7" />
-        <rect x="3" y="14" width="7" height="7" />
+        <circle cx="12" cy="8" r="7"></circle>
+        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
     </svg>
 );
 
-export default GalleryIcon
+export default AwardIcon

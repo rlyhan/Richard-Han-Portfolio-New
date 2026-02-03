@@ -9,13 +9,49 @@ const PROJECTS = [
         "association": "Make Agency",
         "description": "UK based home development.",
         "work_involved": [
-            "New build of their site using a new CMS",
-            ""
+            "Built new headless CMS dataflow with DatoCMS",
+            "Developed maps, carousels and other major components",
+            "Audited and improved SEO, accessibility and analytics"
         ],
         "technologies": [
             "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
         ],
         "images": ["thakeham.webp"]
+    },
+    {
+        "name": "Study With New Zealand",
+        "id": "study-with-nz",
+        "url": "https://www.studywithnewzealand.govt.nz/en",
+        "featured": true,
+        "category": "Government / Education",
+        "client": true,
+        "association": "Voyage",
+        "description": "Government website for the New Zealand education sector.",
+        "work_involved": [
+            "Developed dashboard allowing prospective students to fill their details and fetch personalises study recommendations.",
+            "Negotiated API design with backend engineers",
+            "High-level Contentful CMS development and search indexing",
+        ],
+        "images": ["studywithnz.webp"]
+    },
+    {
+        "name": "Neat Places",
+        "id": "neat-places",
+        "url": "https://neatplaces.co.nz/",
+        "award": {
+            "description": "Best Awards 2022 Recipient",
+            "url": "https://bestawards.co.nz/digital/large-scale-websites/sons-co/neat-places-1/"
+        },
+        "featured": true,
+        "category": "Travel and tourism",
+        "client": true,
+        "association": "Sons & Co.",
+        "description": "New Zealand based tourism website consisting of curated guides to cities and places, and a large directory of shops, restaurants, bars, attractions, and more.",
+        "work_involved": [
+            "Complete site restructure - layout and CMS",
+            "Frequently negotiated new design for optimal responsiveness, performance and brand impact",
+        ],
+        "images": ["neatplaces.webp"]
     },
     {
         "name": "G.Network",
@@ -29,30 +65,13 @@ const PROJECTS = [
         "work_involved": [
             "Successfully developed large scale projects for customer checkout: One Touch Switch and pre-order system",
             "Built engaging new content blocks and improving CMS setup to cut down data entry time",
-            "Improved engagement through audits of SEO, analytics and accessibility",
+            "Optimised site engagement through performance improvements and SEO + analytics audits",
             "Investigated and solved major outages"
         ],
         "technologies": [
             "React", "Next.js", "Kontent.ai"
         ],
         "images": ["gnetwork.webp"]
-    },
-    {
-        "name": "Study With New Zealand",
-        "id": "study-with-nz",
-        "url": "https://www.studywithnewzealand.govt.nz/en",
-        "featured": true,
-        "category": "Government / Education",
-        "client": true,
-        "association": "Voyage",
-        "description": "Government website for the New Zealand education sector.",
-        "work_involved": [
-            "Developed dashboard allowing prospective students to fill their details and fetch personalises study recommendations.",
-            "Building large scale component library",
-            "Collaborating on API development with backend engineers",
-            "Contentful CMS development",
-        ],
-        "images": ["studywithnz.webp"]
     },
     {
         "name": "Deadly Ponies",
@@ -64,27 +83,26 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Australia based handbag and apparel brand.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation, e-commerce integration"
+            "New pages and content blocks",
+            "UX improvements across devices",
+            "Data optimisation and e-commerce integration"
         ],
         "images": ["deadlyponies.webp"]
     },
     {
-        "name": "Neat Places",
-        "id": "neat-places",
-        "url": "https://neatplaces.co.nz/",
-        "best_awards_url": "https://bestawards.co.nz/digital/large-scale-websites/sons-co/neat-places-1/",
+        "name": "Gigs of London",
+        "id": "gigs-of-london",
+        "url": "https://gigs-of-london.vercel.app/",
         "featured": true,
-        "category": "Travel and tourism",
-        "client": true,
-        "association": "Sons & Co.",
-        "description": "New Zealand based tourism website consisting of curated guides to cities and places, and a large directory of shops, restaurants, bars, attractions, and more.",
+        "category": "Events",
+        "client": false,
+        "association": "Personal",
+        "description": "Find events in London on an interactive map.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Integrating APIs such as Instagram",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Integrated Mapbox and Ticketmaster APIs",
+            "Recently integrated OpenAI SDK to suggest events based on mood"
         ],
-        "images": ["neatplaces.webp"]
+        "images": ["gigsoflondon.webp"]
     },
     {
         "name": "The Physics Room",
@@ -96,9 +114,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Christchurch, New Zealand based art gallery.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Fully customisable content management system to add various media including articles, videos, audio",
-            "Full e-commerce integration"
+            "Animated navigation menu",
+            "Set up custom e-commerce system",
+            "Fully customised content management system to add various media including articles, videos, audio",
         ],
         "images": ["physicsroom.webp"]
     },
@@ -112,22 +130,27 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Australia based paint company.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Intricate frontend work - new pages, content blocks and modern page transitions",
+            "Optimised images and backend data querying logic"
         ],
         "images": ["coloursmith.webp"]
     },
     {
-        "name": "Gigs of London",
-        "id": "gigs-of-london",
-        "url": "https://gigs-of-london.vercel.app/",
+        "name": "James Dunlop Textiles",
+        "id": "james-dunlop-textiles",
+        "url": "https://www.jamesdunloptextiles.com/",
         "featured": true,
-        "category": "Events",
-        "client": false,
-        "association": "Personal",
-        "description": "Find events in London on a map",
-        "work_involved": [],
-        "images": ["gigsoflondon.webp"]
+        "category": "Textiles",
+        "client": true,
+        "association": "Sons & Co.",
+        "description": "International textiles company.",
+        "work_involved": [
+            "Multiple front end features including furniture visualiser",
+            "CMS models for new pages and content organisation"
+        ],
+        "images": [
+            "jamesdunlop.webp"
+        ]
     },
     {
         "name": "ECC",
@@ -155,23 +178,6 @@ const PROJECTS = [
         "work_involved": [
             "Front end functionality and styling",
             "Back end development including highly customisable content management system, data optimisation"
-        ]
-    },
-    {
-        "name": "James Dunlop Textiles",
-        "id": "james-dunlop-textiles",
-        "url": "https://www.jamesdunloptextiles.com/",
-        "featured": true,
-        "category": "Textiles",
-        "client": true,
-        "association": "Sons & Co.",
-        "description": "International textiles company.",
-        "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
-        ],
-        "images": [
-            "jamesdunlop.webp"
         ]
     },
     {

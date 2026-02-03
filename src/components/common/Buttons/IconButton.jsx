@@ -20,7 +20,7 @@ const IconButton = ({ type, onClick, isActive }) => {
                 "group p-4 transition-colors",
                 {
                     "bg-yellow-300": isActive,
-                    "bg-[#1a1a1a]": !isActive,
+                    "bg-white/10": !isActive,
                 }
             )}
         >

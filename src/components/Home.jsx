@@ -1,4 +1,4 @@
-import PageSection from "./common/PageSection"
+import PageSection from "./layout/PageSection"
 
 const Home = () => {
     return (
