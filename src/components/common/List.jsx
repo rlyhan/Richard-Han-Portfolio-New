@@ -1,7 +1,7 @@
 import IconRenderer from "../icons/IconRenderer";
 
-const List = ({ listItems = [], keyPrefix, iconType = null, backgroundColor = null, containerStyles = null, textStyles = null }) => {
-    const Icon = iconType ? <IconRenderer iconType={iconType} className="h-4 w-4 mt-1 shrink-0 text-cyan-600" /> : null
+const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, containerStyles = null, textStyles = null }) => {
+    const Icon = icon ? <IconRenderer icon={icon} className="h-4 w-4 mt-1 shrink-0 text-cyan-600" /> : null
 
     const backgroundColorClass = backgroundColor ? backgroundColor : "bg-white/5"
     const containerClasses = containerStyles ? containerStyles : "p-4 rounded-md"

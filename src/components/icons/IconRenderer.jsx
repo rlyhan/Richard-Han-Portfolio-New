@@ -3,7 +3,10 @@ import {
     BookIcon,
     CloudIcon,
     CodeIcon,
+    ExternalLinkIcon,
     FileIcon,
+    GitHubIcon,
+    LinkedInIcon,
     PenIcon,
     SearchIcon,
     ServerIcon,
@@ -18,7 +21,10 @@ const iconMapping = {
     book: BookIcon,
     cloud: CloudIcon,
     code: CodeIcon,
+    externalLink: ExternalLinkIcon,
     file: FileIcon,
+    github: GitHubIcon,
+    linkedin: LinkedInIcon,
     pen: PenIcon,
     search: SearchIcon,
     server: ServerIcon,
@@ -26,8 +32,8 @@ const iconMapping = {
     users: UsersIcon
 };
 
-const IconRenderer = ({ iconType = "default", className = "" }) => {
-    const IconComponent = iconMapping[iconType] || iconMapping["default"];
+const IconRenderer = ({ icon = "default", className = "" }) => {
+    const IconComponent = iconMapping[icon] || iconMapping["default"];
     return <IconComponent className={className} />;
 }
 

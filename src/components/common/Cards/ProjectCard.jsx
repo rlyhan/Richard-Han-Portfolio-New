@@ -50,10 +50,10 @@ const ProjectCard = ({ project, isModalContent = false }) => {
                         {project.description}
                     </p>
                 </header>
-                <List listItems={project.work_involved} keyPrefix={`${project.id}-point`} iconType="tick" />
+                <List listItems={project.work_involved} keyPrefix={`${project.id}-point`} icon="tick" />
                 <div className="mt-auto flex gap-2">
-                    <LinkButton href={project.url} label="Visit Site" />
-                    {project.award && <LinkButton href={project.award.url} label="View Award" />}
+                    <LinkButton href={project.url} label="Visit Site" useExternalIcon />
+                    {project.award && <LinkButton href={project.award.url} label="View Award" useExternalIcon />}
                 </div>
             </div>
         </article >
