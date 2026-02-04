@@ -77,7 +77,7 @@ const TECH = [
         id: "cloud-infrastructure",
         heading: "Cloud & Infrastructure",
         listItems: [
-            "Azure", "Cloudflare", "Vercel"
+            "Azure", "Cloudflare", "AWS", "Vercel"
         ],
         icon: "cloud"
     },
