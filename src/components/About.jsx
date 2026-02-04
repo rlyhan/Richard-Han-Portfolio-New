@@ -2,7 +2,8 @@ import PageSection from "./layout/PageSection"
 import Article from "./common/Article"
 import Tabs from "./common/Tabs/Tabs"
 import SectionHeading from "./common/SectionHeading"
-import { WORK, TECH, SKILLS } from "../data/work.data"
+import { WORK, TECH, SKILLS, INTERESTS } from "../data/work.data"
+import IconCard from "./common/Cards/IconCard"
 
 const About = () => {
     const tabs = [
@@ -12,7 +13,12 @@ const About = () => {
             render: () => (
                 <>
                     {WORK.map((workItem) => (
-                        <Article key={workItem.id} item={workItem} containerStyles="p-8 rounded-lg" textStyles="text-sm sm:text-md md:text-lg" icon="default" />
+                        <Article key={workItem.id}
+                            item={workItem}
+                            backgroundColor="bg-black"
+                            containerStyles="p-8 rounded-lg border border-solid border-yellow-400/50 hover:bg-gray-800 transition"
+                            textStyles="text-sm sm:text-md md:text-lg"
+                            icon="default" />
                     ))}
                 </>
             ),
@@ -24,7 +30,12 @@ const About = () => {
             render: () => (
                 <>
                     {TECH.map((techItem) => (
-                        <Article key={techItem.id} item={techItem} icon={techItem.icon} includeHeaderIcon useListIcons={false} />
+                        <Article key={techItem.id}
+                            item={techItem}
+                            icon={techItem.icon}
+                            includeHeaderIcon
+                            useListIcons={false}
+                        />
                     ))}
                 </>
             ),
@@ -40,27 +51,40 @@ const About = () => {
                             item={skillItem}
                             icon={skillItem.icon}
                             backgroundColor="bg-black"
-                            containerStyles="p-6 border border-solid border-yellow-300/50 rounded-lg"
+                            containerStyles="p-6 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
                             textStyles="text-sm sm:text-md md:text-lg" />
                     ))}
                 </>
             ),
         },
+        {
+            id: "Interests",
+            tabName: "Interests",
+            render: () => (
+                <div className="flex flex-col gap-4">
+                    {INTERESTS.map((interest) => (
+                        <IconCard key={interest.id} icon={interest.icon} text={interest.text} />
+                    ))}
+                </div>
+            ),
+        }
     ];
 
     return (
         <PageSection id="about">
             <SectionHeading label="About" />
-            <p className="text-grey-500 text-2xl sm:text-4xl mb-10">
-                Hi! I'm Richard, and I have been building high-traffic web apps for a range of clients since 2020.
-            </p>
-            <p className="text-grey-500 text-2xl sm:text-4xl mb-10">
-                I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
-                <br />I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
-            </p>
-            <p className="text-grey-500 text-2xl sm:text-4xl mb-10">
-                I love creating performant, accessible, and user-friendly web experiences that help businesses grow online.
-            </p>
+            <div className="max-w-5xl mr-auto">
+                <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
+                    Hi! I'm Richard, and I have been building high-traffic web apps for a range of clients since 2020.
+                </p>
+                <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
+                    I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
+                    I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
+                </p>
+                <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
+                    I love creating performant, accessible, and user-friendly web experiences that help businesses grow online.
+                </p>
+            </div>
             <Tabs tabs={tabs} keepStableHeight className="mt-16" />
         </PageSection>
     )

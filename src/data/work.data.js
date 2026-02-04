@@ -17,7 +17,7 @@ const WORK = [
         listItems: [
             "Built large scale component libraries and features for Education New Zealand websites",
             "Mentored developers new to React and NextJS",
-            "Partnered with backend engineers on API development",
+            "Partnered with backend engineers on API design",
         ]
     },
     {
@@ -132,6 +132,22 @@ const SKILLS = [
     },
 ]
 
+const INTERESTS = [
+    {
+        id: "music-interest",
+        icon: "acoustic-guitar.png",
+        text: "Music is my #1 passion outside of dev, I love singing, guitar, and songwriting along with going to live shows. My favourite genres are indie rock, punk, metal, and folk.",
+    },
+    {
+        id: "cinema-interest",
+        icon: "movie.png",
+        text: "I love the cinema. My favourites of 2025: Marty Supreme, Demon Slayer: Infinity Castle, The Long Walk, 28 Years Later, Sinners",
+    },
+    {
+        id: "other-interests",
+        icon: "ski.png",
+        text: "Skiing, cooking, and practicing my Japanese are other things I like to do with my time.",
+    }
+]
 
-
-export { WORK, TECH, SKILLS }
+export { WORK, TECH, SKILLS, INTERESTS }

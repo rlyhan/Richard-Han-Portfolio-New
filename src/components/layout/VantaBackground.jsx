@@ -28,8 +28,8 @@ export default function VantaDotsBG() {
                 minWidth: 200,
                 scale: 1,
                 scaleMobile: 1,
-                color: 0x777777,
-                color2: 0xeab308,
+                color: 0x6b7280,
+                color2: 0x0369a1,
                 backgroundColor: 0x000000,
             });
         }

@@ -54,7 +54,7 @@ const Projects = () => {
     }, [isModalOpen]);
 
     return (
-        <PageSection id="projects">
+        <PageSection id="projects" additionalClasses="mb-4">
             <div className="max-w-6xl mx-auto w-full">
                 <SectionHeading label="Projects" />
                 <div className="flex justify-between">
@@ -88,12 +88,14 @@ const Projects = () => {
                 </div>
             </div>
             {/* Modal */}
-            {isModalOpen && selectedProject && (
-                <Modal project={selectedProject} modalTitle={selectedProject.name} isOpen={isModalOpen} onClose={closeProject}>
-                    <ProjectCard project={selectedProject} isModalContent={true} />
-                </Modal>
-            )}
-        </PageSection>
+            {
+                isModalOpen && selectedProject && (
+                    <Modal project={selectedProject} modalTitle={selectedProject.name} isOpen={isModalOpen} onClose={closeProject}>
+                        <ProjectCard project={selectedProject} isModalContent={true} />
+                    </Modal>
+                )
+            }
+        </PageSection >
     )
 }
 

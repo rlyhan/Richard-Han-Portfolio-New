@@ -4,20 +4,24 @@ const Home = () => {
     return (
         <PageSection id="home" additionalClasses="flex items-center justify-center min-h-screen">
             <div className="w-full">
-                <h1 className="font-heading uppercase mb-6">
+                <h1 className="font-heading uppercase mb-4 text-white/85">
                     <span className="text-4xl sm:text-6xl block">Richard Han</span>
                     <span className="text-6xl sm:text-8xl block">Frontend Developer</span>
                 </h1>
-                <h2 className="text-cyan-400/85 text-2xl sm:text-3xl font-semibold">
+
+                <p className="text-yellow-200/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-md sm:text-lg font-medium mb-4">
+                    Turning ideas and designs into engaging user experiences
+                </p>
+
+                <p className="text-white/85 text-2xl sm:text-3xl font-semibold">
                     Currently based in: London, UK
-                </h2>
-                <h2 className="text-cyan-400/85 text-2xl sm:text-3xl font-semibold">
+                </p>
+
+                <p className="text-white/85 text-2xl sm:text-3xl font-semibold">
                     Open to opportunities
-                </h2>
-                <p className="text-gray-300 text-md sm:text-lg font-medium mt-4">
-                    Passionate about turning ideas and designs into excellent, engaging, user-facing products
                 </p>
             </div>
+
         </PageSection>
     )
 }
