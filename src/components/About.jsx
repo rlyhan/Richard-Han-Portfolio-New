@@ -12,7 +12,7 @@ const About = () => {
             render: () => (
                 <>
                     {WORK.map((workItem) => (
-                        <Article key={workItem.id} item={workItem} containerStyles="p-8 rounded-lg" textStyles="text-lg" icon="default" />
+                        <Article key={workItem.id} item={workItem} containerStyles="p-8 rounded-lg" textStyles="text-sm sm:text-md md:text-lg" icon="default" />
                     ))}
                 </>
             ),
@@ -41,7 +41,7 @@ const About = () => {
                             icon={skillItem.icon}
                             backgroundColor="bg-black"
                             containerStyles="p-6 border border-solid border-yellow-300/50 rounded-lg"
-                            textStyles="text-lg mb-4" />
+                            textStyles="text-sm sm:text-md md:text-lg" />
                     ))}
                 </>
             ),
@@ -51,14 +51,14 @@ const About = () => {
     return (
         <PageSection id="about">
             <SectionHeading label="About" />
-            <p className="text-grey-500 text-4xl mb-10">
+            <p className="text-grey-500 text-2xl sm:text-4xl mb-10">
                 Hi! I'm Richard, and I have been building high-traffic web apps for a range of clients since 2020.
             </p>
-            <p className="text-grey-500 text-4xl mb-10">
+            <p className="text-grey-500 text-2xl sm:text-4xl mb-10">
                 I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
                 <br />I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
             </p>
-            <p className="text-grey-500 text-4xl mb-10">
+            <p className="text-grey-500 text-2xl sm:text-4xl mb-10">
                 I love creating performant, accessible, and user-friendly web experiences that help businesses grow online.
             </p>
             <Tabs tabs={tabs} keepStableHeight className="mt-16" />

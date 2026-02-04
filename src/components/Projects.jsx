@@ -69,13 +69,14 @@ const Projects = () => {
                             />
                         ))}
                     </div>
-                    <div role="group" aria-label="Project display mode" className="flex gap-4 mb-6">
+                    <div role="group" aria-label="Project display mode" className="hidden md:flex gap-4 mb-6">
                         <IconButton type="list" onClick={() => setDisplayMode("default")} isActive={displayMode === "default"} />
                         <IconButton type="gallery" onClick={() => setDisplayMode("gallery")} isActive={displayMode === "gallery"} />
                     </div>
                 </div>
-                <div className={classNames("grid grid-cols-1 md:grid-cols-2 gap-6", {
-                    "md:grid-cols-3": displayMode === "gallery",
+                <div className={classNames("grid gap-6", {
+                    "grid-cols-1 md:grid-cols-2": displayMode === "default",
+                    "md:grid-cols-2 lg:grid-cols-3": displayMode === "gallery",
                 })}>
                     {featuredProjects.map((project) =>
                         displayMode === "gallery" ? (

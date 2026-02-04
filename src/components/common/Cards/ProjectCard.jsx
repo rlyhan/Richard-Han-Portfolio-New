@@ -42,7 +42,7 @@ const ProjectCard = ({ project, isModalContent = false }) => {
                             <h3 className="text-3xl text-white font-bold">{project.name}</h3>
                         </a>
                     )}
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                         {project.award && <Pill label={project.award.description} theme="award" />}
                         <Pill label={project.client ? "Client" : "Personal"} />
                     </div>
@@ -51,7 +51,7 @@ const ProjectCard = ({ project, isModalContent = false }) => {
                     </p>
                 </header>
                 <List listItems={project.work_involved} keyPrefix={`${project.id}-point`} icon="tick" />
-                <div className="mt-auto flex gap-2">
+                <div className="mt-auto flex flex-col md:flex-row gap-2">
                     <LinkButton href={project.url} label="Visit Site" useExternalIcon />
                     {project.award && <LinkButton href={project.award.url} label="View Award" useExternalIcon />}
                 </div>

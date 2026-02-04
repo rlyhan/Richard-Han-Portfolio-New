@@ -7,7 +7,7 @@ const TabContent = forwardRef(function TabContent(
     const isActive = activeTab === id;
 
     const className = useGrid
-        ? `grid grid-cols-3 gap-4 ${isActive ? "block" : "hidden"}`
+        ? `grid grid-cols-1 md:grid-cols-3 gap-4 ${isActive ? "block" : "hidden"}`
         : `flex flex-col gap-8 ${isActive ? "block" : "hidden"}`;
 
     return (

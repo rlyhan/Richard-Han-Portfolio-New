@@ -1,5 +1,5 @@
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import TabButton from "./TabButton";
 import TabContent from "./TabContent";
 
@@ -51,16 +51,20 @@ export default function Tabs({
 
     return (
         <div className={className}>
-            <div role="tablist" className="flex gap-4 mb-6">
-                {tabs.map((t) => (
-                    <TabButton
-                        key={t.id}
-                        id={t.id}
-                        tabName={t.tabName}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                    />
-                ))}
+            <div className="relative">
+                <div role="tablist" className="flex gap-2 md:gap-4 mb-6 overflow-x-auto">
+                    {tabs.map((t) => (
+                        <TabButton
+                            key={t.id}
+                            id={t.id}
+                            tabName={t.tabName}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                        />
+                    ))}
+                </div>
+                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-black/50 to-transparent md:hidden"
+                ></div>
             </div>
 
             <div ref={wrapRef} className="relative">

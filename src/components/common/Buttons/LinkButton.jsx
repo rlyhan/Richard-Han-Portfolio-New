@@ -9,7 +9,7 @@ const themeMapping = {
 const sizeMapping = {
     "small": "px-2 py-1 text-sm",
     "medium": "px-3 py-2 text-base",
-    "large": "px-4 py-3 text-lg",
+    "large": "px-4 py-3 text-md md:text-lg",
 }
 
 const LinkButton = ({ href, label, isExternal = true, useExternalIcon = false, customIcon = null, theme = "default", size = "medium", additionalClasses = "" }) => {
