@@ -9,9 +9,10 @@ const PROJECTS = [
         "association": "Make Agency",
         "description": "UK based home development.",
         "work_involved": [
-            "Built new headless CMS dataflow with DatoCMS",
-            "Developed maps, carousels and other major components",
-            "Audited and improved SEO, accessibility and analytics"
+            "Parsed complex API housing data into an optimal logical flow between codebase and DatoCMS",
+            "Collaborated closely with designers for bold, user-friendly components such as interactive maps and carousels",
+            "Tested and fixed various UX issues across the site",
+            "Conducted a full audit and delivered improvements across SEO, accessibility, and analytics"
         ],
         "technologies": [
             "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
@@ -28,9 +29,11 @@ const PROJECTS = [
         "association": "Voyage",
         "description": "Government website for the New Zealand education sector.",
         "work_involved": [
-            "Developed dashboard allowing prospective students to fill their details and fetch personalised study recommendations",
-            "Negotiated API design with backend engineers",
-            "High-level Contentful CMS development and search indexing",
+            "Developed a personalised dashboard allowing prospective students to submit details and receive tailored study recommendations",
+            "Collaborated with backend engineers on API design, resolving critical user validation issues",
+            "Built and structured high-level Contentful CMS to support scalable, editor-friendly content management",
+            "Delivered multiple site optimisations, including improved search indexing and more efficient GraphQL data querying",
+            "Migrated site to monorepo architecture to support development of NauMai NZ website"
         ],
         "images": ["studywithnz.webp"]
     },
@@ -48,8 +51,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based tourism website consisting of curated guides to cities and places, and a large directory of shops, restaurants, bars, attractions, and more.",
         "work_involved": [
-            "Complete site restructure - layout and CMS",
-            "Frequently negotiated new design for optimal responsiveness, performance and brand impact",
+            "Delivered a complete front-end restyle, redesigning navigation, articles, and metadata with a more minimalist approach to improve content accessibility and readability.",
+            "Reworked the Django-based CMS with simplified content types, reducing information overload for users while preserving flexibility and brand impact for editors.",
+            "Collaborated closely on wireframes to ensure optimal performance, responsiveness, and usability across devices."
         ],
         "images": ["neatplaces.webp"]
     },
@@ -63,10 +67,12 @@ const PROJECTS = [
         "association": "Make Agency",
         "description": "London based broadband network.",
         "work_involved": [
-            "Successfully developed large scale projects for customer checkout: One Touch Switch and pre-order system",
-            "Built engaging new content blocks and improving CMS setup to cut down data entry time",
-            "Optimised site engagement through performance improvements and SEO + analytics audits",
-            "Investigated and solved major outages"
+            "Built front-end features for large B2C initiatives such as One Touch Switch and Pre-Order, collaborating with multiple teams and stakeholders",
+            "Developed new CMS features that enabled A/B testing and more flexible content experimentation",
+            "Streamlined CMS workflows for the marketing team, reducing hours of manual data entry",
+            "Improved site engagement through performance optimisation, SEO enhancements, and analytics-led audits",
+            "Led the investigation and resolution of critical production incidents, improving cross-team communication and response clarity"
+
         ],
         "technologies": [
             "React", "Next.js", "Kontent.ai"

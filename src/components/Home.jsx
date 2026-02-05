@@ -9,15 +9,15 @@ const Home = () => {
                     <span className="text-6xl sm:text-8xl block">Frontend Developer</span>
                 </h1>
 
-                <p className="text-yellow-200/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-md sm:text-lg font-medium mb-4">
+                <p className="text-yellow-200/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-sm sm:text-lg font-medium mb-4">
                     Turning ideas and designs into engaging user experiences
                 </p>
 
-                <p className="text-white/85 text-2xl sm:text-3xl font-semibold">
+                <p className="text-white/85 text-lg sm:text-3xl font-semibold">
                     Currently based in: London, UK
                 </p>
 
-                <p className="text-white/85 text-2xl sm:text-3xl font-semibold">
+                <p className="text-white/85 text-lg sm:text-3xl font-semibold">
                     Open to opportunities
                 </p>
             </div>

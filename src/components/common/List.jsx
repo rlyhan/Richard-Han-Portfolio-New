@@ -9,10 +9,10 @@ const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, 
 
     const backgroundColorClass = backgroundColor ? backgroundColor : "bg-white/5"
     const containerClasses = containerStyles ? containerStyles : "p-4 rounded-md"
-    const textClasses = textStyles ? textStyles : "text-white/80 text-sm"
+    const textClasses = textStyles ? textStyles : "text-white/80 text-xs sm:text-sm"
 
     return (
-        <div className={classNames(`grid grid-cols-1 h-full ${backgroundColorClass} ${containerClasses}`, {
+        <div className={classNames(`grid grid-cols-1 gap-3 h-full ${backgroundColorClass} ${containerClasses}`, {
             "md:grid-cols-2": col2.length > 0,
         })}>
             <ul className="flex flex-col gap-3">

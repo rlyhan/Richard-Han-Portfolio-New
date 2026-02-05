@@ -58,7 +58,7 @@ const Projects = () => {
             <div className="max-w-6xl mx-auto w-full">
                 <SectionHeading label="Projects" />
                 <div className="flex justify-between">
-                    <div role="tablist" className="flex gap-4 mb-6">
+                    <div role="tablist" className="flex gap-4 mb-6" aria-label="Project category tabs">
                         {tabs.map((t) => (
                             <TabButton
                                 key={t.id}

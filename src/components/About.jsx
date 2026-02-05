@@ -85,7 +85,7 @@ const About = () => {
                     I love creating performant, accessible, and user-friendly web experiences that help businesses grow online.
                 </p>
             </div>
-            <Tabs tabs={tabs} keepStableHeight className="mt-16" />
+            <Tabs tabs={tabs} ariaLabel="About tabs" keepStableHeight className="mt-16" />
         </PageSection>
     )
 }

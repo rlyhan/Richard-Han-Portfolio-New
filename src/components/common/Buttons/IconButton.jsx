@@ -15,6 +15,7 @@ const IconButton = ({ type, onClick, isActive }) => {
         <button
             type="button"
             onClick={onClick}
+            aria-label={type === "gallery" ? "Gallery view" : "List view"}
             aria-pressed={isActive}
             className={classNames(
                 "group p-4 transition-colors",
