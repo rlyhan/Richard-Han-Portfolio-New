@@ -26,7 +26,7 @@ const WORK = [
         subheading: "2020 - 2022 · Full Stack Web Developer",
         listItems: [
             "Delivered high-traffic websites across fashion, furniture, tourism, and lifestyle sectors",
-            "Engaged in design-centric frontend development, focusing on strong performance and pixel-perfect UI",
+            "Engaged in design-centric frontend development with modern JavaScript animation and pixel-perfect UI balanced with performance optimisation",
             "Built and maintained Django/Python-based backend systems, including CMS and data migrations",
             "Earned an accolade on Best Awards for a redesign project for Neat Places, a New Zealand tourism website"
         ]
@@ -38,7 +38,7 @@ const TECH = [
         id: "languages",
         heading: "Languages",
         listItems: [
-            "JavaScript ES6", "TypeScript", "HTML5", "CSS", "SASS", "Python", "PHP"
+            "JavaScript ES6", "jQuery", "TypeScript", "HTML5", "CSS", "SASS", "Python", "PHP"
         ],
         icon: "code"
     },
