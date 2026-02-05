@@ -1,13 +1,13 @@
 const WORK = [
     {
-        id: "sonsandco",
-        heading: "Sons & Co",
-        subheading: "2020 - 2022 · Full Stack Web Developer",
+        id: "makeagency",
+        heading: "Make Agency",
+        subheading: "2023 - 2025 · Website Developer",
         listItems: [
-            "Built high traffic websites across industries like fashion, furniture, tourism, and more",
-            "Design-centric frontend development with strong performance and pixel-perfect UI",
-            "Backend work including CMS and data migration",
-            "My work on Neat Places earned an accolade on Best Awards"
+            "Led React-based development on new client projects as the primary React developer within a WordPress-focused team",
+            "Delivered features for enterprise clients such as G.Network, working closely with product, design, and stakeholder teams",
+            "Developed and maintained multiple UK-based client sites such as Thakeham and Boxpark",
+            "Modernised team workflows by introducing new frameworks, CMS platforms, and error reporting tools"
         ]
     },
     {
@@ -15,19 +15,20 @@ const WORK = [
         heading: "Voyage",
         subheading: "2022 - 2023 · Front End Developer",
         listItems: [
-            "Built large scale component libraries and features for Education New Zealand websites",
-            "Mentored developers new to React and NextJS",
-            "Partnered with backend engineers on API design",
+            "Developed large scale component libraries and features for Education New Zealand websites",
+            "Mentored developers new to React and NextJS to improve team onboarding and code quality",
+            "Partnered closely with backend engineers to design and integrate APIs",
         ]
     },
     {
-        id: "makeagency",
-        heading: "Make Agency",
-        subheading: "2023 - 2025 · Website Developer",
+        id: "sonsandco",
+        heading: "Sons & Co",
+        subheading: "2020 - 2022 · Full Stack Web Developer",
         listItems: [
-            "Led front-end development for broadband provider G.Network",
-            "Optimised multiple client sites for performance and SEO",
-            "Introduced new frameworks, CMS and error reporting tools"
+            "Delivered high-traffic websites across fashion, furniture, tourism, and lifestyle sectors",
+            "Engaged in design-centric frontend development, focusing on strong performance and pixel-perfect UI",
+            "Built and maintained Django/Python-based backend systems, including CMS and data migrations",
+            "Earned an accolade on Best Awards for a redesign project for Neat Places, a New Zealand tourism website"
         ]
     }
 ]
