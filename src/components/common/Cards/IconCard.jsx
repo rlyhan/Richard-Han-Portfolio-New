@@ -10,7 +10,7 @@ const IconCard = ({ id, icon, text }) => {
                     </div>
                 )}
             </div>
-            <p className="text-center text-white font-medium text-lg sm:text-xl lg:text-2xl max-w-2xl mx-auto">{text}</p>
+            <p className="text-center text-white font-medium sm:text-lg max-w-2xl mx-auto">{text}</p>
         </div>
     );
 };
