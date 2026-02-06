@@ -78,7 +78,7 @@ const About = () => {
                     Hi! I'm Richard, and I have been building web appications for a range of clients since 2020.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
+                    My primary focus is front end development with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
                     I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
