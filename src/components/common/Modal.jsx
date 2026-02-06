@@ -37,7 +37,7 @@ const Modal = ({ isOpen, onClose, children }) => {
         >
             <div
                 className={classNames(
-                    "relative w-full max-w-lg bg-[#1a1a1a] border border-solid border-white/10 rounded-lg shadow-xl",
+                    "overflow-y-auto max-h-[85vh] relative w-full max-w-lg bg-[#1a1a1a] border border-solid border-white/10 rounded-lg shadow-xl",
                     "transition-all duration-200",
                     entered ? "opacity-100 scale-100" : "opacity-0 scale-95"
                 )}
