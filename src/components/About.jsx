@@ -24,23 +24,6 @@ const About = () => {
             ),
         },
         {
-            id: "technologies",
-            tabName: "Technologies",
-            useGrid: true,
-            render: () => (
-                <>
-                    {TECH.map((techItem) => (
-                        <Article key={techItem.id}
-                            item={techItem}
-                            icon={techItem.icon}
-                            includeHeaderIcon
-                            useListIcons={false}
-                        />
-                    ))}
-                </>
-            ),
-        },
-        {
             id: "skills",
             tabName: "Skills",
             useGrid: true,
@@ -53,6 +36,23 @@ const About = () => {
                             backgroundColor="bg-black"
                             containerStyles="p-6 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
                             textStyles="text-sm sm:text-md md:text-lg" />
+                    ))}
+                </>
+            ),
+        },
+        {
+            id: "technologies",
+            tabName: "Technologies",
+            useGrid: true,
+            render: () => (
+                <>
+                    {TECH.map((techItem) => (
+                        <Article key={techItem.id}
+                            item={techItem}
+                            icon={techItem.icon}
+                            includeHeaderIcon
+                            useListIcons={false}
+                        />
                     ))}
                 </>
             ),
@@ -75,7 +75,7 @@ const About = () => {
             <SectionHeading label="About" />
             <div className="max-w-5xl mr-auto">
                 <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
-                    Hi! I'm Richard, and I have been building high-traffic web apps for a range of clients since 2020.
+                    Hi! I'm Richard, and I have been building web apps for a range of clients since 2020.
                 </p>
                 <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
                     I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
