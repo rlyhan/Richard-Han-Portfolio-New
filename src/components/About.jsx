@@ -75,15 +75,14 @@ const About = () => {
             <SectionHeading label="About" />
             <div className="max-w-5xl mr-auto">
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    Hi! I'm Richard, and I have been building web apps for a range of clients since 2020.
+                    Hi! I'm Richard, and I have been building web appications for a range of clients since 2020.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
                     I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
                     I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    I love creating performant, accessible, and user-friendly web experiences that help businesses grow online.
-                </p>
+                    I’m passionate about developing visually driven sites where design and interaction really matter, and about turning ambitious ideas into engaging user experiences through close collaboration, while ensuring scalability, performance, and measurable business impact.                </p>
             </div>
             <Tabs tabs={tabs} ariaLabel="About tabs" keepStableHeight className="mt-16" />
         </PageSection >

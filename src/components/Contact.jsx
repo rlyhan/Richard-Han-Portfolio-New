@@ -14,7 +14,7 @@ const Contact = () => {
                     </p>
                     <p className="text-grey-500 text-2xl md:text-4xl mt-6">
                         I'm open to new opportunities or a chat.&nbsp;
-                        <a href="/Richard_Han_CV_2026.pdf" download className="text-yellow-500 hover:text-yellow-500/50">
+                        <a href="/Richard_Han_CV.pdf" download className="text-yellow-500 hover:text-yellow-500/50">
                             Download my CV here.
                         </a>
                     </p>
