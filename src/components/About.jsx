@@ -75,7 +75,7 @@ const About = () => {
             <SectionHeading label="About" />
             <div className="max-w-5xl mr-auto">
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    Hi! I'm Richard, and I have been building web appications for a range of clients since 2020.
+                    Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
                     My primary focus is front end development with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
