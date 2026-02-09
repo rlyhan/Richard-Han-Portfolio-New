@@ -10,14 +10,14 @@ const About = () => {
         {
             id: "experience",
             tabName: "Experience",
+            useGrid: true,
             render: () => (
                 <>
                     {WORK.map((workItem) => (
                         <Article key={workItem.id}
                             item={workItem}
-                            backgroundColor="bg-black"
-                            containerStyles="p-8 rounded-lg border border-solid border-yellow-400/50 hover:bg-gray-800 transition"
-                            textStyles="text-sm md:text-base"
+                            containerStyles="p-8 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
+                            textStyles="text-sm"
                             icon="default" />
                     ))}
                 </>
@@ -33,7 +33,6 @@ const About = () => {
                         <Article key={skillItem.id}
                             item={skillItem}
                             icon={skillItem.icon}
-                            backgroundColor="bg-black"
                             containerStyles="p-6 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
                         />
                     ))}
@@ -61,7 +60,7 @@ const About = () => {
             id: "Interests",
             tabName: "Interests",
             render: () => (
-                <div className="flex flex-col gap-4">
+                <div className="grid md:grid-cols-3 gap-4">
                     {INTERESTS.map((interest) => (
                         <IconCard key={interest.id} icon={interest.icon} text={interest.text} />
                     ))}

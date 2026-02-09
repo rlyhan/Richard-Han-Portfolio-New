@@ -43,7 +43,7 @@ const Header = () => {
     return (
         <header
             ref={headerRef}
-            className="fixed top-0 left-0 w-full z-50 bg-black shadow-xl/20"
+            className="fixed top-0 left-0 w-full z-50 bg-neutral-900"
         >
             <nav ref={barRef} className="max-w-7xl mx-auto flex items-end justify-end px-6 py-4">
                 {/* Desktop nav */}

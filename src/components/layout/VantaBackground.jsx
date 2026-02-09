@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 
-export default function VantaDotsBG() {
+export default function VantaBackground() {
     const containerRef = useRef(null);
     const vantaRef = useRef(null);
 
@@ -11,26 +10,24 @@ export default function VantaDotsBG() {
         async function init() {
             if (!containerRef.current || vantaRef.current) return;
 
-            // Set before Vanta import
-            globalThis.THREE = THREE;
+            const p5 = await import("p5");
+            globalThis.p5 = p5.default;
 
-            const { default: DOTS } = await import("vanta/dist/vanta.dots.min");
+            const { default: TRUNK } = await import("vanta/dist/vanta.trunk.min");
 
             if (cancelled || !containerRef.current) return;
 
-            vantaRef.current = DOTS({
+            vantaRef.current = TRUNK({
                 el: containerRef.current,
-                THREE,
                 mouseControls: true,
                 touchControls: true,
                 gyroControls: false,
-                minHeight: 200,
-                minWidth: 200,
-                scale: 1,
-                scaleMobile: 1,
-                color: 0x6b7280,
-                color2: 0x0369a1,
-                backgroundColor: 0x000000,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x826a33,
+                backgroundColor: 0x171717,
             });
         }
 

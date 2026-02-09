@@ -14,7 +14,7 @@ const Home = () => {
                 </p>
 
                 <p className="text-white/85 text-lg sm:text-2xl font-semibold">
-                    Currently based in: London, UK
+                    Currently based in: <span className="text-sky-600">London, UK</span>
                 </p>
 
                 <p className="text-white/85 text-lg sm:text-2xl font-semibold">

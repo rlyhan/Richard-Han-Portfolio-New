@@ -1,6 +1,6 @@
 const IconCard = ({ id, icon, text }) => {
     return (
-        <div className="flex flex-col items-center p-12 border border-gray-700 rounded-lg hover:bg-gray-800 transition">
+        <div className="bg-zinc-800 flex flex-col items-center p-12 border border-gray-700 rounded-lg hover:bg-gray-800 transition">
             <div className="mb-4">
                 {icon ? (
                     <img src={`./images/${icon}`} alt={`${id} icon`} className="w-12 h-12" />
