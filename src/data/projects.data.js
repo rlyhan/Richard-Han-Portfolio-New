@@ -32,7 +32,7 @@ const PROJECTS = [
             "Developed a personalised dashboard allowing prospective students to submit details and receive tailored study recommendations",
             "Collaborated with backend engineers on API design, resolving critical user validation issues",
             "Built and structured high-level Contentful CMS to support scalable, editor-friendly content management",
-            "Delivered multiple site optimisations, including improved search indexing and more efficient GraphQL data querying",
+            "Delivered multiple site optimisations to improve rendering performance and querying efficiency",
             "Migrated site to monorepo architecture to support development of NauMai NZ website"
         ],
         "images": ["studywithnz.webp"]
