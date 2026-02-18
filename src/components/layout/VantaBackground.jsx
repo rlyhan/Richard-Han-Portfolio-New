@@ -24,10 +24,12 @@ export default function VantaBackground() {
                 gyroControls: false,
                 minHeight: 200.00,
                 minWidth: 200.00,
-                scale: 1.00,
+                scale: 0.70,
                 scaleMobile: 1.00,
-                color: 0x826a33,
                 backgroundColor: 0x171717,
+                color: 0x9b9b8c,
+                spacing: 0.00,
+                chaos: 4.00,
             });
         }
 
@@ -42,5 +44,5 @@ export default function VantaBackground() {
         };
     }, []);
 
-    return <div ref={containerRef} className="absolute inset-0 -z-10" aria-hidden="true" />;
+    return <div ref={containerRef} className="absolute inset-0 -z-10 opacity-65" aria-hidden="true" />;
 }

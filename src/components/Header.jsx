@@ -20,7 +20,7 @@ const Header = () => {
         const barHeight = barRef.current?.offsetHeight ?? 0;
 
         gsap.to(window, {
-            duration: 1.6,
+            duration: 1.2,
             ease: "power3.out",
             scrollTo: { y: selector, offsetY: barHeight },
         });

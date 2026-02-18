@@ -5,7 +5,7 @@ const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, 
     const col1 = listItems.slice(0, 5);
     const col2 = listItems.slice(5);
 
-    const Icon = icon ? <IconRenderer icon={icon} className="h-4 w-4 mt-1 shrink-0 text-cyan-600" /> : null
+    const Icon = icon ? <IconRenderer icon={icon} className="h-4 w-4 mt-1 shrink-0 text-teal-500" /> : null
 
     const backgroundColorClass = backgroundColor ? backgroundColor : "bg-zinc-800"
     const containerClasses = containerStyles ? containerStyles : "p-4 rounded-md"

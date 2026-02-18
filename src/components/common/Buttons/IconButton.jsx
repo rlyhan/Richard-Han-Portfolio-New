@@ -7,7 +7,7 @@ const IconButton = ({ type, onClick, isActive }) => {
         "h-5 w-5 transition-colors",
         {
             "text-black": isActive,
-            "text-white group-hover:text-yellow-300": !isActive,
+            "text-white group-hover:text-yellow-400": !isActive,
         }
     );
 
@@ -20,7 +20,7 @@ const IconButton = ({ type, onClick, isActive }) => {
             className={classNames(
                 "group p-4 transition-colors",
                 {
-                    "bg-yellow-300": isActive,
+                    "bg-yellow-400": isActive,
                     "bg-white/10": !isActive,
                 }
             )}
