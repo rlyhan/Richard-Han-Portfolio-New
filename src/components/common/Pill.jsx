@@ -2,7 +2,7 @@ import AwardIcon from "../icons/AwardIcon"
 
 const themeMapping = {
     "default": "border border-white/20 text-gray-300 bg-transparent",
-    "award": "border border-yellow-400 text-yellow-400 bg-transparent font-bold"
+    "award": "border border-yellow-300 text-yellow-300 bg-transparent font-bold"
 }
 
 const Pill = ({ label, theme = "default" }) => {

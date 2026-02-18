@@ -5,7 +5,7 @@ const Home = () => {
         <PageSection id="home" additionalClasses="flex items-center justify-center min-h-screen">
             <div className="w-full">
                 <h1 className="font-heading uppercase mb-4 line-height">
-                    <span className="text-neutral-100 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-6xl sm:text-8xl block mb-2">Richard Han</span>
+                    <span className="text-neutral-100 text-6xl sm:text-8xl block mb-2">Richard Han</span>
                     <span className="text-teal-400 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-xl sm:text-3xl block">Software Developer | Front End Focused | Full Stack Capable</span>
                 </h1>
 
@@ -14,7 +14,7 @@ const Home = () => {
                 </p>
 
                 <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
-                    Currently based in: <span className="text-teal-400">London, UK</span>
+                    Currently based in: <span className="text-cyan-300">London, UK</span>
                 </p>
 
                 <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">

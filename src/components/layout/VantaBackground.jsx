@@ -44,5 +44,5 @@ export default function VantaBackground() {
         };
     }, []);
 
-    return <div ref={containerRef} className="absolute inset-0 -z-10 opacity-65" aria-hidden="true" />;
+    return <div ref={containerRef} className="absolute inset-0 -z-10 opacity-50" aria-hidden="true" />;
 }
