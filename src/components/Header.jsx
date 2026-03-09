@@ -12,24 +12,43 @@ const NAV_ITEMS = [
 ];
 
 const Header = () => {
-    const headerRef = useRef(null);
     const barRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
 
-    const scrollToSection = useCallback((selector) => {
+    const scrollToSection = useCallback((selector, isHome) => {
         const barHeight = barRef.current?.offsetHeight ?? 0;
 
-        gsap.to(window, {
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTo: { y: selector, offsetY: barHeight },
-        });
+        if (isHome) {
+            window.dispatchEvent(new Event("vanta:suppress"));
+            gsap.to(window, {
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTo: { y: selector, offsetY: barHeight },
+                onComplete: () => {
+                    // Wait for the browser to paint the final scroll position,
+                    // then add a short pause before fading Vanta back in.
+                    requestAnimationFrame(() => {
+                        gsap.delayedCall(0.25, () => window.dispatchEvent(new Event("vanta:show")));
+                    });
+                },
+            });
+        } else {
+            window.dispatchEvent(new Event("vanta:hide"));
+            // Wait for fade-out (0.3s) before scrolling
+            gsap.delayedCall(0.3, () => {
+                gsap.to(window, {
+                    duration: 1.2,
+                    ease: "power3.out",
+                    scrollTo: { y: selector, offsetY: barHeight },
+                });
+            });
+        }
     }, []);
 
 
     const handleNavClick = (id) => {
         setIsOpen(false);
-        scrollToSection(`#${id}`);
+        scrollToSection(`#${id}`, id === "home");
     };
 
     useEffect(() => {
@@ -42,7 +61,6 @@ const Header = () => {
 
     return (
         <header
-            ref={headerRef}
             className="fixed top-0 left-0 w-full z-50 bg-neutral-900"
         >
             <nav ref={barRef} className="max-w-7xl mx-auto flex items-end justify-end px-6 py-4">
