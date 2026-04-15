@@ -14,7 +14,7 @@ const Home = () => {
                 </p>
 
                 <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
-                    Currently based in: <span className="text-cyan-300">London, UK</span>
+                    Currently based in: <span className="text-cyan-300">Auckland, NZ</span>
                 </p>
 
                 <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
