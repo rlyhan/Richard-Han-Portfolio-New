@@ -1,25 +1,5 @@
 const PROJECTS = [
     {
-        "name": "Thakeham",
-        "id": "thakeham",
-        "url": "https://thakeham.com/",
-        "featured": true,
-        "category": "Residential Housing",
-        "client": true,
-        "association": "Make Agency",
-        "description": "UK based home development.",
-        "work_involved": [
-            "Parsed complex API housing data into an optimal logical flow between codebase and DatoCMS",
-            "Collaborated closely with designers for bold, user-friendly components such as interactive maps and carousels",
-            "Tested and fixed various UX issues across the site",
-            "Conducted a full audit and delivered improvements across SEO, accessibility, and analytics"
-        ],
-        "technologies": [
-            "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
-        ],
-        "images": ["thakeham.webp"]
-    },
-    {
         "name": "Study With New Zealand",
         "id": "study-with-nz",
         "url": "https://www.studywithnewzealand.govt.nz/en",
@@ -29,11 +9,11 @@ const PROJECTS = [
         "association": "Voyage",
         "description": "Government website for the New Zealand education sector.",
         "work_involved": [
-            "Developed a personalised dashboard allowing prospective students to submit details and receive tailored study recommendations",
-            "Collaborated with backend engineers on API design, resolving critical user validation issues",
-            "Built and structured high-level Contentful CMS to support scalable, editor-friendly content management",
-            "Delivered multiple site optimisations to improve rendering performance and querying efficiency",
-            "Migrated site to monorepo architecture to support development of NauMai NZ website"
+            "Built study recommendation dashboard for prospective students.",
+            "Migrated legacy architecture to monorepo.",
+            "Identified critical API issues and refined API design with backend team.",
+            "High-level, structured Contentful integration to support complex data while retaining editor usability.",
+            "Improved performance through optimising querying and search indexing."
         ],
         "images": ["studywithnz.webp"]
     },
@@ -51,9 +31,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based tourism website consisting of curated guides to cities and places, and a large directory of shops, restaurants, bars, attractions, and more.",
         "work_involved": [
-            "Delivered a complete front-end restyle, redesigning navigation, articles, and metadata with a more minimalist approach to improve content accessibility and readability.",
-            "Reworked the Django-based CMS with simplified content types, reducing information overload for users while preserving flexibility and brand impact for editors.",
-            "Collaborated closely on wireframes to ensure optimal performance, responsiveness, and usability across devices."
+            "Redesigned frontend to improve navigation, readability, and content accessibility.",
+            "Refactored entire CMS, reducing complexity while maintaining flexibility.",
+            "Helped deliver responsive, performance optimised UI through collaboration on wireframes and implementation."
         ],
         "images": ["neatplaces.webp"]
     },
@@ -67,17 +47,35 @@ const PROJECTS = [
         "association": "Make Agency",
         "description": "London based broadband network.",
         "work_involved": [
-            "Built front-end features for large B2C initiatives such as One Touch Switch and Pre-Order, collaborating with multiple teams and stakeholders",
-            "Developed new CMS features that enabled A/B testing and more flexible content experimentation",
-            "Streamlined CMS workflows for the marketing team, reducing hours of manual data entry",
-            "Improved site engagement through performance optimisation, SEO enhancements, and analytics-led audits",
-            "Led the investigation and resolution of critical production incidents, improving cross-team communication and response clarity"
-
+            "Delivered major B2C features (One Touch Switch, Pre-Order) with cross-functional teams.",
+            "CMS development and restructures, enabling editors greater content flexiblity, A/B testing and reduction of manual overhead by hours.",
+            "Fully audited and improved performance and SEO metrics.",
+            "Led investigation and resolution of critical production incidents."
         ],
         "technologies": [
             "React", "Next.js", "Kontent.ai"
         ],
         "images": ["gnetwork.webp"]
+    },
+    {
+        "name": "Thakeham",
+        "id": "thakeham",
+        "url": "https://thakeham.com/",
+        "featured": true,
+        "category": "Residential Housing",
+        "client": true,
+        "association": "Make Agency",
+        "description": "UK based home development.",
+        "work_involved": [
+            "Developed interactive UI elements including maps and carousels.",
+            "Identified and fixed UX issues across the site.",
+            "Refined and tested complex API data flows and DatoCMS integration.",
+            "Identified and resolved SEO, accessibility, and analytics issues."
+        ],
+        "technologies": [
+            "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
+        ],
+        "images": ["thakeham.webp"]
     },
     {
         "name": "Deadly Ponies",
@@ -89,9 +87,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Australia based handbag and apparel brand.",
         "work_involved": [
-            "New pages and content blocks",
-            "UX improvements across devices",
-            "Data optimisation and e-commerce integration"
+            "New pages and content blocks.",
+            "UX improvements across devices.",
+            "Data optimisation and e-commerce integration."
         ],
         "images": ["deadlyponies.webp"]
     },
@@ -105,8 +103,9 @@ const PROJECTS = [
         "association": "Personal",
         "description": "Find events in London on an interactive map.",
         "work_involved": [
-            "Integrated Mapbox and Ticketmaster APIs",
-            "Recently integrated OpenAI SDK to suggest events based on mood"
+            "Ticketmaster API integration to fetch real-time event data.",
+            "Mapbox integration for interactive event mapping.",
+            "OpenAI SDK integration to suggest events based on mood and generate descriptions."
         ],
         "images": ["gigsoflondon.webp"]
     },
@@ -120,9 +119,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Christchurch, New Zealand based art gallery.",
         "work_involved": [
-            "Animated navigation menu",
-            "Set up custom e-commerce system",
-            "Fully customised content management system to add various media including articles, videos, audio",
+            "Animated navigation menu.",
+            "Set up custom e-commerce system.",
+            "Fully customised content management system to add various media including articles, videos, audio.",
         ],
         "images": ["physicsroom.webp"]
     },
@@ -136,8 +135,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Australia based paint company.",
         "work_involved": [
-            "Intricate frontend work - new pages, content blocks and modern page transitions",
-            "Optimised images and backend data querying logic"
+            "Intricate frontend work - new pages, content blocks and modern page transitions.",
+            "Optimised images and backend data querying logic."
         ],
         "images": ["coloursmith.webp"]
     },
@@ -151,8 +150,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "International textiles company.",
         "work_involved": [
-            "Multiple front end features including furniture visualiser",
-            "CMS models for new pages and content organisation"
+            "Multiple front end features including furniture visualiser.",
+            "CMS models for new pages and content organisation."
         ],
         "images": [
             "jamesdunlop.webp"
@@ -168,8 +167,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based furniture company.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Front end functionality and styling.",
+            "Back end development including highly customisable content management system, data optimisation."
         ]
     },
     {
@@ -182,8 +181,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "City guides curated by some significant faces. In association with Neat Places.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Front end functionality and styling.",
+            "Back end development including highly customisable content management system, data optimisation."
         ]
     },
     {
@@ -196,8 +195,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based architects.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Front end functionality and styling.",
+            "Back end development including highly customisable content management system, data optimisation."
         ]
     }
 ]

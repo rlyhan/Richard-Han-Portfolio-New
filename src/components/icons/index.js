@@ -7,6 +7,7 @@ import FileIcon from "./FileIcon";
 import GitHubIcon from "./GitHubIcon";
 import LinkedInIcon from "./LinkedInIcon";
 import PenIcon from "./PenIcon";
+import RobotIcon from "./RobotIcon";
 import SearchIcon from "./SearchIcon";
 import ServerIcon from "./ServerIcon";
 import TickIcon from "./TickIcon";
@@ -23,6 +24,7 @@ export {
     GitHubIcon,
     LinkedInIcon,
     PenIcon,
+    RobotIcon,
     SearchIcon,
     ServerIcon,
     TickIcon,

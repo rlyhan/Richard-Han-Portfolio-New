@@ -4,10 +4,10 @@ const WORK = [
         heading: "Make Agency",
         subheading: "2023 - 2025 · Website Developer",
         listItems: [
-            "Led React-based development on new client projects as the primary React developer within a WordPress-focused team",
-            "Delivered features for enterprise clients such as G.Network, working closely with product, design, and stakeholder teams",
-            "Developed and maintained multiple UK-based client sites such as Thakeham and Boxpark",
-            "Modernised team workflows by introducing new frameworks, CMS platforms, and error reporting tools"
+            "Led in-house dev team on React-based projects.",
+            "Built One-Touch-Switch and Pre-Order functionality for London broadband company G.Network.",
+            "Developed and maintained various client projects using WordPress-based stack.",
+            "Introduced new documentation and error-reporting integrations to improve team knowledge and workflows."
         ]
     },
     {
@@ -15,9 +15,9 @@ const WORK = [
         heading: "Voyage",
         subheading: "2022 - 2023 · Front End Developer",
         listItems: [
-            "Developed large scale component libraries and features for Education New Zealand websites",
-            "Mentored developers new to React and NextJS to improve team onboarding and code quality",
-            "Partnered closely with backend engineers to design and integrate APIs",
+            "Built study recommendation dashboard on Study With New Zealand website, collaborating with API dev team.",
+            "Migrated legacy architecture into mono-repo.",
+            "Mentored junior developers."
         ]
     },
     {
@@ -25,10 +25,9 @@ const WORK = [
         heading: "Sons & Co",
         subheading: "2020 - 2022 · Full Stack Web Developer",
         listItems: [
-            "Delivered high-traffic websites across fashion, furniture, tourism, and lifestyle sectors",
-            "Engaged in design-centric frontend development with modern JavaScript animation and pixel-perfect UI balanced with performance optimisation",
-            "Built and maintained Django/Python-based backend systems, including CMS and data migrations",
-            "Earned an accolade on Best Awards for a redesign project for Neat Places, a New Zealand tourism website"
+            "End-to-end rebuild of Neat Places website which earned a Best Award.",
+            "Delivered modern, responsive frontend interfaces with strong design and UX focus.",
+            "Backend work including eCommerce functionality, data integration logic, and query optimisation."
         ]
     }
 ]
@@ -46,7 +45,7 @@ const TECH = [
         id: "frameworks-libraries",
         heading: "Frameworks & Libraries",
         listItems: [
-            "React", "NextJS", "Redux", "Django", "Wordpress", "Tailwind", "Cypress", "Storybook", "Jest", "React Testing Library"
+            "React", "NextJS", "Redux", "Django", "Tailwind", "Cypress", "Storybook", "React Testing Library"
         ],
         icon: "book"
     },
@@ -60,9 +59,9 @@ const TECH = [
     },
     {
         id: "database",
-        heading: "Databases",
+        heading: "Databases & APIs",
         listItems: [
-            "MongoDB", "PostgreSQL", "MySQL"
+            "REST API", "GraphQL", "MongoDB", "PostgreSQL"
         ],
         icon: "server"
     },
@@ -75,14 +74,6 @@ const TECH = [
         icon: "search"
     },
     {
-        id: "cloud-infrastructure",
-        heading: "Cloud & Infrastructure",
-        listItems: [
-            "Azure", "Cloudflare", "AWS", "Vercel", "Digital Ocean"
-        ],
-        icon: "cloud"
-    },
-    {
         id: "devops",
         heading: "DevOps, CI/CD, Tools",
         listItems: [
@@ -91,12 +82,30 @@ const TECH = [
         icon: "tool"
     },
     {
+        id: "cloud-infrastructure",
+        heading: "Cloud & Infrastructure",
+        listItems: [
+            "Azure", "AWS", "Cloudflare", "Digital Ocean", "Vercel",
+        ],
+        icon: "cloud"
+    },
+    {
         id: "design",
         heading: "Design",
         listItems: [
             "Figma", "Photoshop"
         ],
         icon: "pen"
+    },
+    {
+        id: "ai",
+        heading: "AI",
+        listItems: [
+            "Claude Code",
+            "GitHub Copilot",
+            "OpenAI SDK"
+        ],
+        icon: "robot"
     }
 ]
 
@@ -105,9 +114,9 @@ const SKILLS = [
         id: "solution-skill",
         heading: "Solutions",
         listItems: [
-            "Uses the right tools and an engineering mindset to achieve purpose and scalability",
-            "Adapts quickly to client's preferred technologies",
-            "Debugs complex issues through a step-by-step process"
+            "Chooses appropriate tools and patterns to deliver maintainable, scalable features",
+            "Adapts quickly to existing codebases and client technology stacks",
+            "Debugs complex issues methodically, isolating root causes and validating fixes"
         ],
         icon: "tool"
     },
@@ -115,9 +124,9 @@ const SKILLS = [
         id: "collaboration-skill",
         heading: "Collaboration",
         listItems: [
-            "Regularly communicates with product stakeholders to capture business requirements accurately",
-            "Reviews wireframes with designers to achieve pixel-perfect vision and brand identity whilst retaining technical viability",
-            "Engages in pair programming and enthusiastic about helping others with their growth",
+            "Directly communicates with product stakeholders to capture business requirements accurately",
+            "Collaborates with designers to implement UI that balances visual quality with technical constraints",
+            "Supports team development through mentorship and knowledge sharing",
         ],
         icon: "users"
     },
@@ -126,8 +135,8 @@ const SKILLS = [
         heading: "Optimisation",
         listItems: [
             "Audits and improves scores for SEO, Performance, Accessibility and Web Core Vitals",
-            "Implements analytics tracking and A/B testing to help inform business decisions",
-            "Thoroughly tests site interactivity to achieve a coherent user experience"
+            "Implements analytics tracking and A/B testing to support data-informed decisions",
+            "Tests and refines UI interactions to ensure a consistent user experience across devices"
         ],
         icon: "search"
     },

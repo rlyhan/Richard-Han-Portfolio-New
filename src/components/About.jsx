@@ -77,8 +77,8 @@ const About = () => {
                     Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    My primary focus is front end development with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
-                    I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
+                    I have a strong background in front end development with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
+                    I have expertise working across the full stack using Python/Django and PHP/WordPress architectures.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
                     I’m passionate about developing visually driven sites where design and interaction really matter, and about turning ambitious ideas into engaging user experiences through close collaboration, while ensuring scalability, performance, and measurable business impact.                </p>

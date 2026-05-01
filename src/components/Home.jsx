@@ -6,7 +6,7 @@ const Home = () => {
             <div className="w-full">
                 <h1 className="font-heading uppercase mb-4 line-height">
                     <span className="text-neutral-100 text-6xl sm:text-8xl block mb-2">Richard Han</span>
-                    <span className="text-teal-400 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-xl sm:text-3xl block">Software Developer | Front End Focused | Full Stack Capable</span>
+                    <span className="text-teal-400 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-xl sm:text-3xl block">Software Developer | Front End | Full Stack </span>
                 </h1>
 
                 <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-sm sm:text-lg font-medium mb-4">
