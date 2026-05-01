@@ -1,6 +1,6 @@
 const IconCard = ({ id, icon, text }) => {
     return (
-        <div className="bg-zinc-800 flex flex-col items-center p-12 border border-gray-700 rounded-lg hover:bg-gray-800 transition">
+        <div className="flex flex-col items-center p-12 rounded-xl border border-zinc-800 bg-zinc-900 hover:border-zinc-700 transition-colors">
             <div className="mb-4">
                 {icon ? (
                     <img src={`./images/${icon}`} alt={`${id} icon`} className="w-12 h-12" />
@@ -10,7 +10,7 @@ const IconCard = ({ id, icon, text }) => {
                     </div>
                 )}
             </div>
-            <p className="text-center text-white font-medium sm:text-lg max-w-2xl mx-auto">{text}</p>
+            <p className="text-center text-zinc-200 font-medium sm:text-lg leading-relaxed max-w-2xl mx-auto">{text}</p>
         </div>
     );
 };

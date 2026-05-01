@@ -8,7 +8,7 @@ const ProjectCard = ({ project, isModalContent = false }) => {
     return (
         <article className={classNames("flex flex-col overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.04)]",
             {
-                "border border-solid border-white/10 rounded-lg gap-4": !isModalContent
+                "border border-solid border-zinc-900 rounded-lg gap-4": !isModalContent
             }
         )}>
             {project.images?.[0] && (
@@ -50,7 +50,13 @@ const ProjectCard = ({ project, isModalContent = false }) => {
                         {project.description}
                     </p>
                 </header>
-                <List listItems={project.work_involved} keyPrefix={`${project.id}-point`} icon="tick" />
+                <List
+                    listItems={project.work_involved}
+                    keyPrefix={`${project.id}-point`}
+                    icon="tick"
+                    containerStyles="p-6 rounded-xl border border-zinc-800 bg-zinc-900"
+                    textStyles="text-sm text-zinc-300 leading-relaxed"
+                />
                 <div className="mt-auto flex flex-col md:flex-row gap-2">
                     <LinkButton href={project.url} label="Visit Site" useExternalIcon />
                     {project.award && <LinkButton href={project.award.url} label="View Award" useExternalIcon />}

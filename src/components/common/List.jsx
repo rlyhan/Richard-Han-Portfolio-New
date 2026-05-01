@@ -1,18 +1,19 @@
 import classNames from "classnames";
 import IconRenderer from "../icons/IconRenderer";
 
-const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, containerStyles = null, textStyles = null }) => {
+const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, borderColor = null, containerStyles = null, textStyles = null }) => {
     const col1 = listItems.slice(0, 5);
     const col2 = listItems.slice(5);
 
     const Icon = icon ? <IconRenderer icon={icon} className="h-4 w-4 mt-1 shrink-0 text-teal-500" /> : null
 
     const backgroundColorClass = backgroundColor ? backgroundColor : "bg-zinc-800"
+    const borderColorClass = borderColor ? `border ${borderColor}` : ""
     const containerClasses = containerStyles ? containerStyles : "p-4 rounded-md"
     const textClasses = textStyles ? textStyles : "text-white/80 text-xs sm:text-sm"
 
     return (
-        <div className={classNames(`sm:pr-[48px] grid grid-cols-1 gap-3 h-full ${backgroundColorClass} ${containerClasses}`, {
+        <div className={classNames(`sm:pr-[48px] grid grid-cols-1 gap-3 h-full ${backgroundColorClass} ${borderColorClass} ${containerClasses}`, {
             "md:grid-cols-2": col2.length > 0,
         })}>
             <ul className="flex flex-col gap-3">

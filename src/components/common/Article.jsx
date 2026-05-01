@@ -1,8 +1,18 @@
 import List from "./List"
 import IconRenderer from "../icons/IconRenderer"
 
-const Article = ({ item, icon, backgroundColor, containerStyles, textStyles, includeHeaderIcon = false, useListIcons = true }) => {
-    const { id, heading, listItems } = item
+const DEFAULT_CONTAINER_STYLES = "p-6 rounded-xl border border-zinc-800 bg-zinc-900 hover:border-zinc-700 transition-colors"
+const DEFAULT_TEXT_STYLES = "text-base text-zinc-200 font-medium leading-relaxed"
+
+const Article = ({
+    item,
+    icon,
+    containerStyles = DEFAULT_CONTAINER_STYLES,
+    textStyles = DEFAULT_TEXT_STYLES,
+    includeHeaderIcon = false,
+    useListIcons = true,
+}) => {
+    const { id, heading, subheading, listItems } = item
     return (
         <article key={id} className="flex flex-col gap-4">
             <header className="flex flex-col gap-2">
@@ -10,17 +20,16 @@ const Article = ({ item, icon, backgroundColor, containerStyles, textStyles, inc
                     {includeHeaderIcon && icon && <IconRenderer icon={icon} className="h-6 w-6 text-teal-500" />}
                     <h3 className="text-lg md:text-2xl font-semibold">{heading}</h3>
                 </div>
-                {item.subheading ? <p className="text-sm text-gray-400">
-                    {item.subheading}
-                </p> : <></>}
+                {subheading && <p className="text-sm text-gray-400">{subheading}</p>}
             </header>
 
-            <List listItems={listItems}
+            <List
+                listItems={listItems}
                 keyPrefix={`${id}-articleitem`}
                 icon={useListIcons && icon ? icon : null}
-                backgroundColor={backgroundColor}
                 containerStyles={containerStyles}
-                textStyles={textStyles} />
+                textStyles={textStyles}
+            />
         </article>
     )
 }

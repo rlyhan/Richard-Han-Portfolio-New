@@ -14,11 +14,7 @@ const About = () => {
             render: () => (
                 <>
                     {WORK.map((workItem) => (
-                        <Article key={workItem.id}
-                            item={workItem}
-                            containerStyles="p-8 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
-                            textStyles="text-sm"
-                            icon="default" />
+                        <Article key={workItem.id} item={workItem} icon="default" />
                     ))}
                 </>
             ),
@@ -30,11 +26,7 @@ const About = () => {
             render: () => (
                 <>
                     {SKILLS.map((skillItem) => (
-                        <Article key={skillItem.id}
-                            item={skillItem}
-                            icon={skillItem.icon}
-                            containerStyles="p-6 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
-                        />
+                        <Article key={skillItem.id} item={skillItem} icon={skillItem.icon} />
                     ))}
                 </>
             ),
@@ -48,6 +40,7 @@ const About = () => {
                     {TECH.map((techItem) => (
                         <Article key={techItem.id}
                             item={techItem}
+                            textStyles="text-white/80 text-xs sm:text-sm font-medium"
                             icon={techItem.icon}
                             includeHeaderIcon
                             useListIcons={false}
