@@ -20,18 +20,6 @@ const About = () => {
             ),
         },
         {
-            id: "skills",
-            tabName: "Skills",
-            useGrid: true,
-            render: () => (
-                <>
-                    {SKILLS.map((skillItem) => (
-                        <Article key={skillItem.id} item={skillItem} icon={skillItem.icon} />
-                    ))}
-                </>
-            ),
-        },
-        {
             id: "technologies",
             tabName: "Technologies",
             useGrid: true,
@@ -70,11 +58,22 @@ const About = () => {
                     Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    I have a strong background in front end development with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
-                    I have expertise working across the full stack using Python/Django and PHP/WordPress architectures.
+                    I carry a passion for creating visually-driven digital experiences, architecting solutions that
+                    scale and perform, and collaborating closely with different kinds of people to bring ambitious concepts to life.
                 </p>
                 <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
-                    I’m passionate about developing visually driven sites where design and interaction really matter, and about turning ambitious ideas into engaging user experiences through close collaboration, while ensuring scalability, performance, and measurable business impact.                </p>
+                    I have a strong background in React and Next.js frontend development, with experience across Node.js and Django based architectures.
+                    I’ve also worked extensively with headless CMS, eCommerce systems, and third-party APIs to deliver complete, production-ready features.
+                </p>
+
+                <p className="text-grey-500 text-xl md:text-2xl lg:text-3xl mb-10">
+                    More recently, I’ve been exploring AI-assisted workflows, architecting context-aware solutions and utilising agentic and custom command-driven tooling to automate, accelerate and stabilise processes.
+                </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 block py-16">
+                {SKILLS.map((skillItem) => (
+                    <Article key={skillItem.id} item={skillItem} icon={skillItem.icon} />
+                ))}
             </div>
             <Tabs tabs={tabs} ariaLabel="About tabs" keepStableHeight className="mt-16" />
         </PageSection >

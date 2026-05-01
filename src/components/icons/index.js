@@ -1,5 +1,6 @@
 import ActivityIcon from "./ActivityIcon";
 import BookIcon from "./BookIcon";
+import Chart from "./Chart";
 import CloudIcon from "./CloudIcon";
 import CodeIcon from "./CodeIcon";
 import ExternalLinkIcon from "./ExternalLinkIcon";
@@ -17,6 +18,7 @@ import UsersIcon from "./UsersIcon";
 export {
     ActivityIcon,
     BookIcon,
+    Chart,
     CloudIcon,
     CodeIcon,
     ExternalLinkIcon,

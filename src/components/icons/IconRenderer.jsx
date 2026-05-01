@@ -1,6 +1,7 @@
 import {
     ActivityIcon,
     BookIcon,
+    Chart,
     CloudIcon,
     CodeIcon,
     ExternalLinkIcon,
@@ -20,6 +21,7 @@ const iconMapping = {
     default: TickIcon,
     activity: ActivityIcon,
     book: BookIcon,
+    chart: Chart,
     cloud: CloudIcon,
     code: CodeIcon,
     externalLink: ExternalLinkIcon,

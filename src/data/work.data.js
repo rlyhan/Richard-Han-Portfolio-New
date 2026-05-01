@@ -45,7 +45,7 @@ const TECH = [
         id: "frameworks-libraries",
         heading: "Frameworks & Libraries",
         listItems: [
-            "React", "NextJS", "Redux", "Django", "Tailwind", "Cypress", "Storybook", "React Testing Library"
+            "React", "NextJS", "Node.js", "Redux", "Django", "Tailwind", "Cypress", "Storybook", "React Testing Library"
         ],
         icon: "book"
     },
@@ -114,9 +114,11 @@ const SKILLS = [
         id: "solution-skill",
         heading: "Solutions",
         listItems: [
-            "Chooses appropriate tools and patterns to deliver maintainable, scalable features",
-            "Adapts quickly to existing codebases and client technology stacks",
-            "Debugs complex issues methodically, isolating root causes and validating fixes"
+            "Design and product-led UI development with a focus on interaction and detail",
+            "API, CMS and external service integration",
+            "Database query optimisation",
+            "SEO, accessibility, and Core Web Vitals improvements",
+            "Analytics and A/B testing implementation"
         ],
         icon: "tool"
     },
@@ -124,21 +126,22 @@ const SKILLS = [
         id: "collaboration-skill",
         heading: "Collaboration",
         listItems: [
-            "Directly communicates with product stakeholders to capture business requirements accurately",
-            "Collaborates with designers to implement UI that balances visual quality with technical constraints",
+            "Directly works with stakeholders to optimise solutions and ensure feasibility",
+            "Technical decisions based on critical timelines and business constraints",
             "Supports team development through mentorship and knowledge sharing",
         ],
         icon: "users"
     },
     {
-        id: "optimisation-skill",
-        heading: "Optimisation",
+        id: "workflow-skill",
+        heading: "Workflow",
         listItems: [
-            "Audits and improves scores for SEO, Performance, Accessibility and Web Core Vitals",
-            "Implements analytics tracking and A/B testing to support data-informed decisions",
-            "Tests and refines UI interactions to ensure a consistent user experience across devices"
+            "AI-assisted development workflows for faster iteration and improved consistency",
+            "Automated code review and quality checks for performance, security, and maintainability",
+            "CI/CD pipelines with integrated testing and deployment automation",
+            "Documentation and error reporting systems for improved observability and debugging"
         ],
-        icon: "search"
+        icon: "chart"
     },
 ]
 
