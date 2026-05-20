@@ -101,10 +101,10 @@ const PROJECTS = [
         "category": "Events",
         "client": false,
         "association": "Personal",
-        "description": "Find events in London on an interactive map.",
+        "description": "Find events in London on an interactive map. Built with Next.js, Mapbox, and Ticketmaster API.",
         "work_involved": [
-            "Ticketmaster API integration to fetch real-time event data.",
-            "Mapbox integration for interactive event mapping.",
+            "Real-time event data from ticketmaster.",
+            "Interactive map displaying locations of events.",
             "OpenAI SDK integration to suggest events based on mood and generate descriptions."
         ],
         "images": ["gigsoflondon.webp"]
@@ -198,6 +198,21 @@ const PROJECTS = [
             "Front end functionality and styling.",
             "Back end development including highly customisable content management system, data optimisation."
         ]
+    },
+    {
+        "name": "Image Board",
+        "id": "image-board",
+        "url": "https://image-board-app.vercel.app/",
+        "featured": true,
+        "category": "eCommerce",
+        "client": false,
+        "association": "Personal",
+        "description": "A simple image board / eCommerce shop. Built with Next.js, MongoDB and Auth0.",
+        "work_involved": [
+            "Gallery loaded from Pexels API.",
+            "Authentication with ability to favourite images + eCommerce functionality to buy prints.",
+        ],
+        "images": ["imageboard.webp"],
     }
 ]
 
