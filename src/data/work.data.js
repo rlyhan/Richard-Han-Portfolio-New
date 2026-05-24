@@ -45,7 +45,7 @@ const TECH = [
         id: "frameworks-libraries",
         heading: "Frameworks & Libraries",
         listItems: [
-            "React", "NextJS", "Node.js", "Redux", "Django", "Tailwind", "Cypress", "Storybook", "React Testing Library"
+            "React", "NextJS", "Node.js", "React Native", "Redux", "Django", "Tailwind", "Cypress", "Storybook", "React Testing Library"
         ],
         icon: "book"
     },
@@ -53,7 +53,7 @@ const TECH = [
         id: "cms",
         heading: "CMS",
         listItems: [
-            "Contentful", "Kontent.ai", "DatoCMS", "Strapi", "WordPress"
+            "Contentful", "Kontent.ai", "DatoCMS", "Sanity", "Strapi", "WordPress"
         ],
         icon: "file"
     },

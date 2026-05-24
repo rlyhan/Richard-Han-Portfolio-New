@@ -200,6 +200,22 @@ const PROJECTS = [
         ]
     },
     {
+        "name": "Touchgrass",
+        "id": "touchgrass",
+        "url": "https://touchgrass-mobile.vercel.app/",
+        "featured": true,
+        "category": "Lifestyle",
+        "client": false,
+        "association": "Personal",
+        "description": "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you. Built with React Native, Expo, TypeScript, Express, PostgreSQL, BetterAuth and Sanity.",
+        "work_involved": [
+            "Algorithm based off the BFAS (Big Five Aspect Scales) and NEO-PI-R personality models to calculate alignment to various types of activities.",
+            "Integration with Sanity CMS to manage and update activity database.",
+            "API with Express and PostgreSQL to handle authentication and profile data."
+        ],
+        "images": ["touchgrass.webp"]
+    },
+    {
         "name": "Image Board",
         "id": "image-board",
         "url": "https://image-board-app.vercel.app/",
@@ -210,7 +226,8 @@ const PROJECTS = [
         "description": "A simple image board / eCommerce shop. Built with Next.js, MongoDB and Auth0.",
         "work_involved": [
             "Gallery loaded from Pexels API.",
-            "Authentication with ability to favourite images + eCommerce functionality to buy prints.",
+            "Authentication with ability to favourite images.",
+            "eCommerce functionality to buy prints.",
         ],
         "images": ["imageboard.webp"],
     }
