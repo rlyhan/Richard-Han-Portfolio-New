@@ -94,6 +94,22 @@ const PROJECTS = [
         "images": ["deadlyponies.webp"]
     },
     {
+        "name": "Touchgrass",
+        "id": "touchgrass",
+        "url": "https://touchgrass-mobile.vercel.app/",
+        "featured": true,
+        "category": "Lifestyle",
+        "client": false,
+        "association": "Personal",
+        "description": "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you. Built with React Native, Expo, TypeScript, Express, PostgreSQL, BetterAuth and Sanity.",
+        "work_involved": [
+            "Algorithm based off the BFAS (Big Five Aspect Scales) and NEO-PI-R personality models to calculate alignment to various types of activities.",
+            "Integration with Sanity CMS to manage and update activity database.",
+            "API with Express and PostgreSQL to handle authentication and profile data."
+        ],
+        "images": ["touchgrass.webp"]
+    },
+    {
         "name": "Gigs of London",
         "id": "gigs-of-london",
         "url": "https://gigs-of-london.vercel.app/",
@@ -198,22 +214,6 @@ const PROJECTS = [
             "Front end functionality and styling.",
             "Back end development including highly customisable content management system, data optimisation."
         ]
-    },
-    {
-        "name": "Touchgrass",
-        "id": "touchgrass",
-        "url": "https://touchgrass-mobile.vercel.app/",
-        "featured": true,
-        "category": "Lifestyle",
-        "client": false,
-        "association": "Personal",
-        "description": "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you. Built with React Native, Expo, TypeScript, Express, PostgreSQL, BetterAuth and Sanity.",
-        "work_involved": [
-            "Algorithm based off the BFAS (Big Five Aspect Scales) and NEO-PI-R personality models to calculate alignment to various types of activities.",
-            "Integration with Sanity CMS to manage and update activity database.",
-            "API with Express and PostgreSQL to handle authentication and profile data."
-        ],
-        "images": ["touchgrass.webp"]
     },
     {
         "name": "Image Board",
