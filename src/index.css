@@ -1,6 +1,18 @@
 @config "../tailwind.config.js";
 @import "tailwindcss";
 
+/* Self-hosted from public/fonts. font-display: block (paired with the
+   preload in index.html) renders the hero heading directly in Fjalla One
+   with no fallback-to-webfont swap flash. */
+@font-face {
+  font-family: 'Fjalla One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/fjalla-one-latin-400-normal.woff2) format('woff2'),
+       url(/fonts/fjalla-one-latin-400-normal.woff) format('woff');
+}
+
 @layer base {
   :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
