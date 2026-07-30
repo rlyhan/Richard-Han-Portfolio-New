@@ -12,7 +12,6 @@ function App() {
       <Header />
 
       <main id="main" className="px-12 max-w-7xl mx-auto">
-        <VantaBackground />
         <Home />
         <About />
         <Projects />

@@ -3,23 +3,16 @@ import PageSection from "./layout/PageSection"
 const Home = () => {
     return (
         <PageSection id="home" additionalClasses="flex items-center justify-center min-h-screen">
-            <div className="w-full">
-                <h1 className="font-heading uppercase mb-4 line-height">
-                    <span className="text-neutral-100 text-6xl sm:text-8xl block mb-2">Richard Han</span>
-                    <span className="text-teal-400 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-xl sm:text-3xl block">Software Developer | Front End | Full Stack </span>
-                </h1>
-
-                <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-sm sm:text-lg font-medium mb-4">
-                    Turning ideas and designs into engaging user experiences
-                </p>
-
-                <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
-                    Currently based in: <span className="text-cyan-300">Auckland, NZ</span>
-                </p>
-
-                <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
-                    Open to opportunities
-                </p>
+            <div className="w-full self-end">
+                <div className="flex items-end justify-between">
+                    <h1 className="font-heading uppercase mb-10 line-height">
+                        <span className="block text-neutral-100 text-6xl sm:text-7xl mr-2">Richard Han</span>
+                        <span className="block text-neutral-700 text-xl sm:text-3xl">Front End | Full Stack Developer</span>
+                    </h1>
+                    <p className="text-neutral-100/85 text-sm sm:text-lg font-medium mb-10">
+                        Open to opportunities | Currently based in: <span className="text-neutral-900/85">Auckland, NZ</span>
+                    </p>
+                </div>
             </div>
 
         </PageSection>

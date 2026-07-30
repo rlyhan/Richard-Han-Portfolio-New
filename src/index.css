@@ -29,7 +29,7 @@
   }
 
   body {
-    background-color: #18181b;
+    background-color: oklch(70.9% 0.01 56.259);
     width: 100%;
   }
 
