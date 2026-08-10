@@ -4,6 +4,7 @@ import Tabs from "./common/Tabs/Tabs"
 import SectionHeading from "./common/SectionHeading"
 import { WORK, TECH, SKILLS, INTERESTS } from "../data/work.data"
 import IconCard from "./common/Cards/IconCard"
+import SkillCard from "./common/Cards/SkillCard"
 
 const About = () => {
     const tabs = [
@@ -75,7 +76,16 @@ const About = () => {
             </div>
             <div className="grid gap-12 py-16">
                 {SKILLS.map((skillItem) => (
-                    <Article key={skillItem.id} item={skillItem} icon={skillItem.icon} />
+                    <section key={skillItem.id} className="flex flex-col gap-4">
+                        <h3 className="text-2xl md:text-3xl font-semibold font-heading uppercase text-paper">{skillItem.heading}</h3>
+                        {/* one column on mobile: a square card at a third of a phone's
+                            width leaves no room for the copy */}
+                        <div className="grid md:grid-cols-3 gap-4">
+                            {skillItem.listItems.map((listItem, i) => (
+                                <SkillCard key={`${skillItem.id}-${i}`} icon={listItem.icon} text={listItem.text} />
+                            ))}
+                        </div>
+                    </section>
                 ))}
             </div>
             {/* no keepStableHeight: Technologies is ~2x the height of Interests, so pinning
