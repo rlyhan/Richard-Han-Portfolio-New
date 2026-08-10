@@ -57,21 +57,19 @@ const About = () => {
     return (
         <PageSection id="about" additionalClasses="max-w-4xl mx-auto">
             <SectionHeading label="About" />
-            <div>
-                <p className="text-paper text-xl md:text-2xl mb-10">
+            <div className="pr-8 md:pr-24">
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
                     Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                 </p>
-                <p className="text-paper text-xl md:text-2xl mb-10">
-                    I carry a passion for creating visually-driven digital experiences, architecting solutions that
-                    scale and perform, and collaborating closely with different kinds of people to bring ambitious concepts to life.
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    I'm driven by a passion for building modern, fluid, interactive user experiences, and a commitment to the collaborative and technical processes that build the most performant, maintainable, and brand impactful solutions possible.
                 </p>
-                <p className="text-paper text-xl md:text-2xl mb-10">
-                    I have a strong background in React and Next.js frontend development, with experience across Node.js and Django based architectures.
-                    I’ve also worked extensively with headless CMS, eCommerce systems, and third-party APIs to deliver complete, production-ready features.
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    I have a strong background in React/Next.js driven frontend development, Node.js and Django based backend architectures, and integrating headless CMS like Sanity, Contentful and Kontent.ai, eCommerce platforms like Shopify, and large scale domain data APIs tailored to business needs. 
                 </p>
 
-                <p className="text-paper text-xl md:text-2xl mb-10">
-                    More recently, I’ve been exploring AI-assisted workflows, architecting context-aware solutions and utilising agentic and custom command-driven tooling to automate, accelerate and stabilise processes.
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    I am currently freelancing and open to new opportunities. If you have an idea or project you’d like to discuss, please reach out!
                 </p>
             </div>
             <div className="grid gap-12 py-16">
