@@ -75,14 +75,14 @@ const Projects = () => {
                     </div>
                 </div>
                 <div className={classNames("grid gap-6", {
-                    "grid-cols-1 md:grid-cols-2": displayMode === "default",
+                    "grid-cols-1": displayMode === "default",
                     "md:grid-cols-2 lg:grid-cols-3": displayMode === "gallery",
                 })}>
                     {featuredProjects.map((project) =>
                         displayMode === "gallery" ? (
                             <ProjectCardGallery key={project.id} project={project} onClick={() => openProject(project)} />
                         ) : (
-                            <ProjectCard key={project.id} project={project} />
+                            <ProjectCard key={project.id} project={project} onClick={() => openProject(project)} />
                         )
                     )}
                 </div>

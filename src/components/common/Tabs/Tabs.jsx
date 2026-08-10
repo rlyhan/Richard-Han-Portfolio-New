@@ -53,7 +53,7 @@ export default function Tabs({
     return (
         <div className={className}>
             <div className="relative">
-                <div role="tablist" className="flex gap-2 md:gap-4 mb-6 overflow-x-auto" aria-label={ariaLabel}>
+                <div role="tablist" className="flex gap-2 md:gap-4 mb-12 overflow-x-auto" aria-label={ariaLabel}>
                     {tabs.map((t) => (
                         <TabButton
                             key={t.id}
@@ -64,7 +64,7 @@ export default function Tabs({
                         />
                     ))}
                 </div>
-                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-neutral-900 to-transparent md:hidden"
+                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-gray-400 to-transparent md:hidden"
                 ></div>
             </div>
 

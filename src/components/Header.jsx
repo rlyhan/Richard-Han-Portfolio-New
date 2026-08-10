@@ -61,7 +61,7 @@ const Header = () => {
 
     return (
         <header
-            className="fixed top-0 left-0 w-full z-50 bg-stone-400"
+            className="fixed top-0 left-0 w-full z-50 bg-gray-400"
         >
             <nav ref={barRef} className="max-w-7xl mx-auto flex items-end justify-end px-6 py-4">
                 {/* Desktop nav */}
@@ -71,7 +71,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="text-neutral-900/85 hover:text-white"
+                                className="text-neutral-700 hover:text-white"
                             >
                                 {item.label}
                             </button>
@@ -82,7 +82,7 @@ const Header = () => {
                 {/* Mobile hamburger */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:text-gray-400"
+                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:text-neutral-700"
                     aria-label="Open menu"
                     aria-expanded={isOpen}
                     aria-controls="mobile-menu"
@@ -116,7 +116,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="w-full text-left py-2 text-neutral-900/85 hover:text-white"
+                                className="w-full text-left py-2 text-neutral-700 hover:text-white"
                             >
                                 {item.label}
                             </button>
