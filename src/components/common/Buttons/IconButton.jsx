@@ -6,8 +6,9 @@ const IconButton = ({ type, onClick, isActive }) => {
     const iconClass = classNames(
         "h-5 w-5 transition-colors",
         {
-            "text-gray-900": isActive,
-            "text-white group-hover:text-yellow-400": !isActive,
+            // sits on the neon fill below, so it takes the dark ink
+            "text-carbon-950": isActive,
+            "text-paper group-hover:text-neon": !isActive,
         }
     );
 
@@ -20,8 +21,8 @@ const IconButton = ({ type, onClick, isActive }) => {
             className={classNames(
                 "group p-4 transition-colors",
                 {
-                    "bg-yellow-300": isActive,
-                    "bg-white/10": !isActive,
+                    "bg-neon": isActive,
+                    "bg-carbon-600 hover:bg-carbon-700": !isActive,
                 }
             )}
         >

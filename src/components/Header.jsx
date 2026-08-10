@@ -61,7 +61,11 @@ const Header = () => {
 
     return (
         <header
-            className="fixed top-0 left-0 w-full z-50 bg-gray-400"
+            // Translucent rather than solid: the bar has to sit over the hero's
+            // full-bleed display lines, and a hard block cut a visible seam across
+            // them. Borderless, so the blur and the shadow's falloff are what end
+            // the bar instead of a hairline.
+            className="fixed top-0 left-0 w-full z-50 bg-carbon-900/80 backdrop-blur-md shadow-bar"
         >
             <nav ref={barRef} className="max-w-7xl mx-auto flex items-end justify-end px-6 py-4">
                 {/* Desktop nav */}
@@ -71,7 +75,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="text-gray-900 hover:text-white"
+                                className="text-paper hover:text-neon transition-colors"
                             >
                                 {item.label}
                             </button>
@@ -82,7 +86,7 @@ const Header = () => {
                 {/* Mobile hamburger */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:text-gray-900"
+                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-paper hover:text-neon transition-colors"
                     aria-label="Open menu"
                     aria-expanded={isOpen}
                     aria-controls="mobile-menu"
@@ -110,13 +114,13 @@ const Header = () => {
                 className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-200 ease-out ${isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
                     }`}
             >
-                <ul className="px-6 pb-4 pt-2 space-y-2 border-t border-white/10">
+                <ul className="px-6 pb-4 pt-2 space-y-2">
                     {NAV_ITEMS.map((item) => (
                         <li key={item.id}>
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="w-full text-left py-2 text-gray-900 hover:text-white"
+                                className="w-full text-left py-2 text-paper hover:text-neon transition-colors"
                             >
                                 {item.label}
                             </button>

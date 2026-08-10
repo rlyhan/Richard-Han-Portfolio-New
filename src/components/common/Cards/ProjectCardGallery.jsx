@@ -3,7 +3,7 @@ import Pill from "../Pill"
 
 const ProjectCardGallery = ({ project, onClick }) => {
     return (
-        <article className="flex flex-col group bg-gray-500 border border-white/20 rounded-lg overflow-hidden cursor-pointer transition-colors hover:bg-gray-600 hover:border-white/40"
+        <article className="flex flex-col group bg-carbon-800 shadow-card rounded-lg overflow-hidden cursor-pointer transition hover:bg-carbon-700 hover:shadow-card-hover"
             onClick={onClick}>
             {project["images"] &&
                 <Image
@@ -18,8 +18,8 @@ const ProjectCardGallery = ({ project, onClick }) => {
             }
             <div className="p-6 flex flex-col flex-1 gap-4">
                 <header className="mb-auto">
-                    <h3 className="text-xl font-medium mb-2 text-white">{project.name}</h3>
-                    <p className="text-gray-50 text-sm">
+                    <h3 className="text-xl font-medium mb-2 text-paper">{project.name}</h3>
+                    <p className="text-mute text-sm">
                         {project.description}
                     </p>
                 </header>

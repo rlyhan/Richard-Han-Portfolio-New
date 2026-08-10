@@ -64,7 +64,7 @@ export default function Tabs({
                         />
                     ))}
                 </div>
-                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-gray-400 to-transparent md:hidden"
+                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-carbon-900 to-transparent md:hidden"
                 ></div>
             </div>
 

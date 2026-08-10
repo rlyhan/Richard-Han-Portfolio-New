@@ -29,7 +29,9 @@ const Modal = ({ isOpen, onClose, children }) => {
     return (
         <div
             className={classNames(
-                "fixed inset-0 z-50 flex items-center justify-center bg-black/70",
+                // The page is already near-black, so a plain dark scrim can't
+                // separate the panel from what's behind it — the blur does that work
+                "fixed inset-0 z-50 flex items-center justify-center bg-carbon-950/85 backdrop-blur-sm",
                 "transition-opacity duration-200",
                 entered ? "opacity-100" : "opacity-0"
             )}
@@ -37,7 +39,7 @@ const Modal = ({ isOpen, onClose, children }) => {
         >
             <div
                 className={classNames(
-                    "overflow-y-auto max-h-[85vh] relative w-full max-w-lg bg-[#1a1a1a] border border-solid border-white/10 rounded-lg shadow-xl",
+                    "overflow-y-auto max-h-[85vh] relative w-full max-w-lg bg-carbon-850 shadow-modal rounded-lg",
                     "transition-all duration-200",
                     entered ? "opacity-100 scale-100" : "opacity-0 scale-95"
                 )}
@@ -49,7 +51,7 @@ const Modal = ({ isOpen, onClose, children }) => {
                 <div className="p-4 flex items-center justify-between">
                     <button
                         type="button"
-                        className="text-gray-900/60 hover:text-gray-900 rounded-full bg-white w-9 h-9 p-0 ml-auto"
+                        className="text-paper hover:text-carbon-950 bg-carbon-600 hover:bg-neon transition-colors rounded-full w-9 h-9 p-0 ml-auto"
                         aria-label="Close modal"
                         onClick={onClose}
                     >

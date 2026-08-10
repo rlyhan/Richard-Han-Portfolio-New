@@ -74,7 +74,10 @@ const Home = () => {
                             // wider than measured, the text overflows sideways instead of
                             // wrapping, which would double the cell and break the roll.
                             "grid overflow-hidden leading-none whitespace-nowrap text-[length:min(7vw,118px)]",
-                            i % 2 ? "text-right text-gray-900" : "text-white"
+                            // The alternation is the hero: neon and paper trade off
+                            // down the stack so the accent is structural here rather
+                            // than a highlight, which is why it stays rare elsewhere.
+                            i % 2 ? "text-right text-paper" : "text-neon"
                         )}
                     >
                         {/* Both strings share one grid cell, so the clip height is
@@ -90,11 +93,11 @@ const Home = () => {
             <div className="w-full">
                 <div className="flex flex-wrap items-end justify-between">
                     <h1 className="font-heading uppercase mb-10 line-height">
-                        <span className="block text-white text-3xl mr-2">Richard Han</span>
-                        <span className="block text-gray-900 text-xl sm:text-2xl">Front End | Full Stack Developer</span>
+                        <span className="block text-neon text-3xl mr-2">Richard Han</span>
+                        <span className="block text-paper text-xl sm:text-2xl">Front End | Full Stack Developer</span>
                     </h1>
-                    <p className="text-white/85 text-sm sm:text-lg font-medium mb-10">
-                        Open to opportunities | Currently based in: <span className="text-gray-900">Auckland, NZ</span>
+                    <p className="text-mute text-sm sm:text-lg font-medium mb-10">
+                        Open to opportunities | Currently based in: <span className="text-neon">Auckland, NZ</span>
                     </p>
                 </div>
             </div>

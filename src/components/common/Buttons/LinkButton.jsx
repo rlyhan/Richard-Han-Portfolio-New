@@ -2,8 +2,13 @@ import classNames from "classnames";
 import IconRenderer from "../../icons/IconRenderer";
 
 const themeMapping = {
-    "default": "border border-gray-900 text-gray-900 font-bold hover:opacity-60",
-    "solid-fill": "border border-white/20 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-100 hover:opacity-60",
+    // The primary action: an accent outline that fills in on hover, so the
+    // strongest colour on the page is spent on the thing you're meant to click
+    "default": "border border-neon text-neon font-bold hover:bg-neon hover:text-carbon-950",
+    // A neutral secondary that stays quiet until hover. Currently unused — the
+    // Contact row deliberately renders all three links as equal primaries — but
+    // kept for the case where a button has to sit below another in rank.
+    "solid-fill": "bg-carbon-600 text-paper font-semibold hover:bg-carbon-700 hover:text-neon",
 }
 
 const sizeMapping = {
@@ -13,7 +18,9 @@ const sizeMapping = {
 }
 
 const LinkButton = ({ href, label, isExternal = true, useExternalIcon = false, customIcon = null, theme = "default", size = "medium", additionalClasses = "" }) => {
-    const iconElement = customIcon ? <IconRenderer icon={customIcon} className="h-6 w-6 shrink-0 mr-2 text-gray-900" /> : null;
+    // currentColor, not a fixed ink: both themes recolour their label on hover and
+    // the icon has to travel with it
+    const iconElement = customIcon ? <IconRenderer icon={customIcon} className="h-6 w-6 shrink-0 mr-2" /> : null;
 
     return (
         <a

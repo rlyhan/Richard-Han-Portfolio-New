@@ -28,7 +28,7 @@ const About = () => {
                     {TECH.map((techItem) => (
                         <Article key={techItem.id}
                             item={techItem}
-                            textStyles="text-gray-950 text-sm font-medium"
+                            textStyles="text-paper text-sm font-medium"
                             icon={techItem.icon}
                             includeHeaderIcon
                             useListIcons={false}
@@ -57,19 +57,19 @@ const About = () => {
         <PageSection id="about" additionalClasses="max-w-4xl mx-auto">
             <SectionHeading label="About" />
             <div>
-                <p className="text-gray-900 text-xl md:text-2xl mb-10">
+                <p className="text-paper text-xl md:text-2xl mb-10">
                     Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                 </p>
-                <p className="text-gray-900 text-xl md:text-2xl mb-10">
+                <p className="text-paper text-xl md:text-2xl mb-10">
                     I carry a passion for creating visually-driven digital experiences, architecting solutions that
                     scale and perform, and collaborating closely with different kinds of people to bring ambitious concepts to life.
                 </p>
-                <p className="text-gray-900 text-xl md:text-2xl mb-10">
+                <p className="text-paper text-xl md:text-2xl mb-10">
                     I have a strong background in React and Next.js frontend development, with experience across Node.js and Django based architectures.
                     I’ve also worked extensively with headless CMS, eCommerce systems, and third-party APIs to deliver complete, production-ready features.
                 </p>
 
-                <p className="text-gray-900 text-xl md:text-2xl mb-10">
+                <p className="text-paper text-xl md:text-2xl mb-10">
                     More recently, I’ve been exploring AI-assisted workflows, architecting context-aware solutions and utilising agentic and custom command-driven tooling to automate, accelerate and stabilise processes.
                 </p>
             </div>

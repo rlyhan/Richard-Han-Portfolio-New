@@ -1,8 +1,9 @@
 import IconRenderer from "../icons/IconRenderer";
 
-// iconStyles is caller-controlled because this list renders on two opposite
-// surfaces: the light card in About (needs dark icons) and the dark project modal
-const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, borderColor = null, containerStyles = null, textStyles = null, iconStyles = "text-teal-400", splitFromMobile = false }) => {
+// iconStyles stays caller-controlled: every surface is dark now, but a list on a
+// raised carbon-800 card and a list in the modal's recessed well want different
+// weights of accent
+const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, borderColor = null, containerStyles = null, textStyles = null, iconStyles = "text-neon", splitFromMobile = false }) => {
     // Split evenly rather than at a fixed index, so a 6-item list reads 3/3 instead of 5/1
     const splitAt = listItems.length > 5 ? Math.ceil(listItems.length / 2) : listItems.length;
     const col1 = listItems.slice(0, splitAt);
@@ -15,9 +16,9 @@ const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, 
     // over Tailwind's stylesheet order
     const backgroundColorClass = backgroundColor ?? ""
     const borderColorClass = borderColor ? `border ${borderColor}` : ""
-    const containerClasses = containerStyles ?? "p-4 rounded-md bg-gray-100"
+    const containerClasses = containerStyles ?? "p-4 rounded-md bg-carbon-800 shadow-card"
     // default ink matches the default surface above — keep the two in step
-    const textClasses = textStyles ?? "text-gray-950 text-sm"
+    const textClasses = textStyles ?? "text-paper text-sm"
 
     // With a second column of items, split side by side from md up — or from the
     // smallest screens when splitFromMobile is set
