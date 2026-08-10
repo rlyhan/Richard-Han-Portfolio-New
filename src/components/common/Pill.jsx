@@ -2,18 +2,24 @@ import AwardIcon from "../icons/AwardIcon"
 import IconRenderer from "../icons/IconRenderer"
 
 const themeMapping = {
+    // Light-on-dark — for the project modal's #1a1a1a surface
     "default": "border border-white/20 text-gray-50 bg-transparent",
     "award": "border border-yellow-300 text-yellow-300 bg-transparent font-bold",
-    // Mid-grey card surface: yellow-300 text only reaches 3.1:1 there, so the
-    // label goes white and yellow is kept for the border and icon
-    "award-muted": "border border-yellow-300 text-white bg-transparent font-bold",
-    // Filled variant for pills that are links
-    "solid": "border border-gray-300 bg-gray-200 text-gray-800 hover:bg-gray-100"
+    // Dark-on-light — for the project card, which spans two surfaces (gray-300 at
+    // rest, gray-500/85 on hover). gray-950 is the only ink that clears AA on both.
+    "card": "border border-gray-900 text-gray-950 bg-transparent",
+    // These two are filled rather than outlined because no single yellow or grey
+    // holds 3:1 against both card states — a fill carries its own contrast
+    // gray-900 edge, not yellow: the gold fill is only 1.11:1 against the resting
+    // card, so the border is what gives the badge a shape on both states
+    "award-muted": "border border-gray-900 bg-yellow-300 text-gray-950 font-bold",
+    "solid": "border border-gray-900 bg-gray-900 text-gray-50 hover:bg-gray-800"
 }
 
 const awardIconMapping = {
     "award": "text-yellow-400/85",
-    "award-muted": "text-yellow-300"
+    // sits on the yellow fill above, so it takes the dark ink
+    "award-muted": "text-gray-950"
 }
 
 const Pill = ({ label, theme = "default", href = null, isExternal = true }) => {

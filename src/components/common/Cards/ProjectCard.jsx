@@ -31,7 +31,7 @@ const ProjectDetail = ({ project }) => (
                     {project.award && <Pill label={project.award.description} theme="award" />}
                     <Pill label={project.client ? "Client" : "Personal"} />
                 </div>
-                <p className="text-white/80 text-md leading-relaxed">
+                <p className="text-white/80 text-base leading-relaxed">
                     {project.description}
                 </p>
             </header>
@@ -62,7 +62,11 @@ const ProjectCard = ({ project, onClick, isModalContent = false }) => {
 
     return (
         <article
-            className="group flex flex-col md:flex-row bg-gray-500/85 border border-white/20 rounded-lg overflow-hidden cursor-pointer transition-colors hover:bg-gray-700 hover:border-white/40"
+            // Borderless: a light surface lifted off the mid-grey page by its shadow.
+            // No light fill can reach 3:1 against gray-400 (white caps at 2.60), so the
+            // fill and shadow carry the edge together rather than a hard border line.
+            // Hover lifts brighter and higher — the image overlay is the explicit cue.
+            className="group flex flex-col md:flex-row bg-gray-100 rounded-lg overflow-hidden cursor-pointer shadow-lg shadow-gray-950/25 transition hover:bg-white hover:shadow-xl hover:shadow-gray-950/35"
             onClick={onClick}
             onKeyDown={handleKeyDown}
             role="button"
@@ -83,14 +87,13 @@ const ProjectCard = ({ project, onClick, isModalContent = false }) => {
             )}
             <div className="p-5 md:p-4 flex flex-col flex-1 min-w-0 gap-3 md:gap-2">
                 <header className="flex flex-col gap-2">
-                    <h3 className="text-xl md:text-2xl font-medium font-heading uppercase text-white">{project.name}</h3>
+                    <h3 className="text-xl md:text-2xl font-medium font-heading uppercase text-gray-950">{project.name}</h3>
                     <div className="flex flex-wrap items-center gap-2 mb-3">
-                        {project.award && <Pill label={project.award.description} theme="award-muted" />}
-                        <Pill label={project.client ? "Client" : "Personal"} />
+                        {project.award && <Pill label={project.award.description} theme="award-muted" href={project.award.url} />}
+                        <Pill label={project.client ? "Client" : "Personal"} theme="card" />
                         <Pill label="Visit Site" theme="solid" href={project.url} />
-                        {project.award && <Pill label="View Award" theme="solid" href={project.award.url} />}
                     </div>
-                    <p className="text-gray-50 text-sm leading-relaxed md:line-clamp-2">
+                    <p className="text-gray-950 text-sm leading-relaxed md:line-clamp-2">
                         {project.description}
                     </p>
                 </header>

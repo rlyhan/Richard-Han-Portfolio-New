@@ -8,9 +8,9 @@ const TabButton = ({ id, tabName, activeTab, setActiveTab }) => {
             aria-label={tabName}
             aria-selected={isActive}
             onClick={() => setActiveTab(id)}
-            className={`text-sm md:text-base border transition-colors hover:border-yellow-300 px-4 py-2 rounded-md ${isActive
-                ? "bg-yellow-300 text-neutral-700 border-yellow-300"
-                : "bg-transparent border-white/20 text-white"
+            className={`text-sm md:text-base border transition-colors px-4 py-2 rounded-md ${isActive
+                ? "bg-yellow-300 text-gray-900 border-yellow-300"
+                : "bg-white/10 border-white/10 hover:text-yellow-300"
                 }`}
         >
             {tabName}

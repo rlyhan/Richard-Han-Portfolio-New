@@ -71,7 +71,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="text-neutral-700 hover:text-white"
+                                className="text-gray-900 hover:text-white"
                             >
                                 {item.label}
                             </button>
@@ -82,7 +82,7 @@ const Header = () => {
                 {/* Mobile hamburger */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:text-neutral-700"
+                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:text-gray-900"
                     aria-label="Open menu"
                     aria-expanded={isOpen}
                     aria-controls="mobile-menu"
@@ -116,7 +116,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="w-full text-left py-2 text-neutral-700 hover:text-white"
+                                className="w-full text-left py-2 text-gray-900 hover:text-white"
                             >
                                 {item.label}
                             </button>

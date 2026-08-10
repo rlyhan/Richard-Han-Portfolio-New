@@ -2,7 +2,7 @@ import classNames from "classnames";
 import IconRenderer from "../../icons/IconRenderer";
 
 const themeMapping = {
-    "default": "border border-gray-100 text-gray-100 font-bold hover:opacity-60",
+    "default": "border border-gray-900 text-gray-900 font-bold hover:opacity-60",
     "solid-fill": "border border-white/20 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-100 hover:opacity-60",
 }
 
@@ -13,7 +13,7 @@ const sizeMapping = {
 }
 
 const LinkButton = ({ href, label, isExternal = true, useExternalIcon = false, customIcon = null, theme = "default", size = "medium", additionalClasses = "" }) => {
-    const iconElement = customIcon ? <IconRenderer icon={customIcon} className="h-6 w-6 shrink-0 mr-2 text-neutral-700" /> : null;
+    const iconElement = customIcon ? <IconRenderer icon={customIcon} className="h-6 w-6 shrink-0 mr-2 text-gray-900" /> : null;
 
     return (
         <a

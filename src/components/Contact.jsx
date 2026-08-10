@@ -12,7 +12,7 @@ const Contact = () => {
                     <p className="text-yellow-300 text-2xl md:text-4xl">
                         Let's connect!
                     </p>
-                    <p className="text-grey-500 text-2xl md:text-4xl mt-6">
+                    <p className="text-gray-900 text-2xl md:text-4xl mt-6">
                         I'm open to new opportunities or a chat.&nbsp;
                     </p>
                 </div>

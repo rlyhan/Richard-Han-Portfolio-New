@@ -49,7 +49,7 @@ const Modal = ({ isOpen, onClose, children }) => {
                 <div className="p-4 flex items-center justify-between">
                     <button
                         type="button"
-                        className="text-neutral-700/60 hover:text-neutral-700 rounded-full bg-white w-9 h-9 p-0 ml-auto"
+                        className="text-gray-900/60 hover:text-gray-900 rounded-full bg-white w-9 h-9 p-0 ml-auto"
                         aria-label="Close modal"
                         onClick={onClose}
                     >

@@ -57,7 +57,7 @@ const Image = ({
                 opacity-0 translate-y-2
                 group-hover:opacity-100 group-hover:translate-y-0
                 transition-all duration-300 ease-out
-                bg-white text-neutral-700
+                bg-white text-gray-900
                 px-5 py-2 rounded-md
                 text-sm font-medium
               "

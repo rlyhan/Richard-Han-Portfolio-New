@@ -1,15 +1,23 @@
 import IconRenderer from "../icons/IconRenderer";
 
-const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, borderColor = null, containerStyles = null, textStyles = null, splitFromMobile = false }) => {
-    const col1 = listItems.slice(0, 5);
-    const col2 = listItems.slice(5);
+// iconStyles is caller-controlled because this list renders on two opposite
+// surfaces: the light card in About (needs dark icons) and the dark project modal
+const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, borderColor = null, containerStyles = null, textStyles = null, iconStyles = "text-teal-400", splitFromMobile = false }) => {
+    // Split evenly rather than at a fixed index, so a 6-item list reads 3/3 instead of 5/1
+    const splitAt = listItems.length > 5 ? Math.ceil(listItems.length / 2) : listItems.length;
+    const col1 = listItems.slice(0, splitAt);
+    const col2 = listItems.slice(splitAt);
 
-    const Icon = icon ? <IconRenderer icon={icon} className="h-4 w-4 mt-1 shrink-0 text-teal-400" /> : null
+    const Icon = icon ? <IconRenderer icon={icon} className={`h-4 w-4 mt-1 shrink-0 ${iconStyles}`} /> : null
 
-    const backgroundColorClass = backgroundColor ? backgroundColor : "bg-gray-400"
+    // Only fall back to a background when the caller hasn't set one — containerStyles
+    // carries its own bg, and emitting a second bg-* class here left the two fighting
+    // over Tailwind's stylesheet order
+    const backgroundColorClass = backgroundColor ?? ""
     const borderColorClass = borderColor ? `border ${borderColor}` : ""
-    const containerClasses = containerStyles ? containerStyles : "p-4 rounded-md"
-    const textClasses = textStyles ? textStyles : "text-white/80 text-xs sm:text-sm"
+    const containerClasses = containerStyles ?? "p-4 rounded-md bg-gray-100"
+    // default ink matches the default surface above — keep the two in step
+    const textClasses = textStyles ?? "text-gray-950 text-sm"
 
     // With a second column of items, split side by side from md up — or from the
     // smallest screens when splitFromMobile is set
@@ -18,7 +26,7 @@ const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, 
         : (splitFromMobile ? "grid-cols-2" : "grid-cols-1 md:grid-cols-2")
 
     return (
-        <div className={`sm:pr-[48px] grid ${columnClasses} gap-3 h-full ${backgroundColorClass} ${borderColorClass} ${containerClasses}`}>
+        <div className={`grid ${columnClasses} gap-3 h-full ${backgroundColorClass} ${borderColorClass} ${containerClasses}`}>
             <ul className="flex flex-col gap-3">
                 {col1.map((listItem, i) => (
                     <li
