@@ -71,7 +71,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="text-white hover:text-gray-400"
+                                className="text-neutral-900/85 hover:text-white"
                             >
                                 {item.label}
                             </button>
@@ -116,7 +116,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="w-full text-left py-2 text-white hover:text-gray-400"
+                                className="w-full text-left py-2 text-neutral-900/85 hover:text-white"
                             >
                                 {item.label}
                             </button>
