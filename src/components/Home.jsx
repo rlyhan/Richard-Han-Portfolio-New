@@ -2,10 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import cn from "classnames"
 import gsap from "gsap"
 import ScrollToPlugin from "gsap/ScrollToPlugin"
+import ScrollTrigger from "gsap/ScrollTrigger"
 import PageSection from "./layout/PageSection"
 import ScrollCue from "./common/Buttons/ScrollCue"
 
-gsap.registerPlugin(ScrollToPlugin)
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
 const TEXT_LINES = {
     line1: ["Tailored to design", "Modern + legacy builds"],
@@ -20,25 +21,51 @@ const ROLL_EASE = "power3.inOut"
 // Offsetting each line keeps all four from flipping in lockstep.
 const LINE_STAGGER = 0.12
 
-// The hero → About handoff, as one ordered sequence. The display lines empty
-// out first and the outro block only starts leaving once they are most of the
-// way gone, so the hero clears in two reads rather than dimming as one slab.
-// The scroll is last: About should arrive over an already-empty hero.
-const LINES_FADE = 0.9
-const OUTRO_START = 0.5
-const OUTRO_FADE = 0.6
-const OUTRO_DRIFT = 32
-const COVER_START = 0.8
-const COVER_DURATION = 1.2
+// Seconds of catch-up between the scroll position and the animation, and the
+// single most important number here: it is what makes the hero trail the wheel
+// and coast to a stop after it, rather than being welded to the scrollbar.
+const SCRUB_LAG = 1
+
+// The display lines leave as four planes rather than one sheet. Each line
+// travels TRAVEL + its index * STEP for the same scroll, so the stack spreads
+// as it goes, and each starts STAGGER later than the one above it.
+const LINE_TRAVEL = 40
+const LINE_TRAVEL_STEP = 34
+const LINE_EXIT_STAGGER = 0.1
+const LINE_EXIT_DURATION = 0.45
+// Splits the lines sideways along the alternation they already sit on — the
+// neon lines leave left, the paper lines right. A percentage rather than a
+// pixel count, and a small one: at 3% the drift is always shorter than the
+// gutter beside it, so no line can push a horizontal scrollbar onto the page.
+const LINE_DRIFT = 3
+
+// The outro sinks while the lines rise, so the hero parts down the middle
+// instead of dimming as a block. It goes last and it goes quickly: the point
+// is that the hero is already empty by the time About's edge appears.
+const OUTRO_START = 0.55
+const OUTRO_DURATION = 0.25
+const OUTRO_STAGGER = 0.08
+const OUTRO_DRIFT = 44
+
+// About rides up at a fraction under the speed of the scroll carrying it and
+// closes the gap exactly as it lands, so the cover has some weight behind it.
+// A share of the viewport, not a pixel count: the distance it has to travel
+// scales with the screen, so the lag has to as well.
+const ABOUT_LAG = 0.12
+
+// How long a click on the cue takes to cross the whole sequence. Long, because
+// everything else here is scrubbed off this scroll — rush it and the fades
+// arrive as a blur instead of as beats.
+const CUE_SCROLL_DURATION = 2.4
 
 // Under this the hero still owns the viewport, so the cue belongs on screen.
 const CUE_VISIBLE_BELOW = 40
 
 const Home = () => {
     const lineRefs = useRef([])
-    const rollingRef = useRef(null)
-    const outroRef = useRef(null)
-    const revealRef = useRef(null)
+    const outroPartRefs = useRef([])
+    const runwayRef = useRef(null)
+    const cueScrollRef = useRef(null)
     const [atTop, setAtTop] = useState(true)
     const [isRevealing, setIsRevealing] = useState(false)
 
@@ -78,48 +105,102 @@ const Home = () => {
         return () => mm.revert()
     }, [])
 
-    // Drives the whole handoff off one click for now. The same ordering is what
-    // a scrubbed ScrollTrigger will drive later, which is why every beat is a
-    // position on one timeline rather than a chain of callbacks.
+    // The handoff itself, scrubbed off the scroll position. Both triggers are
+    // anchored to the runway rather than to pixel counts, so the choreography is
+    // stated in terms of the layout it belongs to:
+    //
+    //   runway top → bottom edge     the hero alone on screen, emptying out
+    //   runway bottom → top edge     About climbing over the emptied hero
+    //
+    // Nothing here moves About into place: that is the sticky hero plus an
+    // opaque section stacked above it, which is layout, not animation. The only
+    // tween on About is the lag that keeps it off the wheel.
+    useEffect(() => {
+        const mm = gsap.matchMedia()
+
+        mm.add("(prefers-reduced-motion: no-preference)", () => {
+            const lines = lineRefs.current.filter(Boolean)
+            const outroParts = outroPartRefs.current.filter(Boolean)
+
+            const heroOut = gsap.timeline({
+                // ease: "none" throughout — with a scrub the scroll is the ease,
+                // and a second one layered on top only makes the mapping lie.
+                defaults: { ease: "none" },
+                scrollTrigger: {
+                    trigger: runwayRef.current,
+                    start: "top bottom",
+                    end: "bottom bottom",
+                    scrub: SCRUB_LAG,
+                },
+            })
+
+            heroOut
+                // Pins the timeline's length to 1 so every position below reads
+                // as a fraction of the runway — and so the gap between the last
+                // fade and the end survives as a beat of empty hero rather than
+                // being stretched away, since a scrub maps whatever duration the
+                // timeline happens to have across the whole scroll range.
+                .to({}, { duration: 1 }, 0)
+                .to(lines, {
+                    opacity: 0,
+                    y: (i) => -(LINE_TRAVEL + i * LINE_TRAVEL_STEP),
+                    xPercent: (i) => (i % 2 ? LINE_DRIFT : -LINE_DRIFT),
+                    duration: LINE_EXIT_DURATION,
+                    stagger: LINE_EXIT_STAGGER,
+                }, 0)
+                .to(outroParts, {
+                    opacity: 0,
+                    y: OUTRO_DRIFT,
+                    duration: OUTRO_DURATION,
+                    stagger: OUTRO_STAGGER,
+                }, OUTRO_START)
+
+            // Held on the runway rather than on About: an element used as its own
+            // trigger is measured with this transform already applied, which puts
+            // the start and end it is measuring against out by the lag distance.
+            gsap.fromTo("#about",
+                { y: () => window.innerHeight * ABOUT_LAG },
+                {
+                    y: 0,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: runwayRef.current,
+                        start: "bottom bottom",
+                        end: "bottom top",
+                        scrub: SCRUB_LAG,
+                        // The lag is a share of the viewport, so a resize has to
+                        // re-read it rather than keep the height it started with.
+                        invalidateOnRefresh: true,
+                    },
+                }
+            )
+        })
+
+        return () => mm.revert()
+    }, [])
+
+    // The cue's shortcut through all of the above. It drives the scroll and
+    // nothing else — every fade above is scrubbed off that scroll, so this stays
+    // one tween and the two paths can never describe different sequences.
     const revealAbout = useCallback(() => {
-        if (revealRef.current?.isActive()) return
+        if (cueScrollRef.current?.isActive()) return
+
+        const runway = runwayRef.current
+        if (!runway) return
 
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        // Reduced motion keeps the ordering but collapses every beat to zero, so
-        // the sequence lands as a jump cut instead of being skipped outright.
-        const t = (seconds) => (reduced ? 0 : seconds)
 
         setIsRevealing(true)
 
-        revealRef.current = gsap.timeline({
-            defaults: { ease: "power2.out" },
-            onComplete: () => {
-                // About covers the hero completely by now, so putting it back is
-                // unseen — and it has to happen, or scrolling up finds it empty.
-                gsap.set([rollingRef.current, outroRef.current], { opacity: 1, y: 0 })
-                setIsRevealing(false)
-            },
+        cueScrollRef.current = gsap.to(window, {
+            duration: reduced ? 0 : CUE_SCROLL_DURATION,
+            ease: "power2.inOut",
+            // Measured off the runway rather than passing "#about" as the target:
+            // About carries the lag transform, and ScrollToPlugin reads an
+            // element's live position, so it would aim the lag distance too low.
+            scrollTo: { y: window.scrollY + runway.getBoundingClientRect().bottom },
+            onComplete: () => setIsRevealing(false),
         })
-            .to(rollingRef.current, { opacity: 0, duration: t(LINES_FADE) }, 0)
-            .to(
-                outroRef.current,
-                { opacity: 0, y: OUTRO_DRIFT, duration: t(OUTRO_FADE) },
-                t(OUTRO_START)
-            )
-            // The cover itself is layout, not a tween: the hero is sticky and
-            // About is opaque and stacked above it, so moving the page is all it
-            // takes for About to slide up over a hero that never moves.
-            // autoKill is left off — a tween killed mid-scroll would never run
-            // onComplete, stranding the hero at zero opacity.
-            .to(
-                window,
-                {
-                    duration: t(COVER_DURATION),
-                    ease: "power2.inOut",
-                    scrollTo: { y: "#about" },
-                },
-                t(COVER_START)
-            )
     }, [])
 
     // Space is the same gesture as the cue, from the keyboard. It is only taken
@@ -172,7 +253,7 @@ const Home = () => {
         }
     }, [])
 
-    useEffect(() => () => revealRef.current?.kill(), [])
+    useEffect(() => () => cueScrollRef.current?.kill(), [])
 
     // min-h rather than h: on a viewport too short for four display lines plus
     // the name block, the hero grows rather than clipping anything.
@@ -183,7 +264,7 @@ const Home = () => {
     return (
         <>
             <PageSection id="home" additionalClasses="sticky top-0 flex flex-col min-h-svh">
-                <div ref={rollingRef} className="flex-1 flex flex-col justify-center gap-2 py-8 sm:py-12">
+                <div className="flex-1 flex flex-col justify-center gap-2 py-8 sm:py-12">
                     {Object.entries(TEXT_LINES).map(([key, [first, second]], i) => (
                         <div
                             key={key}
@@ -214,18 +295,36 @@ const Home = () => {
                     ))}
                 </div>
 
-                <div ref={outroRef} className="w-full">
+                {/* The two halves are animated separately rather than as one
+                    block, so the name and the availability line leave on their
+                    own beats — the same reason the display lines above stagger. */}
+                <div className="w-full">
                     <div className="flex flex-wrap items-end justify-between">
-                        <h1 className="font-heading uppercase mb-10 line-height">
+                        <h1
+                            ref={(el) => { outroPartRefs.current[0] = el }}
+                            className="font-heading uppercase mb-10 line-height"
+                        >
                             <span className="block text-neon text-3xl mr-2">Richard Han</span>
                             <span className="block text-paper text-xl sm:text-2xl">Front End | Full Stack Developer</span>
                         </h1>
-                        <p className="text-mute text-sm sm:text-lg font-medium mb-10">
+                        <p
+                            ref={(el) => { outroPartRefs.current[1] = el }}
+                            className="text-mute text-sm sm:text-lg font-medium mb-10"
+                        >
                             Open to opportunities | Currently based in: <span className="text-neon">Auckland, NZ</span>
                         </p>
                     </div>
                 </div>
             </PageSection>
+
+            {/* The runway: the stretch of scroll where the hero holds the
+                viewport alone and empties out, before About's top edge appears.
+                It carries no content, so its only job is height — and it is also
+                what both ScrollTriggers above measure themselves against.
+
+                Reduced motion collapses it to nothing: with the fades gone there
+                is nothing to watch here, and it would read as a dead screen. */}
+            <div ref={runwayRef} aria-hidden="true" className="h-[80svh] motion-reduce:h-0" />
 
             {/* Retired the moment the page leaves the hero, so it never floats over
                 About as a stale invitation to a section already on screen. */}
