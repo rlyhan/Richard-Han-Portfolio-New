@@ -31,7 +31,10 @@ const Header = () => {
             gsap.to(window, {
                 duration: 1.2,
                 ease: "power3.out",
-                scrollTo: { y: selector, offsetY: barHeight },
+                // The top of the page rather than #home: the hero is sticky, so
+                // resolving it as a target reads its stuck position — which is
+                // already at the viewport top — and scrolls nowhere.
+                scrollTo: { y: 0 },
                 onComplete: () => {
                     // Wait for the browser to paint the final scroll position,
                     // then add a short pause before fading Vanta back in.
