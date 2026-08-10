@@ -1,24 +1,5 @@
 const PROJECTS = [
     {
-        "name": "Thakeham",
-        "id": "thakeham",
-        "url": "https://thakeham.com/",
-        "featured": true,
-        "category": "Residential Housing",
-        "client": true,
-        "association": "Make Agency",
-        "description": "UK based home development.",
-        "work_involved": [
-            "Built new headless CMS dataflow with DatoCMS",
-            "Developed maps, carousels and other major components",
-            "Audited and improved SEO, accessibility and analytics"
-        ],
-        "technologies": [
-            "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
-        ],
-        "images": ["thakeham.webp"]
-    },
-    {
         "name": "Study With New Zealand",
         "id": "study-with-nz",
         "url": "https://www.studywithnewzealand.govt.nz/en",
@@ -28,9 +9,11 @@ const PROJECTS = [
         "association": "Voyage",
         "description": "Government website for the New Zealand education sector.",
         "work_involved": [
-            "Developed dashboard allowing prospective students to fill their details and fetch personalised study recommendations",
-            "Negotiated API design with backend engineers",
-            "High-level Contentful CMS development and search indexing",
+            "Built study recommendation dashboard for prospective students.",
+            "Migrated legacy architecture to monorepo.",
+            "Identified critical API issues and refined API design with backend team.",
+            "High-level, structured Contentful integration to support complex data while retaining editor usability.",
+            "Improved performance through optimising querying and search indexing."
         ],
         "images": ["studywithnz.webp"]
     },
@@ -48,8 +31,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based tourism website consisting of curated guides to cities and places, and a large directory of shops, restaurants, bars, attractions, and more.",
         "work_involved": [
-            "Complete site restructure - layout and CMS",
-            "Frequently negotiated new design for optimal responsiveness, performance and brand impact",
+            "Redesigned frontend to improve navigation, readability, and content accessibility.",
+            "Refactored entire CMS, reducing complexity while maintaining flexibility.",
+            "Helped deliver responsive, performance optimised UI through collaboration on wireframes and implementation."
         ],
         "images": ["neatplaces.webp"]
     },
@@ -63,15 +47,35 @@ const PROJECTS = [
         "association": "Make Agency",
         "description": "London based broadband network.",
         "work_involved": [
-            "Successfully developed large scale projects for customer checkout: One Touch Switch and pre-order system",
-            "Built engaging new content blocks and improving CMS setup to cut down data entry time",
-            "Optimised site engagement through performance improvements and SEO + analytics audits",
-            "Investigated and solved major outages"
+            "Delivered major B2C features (One Touch Switch, Pre-Order) with cross-functional teams.",
+            "CMS development and restructures, enabling editors greater content flexiblity, A/B testing and reduction of manual overhead by hours.",
+            "Fully audited and improved performance and SEO metrics.",
+            "Led investigation and resolution of critical production incidents."
         ],
         "technologies": [
             "React", "Next.js", "Kontent.ai"
         ],
         "images": ["gnetwork.webp"]
+    },
+    {
+        "name": "Thakeham",
+        "id": "thakeham",
+        "url": "https://thakeham.com/",
+        "featured": true,
+        "category": "Residential Housing",
+        "client": true,
+        "association": "Make Agency",
+        "description": "UK based home development.",
+        "work_involved": [
+            "Developed interactive UI elements including maps and carousels.",
+            "Identified and fixed UX issues across the site.",
+            "Refined and tested complex API data flows and DatoCMS integration.",
+            "Identified and resolved SEO, accessibility, and analytics issues."
+        ],
+        "technologies": [
+            "React", "Next.js", "TypeScript", "GraphQL", "DatoCMS"
+        ],
+        "images": ["thakeham.webp"]
     },
     {
         "name": "Deadly Ponies",
@@ -83,11 +87,27 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Australia based handbag and apparel brand.",
         "work_involved": [
-            "New pages and content blocks",
-            "UX improvements across devices",
-            "Data optimisation and e-commerce integration"
+            "New pages and content blocks.",
+            "UX improvements across devices.",
+            "Data optimisation and e-commerce integration."
         ],
         "images": ["deadlyponies.webp"]
+    },
+    {
+        "name": "Touchgrass",
+        "id": "touchgrass",
+        "url": "https://touchgrass-mobile.vercel.app/",
+        "featured": true,
+        "category": "Lifestyle",
+        "client": false,
+        "association": "Personal",
+        "description": "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you. Built with React Native, Expo, TypeScript, Express, PostgreSQL, BetterAuth and Sanity.",
+        "work_involved": [
+            "Algorithm based off the BFAS (Big Five Aspect Scales) and NEO-PI-R personality models to calculate alignment to various types of activities.",
+            "Integration with Sanity CMS to manage and update activity database.",
+            "API with Express and PostgreSQL to handle authentication and profile data."
+        ],
+        "images": ["touchgrass.webp"]
     },
     {
         "name": "Gigs of London",
@@ -97,10 +117,11 @@ const PROJECTS = [
         "category": "Events",
         "client": false,
         "association": "Personal",
-        "description": "Find events in London on an interactive map.",
+        "description": "Find events in London on an interactive map. Built with Next.js, Mapbox, and Ticketmaster API.",
         "work_involved": [
-            "Integrated Mapbox and Ticketmaster APIs",
-            "Recently integrated OpenAI SDK to suggest events based on mood"
+            "Real-time event data from ticketmaster.",
+            "Interactive map displaying locations of events.",
+            "OpenAI SDK integration to suggest events based on mood and generate descriptions."
         ],
         "images": ["gigsoflondon.webp"]
     },
@@ -114,9 +135,9 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Christchurch, New Zealand based art gallery.",
         "work_involved": [
-            "Animated navigation menu",
-            "Set up custom e-commerce system",
-            "Fully customised content management system to add various media including articles, videos, audio",
+            "Animated navigation menu.",
+            "Set up custom e-commerce system.",
+            "Fully customised content management system to add various media including articles, videos, audio.",
         ],
         "images": ["physicsroom.webp"]
     },
@@ -130,8 +151,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "Australia based paint company.",
         "work_involved": [
-            "Intricate frontend work - new pages, content blocks and modern page transitions",
-            "Optimised images and backend data querying logic"
+            "Intricate frontend work - new pages, content blocks and modern page transitions.",
+            "Optimised images and backend data querying logic."
         ],
         "images": ["coloursmith.webp"]
     },
@@ -145,8 +166,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "International textiles company.",
         "work_involved": [
-            "Multiple front end features including furniture visualiser",
-            "CMS models for new pages and content organisation"
+            "Multiple front end features including furniture visualiser.",
+            "CMS models for new pages and content organisation."
         ],
         "images": [
             "jamesdunlop.webp"
@@ -162,8 +183,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based furniture company.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Front end functionality and styling.",
+            "Back end development including highly customisable content management system, data optimisation."
         ]
     },
     {
@@ -176,8 +197,8 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "City guides curated by some significant faces. In association with Neat Places.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Front end functionality and styling.",
+            "Back end development including highly customisable content management system, data optimisation."
         ]
     },
     {
@@ -190,9 +211,25 @@ const PROJECTS = [
         "association": "Sons & Co.",
         "description": "New Zealand based architects.",
         "work_involved": [
-            "Front end functionality and styling",
-            "Back end development including highly customisable content management system, data optimisation"
+            "Front end functionality and styling.",
+            "Back end development including highly customisable content management system, data optimisation."
         ]
+    },
+    {
+        "name": "Image Board",
+        "id": "image-board",
+        "url": "https://image-board-app.vercel.app/",
+        "featured": true,
+        "category": "eCommerce",
+        "client": false,
+        "association": "Personal",
+        "description": "A simple image board / eCommerce shop. Built with Next.js, MongoDB and Auth0.",
+        "work_involved": [
+            "Gallery loaded from Pexels API.",
+            "Authentication with ability to favourite images.",
+            "eCommerce functionality to buy prints.",
+        ],
+        "images": ["imageboard.webp"],
     }
 ]
 

@@ -4,21 +4,18 @@ import Tabs from "./common/Tabs/Tabs"
 import SectionHeading from "./common/SectionHeading"
 import { WORK, TECH, SKILLS, INTERESTS } from "../data/work.data"
 import IconCard from "./common/Cards/IconCard"
+import SkillCard from "./common/Cards/SkillCard"
 
 const About = () => {
     const tabs = [
         {
             id: "experience",
             tabName: "Experience",
+            useGrid: false,
             render: () => (
                 <>
                     {WORK.map((workItem) => (
-                        <Article key={workItem.id}
-                            item={workItem}
-                            backgroundColor="bg-black"
-                            containerStyles="p-8 rounded-lg border border-solid border-yellow-400/50 hover:bg-gray-800 transition"
-                            textStyles="text-sm sm:text-md md:text-lg"
-                            icon="default" />
+                        <Article key={workItem.id} item={workItem} icon="default" />
                     ))}
                 </>
             ),
@@ -32,27 +29,13 @@ const About = () => {
                     {TECH.map((techItem) => (
                         <Article key={techItem.id}
                             item={techItem}
+                            textStyles="text-paper text-sm font-medium"
                             icon={techItem.icon}
                             includeHeaderIcon
                             useListIcons={false}
+                            alignHeaders
+                            splitListFromMobile
                         />
-                    ))}
-                </>
-            ),
-        },
-        {
-            id: "skills",
-            tabName: "Skills",
-            useGrid: true,
-            render: () => (
-                <>
-                    {SKILLS.map((skillItem) => (
-                        <Article key={skillItem.id}
-                            item={skillItem}
-                            icon={skillItem.icon}
-                            backgroundColor="bg-black"
-                            containerStyles="p-6 rounded-lg border border-solid border-gray-700 hover:bg-gray-800 transition"
-                            textStyles="text-sm sm:text-md md:text-lg" />
                     ))}
                 </>
             ),
@@ -60,8 +43,9 @@ const About = () => {
         {
             id: "Interests",
             tabName: "Interests",
+            useGrid: false,
             render: () => (
-                <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 gap-4">
                     {INTERESTS.map((interest) => (
                         <IconCard key={interest.id} icon={interest.icon} text={interest.text} />
                     ))}
@@ -71,22 +55,41 @@ const About = () => {
     ];
 
     return (
-        <PageSection id="about">
+        <PageSection id="about" additionalClasses="max-w-4xl mx-auto">
             <SectionHeading label="About" />
-            <div className="max-w-5xl mr-auto">
-                <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
-                    Hi! I'm Richard, and I have been building high-traffic web apps for a range of clients since 2020.
+            <div className="pr-8 md:pr-24">
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                 </p>
-                <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
-                    I am a front-end developer commonly working with React/NextJS apps alongside TypeScript, Tailwind, and various headless CMS.
-                    I have expertise working across the full stack, including backend development with Python/Django and PHP/WordPress.
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    I'm driven by a passion for building modern, fluid, interactive user experiences, and a commitment to the collaborative and technical processes that build the most performant, maintainable, and brand impactful solutions possible.
                 </p>
-                <p className="text-grey-500 text-xl sm:text-2xl lg:text-3xl mb-10">
-                    I love creating performant, accessible, and user-friendly web experiences that help businesses grow online.
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    I have a strong background in React/Next.js driven frontend development, Node.js and Django based backend architectures, and integrating headless CMS like Sanity, Contentful and Kontent.ai, eCommerce platforms like Shopify, and large scale domain data APIs tailored to business needs. 
+                </p>
+
+                <p className="text-paper text-xl md:text-3xl mb-10 leading-relaxed">
+                    I am currently freelancing and open to new opportunities. If you have an idea or project you’d like to discuss, please reach out!
                 </p>
             </div>
-            <Tabs tabs={tabs} keepStableHeight className="mt-16" />
-        </PageSection>
+            <div className="grid gap-12 py-16">
+                {SKILLS.map((skillItem) => (
+                    <section key={skillItem.id} className="flex flex-col gap-4">
+                        <h3 className="text-2xl md:text-3xl font-semibold font-heading uppercase text-paper">{skillItem.heading}</h3>
+                        {/* one column on mobile: a square card at a third of a phone's
+                            width leaves no room for the copy */}
+                        <div className="grid md:grid-cols-3 gap-4">
+                            {skillItem.listItems.map((listItem, i) => (
+                                <SkillCard key={`${skillItem.id}-${i}`} icon={listItem.icon} text={listItem.text} />
+                            ))}
+                        </div>
+                    </section>
+                ))}
+            </div>
+            {/* no keepStableHeight: Technologies is ~2x the height of Interests, so pinning
+                every panel to the tallest left a large void under the shorter tabs */}
+            <Tabs tabs={tabs} ariaLabel="About tabs" keepStableHeight={false} className="mt-16" />
+        </PageSection >
     )
 }
 

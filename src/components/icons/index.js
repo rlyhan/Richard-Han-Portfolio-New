@@ -1,5 +1,6 @@
 import ActivityIcon from "./ActivityIcon";
 import BookIcon from "./BookIcon";
+import Chart from "./Chart";
 import CloudIcon from "./CloudIcon";
 import CodeIcon from "./CodeIcon";
 import ExternalLinkIcon from "./ExternalLinkIcon";
@@ -7,6 +8,7 @@ import FileIcon from "./FileIcon";
 import GitHubIcon from "./GitHubIcon";
 import LinkedInIcon from "./LinkedInIcon";
 import PenIcon from "./PenIcon";
+import RobotIcon from "./RobotIcon";
 import SearchIcon from "./SearchIcon";
 import ServerIcon from "./ServerIcon";
 import TickIcon from "./TickIcon";
@@ -16,6 +18,7 @@ import UsersIcon from "./UsersIcon";
 export {
     ActivityIcon,
     BookIcon,
+    Chart,
     CloudIcon,
     CodeIcon,
     ExternalLinkIcon,
@@ -23,6 +26,7 @@ export {
     GitHubIcon,
     LinkedInIcon,
     PenIcon,
+    RobotIcon,
     SearchIcon,
     ServerIcon,
     TickIcon,

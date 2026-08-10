@@ -5,6 +5,7 @@ import TabContent from "./TabContent";
 
 export default function Tabs({
     tabs,                 // [{ id, tabName, useGrid?, render? or children }]
+    ariaLabel,           // for accessibility
     defaultTabId,         // optional
     keepStableHeight = true,
     className = "",
@@ -52,7 +53,7 @@ export default function Tabs({
     return (
         <div className={className}>
             <div className="relative">
-                <div role="tablist" className="flex gap-2 md:gap-4 mb-6 overflow-x-auto">
+                <div role="tablist" className="flex gap-2 md:gap-4 mb-12 overflow-x-auto" aria-label={ariaLabel}>
                     {tabs.map((t) => (
                         <TabButton
                             key={t.id}
@@ -63,7 +64,7 @@ export default function Tabs({
                         />
                     ))}
                 </div>
-                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-black/50 to-transparent md:hidden"
+                <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-carbon-900 to-transparent md:hidden"
                 ></div>
             </div>
 

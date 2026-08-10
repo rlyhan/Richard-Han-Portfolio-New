@@ -1,14 +1,27 @@
 @config "../tailwind.config.js";
 @import "tailwindcss";
 
+/* Self-hosted from public/fonts. font-display: block (paired with the
+   preload in index.html) renders the hero heading directly in Fjalla One
+   with no fallback-to-webfont swap flash. */
+@font-face {
+  font-family: 'Fjalla One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/fjalla-one-latin-400-normal.woff2) format('woff2'),
+       url(/fonts/fjalla-one-latin-400-normal.woff) format('woff');
+}
+
 @layer base {
   :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+    /* The page is dark-only — there is no light variant to opt into, and
+       leaving "light dark" here let the UA paint light form controls. */
+    color-scheme: dark;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -17,8 +30,20 @@
   }
 
   body {
-    background-color: black;
+    @apply bg-carbon-900 text-paper;
     width: 100%;
+  }
+
+  /* The accent doubles as the selection colour, so highlighting text reads as
+     part of the scheme rather than as the browser's default blue. */
+  ::selection {
+    @apply bg-neon text-carbon-950;
+  }
+
+  /* Nothing in the app sets its own focus style, and the UA default ring is
+     near-invisible on carbon-950. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-neon;
   }
 
   button {
@@ -30,3 +55,4 @@
     cursor: pointer;
   }
 }
+
