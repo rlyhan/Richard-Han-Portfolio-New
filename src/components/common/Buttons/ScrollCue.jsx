@@ -11,14 +11,14 @@ const FADE_DURATION = 0.35
 // section. The bounce lives on an inner element rather than on the button so
 // the infinite y tween and the visibility fade never write to the same target.
 const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) => {
-    const rootRef = useRef(null)
-    const iconRef = useRef(null)
+    const containerRef = useRef(null)
+    const arrowRef = useRef(null)
 
     useEffect(() => {
         const mm = gsap.matchMedia()
 
         mm.add("(prefers-reduced-motion: no-preference)", () => {
-            gsap.to(iconRef.current, {
+            gsap.to(arrowRef.current, {
                 y: BOUNCE_DISTANCE,
                 duration: BOUNCE_DURATION,
                 ease: "sine.inOut",
@@ -31,7 +31,7 @@ const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) 
     }, [])
 
     useEffect(() => {
-        gsap.to(rootRef.current, {
+        gsap.to(containerRef.current, {
             opacity: visible ? 1 : 0,
             duration: FADE_DURATION,
             ease: "power2.out",
@@ -41,7 +41,7 @@ const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) 
 
     return (
         <div
-            ref={rootRef}
+            ref={containerRef}
             // Fixed rather than pinned to the hero: the cue has to hold its
             // place at the foot of the viewport on any hero height, and it is
             // the only thing on screen that should not move as the hero fades.
@@ -59,7 +59,7 @@ const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) 
                 aria-label={label}
                 className="rounded-full border border-neon/40 bg-carbon-900/70 p-3 text-neon backdrop-blur-sm transition-colors hover:border-neon hover:bg-neon hover:text-carbon-950"
             >
-                <span ref={iconRef} className="block">
+                <span ref={arrowRef} className="block">
                     <ArrowDownIcon className="h-6 w-6" />
                 </span>
             </button>
