@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import PageSection from "./layout/PageSection"
 import Article from "./common/Article"
 import Tabs from "./common/Tabs/Tabs"
@@ -5,8 +6,13 @@ import SectionHeading from "./common/SectionHeading"
 import { WORK, TECH, SKILLS, INTERESTS } from "../data/work.data"
 import IconCard from "./common/Cards/IconCard"
 import SkillCard from "./common/Cards/SkillCard"
+import { useTextColorSweep } from "../hooks/useTextColorSweep"
 
 const About = () => {
+    const introRef = useRef(null)
+
+    useTextColorSweep(introRef)
+
     const tabs = [
         {
             id: "experience",
@@ -63,7 +69,7 @@ const About = () => {
         <PageSection id="about" additionalClasses="relative z-10 bg-carbon-900">
             <div className="max-w-4xl mx-auto">
                 <SectionHeading label="About" />
-                <div className="pr-8 md:pr-24">
+                <div ref={introRef} className="pr-8 md:pr-24">
                     <p className="text-paper text-xl md:text-4xl mb-10 leading-relaxed">
                         Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
                     </p>
