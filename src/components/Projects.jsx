@@ -4,6 +4,7 @@ import PageSection from "./layout/PageSection"
 import SectionHeading from "./common/SectionHeading"
 import TabButton from "./common/Tabs/TabButton"
 import { useTabFade } from "../hooks/useTabFade"
+import { useScrollReveal } from "../hooks/useScrollReveal"
 import PROJECTS from "../data/projects.data"
 import ProjectCard from "./common/Cards/ProjectCard"
 import ProjectCardGallery from "./common/Cards/ProjectCardGallery"
@@ -36,6 +37,17 @@ const Projects = () => {
     // the fade on that swap; see useTabFade for why it isn't a CSS animation.
     const panelRef = useRef(null)
     useTabFade(panelRef, activeTab)
+
+    // Keyed on both, because both change which cards are in the grid and how
+    // they are arranged in it: the tab re-filters the list, and the display mode
+    // takes it from one column to a gallery of two or three across. Either way
+    // the rows the reveal measured have stopped existing.
+    //
+    // Alongside the fade above rather than instead of it. They answer different
+    // questions — the fade is what covers the swap itself, this is what carries
+    // the cards below the fold in as the reader scrolls to them — and they
+    // compose cleanly, since the panel's opacity and a card's multiply.
+    useScrollReveal(panelRef, `${activeTab}:${displayMode}`)
 
     const projectList = useMemo(() => {
         if (activeTab === "projects-all") return PROJECTS;

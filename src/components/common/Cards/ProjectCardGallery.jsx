@@ -3,7 +3,16 @@ import Pill from "../Pill"
 
 const ProjectCardGallery = ({ project, onClick }) => {
     return (
-        <article className="flex flex-col group bg-carbon-800 shadow-card rounded-lg overflow-hidden cursor-pointer transition hover:bg-carbon-700 hover:shadow-card-hover"
+        // data-reveal is the reveal's handle on the card — see useScrollReveal,
+        // which is what sets opacity and transform here.
+        //
+        // The transition is named property by property rather than left as bare
+        // `transition`, which also covers opacity and transform — the two the
+        // reveal writes on every frame. Left as it was, each of those writes would
+        // be handed to a 150ms CSS transition on the way to the screen, and a scrub
+        // that is meant to track the wheel would instead trail it by a fixed lag it
+        // never asked for.
+        <article data-reveal className="flex flex-col group bg-carbon-800 shadow-card rounded-lg overflow-hidden cursor-pointer transition-[background-color,box-shadow] hover:bg-carbon-700 hover:shadow-card-hover"
             onClick={onClick}>
             {project["images"] &&
                 <Image

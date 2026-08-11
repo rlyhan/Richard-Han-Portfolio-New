@@ -24,7 +24,12 @@ const Article = ({
         // alignHeaders: take two rows from the parent grid instead of laying out
         // internally, so every article in a row shares one header track and the
         // lists start at the same y regardless of how many lines a heading takes
-        <article key={id} className={classNames("gap-4", alignHeaders ? "grid grid-rows-subgrid row-span-2" : "flex flex-col")}>
+        //
+        // data-reveal is the reveal's handle on the article — see useScrollReveal,
+        // which is what sets opacity and transform here. On the whole article, not
+        // on the list inside it: the heading arriving separately from the card
+        // under it would read as two things, when it is one entry.
+        <article data-reveal key={id} className={classNames("gap-4", alignHeaders ? "grid grid-rows-subgrid row-span-2" : "flex flex-col")}>
             <header className="flex flex-col gap-2">
                 <div className="flex gap-2 items-start">
                     {/* header sits on the page background, not the card — the icon

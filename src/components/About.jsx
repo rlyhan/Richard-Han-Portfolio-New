@@ -7,14 +7,16 @@ import { WORK, TECH, SKILLS, INTERESTS } from "../data/work.data"
 import IconCard from "./common/Cards/IconCard"
 import SkillCard from "./common/Cards/SkillCard"
 import { useTextColorSweep } from "../hooks/useTextColorSweep"
-import { useSkillCardReveal } from "../hooks/useSkillCardReveal"
+import { useScrollReveal } from "../hooks/useScrollReveal"
 
 const About = () => {
     const introRef = useRef(null)
     const skillsRef = useRef(null)
 
     useTextColorSweep(introRef)
-    useSkillCardReveal(skillsRef)
+    // No key: this grid is built from static data and never swaps its contents.
+    // The tab panels below have their own reveal, from inside Tabs.
+    useScrollReveal(skillsRef)
 
     const tabs = [
         {
@@ -93,7 +95,7 @@ const About = () => {
                             <h3 className="text-2xl md:text-3xl font-semibold font-heading uppercase text-paper">{skillItem.heading}</h3>
                             {/* one column on mobile: a square card at a third of a phone's
                                 width leaves no room for the copy */}
-                            <div data-skill-row className="grid md:grid-cols-3 gap-4">
+                            <div className="grid md:grid-cols-3 gap-4">
                                 {skillItem.listItems.map((listItem, i) => (
                                     <SkillCard key={`${skillItem.id}-${i}`} icon={listItem.icon} text={listItem.text} />
                                 ))}

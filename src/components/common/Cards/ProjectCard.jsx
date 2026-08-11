@@ -68,14 +68,24 @@ const ProjectCard = ({ project, onClick, isModalContent = false }) => {
 
     return (
         <article
+            // data-reveal is the reveal's handle on the card — see useScrollReveal,
+            // which is what sets opacity and transform here.
+            data-reveal
             // No fill: the neon outline around the copy is what draws this card, so
             // a surface underneath would only compete with it. shadow-card is
             // unaffected — a box-shadow hangs off the article's own border box, not
             // off its background, so the whole silhouette keeps its lift even
             // though the box is see-through. overflow-hidden stays: it's what
             // rounds the image into the card's corners.
-            // transition, not transition-colors: the shadow has to animate too.
-            className="group flex flex-col md:flex-row shadow-card rounded-lg overflow-hidden cursor-pointer transition hover:shadow-card-hover"
+            //
+            // transition-shadow, not transition: the hover here changes the shadow
+            // and nothing else, and bare `transition` covers opacity and transform
+            // as well — the two properties the reveal writes on every frame. Left
+            // as it was, each of those writes would be handed to a 150ms CSS
+            // transition on the way to the screen, and a scrub that is meant to
+            // track the wheel would instead trail it by a fixed lag it never asked
+            // for.
+            className="group flex flex-col md:flex-row shadow-card rounded-lg overflow-hidden cursor-pointer transition-shadow hover:shadow-card-hover"
             onClick={onClick}
             onKeyDown={handleKeyDown}
             role="button"

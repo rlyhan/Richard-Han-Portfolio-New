@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import TabButton from "./TabButton";
 import TabContent from "./TabContent";
+import { useScrollReveal } from "../../../hooks/useScrollReveal";
 
 export default function Tabs({
     tabs,                 // [{ id, tabName, useGrid?, render? or children }]
@@ -17,6 +18,13 @@ export default function Tabs({
 
     const wrapRef = useRef(null);
     const panelRefs = useRef({}); // { [id]: HTMLElement }
+
+    // Every panel is mounted at once and the inactive ones are display:none, so
+    // this is pointed at the wrapper holding all of them rather than at any one
+    // panel — the reveal filters the hidden ones out itself. Keyed on activeTab
+    // because a switch changes which items have a layout to be measured against,
+    // and the panel taking over has never been measured at all.
+    useScrollReveal(wrapRef, activeTab);
 
     const measure = () => {
         if (!keepStableHeight) return;
