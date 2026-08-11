@@ -1,8 +1,9 @@
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 import classNames from "classnames"
 import PageSection from "./layout/PageSection"
 import SectionHeading from "./common/SectionHeading"
 import TabButton from "./common/Tabs/TabButton"
+import { useTabFade } from "../hooks/useTabFade"
 import PROJECTS from "../data/projects.data"
 import ProjectCard from "./common/Cards/ProjectCard"
 import ProjectCardGallery from "./common/Cards/ProjectCardGallery"
@@ -29,6 +30,12 @@ const Projects = () => {
     const [displayMode, setDisplayMode] = useState("default")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedProject, setSelectedProject] = useState(null)
+
+    // The grid below is one panel for all three categories, so switching tabs
+    // swaps its contents without the element itself ever changing. This replays
+    // the fade on that swap; see useTabFade for why it isn't a CSS animation.
+    const panelRef = useRef(null)
+    useTabFade(panelRef, activeTab)
 
     const projectList = useMemo(() => {
         if (activeTab === "projects-all") return PROJECTS;
@@ -74,7 +81,7 @@ const Projects = () => {
                         <IconButton type="gallery" onClick={() => setDisplayMode("gallery")} isActive={displayMode === "gallery"} />
                     </div>
                 </div>
-                <div className={classNames("grid gap-6", {
+                <div ref={panelRef} className={classNames("grid gap-6", {
                     "grid-cols-1": displayMode === "default",
                     "md:grid-cols-2 lg:grid-cols-3": displayMode === "gallery",
                 })}>

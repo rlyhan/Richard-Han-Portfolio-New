@@ -73,6 +73,24 @@ export default {
                 heading: ['"Fjalla One"', 'system-ui', 'sans-serif'],
                 sans: ['system-ui', 'sans-serif'],
             },
+            // The fade tab panels enter on. Used by panels that swap via
+            // `display`, where the flip restarts the animation on its own; a
+            // transition would never fire, since the incoming panel goes straight
+            // from display:none to its final opacity.
+            //
+            // The projects grid can't use this — it re-filters one panel in place,
+            // so nothing ever changes for CSS to react to — and runs the same fade
+            // from src/hooks/useTabFade.js. Keep the duration and easing below in
+            // step with FADE_MS/FADE_EASING there, or the two drift apart.
+            keyframes: {
+                "tab-fade-in": {
+                    from: { opacity: "0" },
+                    to: { opacity: "1" },
+                },
+            },
+            animation: {
+                "tab-fade-in": "tab-fade-in 0.35s ease-out both",
+            },
         },
     },
     plugins: [],
