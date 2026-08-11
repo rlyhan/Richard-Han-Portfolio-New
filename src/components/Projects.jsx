@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react"
+import { useState, useMemo, useRef } from "react"
 import classNames from "classnames"
 import PageSection from "./layout/PageSection"
 import SectionHeading from "./common/SectionHeading"
@@ -66,11 +66,6 @@ const Projects = () => {
         setIsModalOpen(false);
         setSelectedProject(null);
     };
-
-    useEffect(() => {
-        document.body.classList.toggle("overflow-hidden", isModalOpen);
-        return () => document.body.classList.remove("overflow-hidden");
-    }, [isModalOpen]);
 
     return (
         <PageSection id="projects" additionalClasses="mb-4">

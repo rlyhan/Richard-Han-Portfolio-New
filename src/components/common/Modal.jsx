@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
+import { useScrollLock } from "../../hooks/useScrollLock";
 
 const Modal = ({ isOpen, onClose, children }) => {
     const [entered, setEntered] = useState(false);
+
+    // The modal's own business rather than the caller's: it is the thing
+    // covering the page, so it is the thing that has to hold the page still.
+    useScrollLock(isOpen);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -46,6 +51,12 @@ const Modal = ({ isOpen, onClose, children }) => {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-title"
+                // Opts this subtree out of Lenis entirely, so the panel keeps
+                // native wheel scrolling. Without it Lenis cancels the wheel
+                // event on the way past and the panel never scrolls — it is
+                // stopped while the modal is open, and a stopped Lenis
+                // swallows the gesture rather than letting it through.
+                data-lenis-prevent
                 onMouseDown={(e) => e.stopPropagation()}
             >
                 <div className="p-4 flex items-center justify-between">

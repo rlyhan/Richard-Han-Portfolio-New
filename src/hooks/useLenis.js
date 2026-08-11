@@ -6,6 +6,16 @@ import "lenis/dist/lenis.css"
 
 gsap.registerPlugin(ScrollTrigger)
 
+// The single root instance, or null when there is none — before App has mounted,
+// or under reduced motion, where the hook below declines to construct one.
+//
+// Module scope rather than context because there is exactly one scroller and
+// consumers only ever need to reach it imperatively (see useScrollLock). Read it
+// at the moment of use, never hold it: it is replaced across a remount.
+let instance = null
+
+export const getLenis = () => instance
+
 // Smooth scrolling for the whole document, driven off GSAP's ticker rather than
 // its own rAF loop.
 //
@@ -40,6 +50,7 @@ export function useLenis() {
         // regardless. ScrollTrigger scrubs off native scroll events either way,
         // so nothing below depends on Lenis driving the position.
         const lenis = new Lenis({ autoRaf: false })
+        instance = lenis
 
         lenis.on("scroll", ScrollTrigger.update)
 
@@ -59,6 +70,7 @@ export function useLenis() {
             // this hook.
             gsap.ticker.lagSmoothing(500, 33)
             lenis.destroy()
+            instance = null
         }
     }, [])
 }
