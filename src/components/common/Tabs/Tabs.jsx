@@ -60,8 +60,14 @@ export default function Tabs({
 
     return (
         <div className={className}>
-            <div className="relative">
-                <div role="tablist" className="flex gap-2 md:gap-4 mb-12 overflow-x-auto" aria-label={ariaLabel}>
+            {/* Pulled out to the viewport edges on small screens, cancelling the
+                page gutter on main, so the row scrolls off the edge of the
+                screen instead of being cut off at the gutter. The padding puts
+                back what the margin took, keeping the first and last button
+                lined up with the content either side of them when the row is
+                at rest. Only below md — above it the row fits. */}
+            <div className="relative -mx-8 md:mx-0">
+                <div role="tablist" className="flex gap-2 md:gap-4 mb-12 overflow-x-auto no-scrollbar px-8 md:px-0" aria-label={ariaLabel}>
                     {tabs.map((t) => (
                         <TabButton
                             key={t.id}
