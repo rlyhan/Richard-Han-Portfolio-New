@@ -4,8 +4,13 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import { useLenis } from './hooks/useLenis'
 
 function App() {
+  // Root level because the scroller is the document: it belongs to the page, not
+  // to any section of it, and only one instance may own it.
+  useLenis()
+
   return (
     <>
       <Header />
