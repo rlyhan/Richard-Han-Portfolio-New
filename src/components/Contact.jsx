@@ -1,15 +1,21 @@
+import { useRef } from "react"
 import PageSection from "./layout/PageSection"
 import SectionHeading from "./common/SectionHeading"
 import LinkButton from "./common/Buttons/LinkButton"
+import { useLetterHop } from "../hooks/useLetterHop"
 
 const Contact = () => {
+    const inviteRef = useRef(null)
+
+    useLetterHop(inviteRef)
+
     return (
         <PageSection id="contact" additionalClasses="flex items-center justify-center min-h-[85vh]">
             <div className="w-full h-full sm:min-w-xl mx-auto text-center">
                 <SectionHeading label="Contact" />
                 <div className="my-12 md:mt-16 md:mb-24">
                     <img src="/images/portrait.png" alt="Portrait of Richard Han" className="w-24 h-24 md:w-42 md:h-42 rounded-full object-cover mx-auto mb-12 md:mb-16" />
-                    <p className="text-neon text-2xl md:text-4xl">
+                    <p ref={inviteRef} className="text-neon text-2xl md:text-4xl">
                         Let's connect!
                     </p>
                     <p className="text-paper text-2xl md:text-4xl mt-6">
