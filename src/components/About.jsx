@@ -7,11 +7,14 @@ import { WORK, TECH, SKILLS, INTERESTS } from "../data/work.data"
 import IconCard from "./common/Cards/IconCard"
 import SkillCard from "./common/Cards/SkillCard"
 import { useTextColorSweep } from "../hooks/useTextColorSweep"
+import { useSkillCardReveal } from "../hooks/useSkillCardReveal"
 
 const About = () => {
     const introRef = useRef(null)
+    const skillsRef = useRef(null)
 
     useTextColorSweep(introRef)
+    useSkillCardReveal(skillsRef)
 
     const tabs = [
         {
@@ -84,13 +87,13 @@ const About = () => {
                         I am currently freelancing and open to new opportunities. If you have an idea or project you’d like to discuss, please reach out!
                     </p>
                 </div>
-                <div className="grid gap-12 py-16">
+                <div ref={skillsRef} className="grid gap-12 py-16">
                     {SKILLS.map((skillItem) => (
                         <section key={skillItem.id} className="flex flex-col gap-4">
                             <h3 className="text-2xl md:text-3xl font-semibold font-heading uppercase text-paper">{skillItem.heading}</h3>
                             {/* one column on mobile: a square card at a third of a phone's
                                 width leaves no room for the copy */}
-                            <div className="grid md:grid-cols-3 gap-4">
+                            <div data-skill-row className="grid md:grid-cols-3 gap-4">
                                 {skillItem.listItems.map((listItem, i) => (
                                     <SkillCard key={`${skillItem.id}-${i}`} icon={listItem.icon} text={listItem.text} />
                                 ))}
