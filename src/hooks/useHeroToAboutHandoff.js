@@ -5,6 +5,12 @@ import ScrollTrigger from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
+// Mobile browsers resize the viewport when their toolbar collapses, which would
+// otherwise re-measure both triggers mid-scroll and shift the mapping under the
+// reader. The layout is sized in svh, which is the *smallest* viewport height
+// and so does not move when the toolbar does — there is nothing to re-measure.
+ScrollTrigger.config({ ignoreMobileResize: true })
+
 // The handoff from the hero to About, scrubbed off the scroll position.
 //
 // Three elements do the work, and only one of them is animated here:
@@ -78,11 +84,22 @@ const buildHeroExitTimeline = ({ displayLines, outroLines, runway }) => {
         defaults: { ease: "none" },
         scrollTrigger: {
             trigger: runway,
-            // The runway's top edge reaching the foot of the viewport, which is
-            // the moment the hero stops being the only thing on screen…
-            start: "top bottom",
-            // …and its bottom edge reaching the same place, which is About's
-            // top edge arriving.
+            // The top of the page, stated as a scroll position rather than as
+            // "the runway's top edge reaches the foot of the viewport".
+            //
+            // Those are the same point only where 100svh equals innerHeight.
+            // On iOS they are not: innerHeight reports the LARGE viewport, the
+            // one measured with the toolbar retracted, while the hero above is
+            // sized in svh, the small one. The runway's top edge therefore
+            // starts a toolbar's height above the foot of the viewport, the
+            // relative form resolves to a negative scroll position, and the
+            // hero loads already part-way through its own exit — dimmed and
+            // drifting before the reader has touched anything.
+            start: 0,
+            // The runway's bottom edge reaching the foot of the viewport, which
+            // is About's top edge arriving. Relative is right here: it is a
+            // live measurement either way, in whichever units the browser is
+            // using at the time.
             end: "bottom bottom",
             scrub: SCRUB_LAG,
         },
@@ -140,6 +157,9 @@ const getAboutRestingScrollY = (runway) =>
 
 export function useHeroToAboutHandoff({ displayLineRefs, outroLineRefs, runwayRef }) {
     const cueScrollTweenRef = useRef(null)
+    // Removes whatever abandon listeners the last cue scroll installed, so an
+    // unmount part-way through a scroll does not leave them on the window.
+    const detachRef = useRef(null)
     const [isScrollingToAbout, setIsScrollingToAbout] = useState(false)
 
     useEffect(() => {
@@ -160,7 +180,10 @@ export function useHeroToAboutHandoff({ displayLineRefs, outroLineRefs, runwayRe
         return () => mm.revert()
     }, [displayLineRefs, outroLineRefs, runwayRef])
 
-    useEffect(() => () => cueScrollTweenRef.current?.kill(), [])
+    useEffect(() => () => {
+        cueScrollTweenRef.current?.kill()
+        detachRef.current?.()
+    }, [])
 
     // The shortcut past all of the above. It drives the scroll and nothing else
     // — every fade is scrubbed off that scroll, so this stays a single tween and
@@ -175,11 +198,40 @@ export function useHeroToAboutHandoff({ displayLineRefs, outroLineRefs, runwayRe
 
         setIsScrollingToAbout(true)
 
+        // Hands control back the moment the viewer scrolls for themselves: this
+        // is a 2.4s scripted scroll, and nobody should have to fight it to the
+        // end. Listening for the gestures themselves rather than using
+        // ScrollToPlugin's autoKill, which infers the same intent from
+        // unexpected scroll deltas — on iOS the toolbar collapsing as the scroll
+        // gets underway is exactly such a delta, and it abandons the tween on
+        // the spot, so a tap on the cue appears to do nothing at all.
+        //
+        // touchmove rather than touchstart: the tap that starts the scroll would
+        // otherwise be the gesture that cancels it.
+        const detach = () => {
+            window.removeEventListener("wheel", abandon)
+            window.removeEventListener("touchmove", abandon)
+        }
+
+        const finish = () => {
+            detach()
+            setIsScrollingToAbout(false)
+        }
+
+        const abandon = () => {
+            cueScrollTweenRef.current?.kill()
+            finish()
+        }
+
+        window.addEventListener("wheel", abandon, { passive: true })
+        window.addEventListener("touchmove", abandon, { passive: true })
+        detachRef.current = detach
+
         cueScrollTweenRef.current = gsap.to(window, {
             duration: prefersReducedMotion ? 0 : CUE_SCROLL_DURATION,
             ease: "power2.inOut",
             scrollTo: { y: getAboutRestingScrollY(runway) },
-            onComplete: () => setIsScrollingToAbout(false),
+            onComplete: finish,
         })
     }, [runwayRef])
 

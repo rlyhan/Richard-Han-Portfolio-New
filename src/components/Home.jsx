@@ -84,8 +84,15 @@ const Home = () => {
 
                 {/* The two halves are animated separately rather than as one
                     block, so the name and the availability line leave on their
-                    own beats — the same reason the display lines above stagger. */}
-                <div className="w-full">
+                    own beats — the same reason the display lines above stagger.
+
+                    The bottom padding is clearance for the scroll cue, which is
+                    centred at the foot of the viewport. Below 1280px the name
+                    and the availability line wrap onto separate rows, spanning
+                    the full width, and the cue lands on top of the availability
+                    line; from there up they sit either side of it with the
+                    centre free. */}
+                <div className="w-full pb-16 xl:pb-0">
                     <div className="flex flex-wrap items-end justify-between">
                         <h1
                             ref={(el) => { outroLineRefs.current[0] = el }}
