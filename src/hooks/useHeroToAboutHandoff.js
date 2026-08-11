@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import ScrollToPlugin from "gsap/ScrollToPlugin"
 import ScrollTrigger from "gsap/ScrollTrigger"
+import { getSectionRestingScrollY } from "../helpers/sectionScroll"
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
@@ -147,13 +148,6 @@ const buildAboutRiseTween = ({ runway }) =>
         }
     )
 
-// Where the page comes to rest with About exactly filling the viewport.
-//
-// Measured off the runway rather than off About: About carries the lag
-// transform, and an element's live position includes it, so reading About would
-// aim the lag distance too low.
-const getAboutRestingScrollY = (runway) =>
-    window.scrollY + runway.getBoundingClientRect().bottom
 
 export function useHeroToAboutHandoff({ displayLineRefs, outroLineRefs, runwayRef }) {
     const cueScrollTweenRef = useRef(null)
@@ -191,8 +185,8 @@ export function useHeroToAboutHandoff({ displayLineRefs, outroLineRefs, runwayRe
     const scrollToAbout = useCallback(() => {
         if (cueScrollTweenRef.current?.isActive()) return
 
-        const runway = runwayRef.current
-        if (!runway) return
+        const about = document.querySelector(ABOUT_SELECTOR)
+        if (!about) return
 
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
@@ -230,10 +224,15 @@ export function useHeroToAboutHandoff({ displayLineRefs, outroLineRefs, runwayRe
         cueScrollTweenRef.current = gsap.to(window, {
             duration: prefersReducedMotion ? 0 : CUE_SCROLL_DURATION,
             ease: "power2.inOut",
-            scrollTo: { y: getAboutRestingScrollY(runway) },
+            // The same landing the nav items use, from the same helper: the cue
+            // is another way of asking to go to About, so it has no business
+            // coming to rest anywhere else. Flush to the top of the viewport is
+            // what it used to do, and that put About's heading hard against the
+            // underside of the header bar.
+            scrollTo: { y: getSectionRestingScrollY(about) },
             onComplete: finish,
         })
-    }, [runwayRef])
+    }, [])
 
     return { scrollToAbout, isScrollingToAbout }
 }

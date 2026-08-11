@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
+import { getSectionRestingScrollY } from "../helpers/sectionScroll";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -17,16 +18,6 @@ const HIDE_ABOVE = 80;
 // Movement smaller than this is treated as jitter (trackpad drift, iOS
 // rubber-banding) rather than a change of direction.
 const SCROLL_DELTA = 6;
-
-// A section's resting position in the document, summed from the layout rather
-// than read off its live box. About carries a scroll-driven transform while it
-// climbs over the hero, and a box-based target would aim that offset too low —
-// landing its heading behind this bar.
-const getSectionFlowTop = (element) => {
-    let top = 0;
-    for (let node = element; node; node = node.offsetParent) top += node.offsetTop;
-    return top;
-};
 
 const Header = () => {
     const barRef = useRef(null);
@@ -66,7 +57,7 @@ const Header = () => {
                     // Measured when the scroll starts, not when the click lands,
                     // so a section whose height is still settling is read late
                     // rather than early.
-                    scrollTo: { y: Math.max(getSectionFlowTop(section) - barHeight, 0) },
+                    scrollTo: { y: getSectionRestingScrollY(section, barHeight) },
                 });
             });
         }
