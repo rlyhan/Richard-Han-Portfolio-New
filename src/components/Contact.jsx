@@ -9,8 +9,12 @@ const Contact = () => {
 
     useLetterHop(inviteRef)
 
+    // min-h-svh, not 85% of a viewport: as the last section it has to be tall enough that
+    // the page can still scroll it up to its resting place, where the handoff from
+    // Projects lands it. Short of that the maximum scroll arrives first and Contact never
+    // reaches the top of the viewport.
     return (
-        <PageSection id="contact" additionalClasses="flex items-center justify-center min-h-[85vh]">
+        <PageSection id="contact" additionalClasses="flex items-center justify-center min-h-svh">
             <div className="w-full h-full sm:min-w-xl mx-auto text-center">
                 <SectionHeading label="Contact" />
                 <div className="my-12 md:mt-16 md:mb-24">

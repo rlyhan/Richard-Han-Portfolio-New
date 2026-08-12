@@ -105,10 +105,10 @@ const Home = () => {
                 </div>
             </PageSection>
 
-            {/* The runway: the scroll where the hero holds the viewport alone and
-                empties out, before About's top edge appears. Carries no content, so
-                its only job is height — and it's what the handoff's two
-                ScrollTriggers measure against, hence the ref.
+            {/* The runway: the scroll where the hero holds the viewport alone and empties
+                out, before the handoff takes over into About. Carries no content, so its
+                only job is height — and it's what every trigger in the handoff measures
+                against, hence the ref.
 
                 Reduced motion collapses it: with the fades gone there's nothing to
                 watch, and it would read as a dead screen. */}
