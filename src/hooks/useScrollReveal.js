@@ -12,13 +12,13 @@ const ITEM_SELECTOR = "[data-reveal]"
 // near the document's foot from asking for an end past the maximum scroll, which
 // would leave the last cards stuck part-way through their fade.
 const REVEAL_START = "clamp(top bottom)"
-// A full row finishes at the viewport middle; a row of one finishes at 60%, a
-// little sooner, because a lone item is a wide one and shouldn't still be
+// A full row finishes at the viewport middle; a stack finishes at 60%, a little
+// sooner, because a one-per-row item is a wide one and shouldn't still be
 // arriving after it fills the view. The row end is a default — see the hook's
-// options — while a lone item's is fixed: with nothing to stagger against there
+// options — while the stack's is fixed: with nothing staggered against it there
 // is no row to tighten.
 const ROW_REVEAL_END = "clamp(top center)"
-const LONE_REVEAL_END = "clamp(top 60%)"
+const STACK_REVEAL_END = "clamp(top 60%)"
 
 // How far below its resting place an item starts, in px. A transform rather than
 // a `bottom` offset, which would need position:relative and a repaint per frame.
@@ -68,17 +68,26 @@ const groupIntoRows = (items) =>
         return rows
     }, [])
 
+// Whether a layout puts one item on every row — a mobile grid, a column of
+// full-width cards, a list of articles.
+//
+// Such a layout has no rows to reveal in turn, only a queue of them, and a queue
+// makes the effect the whole experience of the page: every card the reader
+// reaches is mid-fade, so nothing below is ever simply there. Collapsing it is
+// what gives the reveal a place to stop.
+const isStacked = (rows) => rows.every((row) => row.items.length === 1)
+
 // A row arranged so its last item finishes exactly at `end`.
 //
 // A stagger's total length is duration + stagger * (count - 1); pinning that to
-// 1 puts the last landing on the trigger's end. A row of one needs no gap.
+// 1 puts the last landing on the trigger's end.
 //
 // The visible offset between neighbours falls out of the same two numbers:
 // with a linear ease they sit `(gap / itemShare) * lift` px apart while all are
 // in flight. Tighten the row without answering for that and the items travel as
 // one flat block.
-const buildRevealTween = (items, rowEnd, itemShare, lift) => {
-    const gap = items.length > 1 ? (1 - itemShare) / (items.length - 1) : 0
+const buildRowTween = (items, rowEnd, itemShare, lift) => {
+    const gap = (1 - itemShare) / (items.length - 1)
 
     return gsap.fromTo(items,
         { opacity: 0, y: lift },
@@ -95,15 +104,44 @@ const buildRevealTween = (items, rowEnd, itemShare, lift) => {
                 // and sharing a top edge is what made them a row anyway.
                 trigger: items[0],
                 start: REVEAL_START,
-                end: items.length > 1 ? rowEnd : LONE_REVEAL_END,
+                end: rowEnd,
                 scrub: REVEAL_LAG,
             },
         }
     )
 }
 
+// A whole stack rising as one, on the scroll that brings its first item in.
+//
+// No stagger: the point is that the reveal is over by the time the reader is
+// past the first item. Everything below it is already at rest and stays there,
+// however far the stack runs on — so the effect greets the section rather than
+// following the reader down it.
+//
+// A container of a single item takes this path too, which is what it always was:
+// one item, no stagger, and nothing left behind it to wait for.
+const buildStackTween = (items, lift) =>
+    gsap.fromTo(items,
+        { opacity: 0, y: lift },
+        {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: {
+                trigger: items[0],
+                start: REVEAL_START,
+                end: STACK_REVEAL_END,
+                scrub: REVEAL_LAG,
+            },
+        }
+    )
+
 // Every `data-reveal` item inside `containerRef` fading up into place, scrubbed
-// off the scroll that brings its row on screen.
+// off the scroll that brings it on screen.
+//
+// Multi-column layouts reveal a row at a time, each on its own trigger. A layout
+// running one item per row — which is most of them on a phone — reveals in a
+// single pass at the top instead, and is at rest from there down.
 //
 // Pass `revealKey` for containers whose contents are swapped rather than
 // re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
@@ -113,7 +151,8 @@ const buildRevealTween = (items, rowEnd, itemShare, lift) => {
 // it travels, and how far each item rises. A container wanting its rows done
 // sooner has to raise the share as it pulls the end in, or the same animation
 // just plays faster over less scroll — and then wants more lift, since a raised
-// share is what flattens its items against one another.
+// share is what flattens its items against one another. Only `lift` reaches the
+// stacked path, which has no row to place or spread.
 export function useScrollReveal(
     containerRef,
     revealKey,
@@ -137,7 +176,23 @@ export function useScrollReveal(
                     // tab panel stays mounted.
                     .filter((item) => item.offsetParent !== null)
 
-                groupIntoRows(items).forEach((row) => buildRevealTween(row.items, rowEnd, itemShare, lift))
+                if (items.length === 0) return
+
+                const rows = groupIntoRows(items)
+
+                // One trigger for the lot, or one per row — and within a grid, a
+                // row left holding a single item (a trailing third card, say)
+                // takes the stacked path too: there is nothing for it to
+                // stagger against either.
+                if (isStacked(rows)) {
+                    buildStackTween(items, lift)
+                } else {
+                    rows.forEach(({ items: row }) =>
+                        row.length > 1
+                            ? buildRowTween(row, rowEnd, itemShare, lift)
+                            : buildStackTween(row, lift)
+                    )
+                }
             })
 
             // This hook is called where the page has just changed shape, so

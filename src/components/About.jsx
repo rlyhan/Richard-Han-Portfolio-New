@@ -33,8 +33,9 @@ const About = () => {
     // this share the cards sit `(gap / share) * lift` apart mid-flight, so 90px of
     // travel is what puts a visible step back between the second and third.
     //
-    // Only the three-across rows from md up are staggered; below that a row is one
-    // card, which takes the lift alone.
+    // Both settings are for the three-across rows from md up. Below that the cards
+    // are a single column, which the hook reveals as one stack off the first card
+    // — so mobile takes the lift and nothing else.
     useScrollReveal(skillsRef, undefined, { rowEnd: "clamp(top 66.7%)", itemShare: 0.65, lift: 90 })
 
     // The hesitation between About and Projects — the content parks at the middle of
