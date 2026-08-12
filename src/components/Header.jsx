@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
+import { getSectionRestingScrollY } from "../helpers/sectionScroll";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -11,9 +12,17 @@ const NAV_ITEMS = [
     { id: "contact", label: "Contact" },
 ];
 
+// Hide header above this amount so hero loads uninterrupted and a
+// short scroll back up always clears it.
+const HIDE_ABOVE = 80;
+// Smaller movement is jitter (trackpad drift, iOS rubber-banding), not a direction
+// change.
+const SCROLL_DELTA = 6;
+
 const Header = () => {
     const barRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     const scrollToSection = useCallback((selector, isHome) => {
         const barHeight = barRef.current?.offsetHeight ?? 0;
@@ -23,7 +32,9 @@ const Header = () => {
             gsap.to(window, {
                 duration: 1.2,
                 ease: "power3.out",
-                scrollTo: { y: selector, offsetY: barHeight },
+                // The top of the page, not #home: the hero is sticky, so resolving
+                // it as a target reads its stuck position and scrolls nowhere.
+                scrollTo: { y: 0 },
                 onComplete: () => {
                     // Wait for the browser to paint the final scroll position,
                     // then add a short pause before fading Vanta back in.
@@ -33,13 +44,18 @@ const Header = () => {
                 },
             });
         } else {
+            const section = document.querySelector(selector);
+            if (!section) return;
+
             window.dispatchEvent(new Event("vanta:hide"));
             // Wait for fade-out (0.3s) before scrolling
             gsap.delayedCall(0.3, () => {
                 gsap.to(window, {
                     duration: 1.2,
                     ease: "power3.out",
-                    scrollTo: { y: selector, offsetY: barHeight },
+                    // Measured when the scroll starts, not when the click lands, so
+                    // a section still settling is read late rather than early.
+                    scrollTo: { y: getSectionRestingScrollY(section, barHeight) },
                 });
             });
         }
@@ -59,9 +75,53 @@ const Header = () => {
         return () => window.removeEventListener("keydown", onKeyDown);
     }, []);
 
+    // Direction-driven: scrolling down slides the bar in, up slides it out. Reads
+    // are batched into a frame so the scroll handler never touches layout.
+    useEffect(() => {
+        let frame = null;
+        let lastY = window.scrollY;
+
+        const update = () => {
+            frame = null;
+            // Clamped: overscroll reports a negative scrollY, which would read as
+            // an upward move on the way back down.
+            const y = Math.max(window.scrollY, 0);
+            const delta = y - lastY;
+            const atTop = y <= HIDE_ABOVE;
+
+            // Below the threshold lastY is left alone, so a slow drag accumulates
+            // into a direction instead of being discarded each frame. Near the top
+            // there is no direction to read: hidden wins.
+            if (!atTop && Math.abs(delta) < SCROLL_DELTA) return;
+            lastY = y;
+
+            const revealed = !atTop && delta > 0;
+            setIsVisible(revealed);
+            if (!revealed) setIsOpen(false);
+        };
+
+        const onScroll = () => {
+            if (frame === null) frame = requestAnimationFrame(update);
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            if (frame !== null) cancelAnimationFrame(frame);
+        };
+    }, []);
+
     return (
         <header
-            className="fixed top-0 left-0 w-full z-50 bg-neutral-900"
+            className={`fixed top-0 left-0 w-full z-50 bg-carbon-900/80 backdrop-blur-md shadow-bar transition-[translate,opacity] duration-300 ease-out motion-reduce:transition-none ${isVisible
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-full opacity-0 pointer-events-none"
+                }`}
+            // `inert`, not `aria-hidden`: the bar holds focusable buttons, and
+            // aria-hidden would hide them from screen readers while leaving them in
+            // the tab order. pointer-events-none above is the fallback for browsers
+            // without inert.
+            inert={!isVisible}
         >
             <nav ref={barRef} className="max-w-7xl mx-auto flex items-end justify-end px-6 py-4">
                 {/* Desktop nav */}
@@ -71,7 +131,7 @@ const Header = () => {
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="text-white hover:text-gray-400"
+                                className="text-paper hover:text-neon transition-colors"
                             >
                                 {item.label}
                             </button>
@@ -82,7 +142,7 @@ const Header = () => {
                 {/* Mobile hamburger */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:text-gray-400"
+                    className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-paper hover:text-neon transition-colors"
                     aria-label="Open menu"
                     aria-expanded={isOpen}
                     aria-controls="mobile-menu"
@@ -110,13 +170,13 @@ const Header = () => {
                 className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-200 ease-out ${isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
                     }`}
             >
-                <ul className="px-6 pb-4 pt-2 space-y-2 border-t border-white/10">
+                <ul className="px-6 pb-4 pt-2 space-y-2">
                     {NAV_ITEMS.map((item) => (
                         <li key={item.id}>
                             <button
                                 type="button"
                                 onClick={() => handleNavClick(item.id)}
-                                className="w-full text-left py-2 text-white hover:text-gray-400"
+                                className="w-full text-left py-2 text-paper hover:text-neon transition-colors"
                             >
                                 {item.label}
                             </button>

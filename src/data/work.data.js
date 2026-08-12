@@ -109,39 +109,35 @@ const TECH = [
     }
 ]
 
+// Each list item carries its own icon: the skills render as one card per item, so
+// a single group-level icon would repeat across every card in the row.
 const SKILLS = [
     {
         id: "solution-skill",
         heading: "Solutions",
         listItems: [
-            "Design and product-led UI development with a focus on interaction and detail",
-            "API, CMS and external service integration",
-            "Database query optimisation",
-            "SEO, accessibility, and Core Web Vitals improvements",
-            "Analytics and A/B testing implementation"
-        ],
-        icon: "tool"
+            { text: "Building frontends pixel-perfect to design that brings your brand to life for users", icon: "pen" },
+            { text: "Integrating editor-friendly headless CMS and eCommerce platforms and complex domain data", icon: "cloud" },
+            { text: "Measuring customer engagement through SEO, accessibility, and analytics", icon: "search" },
+        ]
     },
     {
         id: "collaboration-skill",
         heading: "Collaboration",
         listItems: [
-            "Directly works with stakeholders to optimise solutions and ensure feasibility",
-            "Technical decisions based on critical timelines and business constraints",
-            "Supports team development through mentorship and knowledge sharing",
-        ],
-        icon: "users"
+            { text: "Clearly guiding clients through business impact and technical feasibility", icon: "users" },
+            { text: "Effective cross-team communication with designers, developers and product teams", icon: "activity" },
+            { text: "Supports team development through mentorship and knowledge sharing", icon: "file" },
+        ]
     },
     {
         id: "workflow-skill",
         heading: "Workflow",
         listItems: [
-            "AI-assisted development workflows for faster iteration and improved consistency",
-            "Automated code review and quality checks for performance, security, and maintainability",
-            "CI/CD pipelines with integrated testing and deployment automation",
-            "Documentation and error reporting systems for improved observability and debugging"
-        ],
-        icon: "chart"
+            { text: "AI-assisted development that accelerates delivery", icon: "robot" },
+            { text: "High standard code maintainability and safe deployment practices", icon: "code" },
+            { text: "Implementing effective short-term solutions as well as long-term scalable implementations", icon: "tool" },
+        ]
     },
 ]
 

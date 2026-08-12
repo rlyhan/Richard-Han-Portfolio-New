@@ -13,14 +13,27 @@
        url(/fonts/fjalla-one-latin-400-normal.woff) format('woff');
 }
 
+@utility no-scrollbar {
+  /* Firefox. */
+  scrollbar-width: none;
+  /* Legacy Edge/IE. */
+  -ms-overflow-style: none;
+
+  /* Safari and Chrome. Nested so Tailwind keeps it with the utility. */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
   :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+    /* The page is dark-only — there is no light variant to opt into, and
+       leaving "light dark" here let the UA paint light form controls. */
+    color-scheme: dark;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -29,8 +42,20 @@
   }
 
   body {
-    background-color: #18181b;
+    @apply bg-carbon-900 text-paper;
     width: 100%;
+  }
+
+  /* The accent doubles as the selection colour, so highlighting text reads as
+     part of the scheme rather than as the browser's default blue. */
+  ::selection {
+    @apply bg-neon text-carbon-950;
+  }
+
+  /* Nothing in the app sets its own focus style, and the UA default ring is
+     near-invisible on carbon-950. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-neon;
   }
 
   button {
@@ -42,3 +67,4 @@
     cursor: pointer;
   }
 }
+

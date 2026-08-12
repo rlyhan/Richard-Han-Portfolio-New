@@ -1,28 +1,123 @@
+import { useRef } from "react"
+import cn from "classnames"
 import PageSection from "./layout/PageSection"
+import ScrollCue from "./common/Buttons/ScrollCue"
+import { useHeroToAboutHandoff } from "../hooks/useHeroToAboutHandoff"
+import { useIsNearPageTop } from "../hooks/useIsNearPageTop"
+import { useKeyShortcut } from "../hooks/useKeyShortcut"
+import { useRollingDisplayLines } from "../hooks/useRollingDisplayLines"
+
+// Each line renders both of its strings and rolls between them — see
+// useRollingDisplayLines for why the pair has to share one grid cell.
+const TEXT_LINES = {
+    line1: ["Tailored to design", "Modern + legacy builds"],
+    line2: ["Collaboration", "AI-empowered"],
+    line3: ["Scalable architecture", "Agile development"],
+    line4: ["User-focused", "SEO-optimised"]
+}
+
+// Scrolled less than this, the hero still owns the viewport, so the cue and its
+// shortcut both still apply.
+const NEAR_TOP_THRESHOLD = 40
 
 const Home = () => {
+    const displayLineRefs = useRef([])
+    const outroLineRefs = useRef([])
+    const runwayRef = useRef(null)
+
+    const { scrollToAbout, isScrollingToAbout } = useHeroToAboutHandoff({
+        displayLineRefs,
+        outroLineRefs,
+        runwayRef,
+    })
+
+    // The cue belongs to the top of the page: any scroll away from the hero retires
+    // it, including the one the cue itself starts.
+    const isCueVisible = useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToAbout
+
+    // Space is the cue's gesture from the keyboard, bound on the same terms: past
+    // the hero it goes back to being page-down.
+    useKeyShortcut("Space", scrollToAbout, { enabled: isCueVisible })
+
+    useRollingDisplayLines(displayLineRefs)
+
+    // min-h, not h: on a viewport too short for four display lines plus the name
+    // block, the hero grows rather than clipping.
+    //
+    // sticky, so the hero holds the viewport while About scrolls over it. Its
+    // containing block is the wrapper it shares with About in App, which ends the
+    // stickiness once About has fully covered it.
     return (
-        <PageSection id="home" additionalClasses="flex items-center justify-center min-h-screen">
-            <div className="w-full">
-                <h1 className="font-heading uppercase mb-4 line-height">
-                    <span className="text-neutral-100 text-6xl sm:text-8xl block mb-2">Richard Han</span>
-                    <span className="text-teal-400 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-xl sm:text-3xl block">Software Developer | Front End | Full Stack </span>
-                </h1>
+        <>
+            <PageSection id="home" additionalClasses="sticky top-0 flex flex-col min-h-svh">
+                <div className="flex-1 flex flex-col justify-center gap-2 py-8 sm:py-12">
+                    {Object.entries(TEXT_LINES).map(([key, [first, second]], i) => (
+                        <div
+                            key={key}
+                            ref={(el) => { displayLineRefs.current[i] = el }}
+                            className={cn(
+                                // 7vw fits the longest string, "Modern + legacy builds", at
+                                // the narrowest viewport; the 118px ceiling is that same
+                                // string against the 1184px max-w-7xl container, which vw
+                                // would outgrow once the width stops scaling. nowrap is the
+                                // backstop: where system-ui runs wider than measured, the
+                                // text overflows sideways rather than wrapping, which would
+                                // double the cell and break the roll.
+                                "grid overflow-hidden leading-none whitespace-nowrap text-[length:min(7vw,118px)]",
+                                // Neon and paper alternate down the stack, so the accent is
+                                // structural here rather than a highlight — which is why it
+                                // stays rare elsewhere.
+                                i % 2 ? "text-right text-paper" : "text-neon"
+                            )}
+                        >
+                            {/* Both strings share one grid cell, so the clip height is the
+                                taller of the two and nothing shifts as they roll. The bottom
+                                padding keeps leading-none from cropping descenders. */}
+                            <p className="col-start-1 row-start-1 pb-[0.12em]">{first}</p>
+                            <p className="col-start-1 row-start-1 pb-[0.12em] opacity-0">{second}</p>
+                        </div>
+                    ))}
+                </div>
 
-                <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-sm sm:text-lg font-medium mb-4">
-                    Turning ideas and designs into engaging user experiences
-                </p>
+                {/* Animated as two halves, so the name and the availability line
+                    leave on their own beats — same reason the display lines stagger.
 
-                <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
-                    Currently based in: <span className="text-cyan-300">Auckland, NZ</span>
-                </p>
+                    The bottom padding is clearance for the scroll cue, centred at the
+                    foot of the viewport. Below 1280px the two wrap onto separate
+                    full-width rows and the cue lands on the availability line; from
+                    there up they sit either side of it. */}
+                <div className="w-full pb-16 xl:pb-0">
+                    <div className="flex flex-wrap items-end justify-between">
+                        <h1
+                            ref={(el) => { outroLineRefs.current[0] = el }}
+                            className="font-heading uppercase mb-10 line-height"
+                        >
+                            <span className="block text-neon text-3xl mr-2">Richard Han</span>
+                            <span className="block text-paper text-xl sm:text-2xl">Front End | Full Stack Developer</span>
+                        </h1>
+                        <p
+                            ref={(el) => { outroLineRefs.current[1] = el }}
+                            className="text-mute text-sm sm:text-lg font-medium mb-10"
+                        >
+                            Open to opportunities | Currently based in: <span className="text-neon">Auckland, NZ</span>
+                        </p>
+                    </div>
+                </div>
+            </PageSection>
 
-                <p className="text-neutral-100/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] text-lg sm:text-2xl font-semibold">
-                    Open to opportunities
-                </p>
-            </div>
+            {/* The runway: the scroll where the hero holds the viewport alone and empties
+                out, before the handoff takes over into About. Carries no content, so its
+                only job is height — and it's what every trigger in the handoff measures
+                against, hence the ref.
 
-        </PageSection>
+                Reduced motion collapses it: with the fades gone there's nothing to
+                watch, and it would read as a dead screen. */}
+            <div ref={runwayRef} aria-hidden="true" className="h-[80svh] motion-reduce:h-0" />
+
+            {/* Retired the moment the page leaves the hero, so it never floats over
+                About as an invitation to a section already on screen. */}
+            <ScrollCue onClick={scrollToAbout} visible={isCueVisible} />
+        </>
     )
 }
 

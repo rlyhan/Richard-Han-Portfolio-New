@@ -38,9 +38,9 @@ const Image = ({
                         className="
               pointer-events-none
               absolute inset-0 z-10
-              bg-[#1a1a1a]/20
+              bg-carbon-950/25
               transition-colors duration-300 ease-in-out
-              group-hover:bg-black/70
+              group-hover:bg-carbon-950/75
             "
                     />
 
@@ -57,9 +57,9 @@ const Image = ({
                 opacity-0 translate-y-2
                 group-hover:opacity-100 group-hover:translate-y-0
                 transition-all duration-300 ease-out
-                bg-white text-black
+                bg-neon text-carbon-950
                 px-5 py-2 rounded-md
-                text-sm font-medium
+                text-sm font-semibold
               "
                         >
                             {hoverLabel}

@@ -1,4 +1,5 @@
 import ActivityIcon from "./ActivityIcon";
+import ArrowDownIcon from "./ArrowDownIcon";
 import BookIcon from "./BookIcon";
 import Chart from "./Chart";
 import CloudIcon from "./CloudIcon";
@@ -17,6 +18,7 @@ import UsersIcon from "./UsersIcon";
 
 export {
     ActivityIcon,
+    ArrowDownIcon,
     BookIcon,
     Chart,
     CloudIcon,

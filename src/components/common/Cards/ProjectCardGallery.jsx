@@ -3,7 +3,8 @@ import Pill from "../Pill"
 
 const ProjectCardGallery = ({ project, onClick }) => {
     return (
-        <article className="flex flex-col group border border-white/10 rounded-lg overflow-hidden cursor-pointer"
+        // data-reveal is useScrollReveal's handle; it sets opacity and transform here.
+        <article data-reveal className="flex flex-col group bg-carbon-800 shadow-card rounded-lg overflow-hidden cursor-pointer transition-[background-color,box-shadow] hover:bg-carbon-700 hover:shadow-card-hover"
             onClick={onClick}>
             {project["images"] &&
                 <Image
@@ -18,13 +19,13 @@ const ProjectCardGallery = ({ project, onClick }) => {
             }
             <div className="p-6 flex flex-col flex-1 gap-4">
                 <header className="mb-auto">
-                    <h3 className="text-xl font-medium mb-2">{project.name}</h3>
-                    <p className="text-gray-400 text-sm">
+                    <h3 className="text-xl font-medium mb-2 text-paper">{project.name}</h3>
+                    <p className="text-mute text-sm">
                         {project.description}
                     </p>
                 </header>
                 <div className="flex gap-2 mt-auto">
-                    {project.award && <Pill label={project.award.description} theme="award" />}
+                    {project.award && <Pill label={project.award.description} theme="award-muted" />}
                     <Pill label={project.client ? "Client" : "Personal"} />
                 </div>
             </div>
