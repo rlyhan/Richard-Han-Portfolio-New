@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import TabButton from "./TabButton";
 import TabContent from "./TabContent";
 import { useScrollReveal } from "../../../hooks/useScrollReveal";
+import { useTabSelect } from "../../../hooks/useTabSelect";
 
 export default function Tabs({
     tabs,                 // [{ id, tabName, useGrid?, render? or children }]
@@ -18,6 +19,10 @@ export default function Tabs({
 
     const wrapRef = useRef(null);
     const panelRefs = useRef({}); // { [id]: HTMLElement }
+
+    // The click lands the row at the top of the viewport, so the panel taking over
+    // opens from its start rather than part-way down. See useTabSelect.
+    const { rowRef, selectTab } = useTabSelect(activeTab, setActiveTab);
 
     // Every panel is mounted at once with the inactive ones display:none, so this
     // points at the wrapper — the reveal filters the hidden ones out itself. Keyed on
@@ -58,7 +63,7 @@ export default function Tabs({
 
     return (
         <div className={className}>
-            <div className="relative -mx-8 md:mx-0">
+            <div ref={rowRef} className="relative -mx-8 md:mx-0">
                 <div role="tablist" className="flex gap-2 md:gap-4 mb-12 overflow-x-auto no-scrollbar px-8 md:px-0" aria-label={ariaLabel}>
                     {tabs.map((t) => (
                         <TabButton
@@ -66,7 +71,7 @@ export default function Tabs({
                             id={t.id}
                             tabName={t.tabName}
                             activeTab={activeTab}
-                            setActiveTab={setActiveTab}
+                            setActiveTab={selectTab}
                         />
                     ))}
                 </div>

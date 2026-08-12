@@ -4,7 +4,7 @@ import PageSection from "./layout/PageSection"
 import SectionHeading from "./common/SectionHeading"
 import TabButton from "./common/Tabs/TabButton"
 import ScrollCue from "./common/Buttons/ScrollCue"
-import { useTabFade } from "../hooks/useTabFade"
+import { useTabSelect } from "../hooks/useTabSelect"
 import { useScrollReveal } from "../hooks/useScrollReveal"
 import { useSectionHandoff } from "../hooks/useSectionHandoff"
 import { useKeyShortcut } from "../hooks/useKeyShortcut"
@@ -35,13 +35,17 @@ const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedProject, setSelectedProject] = useState(null)
 
-    // One panel serves all three categories, so switching tabs swaps its contents
-    // without the element changing. This replays the fade on that swap; see
-    // useTabFade for why it isn't a CSS animation.
     const panelRef = useRef(null)
     const contentRef = useRef(null)
     const runwayRef = useRef(null)
-    useTabFade(panelRef, activeTab)
+
+    // The click lands the row at the top of the viewport, so the filtered list opens
+    // from its first card rather than part-way down.
+    //
+    // panelRef because one panel serves all three categories: switching tabs swaps its
+    // contents without the element changing, so the fade over that swap has to be
+    // replayed by hand. See useTabSelect for why it isn't a CSS animation.
+    const { rowRef, selectTab } = useTabSelect(activeTab, setActiveTab, { panelRef })
 
     // The hesitation between Projects and Contact, on the same terms as About's — see
     // useSectionHandoff.
@@ -90,7 +94,10 @@ const Projects = () => {
                     before Contact. */}
                 <div ref={contentRef} className="max-w-6xl mx-auto w-full">
                     <SectionHeading label="Projects" />
-                    <div className="flex justify-between">
+                    {/* The ref sits on the whole row, not the tablist: the display-mode
+                        buttons share the line, so the row's top edge is what a tab click
+                        lands against. */}
+                    <div ref={rowRef} className="flex justify-between">
                         <div role="tablist" className="flex gap-4 mb-6" aria-label="Project category tabs">
                             {tabs.map((t) => (
                                 <TabButton
@@ -98,7 +105,7 @@ const Projects = () => {
                                     id={t.id}
                                     tabName={t.tabName}
                                     activeTab={activeTab}
-                                    setActiveTab={setActiveTab}
+                                    setActiveTab={selectTab}
                                 />
                             ))}
                         </div>
