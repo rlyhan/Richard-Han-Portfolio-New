@@ -1,7 +1,6 @@
 const IconCard = ({ id, icon, text }) => {
     return (
-        // data-reveal is the reveal's handle on the card — see useScrollReveal,
-        // which is what sets opacity and transform here
+        // data-reveal is useScrollReveal's handle; it sets opacity and transform here
         <div data-reveal className="flex items-center gap-6 p-8 rounded-xl bg-transparent border border-neon transition-colors">
             <div className="shrink-0">
                 {icon ? (

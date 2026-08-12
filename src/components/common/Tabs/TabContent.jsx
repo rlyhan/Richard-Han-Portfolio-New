@@ -6,12 +6,12 @@ const TabContent = forwardRef(function TabContent(
 ) {
     const isActive = activeTab === id;
 
-    // Only the panel being shown fades; the outgoing one is cut immediately so
-    // the two never overlap and shove each other around in the flow.
+    // Only the incoming panel fades; the outgoing one is cut immediately so the two
+    // never overlap and shove each other around in the flow.
     //
-    // An animation rather than a transition, because the flip from display:none
-    // to block is what restarts it — a transition can't fire on an element that
-    // arrives already at its final opacity.
+    // An animation, not a transition: the flip from display:none to block is what
+    // restarts it, and a transition can't fire on an element that arrives already at
+    // its final opacity.
     const visibility = isActive
         ? "block motion-safe:animate-tab-fade-in"
         : "hidden";

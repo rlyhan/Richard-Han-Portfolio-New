@@ -12,11 +12,11 @@ const NAV_ITEMS = [
     { id: "contact", label: "Contact" },
 ];
 
-// The bar never shows this close to the top, so the hero is seen uninterrupted
-// on first load and a short scroll back up always clears it.
+// Hide header above this amount so hero loads uninterrupted and a
+// short scroll back up always clears it.
 const HIDE_ABOVE = 80;
-// Movement smaller than this is treated as jitter (trackpad drift, iOS
-// rubber-banding) rather than a change of direction.
+// Smaller movement is jitter (trackpad drift, iOS rubber-banding), not a direction
+// change.
 const SCROLL_DELTA = 6;
 
 const Header = () => {
@@ -32,9 +32,8 @@ const Header = () => {
             gsap.to(window, {
                 duration: 1.2,
                 ease: "power3.out",
-                // The top of the page rather than #home: the hero is sticky, so
-                // resolving it as a target reads its stuck position — which is
-                // already at the viewport top — and scrolls nowhere.
+                // The top of the page, not #home: the hero is sticky, so resolving
+                // it as a target reads its stuck position and scrolls nowhere.
                 scrollTo: { y: 0 },
                 onComplete: () => {
                     // Wait for the browser to paint the final scroll position,
@@ -54,9 +53,8 @@ const Header = () => {
                 gsap.to(window, {
                     duration: 1.2,
                     ease: "power3.out",
-                    // Measured when the scroll starts, not when the click lands,
-                    // so a section whose height is still settling is read late
-                    // rather than early.
+                    // Measured when the scroll starts, not when the click lands, so
+                    // a section still settling is read late rather than early.
                     scrollTo: { y: getSectionRestingScrollY(section, barHeight) },
                 });
             });
@@ -77,24 +75,23 @@ const Header = () => {
         return () => window.removeEventListener("keydown", onKeyDown);
     }, []);
 
-    // Direction-driven: scrolling down slides the bar in, scrolling up slides
-    // it back out. Reads are batched into a frame so the scroll handler itself
-    // never touches layout.
+    // Direction-driven: scrolling down slides the bar in, up slides it out. Reads
+    // are batched into a frame so the scroll handler never touches layout.
     useEffect(() => {
         let frame = null;
         let lastY = window.scrollY;
 
         const update = () => {
             frame = null;
-            // Clamped because overscroll can report a negative scrollY, which
-            // would otherwise read as an upward move on the way back down.
+            // Clamped: overscroll reports a negative scrollY, which would read as
+            // an upward move on the way back down.
             const y = Math.max(window.scrollY, 0);
             const delta = y - lastY;
             const atTop = y <= HIDE_ABOVE;
 
-            // Below the delta threshold lastY is left alone, so a slow drag
-            // accumulates into a direction instead of being discarded frame by
-            // frame. Near the top there is no direction to read: hidden wins.
+            // Below the threshold lastY is left alone, so a slow drag accumulates
+            // into a direction instead of being discarded each frame. Near the top
+            // there is no direction to read: hidden wins.
             if (!atTop && Math.abs(delta) < SCROLL_DELTA) return;
             lastY = y;
 
@@ -116,22 +113,14 @@ const Header = () => {
 
     return (
         <header
-            // Translucent rather than solid: the bar has to sit over the hero's
-            // full-bleed display lines, and a hard block cut a visible seam across
-            // them. Borderless, so the blur and the shadow's falloff are what end
-            // the bar instead of a hairline.
-            // Tailwind v4's translate utilities set the standalone `translate`
-            // property, not `transform` — transitioning `transform` here would
-            // fade the bar in while snapping it into place.
             className={`fixed top-0 left-0 w-full z-50 bg-carbon-900/80 backdrop-blur-md shadow-bar transition-[translate,opacity] duration-300 ease-out motion-reduce:transition-none ${isVisible
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-full opacity-0 pointer-events-none"
                 }`}
-            // `inert` rather than `aria-hidden`: the bar holds focusable
-            // buttons, and aria-hidden would hide them from screen readers
-            // while leaving them in the tab order. inert takes them out of
-            // both. pointer-events-none above stays as the fallback for
-            // browsers without inert.
+            // `inert`, not `aria-hidden`: the bar holds focusable buttons, and
+            // aria-hidden would hide them from screen readers while leaving them in
+            // the tab order. pointer-events-none above is the fallback for browsers
+            // without inert.
             inert={!isVisible}
         >
             <nav ref={barRef} className="max-w-7xl mx-auto flex items-end justify-end px-6 py-4">

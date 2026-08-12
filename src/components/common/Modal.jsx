@@ -5,8 +5,7 @@ import { useScrollLock } from "../../hooks/useScrollLock";
 const Modal = ({ isOpen, onClose, children }) => {
     const [entered, setEntered] = useState(false);
 
-    // The modal's own business rather than the caller's: it is the thing
-    // covering the page, so it is the thing that has to hold the page still.
+    // Lock background scroll when the modal is open
     useScrollLock(isOpen);
 
     useEffect(() => {
@@ -34,8 +33,6 @@ const Modal = ({ isOpen, onClose, children }) => {
     return (
         <div
             className={classNames(
-                // The page is already near-black, so a plain dark scrim can't
-                // separate the panel from what's behind it — the blur does that work
                 "fixed inset-0 z-50 flex items-center justify-center bg-carbon-950/85 backdrop-blur-sm",
                 "transition-opacity duration-200",
                 entered ? "opacity-100" : "opacity-0"
@@ -51,11 +48,10 @@ const Modal = ({ isOpen, onClose, children }) => {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-title"
-                // Opts this subtree out of Lenis entirely, so the panel keeps
-                // native wheel scrolling. Without it Lenis cancels the wheel
-                // event on the way past and the panel never scrolls — it is
-                // stopped while the modal is open, and a stopped Lenis
-                // swallows the gesture rather than letting it through.
+                // Opts this subtree out of Lenis, so the panel keeps native wheel
+                // scrolling. Without it Lenis cancels the wheel event on the way past
+                // and — being stopped while the modal is open — swallows the gesture
+                // rather than passing it on, so the panel never scrolls.
                 data-lenis-prevent
                 onMouseDown={(e) => e.stopPropagation()}
             >

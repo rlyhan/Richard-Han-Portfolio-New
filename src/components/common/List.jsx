@@ -1,8 +1,5 @@
 import IconRenderer from "../icons/IconRenderer";
 
-// iconStyles stays caller-controlled: every surface is dark now, but a list on a
-// raised carbon-800 card and a list in the modal's recessed well want different
-// weights of accent
 const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, borderColor = null, containerStyles = null, textStyles = null, iconStyles = "text-neon", splitFromMobile = false }) => {
     // Split evenly rather than at a fixed index, so a 6-item list reads 3/3 instead of 5/1
     const splitAt = listItems.length > 5 ? Math.ceil(listItems.length / 2) : listItems.length;
@@ -11,13 +8,9 @@ const List = ({ listItems = [], keyPrefix, icon = null, backgroundColor = null, 
 
     const Icon = icon ? <IconRenderer icon={icon} className={`h-4 w-4 mt-1 shrink-0 ${iconStyles}`} /> : null
 
-    // Only fall back to a background when the caller hasn't set one — containerStyles
-    // carries its own bg, and emitting a second bg-* class here left the two fighting
-    // over Tailwind's stylesheet order
     const backgroundColorClass = backgroundColor ?? ""
     const borderColorClass = borderColor ? `border ${borderColor}` : ""
     const containerClasses = containerStyles ?? "p-4 rounded-md bg-carbon-800 shadow-card"
-    // default ink matches the default surface above — keep the two in step
     const textClasses = textStyles ?? "text-paper text-sm"
 
     // With a second column of items, split side by side from md up — or from the

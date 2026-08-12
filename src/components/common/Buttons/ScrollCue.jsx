@@ -7,9 +7,9 @@ const BOUNCE_DISTANCE = 10
 const BOUNCE_DURATION = 0.9
 const FADE_DURATION = 0.35
 
-// A floating hint at the foot of the hero that hands the viewer into the next
-// section. The bounce lives on an inner element rather than on the button so
-// the infinite y tween and the visibility fade never write to the same target.
+// A floating hint at the foot of the hero, handing the viewer into the next section.
+// The bounce lives on an inner element so the infinite y tween and the visibility
+// fade never write to the same target.
 const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) => {
     const containerRef = useRef(null)
     const arrowRef = useRef(null)
@@ -42,15 +42,15 @@ const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) 
     return (
         <div
             ref={containerRef}
-            // Fixed rather than pinned to the hero: the cue has to hold its
-            // place at the foot of the viewport on any hero height, and it is
-            // the only thing on screen that should not move as the hero fades.
+            // Fixed rather than pinned to the hero: it holds the foot of the viewport
+            // at any hero height, and is the one thing that shouldn't move as the
+            // hero fades.
             className={cn(
                 "fixed inset-x-0 bottom-6 z-40 flex justify-center",
                 !visible && "pointer-events-none"
             )}
-            // Matches the header's approach — the cue is a real button, so
-            // hiding it visually has to take it out of the tab order too.
+            // As in the header: a real button, so hiding it visually has to take it
+            // out of the tab order too.
             inert={!visible}
         >
             <button

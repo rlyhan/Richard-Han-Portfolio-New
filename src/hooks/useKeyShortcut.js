@@ -1,18 +1,16 @@
 import { useEffect } from "react"
 
-// Controls where the key already means something. A page-level shortcut must
-// not fire on top of a focused control's own behaviour, or both run — a button
-// bound to the same key would answer the press twice.
+// Where the key already means something: a page-level shortcut mustn't fire on
+// top of a focused control's own behaviour, or a button bound to the same key
+// answers the press twice.
 const INTERACTIVE_ELEMENTS = "button, a, input, textarea, select, [contenteditable]"
 
-// Runs `handler` on a bare press of `code`, page-wide, and only while `enabled`
-// — the listener is not even bound otherwise, so a shortcut that has stopped
-// applying cannot intercept the key.
+// Runs `handler` on a bare press of `code`, page-wide, and only while `enabled` —
+// the listener isn't bound otherwise, so a shortcut that no longer applies can't
+// intercept the key.
 //
-// Deliberately narrow about what counts as a press: a held key is the browser
-// doing its own repeat, and any modifier makes it a different shortcut
-// altogether. The default is prevented, so the key's native behaviour does not
-// run alongside the handler.
+// Narrow about what counts as a press: a held key is the browser's own repeat, and
+// any modifier makes it a different shortcut. The default is prevented.
 //
 // `handler` should be stable (useCallback), or the listener rebinds each render.
 export function useKeyShortcut(code, handler, { enabled = true } = {}) {

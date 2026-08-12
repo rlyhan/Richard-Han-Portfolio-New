@@ -19,11 +19,9 @@ export default function Tabs({
     const wrapRef = useRef(null);
     const panelRefs = useRef({}); // { [id]: HTMLElement }
 
-    // Every panel is mounted at once and the inactive ones are display:none, so
-    // this is pointed at the wrapper holding all of them rather than at any one
-    // panel — the reveal filters the hidden ones out itself. Keyed on activeTab
-    // because a switch changes which items have a layout to be measured against,
-    // and the panel taking over has never been measured at all.
+    // Every panel is mounted at once with the inactive ones display:none, so this
+    // points at the wrapper — the reveal filters the hidden ones out itself. Keyed on
+    // activeTab because the panel taking over has never been measured.
     useScrollReveal(wrapRef, activeTab);
 
     const measure = () => {
@@ -60,12 +58,6 @@ export default function Tabs({
 
     return (
         <div className={className}>
-            {/* Pulled out to the viewport edges on small screens, cancelling the
-                page gutter on main, so the row scrolls off the edge of the
-                screen instead of being cut off at the gutter. The padding puts
-                back what the margin took, keeping the first and last button
-                lined up with the content either side of them when the row is
-                at rest. Only below md — above it the row fits. */}
             <div className="relative -mx-8 md:mx-0">
                 <div role="tablist" className="flex gap-2 md:gap-4 mb-12 overflow-x-auto no-scrollbar px-8 md:px-0" aria-label={ariaLabel}>
                     {tabs.map((t) => (

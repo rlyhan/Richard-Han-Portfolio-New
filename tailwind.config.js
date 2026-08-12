@@ -15,22 +15,20 @@ export default {
             // Single source of truth for the palette — index.css pulls the same
             // values back out with @apply rather than restating any hex.
             //
-            // Cards carry no border: they read as cards because the fill is
-            // LIGHTER than the page (the dark-UI convention) and a black shadow
-            // darkens the page right at their edge. That only works because the
-            // page sits at carbon-900 rather than at true black — on #07090B a
-            // black shadow has nothing left to darken and lands at 1.05:1.
+            // Cards carry no border: they read as cards because the fill is LIGHTER
+            // than the page and a black shadow darkens the page at their edge. That
+            // needs the page at carbon-900, not true black — on #07090B the shadow
+            // has nothing left to darken and lands at 1.05:1.
             colors: {
                 carbon: {
                     950: "#080C0F", // ink on a neon fill; the shadow's base
                     900: "#12181E", // page background
-                    850: "#26303A", // modal panel. Can't go darker than this: the
-                                    // scrim behind it composites to #0a0e11, and by
-                                    // carbon-900 the panel is 1.08:1 against that —
-                                    // gone. Here it still holds 1.45:1.
+                    850: "#26303A", // modal panel. No darker: the scrim behind
+                                    // composites to #0a0e11, where carbon-900 would be
+                                    // 1.08:1 — gone. This holds 1.45:1.
                     800: "#2E3B47", // card surface — 1.58:1 above the page
-                    700: "#364450", // card hover. Deliberately a small step: any
-                                    // lighter and `mute` drops under AA on it
+                    700: "#364450", // card hover. A small step on purpose: any lighter
+                                    // and `mute` drops under AA on it
                     600: "#4A5966", // filled controls and pills
                     400: "#8593A0", // de-emphasised ink, e.g. the footer (5.71:1)
                 },
@@ -47,24 +45,21 @@ export default {
                     500: NEON,
                     600: "#00B89E", // pressed
                 },
-                // A second accent, scoped to awards and nothing else. An award is a
-                // different KIND of fact from what neon marks (state, interactivity),
-                // so it earns its own colour — but the moment gold appears anywhere
-                // else it stops reading as "achievement" and the page is just
-                // two-toned. 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
+                // A second accent, scoped to awards and nothing else: an award is a
+                // different kind of fact from what neon marks (state, interactivity).
+                // The moment gold appears elsewhere it stops reading as achievement.
+                // 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
                 gold: {
                     DEFAULT: "#FFD447",
                     400: "#FFE27A", // hover on the filled, linked variant
                 },
             },
             boxShadow: {
-                // Two layers on purpose: a tight core that darkens the page right
-                // at the card's edge (this is what replaces the border line), and
-                // a wide soft falloff that reads as height.
+                // Two layers: a tight core darkening the page at the card's edge (this
+                // replaces the border line), and a wide falloff that reads as height.
                 card: "0 1px 2px rgba(0, 0, 0, 0.6), 0 10px 24px -6px rgba(0, 0, 0, 0.7)",
                 // Hover adds a neon bloom. On a dark page a bigger black shadow is
-                // nearly invisible, so the accent is what actually signals the
-                // hover — it replaces the neon border the cards used to grow.
+                // nearly invisible, so the accent is what signals the hover.
                 "card-hover": `0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(${NEON_RGB}, 0.35)`,
                 bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
                 modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
@@ -73,15 +68,13 @@ export default {
                 heading: ['"Fjalla One"', 'system-ui', 'sans-serif'],
                 sans: ['system-ui', 'sans-serif'],
             },
-            // The fade tab panels enter on. Used by panels that swap via
-            // `display`, where the flip restarts the animation on its own; a
-            // transition would never fire, since the incoming panel goes straight
-            // from display:none to its final opacity.
+            // The fade tab panels enter on. For panels that swap via `display`, where
+            // the flip restarts the animation itself; a transition would never fire,
+            // since the incoming panel goes straight to its final opacity.
             //
-            // The projects grid can't use this — it re-filters one panel in place,
-            // so nothing ever changes for CSS to react to — and runs the same fade
-            // from src/hooks/useTabFade.js. Keep the duration and easing below in
-            // step with FADE_MS/FADE_EASING there, or the two drift apart.
+            // The projects grid re-filters one panel in place, so nothing changes for
+            // CSS to react to — it runs the same fade from src/hooks/useTabFade.js.
+            // Keep the duration and easing in step with FADE_MS/FADE_EASING there.
             keyframes: {
                 "tab-fade-in": {
                     from: { opacity: "0" },

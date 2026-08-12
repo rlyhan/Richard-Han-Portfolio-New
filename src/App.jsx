@@ -7,8 +7,7 @@ import Footer from './components/Footer'
 import { useLenis } from './hooks/useLenis'
 
 function App() {
-  // Root level because the scroller is the document: it belongs to the page, not
-  // to any section of it, and only one instance may own it.
+  // Root level: the scroller is the document, and only one instance may own it.
   useLenis()
 
   return (
@@ -16,10 +15,9 @@ function App() {
       <Header />
 
       <main id="main" className="px-8 md:px-12 max-w-7xl mx-auto">
-        {/* Home and About share a containing block on purpose: Home is sticky,
-            and this wrapper is what bounds how long it holds the viewport. It
-            releases at the end of About — long after About has covered it — so
-            the pinned hero is not left painting behind the rest of the page. */}
+        {/* Home is sticky, and this shared wrapper bounds how long it holds the
+            viewport: it releases at the end of About, so the pinned hero isn't
+            left painting behind the rest of the page. */}
         <div className="relative">
           <Home />
           <About />

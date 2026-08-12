@@ -3,9 +3,8 @@ import gsap from "gsap"
 
 // The hero's display lines, each cycling between its two strings forever.
 //
-// Every line is expected to hold exactly two children stacked in one grid cell,
-// which is what makes the roll possible: the pair swap places through the cell's
-// clip edge, and because they share the cell nothing reflows as they pass.
+// Every line holds exactly two children stacked in one grid cell: they swap places
+// through the cell's clip edge, and sharing the cell means nothing reflows.
 
 const ROLL_INTERVAL = 5
 const ROLL_DURATION = 0.7
@@ -24,10 +23,9 @@ const buildLineRollTimeline = (line, index) => {
         delay: ROLL_INTERVAL + index * ROLL_STAGGER,
     })
 
-    // Empty tween pins the cycle at two intervals so the gap between flips stays
-    // even across the repeat boundary. Every position below is explicit:
-    // omitting one appends at the timeline's end, which this tween has already
-    // pushed out to ROLL_INTERVAL * 2.
+    // Empty tween pins the cycle at two intervals, keeping the gap between flips
+    // even across the repeat boundary. Positions are all explicit: omitting one
+    // appends at the timeline's end, already pushed out to ROLL_INTERVAL * 2.
     return timeline
         .to({}, { duration: ROLL_INTERVAL * 2 }, 0)
         // Flip 1 — first exits upward, second arrives from below.

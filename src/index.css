@@ -13,11 +13,6 @@
        url(/fonts/fjalla-one-latin-400-normal.woff) format('woff');
 }
 
-/* For scrollers whose overflow is already signalled some other way — an edge
-   fade, a row of items visibly cut off — where the bar is only chrome over the
-   content. Scrolling itself is untouched: wheel, drag and keyboard all still
-   work, so this hides the indicator, not the affordance. Never put it on a
-   scroller with no other cue that there is more to see. */
 @utility no-scrollbar {
   /* Firefox. */
   scrollbar-width: none;

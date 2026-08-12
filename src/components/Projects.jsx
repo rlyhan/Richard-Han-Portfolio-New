@@ -32,21 +32,18 @@ const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedProject, setSelectedProject] = useState(null)
 
-    // The grid below is one panel for all three categories, so switching tabs
-    // swaps its contents without the element itself ever changing. This replays
-    // the fade on that swap; see useTabFade for why it isn't a CSS animation.
+    // One panel serves all three categories, so switching tabs swaps its contents
+    // without the element changing. This replays the fade on that swap; see
+    // useTabFade for why it isn't a CSS animation.
     const panelRef = useRef(null)
     useTabFade(panelRef, activeTab)
 
-    // Keyed on both, because both change which cards are in the grid and how
-    // they are arranged in it: the tab re-filters the list, and the display mode
-    // takes it from one column to a gallery of two or three across. Either way
-    // the rows the reveal measured have stopped existing.
+    // Keyed on both: the tab re-filters the list and the display mode takes it from
+    // one column to a gallery, so either way the rows the reveal measured are gone.
     //
-    // Alongside the fade above rather than instead of it. They answer different
-    // questions — the fade is what covers the swap itself, this is what carries
-    // the cards below the fold in as the reader scrolls to them — and they
-    // compose cleanly, since the panel's opacity and a card's multiply.
+    // Alongside the fade rather than instead of it — the fade covers the swap, this
+    // carries in the cards below the fold — and they compose, since the panel's
+    // opacity and a card's multiply.
     useScrollReveal(panelRef, `${activeTab}:${displayMode}`)
 
     const projectList = useMemo(() => {

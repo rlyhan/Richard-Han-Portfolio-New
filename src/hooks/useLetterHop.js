@@ -5,38 +5,23 @@ import { SplitText } from "gsap/SplitText"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
-// How far a letter rises, as a share of its own height rather than a pixel
-// count. The line box a character sits in scales with the font size, so one
-// number here reads as the same hop at every breakpoint — where a fixed pixel
-// height would be a bounce at 2xl and a twitch at 4xl.
+// A share of the letter's own height, not a pixel count, so one number reads as
+// the same hop at every breakpoint.
 const HOP_HEIGHT = -50
 
-// One leg of a hop: up, or down. The full hop is two of these, and it is also
-// the gap between one letter starting and the next — which is the brief. A
-// letter is at its apex exactly one leg after it leaves the ground, so starting
-// the next letter one leg behind puts it under way at that moment. Every letter
-// is therefore mid-air alongside exactly one other, one rising as one falls.
+// One leg of a hop — up, or down — and also the gap between one letter starting
+// and the next. A letter is at its apex exactly one leg after leaving the ground,
+// so every letter is mid-air alongside exactly one other, one rising as one falls.
 const HOP_LEG = 0.25
-
-// Up decelerates, down accelerates: the pair of eases is the whole reason a hop
-// reads as a hop and not as a letter being slid along a rail. Anything thrown
-// spends the most time near the top of its arc, and these two are what put it
-// there.
 const HOP_RISE_EASE = "power2.out"
 const HOP_FALL_EASE = "power2.in"
-
-// The pause between the last letter landing and the first one leaving again.
-// The wave is short enough that back-to-back passes would read as a permanent
-// ripple; the gap is what makes each pass a separate gesture.
 const HOP_REST = 3
 
 // The letters of `containerRef` hopping up and down in turn, on a loop.
 //
-// Runs only while the text is on screen. Two reasons, and the second is the one
-// that matters: an off-screen loop is frames spent on something nobody is
-// looking at, and — since this sits at the foot of the page — a loop left
-// running from mount would be caught mid-wave by a reader who has only just
-// scrolled to it. Pausing means the first pass they see starts at the L.
+// Runs only while the text is on screen: this sits at the foot of the page, so a
+// loop running from mount would be caught mid-wave by a reader who has just
+// scrolled to it. Pausing means their first pass starts at the L.
 export function useLetterHop(containerRef) {
     useEffect(() => {
         const container = containerRef.current
@@ -44,20 +29,16 @@ export function useLetterHop(containerRef) {
 
         const mm = gsap.matchMedia()
 
-        // Under reduced motion nothing is split and nothing is built: the text
-        // renders exactly as it would without this hook. A looping animation is
-        // the clearest case there is for honouring the preference — it never
-        // ends on its own, so a reader who is bothered by it is bothered by it
-        // for as long as the section is open.
+        // Under reduced motion nothing is split or built. A looping animation is
+        // the clearest case for honouring the preference — it never ends on its
+        // own, so it bothers the reader for as long as the section is open.
         mm.add("(prefers-reduced-motion: no-preference)", () => {
-            // smartWrap wraps each word's characters in a nowrap span. Without
-            // it every character is its own inline-block, and the browser treats
-            // the gap between two inline-blocks as a break opportunity — so the
-            // heading would split mid-word on a narrow screen.
+            // smartWrap wraps each word's characters in a nowrap span. Without it
+            // every character is its own inline-block, and the gap between two of
+            // them is a break opportunity, so the heading splits mid-word.
             //
             // aria stays at its default: SplitText labels the element with its
-            // original text, so the text reaches the accessibility tree as one
-            // string rather than as a pile of single-letter fragments.
+            // original text, so it reaches the accessibility tree as one string.
             const split = SplitText.create(container, {
                 type: "chars",
                 smartWrap: true,
@@ -70,15 +51,12 @@ export function useLetterHop(containerRef) {
                 paused: true,
             })
 
-            // Positioned by absolute time rather than chained, because the legs
-            // of neighbouring letters overlap — the second letter's rise starts
-            // while the first letter's fall is still running, which is what the
-            // wave IS. Appending them in sequence would queue the letters up to
-            // hop one strictly after another instead.
+            // Positioned by absolute time rather than chained: neighbouring legs
+            // overlap, which is what makes it a wave. Appending in sequence would
+            // queue the letters to hop strictly one after another.
             //
-            // Note the loop covers the characters SplitText made, and whitespace
-            // never becomes one. The space between the words is skipped rather
-            // than held for, so the wave crosses it without a stumble.
+            // Whitespace never becomes a char, so the wave crosses the gap between
+            // words without a stumble.
             split.chars.forEach((char, i) => {
                 const start = i * HOP_LEG
 
@@ -95,10 +73,7 @@ export function useLetterHop(containerRef) {
                 }, start + HOP_LEG)
             })
 
-            // The whole element crossing the viewport, from its top edge
-            // entering at the bottom to its bottom edge leaving at the top —
-            // i.e. active for exactly as long as any part of the text is
-            // visible.
+            // Active for exactly as long as any part of the text is visible.
             const visibility = ScrollTrigger.create({
                 trigger: container,
                 start: "top bottom",
@@ -106,10 +81,9 @@ export function useLetterHop(containerRef) {
                 onToggle: ({ isActive }) => (isActive ? hop.play() : hop.pause()),
             })
 
-            // matchMedia reverts the timeline and the trigger on its own, but
-            // pausing mid-wave would leave the letters wherever they were lifted
-            // to; seek(0) puts them back down first. The split is DOM surgery
-            // matchMedia knows nothing about, so it has to be undone here too.
+            // matchMedia reverts the timeline and trigger, but pausing mid-wave
+            // would leave letters lifted; seek(0) puts them down first. The split
+            // has to be undone here too.
             return () => {
                 visibility.kill()
                 hop.pause(0).kill()

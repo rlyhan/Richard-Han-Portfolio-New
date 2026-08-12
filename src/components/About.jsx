@@ -14,8 +14,8 @@ const About = () => {
     const skillsRef = useRef(null)
 
     useTextColorSweep(introRef)
-    // No key: this grid is built from static data and never swaps its contents.
-    // The tab panels below have their own reveal, from inside Tabs.
+    // No key: static data, so the contents never swap. The tab panels below have
+    // their own reveal, from inside Tabs.
     useScrollReveal(skillsRef)
 
     const tabs = [
@@ -65,11 +65,6 @@ const About = () => {
         }
     ];
 
-    // The opaque background is what makes the hero handoff read as a cover: the
-    // hero sits sticky underneath, and About has to paint over all of it. Hence
-    // the width split — the fill spans the full column while the copy stays at
-    // its 4xl measure, since a 4xl fill would leave the hero's display lines
-    // showing down both edges as About rises.
     return (
         <PageSection id="about" additionalClasses="relative z-10 bg-carbon-900">
             <div className="max-w-4xl mx-auto">
@@ -93,8 +88,8 @@ const About = () => {
                     {SKILLS.map((skillItem) => (
                         <section key={skillItem.id} className="flex flex-col gap-4">
                             <h3 className="text-2xl md:text-3xl font-semibold font-heading uppercase text-paper">{skillItem.heading}</h3>
-                            {/* one column on mobile: a square card at a third of a phone's
-                                width leaves no room for the copy */}
+                            {/* one column on mobile: a square card at a third of a
+                                phone's width leaves no room for the copy */}
                             <div className="grid md:grid-cols-3 gap-4">
                                 {skillItem.listItems.map((listItem, i) => (
                                     <SkillCard key={`${skillItem.id}-${i}`} icon={listItem.icon} text={listItem.text} />
@@ -103,8 +98,8 @@ const About = () => {
                         </section>
                     ))}
                 </div>
-                {/* no keepStableHeight: Technologies is ~2x the height of Interests, so pinning
-                    every panel to the tallest left a large void under the shorter tabs */}
+                {/* no keepStableHeight: Technologies is ~2x the height of Interests,
+                    so pinning every panel to the tallest left a void under the rest */}
                 <Tabs tabs={tabs} ariaLabel="About tabs" keepStableHeight={false} className="mt-16" />
             </div>
         </PageSection >
