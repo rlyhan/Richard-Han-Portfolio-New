@@ -3,7 +3,8 @@ import Pill from "../Pill"
 
 const ProjectCardGallery = ({ project, onClick }) => {
     return (
-        <article className="flex flex-col group bg-carbon-800 shadow-card rounded-lg overflow-hidden cursor-pointer transition hover:bg-carbon-700 hover:shadow-card-hover"
+        // data-reveal is useScrollReveal's handle; it sets opacity and transform here.
+        <article data-reveal className="flex flex-col group bg-carbon-800 shadow-card rounded-lg overflow-hidden cursor-pointer transition-[background-color,box-shadow] hover:bg-carbon-700 hover:shadow-card-hover"
             onClick={onClick}>
             {project["images"] &&
                 <Image
