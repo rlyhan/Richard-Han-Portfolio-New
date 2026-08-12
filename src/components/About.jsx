@@ -21,7 +21,21 @@ const About = () => {
     useTextColorSweep(introRef)
     // No key: static data, so the contents never swap. The tab panels below have
     // their own reveal, from inside Tabs.
-    useScrollReveal(skillsRef)
+    //
+    // The skill cards arrive as a block rather than a run: a row is done once its
+    // top reaches the head of the viewport's bottom third, with the last card
+    // landing just after the first instead of a half-screen behind it. The share
+    // rises with the shortened end so each card still fades over close to the same
+    // stretch of scroll (0.5 of a 50vh range against 0.65 of a 33vh one) — near
+    // enough the same transition, finished sooner.
+    //
+    // The taller lift is what keeps that block from reading as one flat bar: at
+    // this share the cards sit `(gap / share) * lift` apart mid-flight, so 90px of
+    // travel is what puts a visible step back between the second and third.
+    //
+    // Only the three-across rows from md up are staggered; below that a row is one
+    // card, which takes the lift alone.
+    useScrollReveal(skillsRef, undefined, { rowEnd: "clamp(top 66.7%)", itemShare: 0.65, lift: 90 })
 
     // The hesitation between About and Projects — the content parks at the middle of
     // the viewport and the runway below it is the scroll that has to pass before

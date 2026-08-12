@@ -14,18 +14,26 @@ const ITEM_SELECTOR = "[data-reveal]"
 const REVEAL_START = "clamp(top bottom)"
 // A full row finishes at the viewport middle; a row of one finishes at 60%, a
 // little sooner, because a lone item is a wide one and shouldn't still be
-// arriving after it fills the view.
+// arriving after it fills the view. The row end is a default — see the hook's
+// options — while a lone item's is fixed: with nothing to stagger against there
+// is no row to tighten.
 const ROW_REVEAL_END = "clamp(top center)"
 const LONE_REVEAL_END = "clamp(top 60%)"
 
 // How far below its resting place an item starts, in px. A transform rather than
 // a `bottom` offset, which would need position:relative and a repaint per frame.
-// Small on purpose: more distance reads as a carousel, not as surfacing.
+// Small on purpose: more distance reads as a carousel, not as surfacing. A
+// default the caller can override — the lift is also what sets how far apart
+// neighbours sit mid-flight, so a tightly staggered row needs more of it to keep
+// the ladder between its items visible.
 const ITEM_LIFT = 56
 
 // Share of the row's scroll range one item takes to complete; the rest is spent
 // waiting for the items behind it. Raise to move the row as a block, lower to
-// spread the items further apart.
+// spread the items further apart. A default the caller can override, and the
+// counterweight to a shortened row end: a shorter range at the same share would
+// speed every item up, where a larger share over a shorter range holds each
+// item's own pace and only closes the gaps between them.
 const ITEM_SHARE = 0.5
 
 // Seconds of catch-up between scroll and reveal, so items trail the wheel and
@@ -64,15 +72,20 @@ const groupIntoRows = (items) =>
 //
 // A stagger's total length is duration + stagger * (count - 1); pinning that to
 // 1 puts the last landing on the trigger's end. A row of one needs no gap.
-const buildRevealTween = (items) => {
-    const gap = items.length > 1 ? (1 - ITEM_SHARE) / (items.length - 1) : 0
+//
+// The visible offset between neighbours falls out of the same two numbers:
+// with a linear ease they sit `(gap / itemShare) * lift` px apart while all are
+// in flight. Tighten the row without answering for that and the items travel as
+// one flat block.
+const buildRevealTween = (items, rowEnd, itemShare, lift) => {
+    const gap = items.length > 1 ? (1 - itemShare) / (items.length - 1) : 0
 
     return gsap.fromTo(items,
-        { opacity: 0, y: ITEM_LIFT },
+        { opacity: 0, y: lift },
         {
             opacity: 1,
             y: 0,
-            duration: ITEM_SHARE,
+            duration: itemShare,
             stagger: gap,
             // With a scrub the scroll is the ease; a second one would only make
             // the mapping between them lie.
@@ -82,7 +95,7 @@ const buildRevealTween = (items) => {
                 // and sharing a top edge is what made them a row anyway.
                 trigger: items[0],
                 start: REVEAL_START,
-                end: items.length > 1 ? ROW_REVEAL_END : LONE_REVEAL_END,
+                end: items.length > 1 ? rowEnd : LONE_REVEAL_END,
                 scrub: REVEAL_LAG,
             },
         }
@@ -95,7 +108,17 @@ const buildRevealTween = (items) => {
 // Pass `revealKey` for containers whose contents are swapped rather than
 // re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
 // anything changing WHICH elements are present has to say so.
-export function useScrollReveal(containerRef, revealKey) {
+//
+// `rowEnd`, `itemShare` and `lift` move where a multi-item row lands, how tightly
+// it travels, and how far each item rises. A container wanting its rows done
+// sooner has to raise the share as it pulls the end in, or the same animation
+// just plays faster over less scroll — and then wants more lift, since a raised
+// share is what flattens its items against one another.
+export function useScrollReveal(
+    containerRef,
+    revealKey,
+    { rowEnd = ROW_REVEAL_END, itemShare = ITEM_SHARE, lift = ITEM_LIFT } = {},
+) {
     useEffect(() => {
         const container = containerRef.current
         if (!container) return
@@ -114,7 +137,7 @@ export function useScrollReveal(containerRef, revealKey) {
                     // tab panel stays mounted.
                     .filter((item) => item.offsetParent !== null)
 
-                groupIntoRows(items).forEach((row) => buildRevealTween(row.items))
+                groupIntoRows(items).forEach((row) => buildRevealTween(row.items, rowEnd, itemShare, lift))
             })
 
             // This hook is called where the page has just changed shape, so
@@ -151,5 +174,5 @@ export function useScrollReveal(containerRef, revealKey) {
             window.removeEventListener("resize", onResize)
             mm.revert()
         }
-    }, [containerRef, revealKey])
+    }, [containerRef, revealKey, rowEnd, itemShare, lift])
 }
