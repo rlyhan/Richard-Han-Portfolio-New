@@ -8,17 +8,21 @@ gsap.registerPlugin(ScrollTrigger)
 // sits, not what it is.
 const ITEM_SELECTOR = "[data-reveal]"
 
-// The row's top edge entering from the foot of the viewport. clamp() keeps rows
-// near the document's foot from asking for an end past the maximum scroll, which
-// would leave the last cards stuck part-way through their fade.
-const REVEAL_START = "clamp(top bottom)"
-// A full row finishes at the viewport middle; a stack finishes at 60%, a little
-// sooner, because a one-per-row item is a wide one and shouldn't still be
-// arriving after it fills the view. The row end is a default — see the hook's
-// options — while the stack's is fixed: with nothing staggered against it there
-// is no row to tighten.
-const ROW_REVEAL_END = "clamp(top center)"
-const STACK_REVEAL_END = "clamp(top 60%)"
+// The height in the viewport a row's top edge has to reach for its reveal to
+// start, as a fraction from the top. One line rather than a start and an end:
+// the scroll says WHEN a row goes, never how far along it is — from there the
+// reveal runs on its own clock and always lands, whether or not the wheel keeps
+// turning. A scrub welds progress to the scroll position, and that weld is what
+// parks a row half-faded the moment the reader stops mid-flight.
+//
+// Low in the viewport, because the row still has its own run to make afterwards:
+// by the time the last item lands the row is comfortably on screen.
+const REVEAL_LINE = 0.85
+
+// clamp() keeps rows near the document's foot from asking for a start past the
+// maximum scroll — the line they can never reach, which would leave the last
+// cards sitting at opacity 0 forever.
+const REVEAL_START = `clamp(top ${REVEAL_LINE * 100}%)`
 
 // How far below its resting place an item starts, in px. A transform rather than
 // a `bottom` offset, which would need position:relative and a repaint per frame.
@@ -28,18 +32,18 @@ const STACK_REVEAL_END = "clamp(top 60%)"
 // the ladder between its items visible.
 const ITEM_LIFT = 56
 
-// Share of the row's scroll range one item takes to complete; the rest is spent
-// waiting for the items behind it. Raise to move the row as a block, lower to
-// spread the items further apart. A default the caller can override, and the
-// counterweight to a shortened row end: a shorter range at the same share would
-// speed every item up, where a larger share over a shorter range holds each
-// item's own pace and only closes the gaps between them.
-const ITEM_SHARE = 0.5
+// One item's rise, in real seconds, and the gap between neighbours in a row.
+// Both are wall-clock now rather than shares of a scroll range: the whole row
+// takes duration + stagger * (count - 1) to finish, from wherever the reader
+// happened to stop. Defaults the caller can override — the stagger is the knob
+// for whether a row arrives as a run or as a block.
+const ITEM_DURATION = 0.7
+const ITEM_STAGGER = 0.12
 
-// Seconds of catch-up between scroll and reveal, so items trail the wheel and
-// settle after it. Shorter than the 1s the handoff and sweep use — over a 56px
-// lift, a full second reads as lateness rather than weight.
-const REVEAL_LAG = 0.4
+// With the scroll no longer driving progress, the ease is the hook's own again:
+// items come in quickly and settle, rather than sliding at one flat rate the way
+// a scrubbed tween has to.
+const ITEM_EASE = "power2.out"
 
 // Fractional layout can report tops a hair apart, and a hundredth of a pixel
 // shouldn't split a row of three into three rows of one.
@@ -73,45 +77,49 @@ const groupIntoRows = (items) =>
 //
 // Such a layout has no rows to reveal in turn, only a queue of them, and a queue
 // makes the effect the whole experience of the page: every card the reader
-// reaches is mid-fade, so nothing below is ever simply there. Collapsing it is
-// what gives the reveal a place to stop.
+// reaches announces itself. Collapsing it is what gives the reveal a place to
+// stop.
 const isStacked = (rows) => rows.every((row) => row.items.length === 1)
 
-// A row arranged so its last item finishes exactly at `end`.
+// Whether a row is already at or above the line by the time it is built —
+// content on screen at load, or below the fold of a rebuild the reader has long
+// since scrolled past.
 //
-// A stagger's total length is duration + stagger * (count - 1); pinning that to
-// 1 puts the last landing on the trigger's end.
-//
-// The visible offset between neighbours falls out of the same two numbers:
-// with a linear ease they sit `(gap / itemShare) * lift` px apart while all are
-// in flight. Tighten the row without answering for that and the items travel as
-// one flat block.
-const buildRowTween = (items, rowEnd, itemShare, lift) => {
-    const gap = (1 - itemShare) / (items.length - 1)
+// Such a row is left alone entirely: no from-state, no trigger, so it renders at
+// rest. Building one anyway would blank it and fade it back in, which on the
+// resize path means a whole page of settled cards re-announcing themselves.
+const isPastRevealLine = (row) =>
+    row[0].getBoundingClientRect().top <= window.innerHeight * REVEAL_LINE
 
-    return gsap.fromTo(items,
+// A row arriving as a run, its items a fixed beat apart.
+//
+// The visible offset between neighbours falls out of the same two numbers: with
+// this ease they sit roughly `(stagger / duration) * lift` px apart early in the
+// flight. Tighten the stagger without answering for that and the items travel as
+// one flat block.
+const buildRowTween = (items, { duration, stagger, lift }) =>
+    gsap.fromTo(items,
         { opacity: 0, y: lift },
         {
             opacity: 1,
             y: 0,
-            duration: itemShare,
-            stagger: gap,
-            // With a scrub the scroll is the ease; a second one would only make
-            // the mapping between them lie.
-            ease: "none",
+            duration,
+            stagger,
+            ease: ITEM_EASE,
             scrollTrigger: {
                 // The first item stands in for the row — there's no row element,
                 // and sharing a top edge is what made them a row anyway.
                 trigger: items[0],
                 start: REVEAL_START,
-                end: rowEnd,
-                scrub: REVEAL_LAG,
+                // Plays once and retires: nothing to reverse on the way back up,
+                // and nothing left listening for a row that is done.
+                once: true,
             },
         }
     )
-}
 
-// A whole stack rising as one, on the scroll that brings its first item in.
+// A whole stack rising as one, on the scroll that brings its first item to the
+// line.
 //
 // No stagger: the point is that the reveal is over by the time the reader is
 // past the first item. Everything below it is already at rest and stays there,
@@ -120,24 +128,26 @@ const buildRowTween = (items, rowEnd, itemShare, lift) => {
 //
 // A container of a single item takes this path too, which is what it always was:
 // one item, no stagger, and nothing left behind it to wait for.
-const buildStackTween = (items, lift) =>
+const buildStackTween = (items, { duration, lift }) =>
     gsap.fromTo(items,
         { opacity: 0, y: lift },
         {
             opacity: 1,
             y: 0,
-            ease: "none",
+            duration,
+            ease: ITEM_EASE,
             scrollTrigger: {
                 trigger: items[0],
                 start: REVEAL_START,
-                end: STACK_REVEAL_END,
-                scrub: REVEAL_LAG,
+                once: true,
             },
         }
     )
 
-// Every `data-reveal` item inside `containerRef` fading up into place, scrubbed
-// off the scroll that brings it on screen.
+// Every `data-reveal` item inside `containerRef` fading up into place, on the
+// scroll that brings it on screen — and, once it starts, running to its rest
+// position under its own steam. Stopping the wheel mid-reveal doesn't stop the
+// reveal.
 //
 // Multi-column layouts reveal a row at a time, each on its own trigger. A layout
 // running one item per row — which is most of them on a phone — reveals in a
@@ -147,16 +157,13 @@ const buildStackTween = (items, lift) =>
 // re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
 // anything changing WHICH elements are present has to say so.
 //
-// `rowEnd`, `itemShare` and `lift` move where a multi-item row lands, how tightly
-// it travels, and how far each item rises. A container wanting its rows done
-// sooner has to raise the share as it pulls the end in, or the same animation
-// just plays faster over less scroll — and then wants more lift, since a raised
-// share is what flattens its items against one another. Only `lift` reaches the
-// stacked path, which has no row to place or spread.
+// `duration`, `stagger` and `lift` move how long one item takes, how far behind
+// it the next one follows, and how far each rises. Only `duration` and `lift`
+// reach the stacked path, which has no run to space out.
 export function useScrollReveal(
     containerRef,
     revealKey,
-    { rowEnd = ROW_REVEAL_END, itemShare = ITEM_SHARE, lift = ITEM_LIFT } = {},
+    { duration = ITEM_DURATION, stagger = ITEM_STAGGER, lift = ITEM_LIFT } = {},
 ) {
     useEffect(() => {
         const container = containerRef.current
@@ -185,18 +192,22 @@ export function useScrollReveal(
                 // takes the stacked path too: there is nothing for it to
                 // stagger against either.
                 if (isStacked(rows)) {
-                    buildStackTween(items, lift)
+                    if (!isPastRevealLine(items)) {
+                        buildStackTween(items, { duration, lift })
+                    }
                 } else {
-                    rows.forEach(({ items: row }) =>
+                    rows.forEach(({ items: row }) => {
+                        if (isPastRevealLine(row)) return
+
                         row.length > 1
-                            ? buildRowTween(row, rowEnd, itemShare, lift)
-                            : buildStackTween(row, lift)
-                    )
+                            ? buildRowTween(row, { duration, stagger, lift })
+                            : buildStackTween(row, { duration, lift })
+                    })
                 }
             })
 
             // This hook is called where the page has just changed shape, so
-            // everything else scrubbed off it is stale until refreshed.
+            // every other trigger's measurements are stale until refreshed.
             ScrollTrigger.refresh()
 
             return mm
@@ -229,5 +240,5 @@ export function useScrollReveal(
             window.removeEventListener("resize", onResize)
             mm.revert()
         }
-    }, [containerRef, revealKey, rowEnd, itemShare, lift])
+    }, [containerRef, revealKey, duration, stagger, lift])
 }

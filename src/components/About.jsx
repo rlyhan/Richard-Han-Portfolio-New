@@ -22,21 +22,19 @@ const About = () => {
     // No key: static data, so the contents never swap. The tab panels below have
     // their own reveal, from inside Tabs.
     //
-    // The skill cards arrive as a block rather than a run: a row is done once its
-    // top reaches the head of the viewport's bottom third, with the last card
-    // landing just after the first instead of a half-screen behind it. The share
-    // rises with the shortened end so each card still fades over close to the same
-    // stretch of scroll (0.5 of a 50vh range against 0.65 of a 33vh one) — near
-    // enough the same transition, finished sooner.
+    // The skill cards arrive as a block rather than a run: the tightened stagger
+    // puts the last card a fifth of a second behind the first rather than trailing
+    // it by most of the card's own rise, so the row lands close to together.
     //
     // The taller lift is what keeps that block from reading as one flat bar: at
-    // this share the cards sit `(gap / share) * lift` apart mid-flight, so 90px of
-    // travel is what puts a visible step back between the second and third.
+    // this stagger the cards sit `(stagger / duration) * lift` apart early in the
+    // flight, so 90px of travel is what puts a visible step back between the
+    // second and third.
     //
     // Both settings are for the three-across rows from md up. Below that the cards
     // are a single column, which the hook reveals as one stack off the first card
     // — so mobile takes the lift and nothing else.
-    useScrollReveal(skillsRef, undefined, { rowEnd: "clamp(top 66.7%)", itemShare: 0.65, lift: 90 })
+    useScrollReveal(skillsRef, undefined, { stagger: 0.08, lift: 90 })
 
     // The hesitation between About and Projects — the content parks at the middle of
     // the viewport and the runway below it is the scroll that has to pass before
