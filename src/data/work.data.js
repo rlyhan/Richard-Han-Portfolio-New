@@ -116,25 +116,25 @@ const SKILLS = [
         id: "solution-skill",
         heading: "Solutions",
         listItems: [
-            { text: "Building frontends pixel-perfect to design that brings your brand to life for users", icon: "pen" },
-            { text: "Integrating editor-friendly headless CMS and eCommerce platforms and complex domain data", icon: "cloud" },
-            { text: "Measuring customer engagement through SEO, accessibility, and analytics", icon: "search" },
+            { text: "Building responsive, performance optimised UIs pixel-perfect to design", icon: "pen" },
+            { text: "Integrating editor-friendly headless CMS and eCommerce platforms and complex domain data APIs", icon: "cloud" },
+            { text: "Regularly auditing SEO, accessibility, and analytics to maximise user engagement", icon: "search" },
         ]
     },
     {
         id: "collaboration-skill",
         heading: "Collaboration",
         listItems: [
-            { text: "Clearly guiding clients through business impact and technical feasibility", icon: "users" },
+            { text: "Guiding clients through technical feasibility and timelines", icon: "users" },
             { text: "Effective cross-team communication with designers, developers and product teams", icon: "activity" },
-            { text: "Supports team development through mentorship and knowledge sharing", icon: "file" },
+            { text: "Supporting team development through mentorship and knowledge sharing", icon: "file" },
         ]
     },
     {
         id: "workflow-skill",
         heading: "Workflow",
         listItems: [
-            { text: "AI-assisted development that accelerates delivery", icon: "robot" },
+            { text: "AI-assisted development to accelerate delivery", icon: "robot" },
             { text: "High standard code maintainability and safe deployment practices", icon: "code" },
             { text: "Implementing effective short-term solutions as well as long-term scalable implementations", icon: "tool" },
         ]
@@ -155,7 +155,7 @@ const INTERESTS = [
     {
         id: "other-interests",
         icon: "ski.png",
-        text: "Skiing, cooking, and practicing my Japanese are other things I like to do with my time.",
+        text: "Skiing, cooking, gaming and practicing my Japanese are other things I like to do with my time.",
     }
 ]
 

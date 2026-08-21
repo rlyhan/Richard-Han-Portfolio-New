@@ -108,7 +108,7 @@ const About = () => {
                     <SectionHeading label="About" />
                     <div ref={introRef} className="pr-8 md:pr-24">
                         <p className="text-paper text-xl md:text-4xl mb-10 leading-relaxed">
-                            Hi! I'm Richard, and I have been building web applications for a range of clients since 2020.
+                            Hi! I'm Richard, and I have been building digital experiences for a range of clients since 2020.
                         </p>
                         <p className="text-paper text-xl md:text-4xl mb-10 leading-relaxed">
                             I'm driven by a passion for building modern, fluid, interactive user experiences, and a commitment to the collaborative and technical processes that build the most performant, maintainable, and brand impactful solutions possible.
