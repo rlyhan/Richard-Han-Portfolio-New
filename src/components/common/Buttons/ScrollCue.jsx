@@ -7,10 +7,29 @@ const BOUNCE_DISTANCE = 10
 const BOUNCE_DURATION = 0.9
 const FADE_DURATION = 0.35
 
+// The cue sits on whichever section it is handing the viewer out of, and the two
+// grounds on the page are opposites — hence a tone rather than one fixed palette.
+// The focus ring comes with it: the page's neon default is all but invisible on the
+// light ground, so that tone overrides the outline colour too.
+const TONE_CLASSES = {
+    neon: "border-neon/40 bg-carbon-900/70 text-neon hover:border-neon hover:bg-neon hover:text-carbon-950",
+    ink: "border-ink/30 bg-cream/80 text-ink hover:border-ink hover:bg-ink hover:text-cream focus-visible:outline-ink",
+}
+
 // A floating hint at the foot of the hero, handing the viewer into the next section.
 // The bounce lives on an inner element so the infinite y tween and the visibility
 // fade never write to the same target.
-const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) => {
+//
+// `positionClassName` is how far up from the foot of the viewport it sits: the
+// default clears nothing in particular, and a section with its own furniture down
+// there raises it.
+const ScrollCue = ({
+    onClick,
+    visible,
+    label = "Scroll to the About section",
+    tone = "neon",
+    positionClassName = "bottom-6",
+}) => {
     const containerRef = useRef(null)
     const arrowRef = useRef(null)
 
@@ -46,7 +65,8 @@ const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) 
             // at any hero height, and is the one thing that shouldn't move as the
             // hero fades.
             className={cn(
-                "fixed inset-x-0 bottom-6 z-40 flex justify-center",
+                "fixed inset-x-0 z-40 flex justify-center",
+                positionClassName,
                 !visible && "pointer-events-none"
             )}
             // As in the header: a real button, so hiding it visually has to take it
@@ -57,7 +77,10 @@ const ScrollCue = ({ onClick, visible, label = "Scroll to the About section" }) 
                 type="button"
                 onClick={onClick}
                 aria-label={label}
-                className="rounded-full border border-neon/40 bg-carbon-900/70 p-3 text-neon backdrop-blur-sm transition-colors hover:border-neon hover:bg-neon hover:text-carbon-950"
+                className={cn(
+                    "rounded-full border p-3 backdrop-blur-sm transition-colors",
+                    TONE_CLASSES[tone]
+                )}
             >
                 <span ref={arrowRef} className="block">
                     <ArrowDownIcon className="h-6 w-6" />

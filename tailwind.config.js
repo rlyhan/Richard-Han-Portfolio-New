@@ -12,6 +12,17 @@ export default {
     ],
     theme: {
         extend: {
+            // The hero's spread has a second breakpoint of its own: from here up the
+            // panel is wide enough to run the halves even, deepen the caption strips
+            // and show each shot whole.
+            //
+            // Tailwind sorts this ahead of md rather than after it, so the rules it
+            // governs pair it with max-wide instead of relying on it to override —
+            // see HomeProjectCard.
+            screens: {
+                wide: "1440px",
+            },
+
             // Single source of truth for the palette — index.css pulls the same
             // values back out with @apply rather than restating any hex.
             //
@@ -49,6 +60,18 @@ export default {
                 // different kind of fact from what neon marks (state, interactivity).
                 // The moment gold appears elsewhere it stops reading as achievement.
                 // 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
+                // The homepage's editorial palette. Scoped to the hero, which is a
+                // light spread the dark page then slides over — everything below it
+                // stays on carbon/neon. Converted from the design's oklch values.
+                cream: "#E9E9DB",   // the hero's paper ground
+                sage: "#CBD7C2",    // the featured-projects panel
+                ink: "#0E130E",     // hero copy on cream (15.3:1), and the intro
+                                    // panel's own ground, where cream reads 15.3:1
+                                    // and mineral 7.7:1
+                mineral: "#9EA998", // display copy on ink; the image wells' empty state
+                moss: "#5A645A",    // secondary hero copy — 5.0:1 on cream, and 4.1:1
+                                    // on sage, which only carries display sizes
+
                 gold: {
                     DEFAULT: "#FFD447",
                     400: "#FFE27A", // hover on the filled, linked variant
@@ -66,6 +89,7 @@ export default {
             },
             fontFamily: {
                 heading: ['"Fjalla One"', 'system-ui', 'sans-serif'],
+                outfit: ['"Outfit"', 'system-ui', 'sans-serif'],
                 sans: ['system-ui', 'sans-serif'],
             },
             // The fade tab panels enter on. For panels that swap via `display`, where
@@ -80,9 +104,17 @@ export default {
                     from: { opacity: "0" },
                     to: { opacity: "1" },
                 },
+                // The hero's project cards arriving on load. `both` holds the end
+                // state, so the cards keep a transform once it finishes — nothing
+                // inside them is positioned against the viewport, so that's free.
+                "project-reveal": {
+                    from: { opacity: "0", transform: "translateY(1.25rem)" },
+                    to: { opacity: "1", transform: "translateY(0)" },
+                },
             },
             animation: {
                 "tab-fade-in": "tab-fade-in 0.35s ease-out both",
+                "project-reveal": "project-reveal 0.8s ease-out both",
             },
         },
     },
