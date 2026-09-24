@@ -65,9 +65,8 @@ const ScrollCue = ({
             // at any hero height, and is the one thing that shouldn't move as the
             // hero fades.
             className={cn(
-                "fixed inset-x-0 z-40 flex justify-center",
-                positionClassName,
-                !visible && "pointer-events-none"
+                "fixed inset-x-0 z-40 flex justify-center pointer-events-none",
+                positionClassName
             )}
             // As in the header: a real button, so hiding it visually has to take it
             // out of the tab order too.
@@ -78,7 +77,7 @@ const ScrollCue = ({
                 onClick={onClick}
                 aria-label={label}
                 className={cn(
-                    "rounded-full border p-3 backdrop-blur-sm transition-colors",
+                    "pointer-events-auto rounded-full border p-3 backdrop-blur-sm transition-colors",
                     TONE_CLASSES[tone]
                 )}
             >
