@@ -14,22 +14,35 @@ const MD_UP = "(min-width: 768px)";
 // spread is the point, and an auto-placed fourth card would break it — which is why
 // FEATURED_PROJECTS is fixed at three.
 //
-// Only the lead cell changes with the viewport: from 1440px up the panel is wide enough
-// that a row of it is shorter than it is wide, so the cell takes a ninth row and the
-// sage block gives one up. The right column is an even six and six throughout.
+// Fixed at every width now, including from 1440px up, where the lead cell used to take
+// a ninth row and the sage block give one up. The left column's WIDTH carries that job
+// instead — see the grid below — which keeps the lead card's portrait shot filling its
+// cell without costing the sage block the rows it needs to stay square. The right
+// column is an even six and six throughout.
 const CELLS = [
-  "col-start-1 row-start-1 row-end-8 wide:row-end-10",
+  "col-start-1 row-start-1 row-end-8",
   "col-start-2 row-start-1 row-end-7",
   "col-start-2 row-start-7 row-end-13",
 ];
 
 // Shared by both layouts; each adds its own placement.
 //
+// Sized as a label rather than as a second heading: the hero already has two voices
+// competing for the eye — the display lines at up to 6.1vw and the name and section
+// links in the bar below — and at the 3.4vw this used to carry, a two-word caption on
+// a pale block was louder than both. It now tops out at 1.45vw, comfortably under the
+// nav links' 3.1vw, so the sage block reads as a field with a label on it. Padding
+// came down with it: at this size the block's proportions come from its cell, not
+// from the gap around the words.
+//
+// Leading opens up to match — 1.02 is display leading, and it sets tight two-line
+// copy that reads as a heading however small the type is.
+//
 // The right border matches the fill rather than GRID_BORDER_COLOR: that edge sits
 // against a project's dark card, not another grid line, so the grid's usual border
 // reads as a jarring dark seam. Matching it to bg-sage makes it disappear instead.
 const LABEL_CLASS =
-  "flex items-center justify-center border-r border-sage bg-sage p-3 font-outfit font-medium text-[1.4rem] leading-[1.05] text-moss md:p-[clamp(1rem,2vw,1.75rem)] md:text-[clamp(2rem,3.4vw,3.6rem)] md:leading-[1.02]";
+  "flex items-center justify-center border-r border-sage bg-sage p-2.5 font-outfit font-medium text-[0.85rem] leading-[1.25] text-moss md:p-[clamp(0.75rem,1.2vw,1.25rem)] md:text-[clamp(1rem,1.45vw,1.55rem)] md:leading-[1.2]";
 
 // The masonry spread: three hand-placed cells and the label taking what's left of
 // the left column.
@@ -38,14 +51,22 @@ const LABEL_CLASS =
 // bottom-left cell by its placement rather than by source order.
 const WorkGrid = ({ onSelectProject }) => (
   <div
-    // The split widens the right column as the panel narrows, so the two
-    // stacked cards keep a usable width when the hero is only 58% of a
-    // mid-size screen.
-    className="grid h-full grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] grid-rows-12 md:max-wide:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] wide:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]"
+    // The left column is the sage block's width, so it's measured in height: the
+    // block holds five of the twelve rows, and the panel runs at roughly 0.7 of
+    // the viewport once the nav bar has taken its share, which puts a square at
+    // about 30svh a side. Capped by a share of the panel so the column can never
+    // outgrow it — the cap is what a tall viewport gets, and it's the split this
+    // grid has always used. A wide, short viewport gets the height instead, which
+    // is what keeps the block square rather than letting it stretch into a band:
+    // the taller the row, the wider the column, and the two stay in step.
+    //
+    // The cap widens the right column as the panel narrows, so the two stacked
+    // cards keep a usable width when the hero is only 58% of a mid-size screen.
+    className="grid h-full grid-cols-[minmax(0,min(30svh,41%))_minmax(0,1fr)] grid-rows-12 wide:grid-cols-[minmax(0,min(30svh,44%))_minmax(0,1fr)]"
   >
     <h2
       id="home-featured"
-      className={`col-start-1 row-start-8 row-end-13 wide:row-start-10 ${LABEL_CLASS}`}
+      className={`col-start-1 row-start-8 row-end-13 ${LABEL_CLASS}`}
     >
       {FEATURED_LABEL}
     </h2>
