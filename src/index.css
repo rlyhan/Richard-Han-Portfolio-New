@@ -16,7 +16,8 @@
 /* Self-hosted the same way as Fjalla One above — see that comment. Used
    where copy sits alongside Fjalla One headings but needs a lighter,
    geometric weight: the homepage h1, the nav links, and the Featured
-   Projects label. */
+   Projects label. Two weights: 400 for the h1 and nav links, 500 for the
+   Featured Projects label, which reads too thin at 400. */
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
@@ -24,6 +25,15 @@
   font-display: block;
   src: url(/fonts/outfit-latin-400-normal.woff2) format('woff2'),
        url(/fonts/outfit-latin-400-normal.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url(/fonts/outfit-latin-500-normal.woff2) format('woff2'),
+       url(/fonts/outfit-latin-500-normal.woff) format('woff');
 }
 
 @utility no-scrollbar {

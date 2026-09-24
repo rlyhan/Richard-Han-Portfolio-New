@@ -44,7 +44,7 @@ const HomeWork = ({ setGridRef, onSelectProject }) => (
         // edge sits against Touchgrass's dark card, not another grid line, so
         // the grid's usual border reads as a jarring dark seam. Matching it to
         // bg-sage makes it disappear instead.
-        className={`col-start-1 row-start-8 row-end-13 wide:row-start-10 flex items-center justify-center border-r border-sage bg-sage p-3 font-outfit font-bold text-[1.4rem] leading-[1.05] text-moss md:p-[clamp(1rem,2vw,1.75rem)] md:text-[clamp(2rem,3.4vw,3.6rem)] md:leading-[1.02]`}
+        className={`col-start-1 row-start-8 row-end-13 wide:row-start-10 flex items-center justify-center border-r border-sage bg-sage p-3 font-outfit font-medium text-[1.4rem] leading-[1.05] text-moss md:p-[clamp(1rem,2vw,1.75rem)] md:text-[clamp(2rem,3.4vw,3.6rem)] md:leading-[1.02]`}
       >
         {FEATURED_LABEL}
       </h2>
