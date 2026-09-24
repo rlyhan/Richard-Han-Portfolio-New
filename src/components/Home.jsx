@@ -122,7 +122,7 @@ const Home = () => {
 
                 Reduced motion collapses it: with the fades gone there's nothing to
                 watch, and it would read as a dead screen. */}
-            <div ref={runwayRef} aria-hidden="true" className="h-[80svh] motion-reduce:h-0" />
+            <div ref={runwayRef} aria-hidden="true" className="h-[140svh] motion-reduce:h-0" />
 
             {/* Retired the moment the page leaves the hero, so it never floats over
                 About as an invitation to a section already on screen.

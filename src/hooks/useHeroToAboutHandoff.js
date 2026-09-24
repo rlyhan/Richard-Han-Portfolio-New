@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { SCRUB_LAG, buildExitTimeline } from "../helpers/handoff"
+import { buildExitTimeline } from "../helpers/handoff"
 import { getSectionFlowTop } from "../helpers/sectionScroll"
 import { useHandoff } from "./useHandoff"
 
@@ -18,15 +18,26 @@ const ABOUT_SELECTOR = "#about"
 
 // Positions below are fractions of the runway — see buildExitTimeline for why.
 //
-// The display lines leave as four planes rather than one sheet: each travels
-// TRAVEL + index * STEP, so the stack spreads as it goes.
+// The h1's own lines leave as four planes rather than one sheet: each travels
+// TRAVEL + index * STEP, so the stack spreads as it goes. Pixel amounts, since
+// these are the original, small in-place nudges — unlike the work grid below,
+// which needs to actually clear the viewport.
 const LINE_TRAVEL = 40
 const LINE_TRAVEL_STEP = 34
+// The work grid is the whole right column rather than a line in the h1's stack,
+// so it gets its own, much longer travel — a share of the viewport height, not
+// pixels, so it actually clears the screen at any viewport size rather than
+// nudging by a few dozen pixels.
+const WORK_EXIT_TRAVEL_SHARE = 0.7
 const LINE_EXIT_STAGGER = 0.1
 const LINE_EXIT_DURATION = 0.45
-// Splits the lines along the alternation they already sit on — neon left, paper
-// right. A small percentage, so the drift stays shorter than the gutter beside
-// it and can't push a horizontal scrollbar onto the page.
+// Splits the h1's lines along the alternation they already sit on — neon left,
+// paper right. A small percentage, so the drift stays shorter than the gutter
+// beside it and can't push a horizontal scrollbar onto the page.
+//
+// The work grid is excluded below: it only rises, since drifting the whole
+// right column sideways reads as sliding off toward a corner instead of
+// straight up.
 const LINE_DRIFT = 3
 
 // The outro sinks while the lines rise, so the hero parts down the middle rather
@@ -36,6 +47,13 @@ const OUTRO_START = 0.55
 const OUTRO_DURATION = 0.25
 const OUTRO_STAGGER = 0.08
 const OUTRO_DRIFT = 44
+
+// Its own catch-up, longer than the shared SCRUB_LAG every other handoff uses: a
+// bigger lag means the exit keeps easing toward wherever the scroll currently is
+// over this many seconds rather than snapping to match it, so a fast flick still
+// only buys the same unhurried glide as a slow one — just a longer wait for it to
+// catch up, not a faster one.
+const EXIT_SCRUB_LAG = 2.5
 
 // The hero's range: the top of the page to the runway's bottom edge meeting the foot of
 // the viewport, which is where About's own top edge appears.
@@ -60,11 +78,15 @@ const getExitEndShare = ({ displayLines, outroLines }) => Math.max(
 // No hold is raised: the hero's cue belongs to the top of the page rather than to this
 // range, so Home decides when it is up — see useIsNearPageTop there.
 const buildHeroExitTimeline = ({ displayLines, outroLines, runway, range }) =>
-    buildExitTimeline({ runway, range, scrub: SCRUB_LAG })
+    buildExitTimeline({ runway, range, scrub: EXIT_SCRUB_LAG })
         .to(displayLines, {
             opacity: 0,
-            y: (index) => -(LINE_TRAVEL + index * LINE_TRAVEL_STEP),
-            xPercent: (index) => (index % 2 ? LINE_DRIFT : -LINE_DRIFT),
+            y: (index, _target, targets) =>
+                index === targets.length - 1
+                    ? -window.innerHeight * WORK_EXIT_TRAVEL_SHARE
+                    : -(LINE_TRAVEL + index * LINE_TRAVEL_STEP),
+            xPercent: (index, _target, targets) =>
+                index === targets.length - 1 ? 0 : (index % 2 ? LINE_DRIFT : -LINE_DRIFT),
             duration: LINE_EXIT_DURATION,
             stagger: LINE_EXIT_STAGGER,
         }, 0)
