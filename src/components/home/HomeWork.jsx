@@ -1,6 +1,8 @@
 import { FEATURED_LABEL, FEATURED_PROJECTS } from "../../data/home.data";
 import HomeProjectCard from "./HomeProjectCard";
 
+export const GRID_BORDER_COLOR = "border-[#5D5D5D]";
+
 // Where each cell sits in the twelve-row grid. Hand-placed rather than flowed: the
 // spread is the point, and an auto-placed fourth card would break it — which is why
 // FEATURED_PROJECTS is fixed at three.
@@ -9,7 +11,7 @@ import HomeProjectCard from "./HomeProjectCard";
 // that a row of it is shorter than it is wide, so the cell takes a ninth row and the
 // sage block gives one up. The right column is an even six and six throughout.
 const CELLS = [
-  "col-start-1 row-start-1 row-end-8 wide:row-end-9",
+  "col-start-1 row-start-1 row-end-8 wide:row-end-10",
   "col-start-2 row-start-1 row-end-7",
   "col-start-2 row-start-7 row-end-13",
 ];
@@ -38,7 +40,11 @@ const HomeWork = ({ setGridRef, onSelectProject }) => (
                 bottom-left cell by the grid rather than by source order. */}
       <h2
         id="home-featured"
-        className="col-start-1 row-start-8 row-end-13 wide:row-start-9 flex items-center justify-center border-r border-ink/12 bg-sage p-3 font-outfit text-[1.4rem] leading-[1.05] text-moss md:p-[clamp(1rem,2vw,1.75rem)] md:text-[clamp(2rem,3.4vw,3.6rem)] md:leading-[1.02]"
+        // The right border matches the fill rather than GRID_BORDER_COLOR: that
+        // edge sits against Touchgrass's dark card, not another grid line, so
+        // the grid's usual border reads as a jarring dark seam. Matching it to
+        // bg-sage makes it disappear instead.
+        className={`col-start-1 row-start-8 row-end-13 wide:row-start-10 flex items-center justify-center border-r border-sage bg-sage p-3 font-outfit font-bold text-[1.4rem] leading-[1.05] text-moss md:p-[clamp(1rem,2vw,1.75rem)] md:text-[clamp(2rem,3.4vw,3.6rem)] md:leading-[1.02]`}
       >
         {FEATURED_LABEL}
       </h2>
