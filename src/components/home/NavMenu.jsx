@@ -12,11 +12,11 @@
 const NavMenu = ({ items, setNameRef, setNavRef }) => (
   <nav
     aria-label="Portfolio sections"
-    className="relative z-10 grid min-h-15 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-ink/10 bg-cream px-[1.1rem] py-2 md:min-h-54 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8 md:px-[clamp(1.5rem,3vw,3rem)] md:py-5"
+    className="relative z-10 grid min-h-[2.8125rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-ink/10 bg-cream px-[1.1rem] py-2 md:min-h-[10.125rem] md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8 md:px-[clamp(1.5rem,3vw,3rem)] md:py-5"
   >
     <p
       ref={setNameRef}
-      className="font-heading text-[2rem] leading-none md:pb-[0.12em] md:text-[clamp(5rem,9.5vw,10rem)] md:leading-[0.72]"
+      className="font-heading text-[1.5rem] leading-none md:pb-[0.12em] md:text-[clamp(3.75rem,7.1vw,7.5rem)] md:leading-[0.72]"
     >
       Richard&nbsp;
       <br className="inline" />
@@ -32,7 +32,7 @@ const NavMenu = ({ items, setNameRef, setNavRef }) => (
           key={id}
           href={`#${id}`}
           onClick={onSelect}
-          className="block font-outfit text-[0.9rem] leading-[0.9] whitespace-nowrap text-ink transition-colors hover:text-moss focus-visible:outline-ink md:grid md:grid-cols-[2rem_minmax(0,1fr)] md:items-baseline md:text-[clamp(1.8rem,3.1vw,3.25rem)]"
+          className="block font-outfit text-[0.7rem] leading-[0.9] whitespace-nowrap text-ink transition-colors hover:text-moss focus-visible:outline-ink md:grid md:grid-cols-[2rem_minmax(0,1fr)] md:items-baseline md:text-[clamp(1.35rem,2.3vw,2.45rem)]"
         >
           <span
             aria-hidden="true"

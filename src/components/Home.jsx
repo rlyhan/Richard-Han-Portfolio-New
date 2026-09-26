@@ -116,17 +116,17 @@ const Home = () => {
       <PageSection
         id="home"
         contained={false}
-        additionalClasses="sticky top-0 flex min-h-svh flex-col overflow-x-clip bg-cream text-ink md:h-svh"
+        additionalClasses="sticky top-0 flex min-h-svh flex-col overflow-x-clip bg-ink text-ink md:h-svh"
       >
         {/* flex-1, not a calc against the footer's nominal height: the name block
                     is display type and sets its own height, so measuring the spread
                     off a guess at the footer leaves the hero taller than the viewport
                     and the nav below the fold. Letting flex divide what's left keeps
                     the whole hero inside one screen at any size. */}
-        {/* The halves are even only once there is room for it: under 1440px
-                    the copy needs less width than the spread does, so the work panel
-                    takes the larger share. */}
-        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] wide:grid-cols-2">
+        {/* The work panel keeps the larger share below 1440px — the spread needs more
+                    room than the copy does — but at 1440px and up the copy takes it instead,
+                    on a 7/5 split of a twelve-column layout. */}
+        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] wide:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <HomeIntro setLineRef={setDisplayLine} setNoteRef={setNoteRef} />
           <HomeWork setGridRef={setWorkRef} onSelectProject={selectProjects} />
         </div>

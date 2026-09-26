@@ -3,27 +3,33 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import HomeProjectCard from "./HomeProjectCard";
 import HomeProjectCarousel from "./HomeProjectCarousel";
 
-export const GRID_BORDER_COLOR = "border-[#5D5D5D]";
+export const GRID_BORDER_COLOR = "border-grid";
 
 // md, as Tailwind has it. The two layouts below are different markup rather than
 // one layout restyled, so the breakpoint has to be readable from JS as well —
 // see useMediaQuery.
 const MD_UP = "(min-width: 768px)";
 
-// Where each cell sits in the twelve-row grid. Hand-placed rather than flowed: the
-// spread is the point, and an auto-placed fourth card would break it — which is why
-// FEATURED_PROJECTS is fixed at three.
+// Where each cell sits. Hand-placed rather than flowed: the spread is the point,
+// and an auto-placed fourth card would break it — which is why FEATURED_PROJECTS
+// is fixed at three.
 //
-// Fixed at every width now, including from 1440px up, where the lead cell used to take
-// a ninth row and the sage block give one up. The left column's WIDTH carries that job
-// instead — see the grid below — which keeps the lead card's portrait shot filling its
-// cell without costing the sage block the rows it needs to stay square. The right
-// column is an even six and six throughout.
+// Two rows, not twelve: the lead card takes the whole left column and the right
+// column splits evenly. The old twelve-row track existed to give the label a row
+// of its own; the label is now a header above the grid, so the rows only have the
+// cards to describe and can say so directly.
 const CELLS = [
-  "col-start-1 row-start-1 row-end-8",
-  "col-start-2 row-start-1 row-end-7",
-  "col-start-2 row-start-7 row-end-13",
+  "col-start-1 row-start-1 row-end-3",
+  "col-start-2 row-start-1 row-end-2",
+  "col-start-2 row-start-2 row-end-3",
 ];
+
+// The hero's small-caps voice: the section label, its counter, and each card's
+// kicker all speak in it, so the panel reads as one system rather than three
+// unrelated labels. Tracking is doing the work at this size — it's what makes a
+// 0.7rem line read as a deliberate label instead of as shrunken body copy.
+const EYEBROW_CLASS =
+  "font-outfit font-medium uppercase leading-none tracking-[0.2em]";
 
 // Shared by both layouts; each adds its own placement.
 //
@@ -42,45 +48,68 @@ const CELLS = [
 // against a project's dark card, not another grid line, so the grid's usual border
 // reads as a jarring dark seam. Matching it to bg-sage makes it disappear instead.
 const LABEL_CLASS =
-  "flex items-center justify-center border-r border-sage bg-sage p-2.5 font-outfit font-medium text-[0.85rem] leading-[1.25] text-moss md:p-[clamp(0.75rem,1.2vw,1.25rem)] md:text-[clamp(1rem,1.45vw,1.55rem)] md:leading-[1.2]";
+  "flex items-center justify-start border-r border-sage bg-sage p-2.5 font-outfit font-medium text-[1.05rem] leading-[1.25] text-moss md:p-[clamp(0.75rem,1.2vw,1.25rem)] md:text-[clamp(1.2rem,1.7vw,1.85rem)] md:leading-[1.2]";
 
-// The masonry spread: three hand-placed cells and the label taking what's left of
-// the left column.
+// The masonry spread: a section header over three hand-placed cells.
 //
-// The label is first in the DOM so the cards read as its section, and lands in the
-// bottom-left cell by its placement rather than by source order.
+// The panel is inset rather than bled to the viewport edge. It used to run flush
+// to the top and right of the screen while the intro panel beside it sat inside
+// clamp(2rem,4vw,4.5rem) of padding, and the mismatch read as a card grid that had
+// slipped its frame. The inset is smaller than the intro's — the spread wants the
+// width — but it puts the same kind of air on all three outer edges and, at the
+// bottom, keeps the cards off the nav bar they used to butt against.
+//
+// The label is a header rule spanning the full panel instead of a bordered chip
+// stacked on the lead column: a rule introduces all three cards, where the chip
+// only ever looked like a caption on the first one. The counter on the far right is
+// the second half of that rule — it states the depth of the set, which is the one
+// thing a three-card spread can't say for itself.
 const WorkGrid = ({ onSelectProject }) => (
-  <div
-    // The left column is the sage block's width, so it's measured in height: the
-    // block holds five of the twelve rows, and the panel runs at roughly 0.7 of
-    // the viewport once the nav bar has taken its share, which puts a square at
-    // about 30svh a side. Capped by a share of the panel so the column can never
-    // outgrow it — the cap is what a tall viewport gets, and it's the split this
-    // grid has always used. A wide, short viewport gets the height instead, which
-    // is what keeps the block square rather than letting it stretch into a band:
-    // the taller the row, the wider the column, and the two stay in step.
-    //
-    // The cap widens the right column as the panel narrows, so the two stacked
-    // cards keep a usable width when the hero is only 58% of a mid-size screen.
-    className="grid h-full grid-cols-[minmax(0,min(30svh,41%))_minmax(0,1fr)] grid-rows-12 wide:grid-cols-[minmax(0,min(30svh,44%))_minmax(0,1fr)]"
-  >
-    <h2
-      id="home-featured"
-      className={`col-start-1 row-start-8 row-end-13 ${LABEL_CLASS}`}
+  <div className="flex h-full min-h-0 flex-col gap-[clamp(0.85rem,1.7vh,1.5rem)] pt-[clamp(1.5rem,3.2vh,2.75rem)] pr-[clamp(1.5rem,2.8vw,3.5rem)] pb-[clamp(1.5rem,3.2vh,2.75rem)]">
+    <header
+      className={`flex shrink-0 items-center justify-between gap-6 border-b ${GRID_BORDER_COLOR} pb-[clamp(0.55rem,1vh,0.9rem)]`}
     >
-      {FEATURED_LABEL}
-    </h2>
+      <h2
+        className={`${EYEBROW_CLASS} text-[0.68rem] text-cream/60 md:text-[clamp(0.68rem,0.78vw,0.82rem)]`}
+      >
+        {FEATURED_LABEL}
+      </h2>
 
-    {FEATURED_PROJECTS.map((project, i) => (
-      <HomeProjectCard
-        key={project.id}
-        project={project}
-        index={i}
-        position={CELLS[i]}
-        eager={i === 0}
-        onSelect={onSelectProject}
-      />
-    ))}
+      {/* Decorative: the numbering it counts is already on each card, and read
+          aloud on its own "01 — 03" is noise. */}
+      <p
+        aria-hidden="true"
+        className={`${EYEBROW_CLASS} text-[0.68rem] text-cream/30 md:text-[clamp(0.68rem,0.78vw,0.82rem)]`}
+      >
+        01 — {String(FEATURED_PROJECTS.length).padStart(2, "0")}
+      </p>
+    </header>
+
+    {/* The left column is the lead card's own width — see CELLS.
+    
+        47%, so the lead card and the two stacked ones come out near enough the
+        same width and the spread reads as a composition rather than as one
+        column that happened to win. It used to be a pair of caps that landed
+        differently either side of the `wide` breakpoint — 41% of the panel at
+        1280px against 48% at 1512px — which is why the split visibly jumped
+        across it.
+    
+        The svh cap only bites on a short screen, and that is its whole job: the
+        lead cell is as tall as the grid, so on a letterbox viewport a 47% column
+        would be wider than it is tall and the 3:4 tablet shot inside it would
+        crop down to a sliver. */}
+    <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,min(44svh,47%))_minmax(0,1fr)] grid-rows-2 gap-x-[clamp(0.75rem,1.4vw,1.5rem)] gap-y-[clamp(0.75rem,1.9vh,1.5rem)]">
+      {FEATURED_PROJECTS.map((project, i) => (
+        <HomeProjectCard
+          key={project.id}
+          project={project}
+          index={i}
+          position={CELLS[i]}
+          eager={i === 0}
+          onSelect={onSelectProject}
+        />
+      ))}
+    </div>
   </div>
 );
 
@@ -91,10 +120,8 @@ const WorkGrid = ({ onSelectProject }) => (
 //
 // The label keeps the narrower column — it wraps, where a card can only crop.
 const WorkColumns = ({ onSelectProject }) => (
-  <div className="grid h-full grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
-    <h2 id="home-featured" className={LABEL_CLASS}>
-      {FEATURED_LABEL}
-    </h2>
+  <div className="grid h-full grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] gap-2">
+    <h2 className={LABEL_CLASS}>{FEATURED_LABEL}</h2>
 
     <HomeProjectCarousel
       projects={FEATURED_PROJECTS}
@@ -106,10 +133,10 @@ const WorkColumns = ({ onSelectProject }) => (
 // The right half of the hero.
 //
 // A definite height, not min-height: from md up the grid divides whatever it is given
-// between the twelve rows, so the cells only have proportions if the panel has a
-// height. Below md that is a share of the viewport, and it's what gives the carousel
-// its own; from md up it is the row the hero's flex layout hands it. The overflow is
-// the backstop for a viewport too short to divide.
+// between its rows, so the cells only have proportions if the panel has a height.
+// Below md that is a share of the viewport, and it's what gives the carousel its own;
+// from md up it is the row the hero's flex layout hands it. The overflow is the
+// backstop for a viewport too short to divide.
 //
 // `setGridRef` hands the whole panel to the hero's exit as one plane — see Home. It
 // sits on the wrapper rather than on either layout, so the exit doesn't care which
@@ -119,7 +146,7 @@ const HomeWork = ({ setGridRef, onSelectProject }) => {
 
   return (
     <section
-      aria-labelledby="home-featured"
+      aria-label={FEATURED_LABEL}
       className="h-[35svh] shrink-0 overflow-hidden md:h-full"
     >
       <div ref={setGridRef} className="h-full">

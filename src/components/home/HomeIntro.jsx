@@ -25,8 +25,6 @@ const HomeIntro = ({ setLineRef, setNoteRef }) => (
           ref={(el) => {
             setLineRef(i, el);
           }}
-          // block, because the exit writes a transform to each line and an
-          // inline box would ignore it.
           className="block"
         >
           {line}

@@ -2,121 +2,130 @@
 
 // Kept as constants so the neon glow in boxShadow below can't drift out of step
 // with the accent itself.
-const NEON = "#00DDBE"
-const NEON_RGB = "0, 221, 190"
+const NEON = "#00DDBE";
+const NEON_RGB = "0, 221, 190";
 
 export default {
-    content: [
-        "./index.html",
-        "./src/**/*.{js,ts,jsx,tsx}",
-    ],
-    theme: {
-        extend: {
-            // The hero's spread has a second breakpoint of its own: from here up the
-            // panel is wide enough to run the halves even, deepen the caption strips
-            // and show each shot whole.
-            //
-            // Tailwind sorts this ahead of md rather than after it, so the rules it
-            // governs pair it with max-wide instead of relying on it to override —
-            // see HomeProjectCard.
-            screens: {
-                wide: "1440px",
-            },
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      // The hero's spread has a second breakpoint of its own: from here up the
+      // panel is wide enough to run the halves even, deepen the caption strips
+      // and show each shot whole.
+      //
+      // Tailwind sorts this ahead of md rather than after it, so the rules it
+      // governs pair it with max-wide instead of relying on it to override —
+      // see HomeProjectCard.
+      screens: {
+        wide: "1440px",
+      },
 
-            // Single source of truth for the palette — index.css pulls the same
-            // values back out with @apply rather than restating any hex.
-            //
-            // Cards carry no border: they read as cards because the fill is LIGHTER
-            // than the page and a black shadow darkens the page at their edge. That
-            // needs the page at carbon-900, not true black — on #07090B the shadow
-            // has nothing left to darken and lands at 1.05:1.
-            colors: {
-                carbon: {
-                    950: "#080C0F", // ink on a neon fill; the shadow's base
-                    900: "#12181E", // page background
-                    850: "#26303A", // modal panel. No darker: the scrim behind
-                                    // composites to #0a0e11, where carbon-900 would be
-                                    // 1.08:1 — gone. This holds 1.45:1.
-                    800: "#2E3B47", // card surface — 1.58:1 above the page
-                    700: "#364450", // card hover. A small step on purpose: any lighter
-                                    // and `mute` drops under AA on it
-                    600: "#4A5966", // filled controls and pills
-                    400: "#8593A0", // de-emphasised ink, e.g. the footer (5.71:1)
-                },
-                // 16.4:1 on the page, 10.4:1 on a card. Body copy and headings.
-                paper: "#F2F5F7",
-                // Secondary copy. Sized to clear AA on the card's HOVER surface
-                // (4.78:1), which is the tightest place it has to survive.
-                mute: "#AAB6C0",
-                // 10.3:1 on the page, and 11.3:1 the other way when carbon-950 sits
-                // on a neon fill, so the accent works as ink or as surface.
-                neon: {
-                    DEFAULT: NEON,
-                    400: "#5FEDD8", // hover — brighter, never duller
-                    500: NEON,
-                    600: "#00B89E", // pressed
-                },
-                // A second accent, scoped to awards and nothing else: an award is a
-                // different kind of fact from what neon marks (state, interactivity).
-                // The moment gold appears elsewhere it stops reading as achievement.
-                // 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
-                // The homepage's editorial palette. Scoped to the hero, which is a
-                // light spread the dark page then slides over — everything below it
-                // stays on carbon/neon. Converted from the design's oklch values.
-                cream: "#E9E9DB",   // the hero's paper ground
-                sage: "#CBD7C2",    // the featured-projects panel
-                ink: "#0E130E",     // hero copy on cream (15.3:1), and the intro
-                                    // panel's own ground, where cream reads 15.3:1
-                                    // and mineral 7.7:1
-                mineral: "#9EA998", // display copy on ink; the image wells' empty state
-                moss: "#5A645A",    // secondary hero copy — 5.0:1 on cream, and 4.1:1
-                                    // on sage, which only carries display sizes
-
-                gold: {
-                    DEFAULT: "#FFD447",
-                    400: "#FFE27A", // hover on the filled, linked variant
-                },
-            },
-            boxShadow: {
-                // Two layers: a tight core darkening the page at the card's edge (this
-                // replaces the border line), and a wide falloff that reads as height.
-                card: "0 1px 2px rgba(0, 0, 0, 0.6), 0 10px 24px -6px rgba(0, 0, 0, 0.7)",
-                // Hover adds a neon bloom. On a dark page a bigger black shadow is
-                // nearly invisible, so the accent is what signals the hover.
-                "card-hover": `0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(${NEON_RGB}, 0.35)`,
-                bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
-                modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
-            },
-            fontFamily: {
-                heading: ['"Fjalla One"', 'system-ui', 'sans-serif'],
-                outfit: ['"Outfit"', 'system-ui', 'sans-serif'],
-                sans: ['system-ui', 'sans-serif'],
-            },
-            // The fade tab panels enter on. For panels that swap via `display`, where
-            // the flip restarts the animation itself; a transition would never fire,
-            // since the incoming panel goes straight to its final opacity.
-            //
-            // The projects grid re-filters one panel in place, so nothing changes for
-            // CSS to react to — it runs the same fade from src/hooks/useTabFade.js.
-            // Keep the duration and easing in step with FADE_MS/FADE_EASING there.
-            keyframes: {
-                "tab-fade-in": {
-                    from: { opacity: "0" },
-                    to: { opacity: "1" },
-                },
-                // The hero's project cards arriving on load. `both` holds the end
-                // state, so the cards keep a transform once it finishes — nothing
-                // inside them is positioned against the viewport, so that's free.
-                "project-reveal": {
-                    from: { opacity: "0", transform: "translateY(1.25rem)" },
-                    to: { opacity: "1", transform: "translateY(0)" },
-                },
-            },
-            animation: {
-                "tab-fade-in": "tab-fade-in 0.35s ease-out both",
-                "project-reveal": "project-reveal 0.8s ease-out both",
-            },
+      // Single source of truth for the palette — index.css pulls the same
+      // values back out with @apply rather than restating any hex.
+      //
+      // Cards carry no border: they read as cards because the fill is LIGHTER
+      // than the page and a black shadow darkens the page at their edge. That
+      // needs the page at carbon-900, not true black — on #07090B the shadow
+      // has nothing left to darken and lands at 1.05:1.
+      colors: {
+        carbon: {
+          950: "#080C0F", // ink on a neon fill; the shadow's base
+          900: "#12181E", // page background
+          850: "#26303A", // modal panel. No darker: the scrim behind
+          // composites to #0a0e11, where carbon-900 would be
+          // 1.08:1 — gone. This holds 1.45:1.
+          800: "#2E3B47", // card surface — 1.58:1 above the page
+          700: "#364450", // card hover. A small step on purpose: any lighter
+          // and `mute` drops under AA on it
+          600: "#4A5966", // filled controls and pills
+          400: "#8593A0", // de-emphasised ink, e.g. the footer (5.71:1)
         },
+        // 16.4:1 on the page, 10.4:1 on a card. Body copy and headings.
+        paper: "#F2F5F7",
+        // Secondary copy. Sized to clear AA on the card's HOVER surface
+        // (4.78:1), which is the tightest place it has to survive.
+        mute: "#AAB6C0",
+        // 10.3:1 on the page, and 11.3:1 the other way when carbon-950 sits
+        // on a neon fill, so the accent works as ink or as surface.
+        neon: {
+          DEFAULT: NEON,
+          400: "#5FEDD8", // hover — brighter, never duller
+          500: NEON,
+          600: "#00B89E", // pressed
+        },
+        // A second accent, scoped to awards and nothing else: an award is a
+        // different kind of fact from what neon marks (state, interactivity).
+        // The moment gold appears elsewhere it stops reading as achievement.
+        // 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
+        // The homepage's editorial palette. Scoped to the hero, which is a
+        // light spread the dark page then slides over — everything below it
+        // stays on carbon/neon. Converted from the design's oklch values.
+        cream: "#E9E9DB", // the hero's paper ground
+        sage: "#CBD7C2", // the featured-projects panel
+        ink: "#0E130E", // hero copy on cream (15.3:1), and the intro
+        // panel's own ground, where cream reads 15.3:1
+        // and mineral 7.7:1
+        mineral: {
+          DEFAULT: "#9EA998", // display copy on ink; the image wells' empty state
+          light: "#D2D9C6", // the hero's opening line, "Auckland, NZ"
+        },
+        moss: "#5A645A", // secondary hero copy — 5.0:1 on cream, and 4.1:1
+        // on sage, which only carries display sizes
+
+        gold: {
+          DEFAULT: "#FFD447",
+          400: "#FFE27A", // hover on the filled, linked variant
+        },
+        // The hero spread's hairlines: the header rule, each card's frame and
+        // the seam above its meta strip. A true hairline rather than the mid
+        // grey this used to be — at #5D5D5D the line was a visible outline
+        // drawn AROUND each card, which fought the spread's own gaps for the
+        // job of separating them. This is `cream` at ~14% over the panel, so
+        // it reads as a drawn edge and lets the gaps do the separating.
+        grid: "#2E332C",
+        well: "#161E16",
+        surface: "#131913",
+      },
+      boxShadow: {
+        // Two layers: a tight core darkening the page at the card's edge (this
+        // replaces the border line), and a wide falloff that reads as height.
+        card: "0 1px 2px rgba(0, 0, 0, 0.6), 0 10px 24px -6px rgba(0, 0, 0, 0.7)",
+        // Hover adds a neon bloom. On a dark page a bigger black shadow is
+        // nearly invisible, so the accent is what signals the hover.
+        "card-hover": `0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(${NEON_RGB}, 0.35)`,
+        bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
+        modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
+      },
+      fontFamily: {
+        heading: ['"Fjalla One"', "system-ui", "sans-serif"],
+        outfit: ['"Outfit"', "system-ui", "sans-serif"],
+        sans: ["system-ui", "sans-serif"],
+      },
+      // The fade tab panels enter on. For panels that swap via `display`, where
+      // the flip restarts the animation itself; a transition would never fire,
+      // since the incoming panel goes straight to its final opacity.
+      //
+      // The projects grid re-filters one panel in place, so nothing changes for
+      // CSS to react to — it runs the same fade from src/hooks/useTabFade.js.
+      // Keep the duration and easing in step with FADE_MS/FADE_EASING there.
+      keyframes: {
+        "tab-fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        // The hero's project cards arriving on load. `both` holds the end
+        // state, so the cards keep a transform once it finishes — nothing
+        // inside them is positioned against the viewport, so that's free.
+        "project-reveal": {
+          from: { opacity: "0", transform: "translateY(1.25rem)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        "tab-fade-in": "tab-fade-in 0.35s ease-out both",
+        "project-reveal": "project-reveal 0.8s ease-out both",
+      },
     },
-    plugins: [],
-}
+  },
+  plugins: [],
+};
