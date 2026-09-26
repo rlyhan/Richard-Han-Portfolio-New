@@ -27,7 +27,7 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
         doesn't read at all. */}
     <p
       ref={setToplineRef}
-      className="flex items-start justify-between gap-4 font-outfit text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase"
+      className="flex items-start justify-between gap-4 font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase"
     >
       <span>{INTRO_TOPLINE.name}</span>
       <span className="max-w-24 text-right md:max-w-none">
@@ -42,7 +42,7 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
       // rate the display type grows there, "Auckland, NZ" wraps onto a
       // second line — four lines become five and the stack loses its shape.
       // From `wide` the halves even out and the type takes the room back.
-      className="mt-[2.2rem] font-outfit text-[clamp(3.125rem,12vw,4.25rem)] leading-[1.02] font-medium text-ink md:mt-[clamp(2.4rem,7vh,5.6rem)] md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
+      className="mt-[2.2rem] font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[1.02] font-medium text-ink md:mt-[clamp(2.4rem,7vh,5.6rem)] md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
     >
       {INTRO_LINES.map((line, i) => (
         <span
@@ -62,7 +62,7 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
         hanging off the h1. */}
     <p
       ref={setNoteRef}
-      className="mt-auto max-w-[20.5rem] pt-[1.6rem] font-outfit text-[0.8125rem] leading-[1.65] text-ash md:pt-10"
+      className="mt-auto max-w-[20.5rem] pt-[1.6rem] font-epilogue text-[0.8125rem] leading-[1.65] text-ash md:pt-10"
     >
       {INTRO_NOTE}
     </p>

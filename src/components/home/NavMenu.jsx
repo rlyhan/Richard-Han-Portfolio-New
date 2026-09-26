@@ -5,6 +5,10 @@
 // under the cards. The hairline on top is the same line the spread's cells are
 // drawn with.
 //
+// The name is the one piece of the hero that keeps the page's own heading face
+// rather than the hero's display face — it is the same name the header carries,
+// and it should read as the site's rather than as this page's.
+//
 // Two elements rather than one, because the hero's exit sinks them on their own
 // beats — `setNameRef` and `setNavRef` are how Home collects them.
 //
@@ -44,7 +48,7 @@ const NavMenu = ({ items, setNameRef, setNavRef }) => (
           key={id}
           href={`#${id}`}
           onClick={onSelect}
-          className="block font-outfit text-[0.7rem] leading-[0.9] whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:grid md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
+          className="block font-urbanist font-semibold text-[0.7rem] leading-[0.9] whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:grid md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
         >
           {/* The numbering matches the counter on the spread opposite, and is
               decorative in the same way — the label is what names the section.
@@ -52,7 +56,7 @@ const NavMenu = ({ items, setNameRef, setNavRef }) => (
               no room for a second column. */}
           <span
             aria-hidden="true"
-            className="hidden text-[0.5625rem] font-medium tracking-[0.18em] text-ash uppercase md:block"
+            className="hidden font-epilogue text-[0.5625rem] tracking-[0.12em] text-ash md:block"
           >
             {String(i + 1).padStart(2, "0")}
           </span>

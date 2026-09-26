@@ -96,9 +96,17 @@ export default {
         bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
         modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
       },
+      // Three faces, and each one has a job — see the @font-face block in
+      // index.css for which weights of them are actually loaded.
+      //
+      // `heading` is the page's own; `urbanist` and `epilogue` are the hero's
+      // pair, and stay scoped to it the way its palette does. The name at the
+      // foot of the hero is the one thing that crosses over: it keeps the
+      // page's heading face rather than the hero's display face.
       fontFamily: {
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],
-        outfit: ['"Outfit"', "system-ui", "sans-serif"],
+        urbanist: ["Urbanist", "system-ui", "sans-serif"],
+        epilogue: ["Epilogue", "system-ui", "sans-serif"],
         sans: ["system-ui", "sans-serif"],
       },
       // The fade tab panels enter on. For panels that swap via `display`, where

@@ -140,7 +140,7 @@ const HomeProjectCard = ({
 
         <h3
           className={cn(
-            "font-heading truncate leading-none text-ink",
+            "font-urbanist truncate leading-[1.15] font-bold text-ink",
             isSlide ? "text-[0.85rem]" : "text-[clamp(1rem,1.35vw,1.2rem)]",
           )}
         >

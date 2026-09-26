@@ -26,12 +26,12 @@ const CELLS = [
 // number and category. Tracking is doing the work at this size — it's what makes a
 // 11px line read as a deliberate label instead of as shrunken body copy.
 export const EYEBROW_CLASS =
-  "font-outfit font-medium uppercase leading-none tracking-[0.18em]";
+  "font-epilogue font-medium uppercase leading-none tracking-[0.18em]";
 
-// The heading of either layout. 500 rather than a bolder weight because that is
-// what the face carries — see index.css. At this size it holds the panel against
-// the display type opposite without becoming a second headline.
-const HEADING_CLASS = "font-outfit text-base leading-none font-medium text-ink";
+// The heading of either layout. The display face at its heaviest loaded weight
+// and a size that stays a label: it names the panel against the display type
+// opposite without becoming a second headline.
+const HEADING_CLASS = "font-urbanist text-base leading-none font-bold text-ink";
 
 // The masonry spread: a heading rule over three cells drawn as one grid.
 //
