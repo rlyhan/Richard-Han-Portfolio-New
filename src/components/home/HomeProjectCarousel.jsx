@@ -22,11 +22,12 @@ const OPTIONS = { loop: true };
 // The track is the only thing here that claims the horizontal axis, so a vertical
 // swipe over a card still scrolls the page.
 //
-// The dots are the only sign that the deck is deeper than one card, so they sit over
-// the shot rather than under it, on their own translucent ground — a flat fill, since
-// a backdrop blur inside the carousel's clipping, transformed box is both the most
-// expensive thing on the page to repaint while a finger is dragging and the least
-// reliable: WebKit samples the wrong backdrop under a transformed ancestor.
+// The dots are the only sign that the deck is deeper than one card, so they sit in
+// the corner of the well, over the matting rather than over the shot. A flat
+// translucent fill lifts them off it — no backdrop blur, since inside the carousel's
+// clipping, transformed box that is both the most expensive thing on the page to
+// repaint while a finger is dragging and the least reliable: WebKit samples the
+// wrong backdrop under a transformed ancestor.
 const HomeProjectCarousel = ({ projects, onSelectProject }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selected, setSelected] = useState(0);
@@ -71,7 +72,7 @@ const HomeProjectCarousel = ({ projects, onSelectProject }) => {
         </div>
       </div>
 
-      <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-ink/55 px-1.5 py-1">
+      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-cream/15 px-1.5 py-1">
         {projects.map((project, i) => (
           <button
             key={project.id}
@@ -85,7 +86,7 @@ const HomeProjectCarousel = ({ projects, onSelectProject }) => {
               aria-hidden="true"
               className={cn(
                 "h-[0.3rem] w-[0.3rem] rounded-full transition-colors duration-200 motion-reduce:transition-none",
-                i === selected ? "bg-cream" : "bg-cream/40",
+                i === selected ? "bg-cream" : "bg-cream/45",
               )}
             />
           </button>

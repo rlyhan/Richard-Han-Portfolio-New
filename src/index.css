@@ -13,11 +13,12 @@
        url(/fonts/fjalla-one-latin-400-normal.woff) format('woff');
 }
 
-/* Self-hosted the same way as Fjalla One above — see that comment. Used
-   where copy sits alongside Fjalla One headings but needs a lighter,
-   geometric weight: the homepage h1, the nav links, and the Featured
-   Projects label. Two weights: 400 for the h1 and nav links, 500 for the
-   Featured Projects label, which reads too thin at 400. */
+/* Self-hosted the same way as Fjalla One above — see that comment. The
+   homepage's own voice: the display lines, the byline and note beside them,
+   the work panel's heading and every label on the spread. Two weights: 500
+   carries all of it, 400 the running copy. Nothing asks for a bolder face
+   than 500 — `font-synthesis: none` below means a weight that isn't loaded
+   renders as one that is, rather than as a faked bold. */
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
