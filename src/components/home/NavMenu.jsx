@@ -28,11 +28,7 @@ const NavMenu = ({ items, setNameRef, setNavRef }) => (
   >
     <p
       ref={setNameRef}
-      // 0.85, not the 0.67 the design sets: that leading is for a wide,
-      // heavy grotesque, and this face is a tall condensed one whose
-      // ascenders run to about 0.75em. Anything under 0.8 and the two
-      // lines print through each other.
-      className="font-heading text-[1.5rem] leading-none text-ink md:pb-[0.12em] md:text-[clamp(3.75rem,6vw,6rem)] md:leading-[0.85]"
+      className="font-heading text-[1.5rem] leading-[0.85] text-ink md:py-[0.12em] md:text-[clamp(3.75rem,6vw,4.5rem)]"
     >
       Richard&nbsp;
       {/* The break belongs to the display setting from md up, where the name is
