@@ -14,7 +14,10 @@ function App() {
     <>
       <Header />
 
-      <main id="main" className="px-8 md:px-12 max-w-7xl mx-auto">
+      {/* No frame here: the gutter and max width belong to each section instead
+          (see PageSection), so the hero can run to the viewport edge while About
+          still paints its background the full width of the page to cover it. */}
+      <main id="main">
         {/* Home is sticky, and this shared wrapper bounds how long it holds the
             viewport: it releases at the end of About, so the pinned hero isn't
             left painting behind the rest of the page. */}

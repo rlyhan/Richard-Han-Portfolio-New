@@ -1,124 +1,164 @@
-import { useRef } from "react"
-import cn from "classnames"
-import PageSection from "./layout/PageSection"
-import ScrollCue from "./common/Buttons/ScrollCue"
-import { useHeroToAboutHandoff } from "../hooks/useHeroToAboutHandoff"
-import { useIsNearPageTop } from "../hooks/useIsNearPageTop"
-import { useKeyShortcut } from "../hooks/useKeyShortcut"
-import { useRollingDisplayLines } from "../hooks/useRollingDisplayLines"
-
-// Each line renders both of its strings and rolls between them — see
-// useRollingDisplayLines for why the pair has to share one grid cell.
-const TEXT_LINES = {
-    line1: ["Tailored to design", "Modern + legacy builds"],
-    line2: ["Collaboration", "AI-empowered"],
-    line3: ["Scalable architecture", "Agile development"],
-    line4: ["User-focused", "SEO-optimised"]
-}
+import { useCallback, useRef } from "react";
+import PageSection from "./layout/PageSection";
+import ScrollCue from "./common/Buttons/ScrollCue";
+import HomeIntro from "./home/HomeIntro";
+import HomeWork from "./home/HomeWork";
+import NavMenu from "./home/NavMenu";
+import { INTRO_LINES } from "../data/home.data";
+import { useCueScroll } from "../hooks/useCueScroll";
+import { useHeroToAboutHandoff } from "../hooks/useHeroToAboutHandoff";
+import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
+import { useKeyShortcut } from "../hooks/useKeyShortcut";
 
 // Scrolled less than this, the hero still owns the viewport, so the cue and its
 // shortcut both still apply.
-const NEAR_TOP_THRESHOLD = 40
+const NEAR_TOP_THRESHOLD = 40;
+
+// What the hero's exit throws off the screen, in the order it goes. The stagger is
+// indexed off this list, so the spread runs down the left column and then takes the
+// work panel with it — see useHeroToAboutHandoff for the travel each index gets.
+//
+// Six is the ceiling: the exit is scrubbed across a unit-length timeline, and a
+// seventh would push the last fade past the end of the runway, leaving the takeover
+// to fire over content still on screen.
+const NOTE_LINE_INDEX = INTRO_LINES.length;
+const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
 
 const Home = () => {
-    const displayLineRefs = useRef([])
-    const outroLineRefs = useRef([])
-    const runwayRef = useRef(null)
+  const displayLineRefs = useRef([]);
+  const outroLineRefs = useRef([]);
+  const runwayRef = useRef(null);
 
-    const { scrollToAbout, isScrollingToAbout } = useHeroToAboutHandoff({
-        displayLineRefs,
-        outroLineRefs,
-        runwayRef,
-    })
+  // Stable, so a re-render on scroll doesn't detach and reattach every ref in the
+  // hero. The elements themselves never change identity either way, so the exit's
+  // timeline keeps pointing at the right things.
+  const setDisplayLine = useCallback((index, el) => {
+    displayLineRefs.current[index] = el;
+  }, []);
+  const setNoteRef = useCallback((el) => {
+    displayLineRefs.current[NOTE_LINE_INDEX] = el;
+  }, []);
+  const setWorkRef = useCallback((el) => {
+    displayLineRefs.current[WORK_LINE_INDEX] = el;
+  }, []);
+  const setNameRef = useCallback((el) => {
+    outroLineRefs.current[0] = el;
+  }, []);
+  const setNavRef = useCallback((el) => {
+    outroLineRefs.current[1] = el;
+  }, []);
 
-    // The cue belongs to the top of the page: any scroll away from the hero retires
-    // it, including the one the cue itself starts.
-    const isCueVisible = useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToAbout
+  const { scrollToAbout, isScrollingToAbout } = useHeroToAboutHandoff({
+    displayLineRefs,
+    outroLineRefs,
+    runwayRef,
+  });
 
-    // Space is the cue's gesture from the keyboard, bound on the same terms: past
-    // the hero it goes back to being page-down.
-    useKeyShortcut("Space", scrollToAbout, { enabled: isCueVisible })
+  // The rest of the page from the hero's own nav, on the same terms as the cue's
+  // shortcut: one scripted scroll, so every fade scrubbed off the way there plays
+  // as it would have, and a gesture mid-flight hands control straight back.
+  const { scrollToTarget: scrollToProjects } = useCueScroll("#projects");
+  const { scrollToTarget: scrollToContact } = useCueScroll("#contact");
 
-    useRollingDisplayLines(displayLineRefs)
+  // The href is the real destination; this only upgrades the jump. Left as an
+  // ordinary anchor for modified clicks and for a page without JS.
+  const handleNavClick = useCallback(
+    (scroll) => (event) => {
+      if (
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        event.button !== 0
+      )
+        return;
+      event.preventDefault();
+      scroll();
+    },
+    [],
+  );
 
-    // min-h, not h: on a viewport too short for four display lines plus the name
-    // block, the hero grows rather than clipping.
-    //
-    // sticky, so the hero holds the viewport while About scrolls over it. Its
-    // containing block is the wrapper it shares with About in App, which ends the
-    // stickiness once About has fully covered it.
-    return (
-        <>
-            <PageSection id="home" additionalClasses="sticky top-0 flex flex-col min-h-svh">
-                <div className="flex-1 flex flex-col justify-center gap-2 py-8 sm:py-12">
-                    {Object.entries(TEXT_LINES).map(([key, [first, second]], i) => (
-                        <div
-                            key={key}
-                            ref={(el) => { displayLineRefs.current[i] = el }}
-                            className={cn(
-                                // 7vw fits the longest string, "Modern + legacy builds", at
-                                // the narrowest viewport; the 118px ceiling is that same
-                                // string against the 1184px max-w-7xl container, which vw
-                                // would outgrow once the width stops scaling. nowrap is the
-                                // backstop: where system-ui runs wider than measured, the
-                                // text overflows sideways rather than wrapping, which would
-                                // double the cell and break the roll.
-                                "grid overflow-hidden leading-none whitespace-nowrap text-[length:min(7vw,118px)]",
-                                // Neon and paper alternate down the stack, so the accent is
-                                // structural here rather than a highlight — which is why it
-                                // stays rare elsewhere.
-                                i % 2 ? "text-right text-paper" : "text-neon"
-                            )}
-                        >
-                            {/* Both strings share one grid cell, so the clip height is the
-                                taller of the two and nothing shifts as they roll. The bottom
-                                padding keeps leading-none from cropping descenders. */}
-                            <p className="col-start-1 row-start-1 pb-[0.12em]">{first}</p>
-                            <p className="col-start-1 row-start-1 pb-[0.12em] opacity-0">{second}</p>
-                        </div>
-                    ))}
-                </div>
+  const selectAbout = handleNavClick(scrollToAbout);
+  const selectProjects = handleNavClick(scrollToProjects);
+  const selectContact = handleNavClick(scrollToContact);
 
-                {/* Animated as two halves, so the name and the availability line
-                    leave on their own beats — same reason the display lines stagger.
+  const navItems = [
+    { id: "about", label: "About", onSelect: selectAbout },
+    { id: "projects", label: "Projects", onSelect: selectProjects },
+    { id: "contact", label: "Contact", onSelect: selectContact },
+  ];
 
-                    The bottom padding is clearance for the scroll cue, centred at the
-                    foot of the viewport. Below 1280px the two wrap onto separate
-                    full-width rows and the cue lands on the availability line; from
-                    there up they sit either side of it. */}
-                <div className="w-full pb-16 xl:pb-0">
-                    <div className="flex flex-wrap items-end justify-between">
-                        <h1
-                            ref={(el) => { outroLineRefs.current[0] = el }}
-                            className="font-heading uppercase mb-10 line-height"
-                        >
-                            <span className="block text-neon text-3xl mr-2">Richard Han</span>
-                            <span className="block text-paper text-xl sm:text-2xl">Front End | Full Stack Developer</span>
-                        </h1>
-                        <p
-                            ref={(el) => { outroLineRefs.current[1] = el }}
-                            className="text-mute text-sm sm:text-lg font-medium mb-10"
-                        >
-                            Open to opportunities | Currently based in: <span className="text-neon">Auckland, NZ</span>
-                        </p>
-                    </div>
-                </div>
-            </PageSection>
+  // The cue belongs to the top of the page: any scroll away from the hero retires
+  // it, including the one the cue itself starts.
+  const isCueVisible =
+    useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToAbout;
 
-            {/* The runway: the scroll where the hero holds the viewport alone and empties
+  // Space is the cue's gesture from the keyboard, bound on the same terms: past
+  // the hero it goes back to being page-down.
+  useKeyShortcut("Space", scrollToAbout, { enabled: isCueVisible });
+
+  // contained: false — the hero is the one section that runs to the viewport edge,
+  // so it opts out of the page frame the rest of the page sits in.
+  //
+  // h-svh from md up, because that is what lets flex divide the hero: with an auto
+  // height the container sizes to its content, and a spread of images has a
+  // max-content height far taller than the screen. Both panels clip their own
+  // overflow, so a viewport too short to divide loses the bottom of the spread
+  // rather than spilling it over About.
+  //
+  // Below md the hero is a stack sized by its own copy, so it keeps min-h and grows.
+  //
+  // sticky, so the hero holds the viewport while About scrolls over it. Its
+  // containing block is the wrapper it shares with About in App, which ends the
+  // stickiness once About has fully covered it.
+  return (
+    <>
+      <PageSection
+        id="home"
+        contained={false}
+        additionalClasses="sticky top-0 flex min-h-svh flex-col overflow-x-clip bg-ink text-ink md:h-svh"
+      >
+        {/* flex-1, not a calc against the footer's nominal height: the name block
+                    is display type and sets its own height, so measuring the spread
+                    off a guess at the footer leaves the hero taller than the viewport
+                    and the nav below the fold. Letting flex divide what's left keeps
+                    the whole hero inside one screen at any size. */}
+        {/* The work panel keeps the larger share below 1440px — the spread needs more
+                    room than the copy does — but at 1440px and up the copy takes it instead,
+                    on a 7/5 split of a twelve-column layout. */}
+        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] wide:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+          <HomeIntro setLineRef={setDisplayLine} setNoteRef={setNoteRef} />
+          <HomeWork setGridRef={setWorkRef} onSelectProject={selectProjects} />
+        </div>
+
+        <NavMenu
+          items={navItems}
+          setNameRef={setNameRef}
+          setNavRef={setNavRef}
+        />
+      </PageSection>
+
+      {/* The runway: the scroll where the hero holds the viewport alone and empties
                 out, before the handoff takes over into About. Carries no content, so its
                 only job is height — and it's what every trigger in the handoff measures
                 against, hence the ref.
 
                 Reduced motion collapses it: with the fades gone there's nothing to
                 watch, and it would read as a dead screen. */}
-            <div ref={runwayRef} aria-hidden="true" className="h-[80svh] motion-reduce:h-0" />
+      <div
+        ref={runwayRef}
+        aria-hidden="true"
+        className="h-[140svh] motion-reduce:h-0"
+      />
 
-            {/* Retired the moment the page leaves the hero, so it never floats over
-                About as an invitation to a section already on screen. */}
-            <ScrollCue onClick={scrollToAbout} visible={isCueVisible} />
-        </>
-    )
-}
+      <ScrollCue
+        onClick={scrollToAbout}
+        tone="hero"
+        visible={isCueVisible}
+        positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"
+      />
+    </>
+  );
+};
 
-export default Home
+export default Home;
