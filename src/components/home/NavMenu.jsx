@@ -35,7 +35,12 @@ const NavMenu = ({ items, setNameRef, setNavRef }) => (
       className="font-heading text-[1.5rem] leading-none text-ink md:pb-[0.12em] md:text-[clamp(3.75rem,6vw,6rem)] md:leading-[0.85]"
     >
       Richard&nbsp;
-      <br className="inline" />
+      {/* The break belongs to the display setting from md up, where the name is
+          two lines of 60px type stacked beside the links. On a phone the bar is
+          one 45px row and the name stays on one line: broken there it doubles
+          the height of the bar, which is part of what pushed the foot of the
+          hero past the bottom of the viewport. `hidden` stops a <br> breaking. */}
+      <br className="hidden md:inline" />
       Han.
     </p>
 

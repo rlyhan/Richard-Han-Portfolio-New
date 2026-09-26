@@ -14,13 +14,21 @@ import { INTRO_LINES, INTRO_NOTE, INTRO_TOPLINE } from "../../data/home.data";
 // leave, and the panel clips the drift rather than letting it reach the page and
 // open a horizontal scrollbar.
 //
+// min-h-min is the price of that clip below md. A flex item that hides its overflow
+// has an automatic minimum size of zero, so on a phone — where the hero is one
+// screen divided between this panel, the spread and the nav — this column was the
+// thing that gave way, and what it gave up was the foot of the note. Stated as
+// min-content, the copy keeps its height and the spread yields instead. From md up
+// the panel is a grid cell beside the spread and clipping is the intended backstop,
+// so the floor comes back off.
+//
 // The top padding on a phone is what it is to clear the scroll cue, which sits in
 // the top-right corner at that size — see Home. From md up the cue moves to the
 // foot of the viewport and the panel goes back to an even inset.
 const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
   <section
     aria-labelledby="home-heading"
-    className="flex min-w-0 flex-1 flex-col overflow-hidden px-[1.4rem] pt-[4.6rem] pb-[2.1rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-10"
+    className="flex min-h-min min-w-0 flex-1 flex-col overflow-hidden px-[1.4rem] pt-[4.6rem] pb-[clamp(1.25rem,4svh,2.1rem)] md:min-h-0 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-10"
   >
     {/* The location wraps rather than shrinking the type on a phone: two words
         over two lines in the corner still read as a dateline, where 9px type
@@ -37,12 +45,18 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
 
     <h1
       id="home-heading"
+      // Below md the size is the smaller of a share of the width and a share
+      // of the height. Width alone is what pinned this at 50px on every phone
+      // and left the hero taller than the screen: the two ratios are equal at
+      // 16:9, so a taller phone still sizes off its width, and a short one
+      // sizes off its height instead of overflowing.
+      //
       // Two sizes above md, because the copy's half of the hero is the one
       // that narrows: below `wide` it holds 44% of the screen, and at the
       // rate the display type grows there, "Auckland, NZ" wraps onto a
       // second line — four lines become five and the stack loses its shape.
       // From `wide` the halves even out and the type takes the room back.
-      className="mt-[2.2rem] font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[1.02] font-medium text-ink md:mt-[clamp(2.4rem,7vh,5.6rem)] md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
+      className="mt-[clamp(1.15rem,4.2svh,2.2rem)] font-urbanist text-[clamp(2.6rem,min(12.8vw,7.2svh),4.25rem)] leading-[1.02] font-medium text-ink md:mt-[clamp(2.4rem,7vh,5.6rem)] md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
     >
       {INTRO_LINES.map((line, i) => (
         <span
@@ -62,7 +76,7 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
         hanging off the h1. */}
     <p
       ref={setNoteRef}
-      className="mt-auto max-w-[20.5rem] pt-[1.6rem] font-epilogue text-[0.8125rem] leading-[1.65] text-ash md:pt-10"
+      className="mt-auto max-w-[20.5rem] pt-[clamp(0.95rem,3svh,1.6rem)] font-epilogue text-[0.8125rem] leading-[1.65] text-ash md:pt-10"
     >
       {INTRO_NOTE}
     </p>

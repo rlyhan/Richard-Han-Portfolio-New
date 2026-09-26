@@ -116,6 +116,13 @@ const WorkColumns = ({ onSelectProject }) => (
 // from md up it is the row the hero's flex layout hands it. The overflow is the
 // backstop for a viewport too short to divide.
 //
+// Below md that share is a starting height rather than a fixed one — the panel is
+// the part of the hero that gives way. It keeps 35svh on any phone that can afford
+// it, and on a short screen it shrinks by however much the copy column needs to
+// stay whole, down to the 9rem floor where a card stops reading as a card. That is
+// what keeps the nav at the foot of the hero inside the viewport: the hero is one
+// screen tall, and this is the item in it with any give. Hence no `shrink-0`.
+//
 // The seam moves with the layout: below md the panel sits under the intro and the
 // line goes across the top of it, from md up it sits beside it and the line stands
 // between the two halves.
@@ -129,7 +136,7 @@ const HomeWork = ({ setGridRef, onSelectProject }) => {
   return (
     <section
       aria-label={FEATURED_LABEL}
-      className={`h-[35svh] shrink-0 overflow-hidden border-t ${GRID_BORDER_COLOR} md:h-full md:border-t-0 md:border-l`}
+      className={`h-[35svh] min-h-[9rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:h-full md:min-h-0 md:border-t-0 md:border-l`}
     >
       <div ref={setGridRef} className="h-full">
         {isMdUp ? (

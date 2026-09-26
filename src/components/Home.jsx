@@ -107,13 +107,17 @@ const Home = () => {
   // contained: false — the hero is the one section that runs to the viewport edge,
   // so it opts out of the page frame the rest of the page sits in.
   //
-  // h-svh from md up, because that is what lets flex divide the hero: with an auto
-  // height the container sizes to its content, and a spread of images has a
-  // max-content height far taller than the screen. Both panels clip their own
-  // overflow, so a viewport too short to divide loses the bottom of the spread
-  // rather than spilling it over About.
+  // h-svh, because that is what lets flex divide the hero: with an auto height the
+  // container sizes to its content, and a spread of images has a max-content height
+  // far taller than the screen. Both panels clip their own overflow, so a viewport
+  // too short to divide loses the bottom of the spread rather than spilling it over
+  // About.
   //
-  // Below md the hero is a stack sized by its own copy, so it keeps min-h and grows.
+  // At every size, not just from md up. On a phone it used to be min-h-svh and a
+  // stack sized by its own copy — which put the nav below the fold on any screen
+  // shorter than about 780px, and a sticky hero has no scroll left to reach it. One
+  // screen tall is what makes the division below binding, so the work panel gives up
+  // the height the copy column needs instead of the bar at the foot going off-screen.
   //
   // sticky, so the hero holds the viewport while About scrolls over it. Its
   // containing block is the wrapper it shares with About in App, which ends the
@@ -123,7 +127,7 @@ const Home = () => {
       <PageSection
         id="home"
         contained={false}
-        additionalClasses="sticky top-0 flex min-h-svh flex-col overflow-x-clip bg-cream text-ink md:h-svh"
+        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-cream text-ink"
       >
         {/* flex-1, not a calc against the footer's nominal height: the name block
                     is display type and sets its own height, so measuring the spread
