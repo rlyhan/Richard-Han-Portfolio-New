@@ -1,4 +1,4 @@
-import PROJECTS from "./projects.data"
+import PROJECTS from "./projects.data";
 
 // The hero's copy and the slice of the project list it puts on the front page.
 // Nothing here restates a project: the cards read name and category straight off
@@ -6,26 +6,21 @@ import PROJECTS from "./projects.data"
 
 // Four lines, because the hero's exit throws them off the screen as four planes —
 // see useHeroToAboutHandoff.
-export const INTRO_LINES = [
-    "Auckland, NZ",
-    "based.",
-    "Front end.",
-    "Full stack.",
-]
+export const INTRO_LINES = ["Engaging", "digital", "experiences."];
 
 export const INTRO_NOTE =
-    "Building thoughtful digital experiences with a clear structure and a human touch."
+  "Front End and Full Stack Development. Thoughtful engineering. Powered by collaboration. Enhanced by AI.";
 
 // The byline above the display lines: who and where, stated once in small caps so
 // the h1 underneath is free to be four lines of type rather than an introduction.
 // The name repeats at the foot of the hero at display size — this is the caption
 // version of it, and what makes the top of the page read as a masthead.
 export const INTRO_TOPLINE = {
-    name: "Richard Han",
-    location: "Auckland, New Zealand",
-}
+  name: "Richard Han",
+  location: "Auckland, New Zealand",
+};
 
-export const FEATURED_LABEL = "Selected work"
+export const FEATURED_LABEL = "Featured work";
 
 // Three, and in this order: the masonry grid is hand-placed rather than flowed, so
 // the layout below only describes these three cells. Adding a fourth here would
@@ -41,38 +36,36 @@ export const FEATURED_LABEL = "Selected work"
 // and what a card shows is a site ON something, which is the part a description
 // of the project can't supply.
 const FEATURED = [
-    {
-        id: "neat-places",
-        image: {
-            src: "neatplaces-tall.webp",
-            width: 2048,
-            height: 2732,
-            alt: "The Neat Places travel site shown on a tablet",
-        },
+  {
+    id: "neat-places",
+    image: {
+      src: "neatplaces-tall.webp",
+      width: 2048,
+      height: 2732,
+      alt: "The Neat Places travel site shown on a tablet",
     },
-    {
-        id: "thakeham",
-        image: {
-            src: "thakeham.webp",
-            width: 2400,
-            height: 1800,
-            alt: "The Thakeham housing site shown on a laptop",
-        },
+  },
+  {
+    id: "thakeham",
+    image: {
+      src: "thakeham.webp",
+      width: 2400,
+      height: 1800,
+      alt: "The Thakeham housing site shown on a laptop",
     },
-    {
-        id: "touchgrass",
-        image: {
-            src: "touchgrass.webp",
-            width: 3200,
-            height: 2276,
-            alt: "Three phones showing screens from the Touchgrass app",
-        },
+  },
+  {
+    id: "touchgrass",
+    image: {
+      src: "touchgrass.webp",
+      width: 3200,
+      height: 2276,
+      alt: "Three phones showing screens from the Touchgrass app",
     },
-]
+  },
+];
 
-export const FEATURED_PROJECTS = FEATURED
-    .map(({ id, image }) => {
-        const project = PROJECTS.find((entry) => entry.id === id)
-        return project && { ...project, image }
-    })
-    .filter(Boolean)
+export const FEATURED_PROJECTS = FEATURED.map(({ id, image }) => {
+  const project = PROJECTS.find((entry) => entry.id === id);
+  return project && { ...project, image };
+}).filter(Boolean);
