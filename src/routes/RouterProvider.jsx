@@ -360,21 +360,16 @@ const RouterProvider = ({ children }) => {
     // below: the scroll that page leaves by can run. A frame's wait, so the triggers
     // refreshed above are measuring the document the scroll is about to cross.
     //
-    // Not every page has such a scroll. A page with no runway — About, which the hero
-    // hands over to and which simply ends — has nothing to play and registers nothing,
-    // so asking for the page after it is a page change like any other.
+    // The scroll is always there to run: only a page with a `next` is ever asked this,
+    // and a page with a `next` is a page with a runway to empty out across — which is
+    // what it registers. See useAdvance.
     useEffect(() => {
         if (!advanceRequest || !isNextStaged) return
 
-        const frame = requestAnimationFrame(() => {
-            const advance = advanceRef.current
-
-            if (advance) advance()
-            else enterRoute(nextRoute)
-        })
+        const frame = requestAnimationFrame(() => advanceRef.current?.())
 
         return () => cancelAnimationFrame(frame)
-    }, [advanceRequest, isNextStaged, nextRoute, enterRoute])
+    }, [advanceRequest, isNextStaged])
 
     useEffect(() => {
         const onPopState = () => {
@@ -480,7 +475,6 @@ const RouterProvider = ({ children }) => {
     const frontSlot = useMemo(
         () => ({
             isFront: true,
-            nextPath: nextRoute?.path ?? null,
             nextSelector: sectionSelectorOf(nextRoute),
             isNextStaged,
         }),
@@ -506,7 +500,6 @@ const RouterProvider = ({ children }) => {
     const routerValue = useMemo(
         () => ({
             path,
-            route,
             pages,
             swap,
             finishSwap,

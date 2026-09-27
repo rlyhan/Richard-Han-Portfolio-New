@@ -18,7 +18,7 @@ ScrollTrigger.config({ ignoreMobileResize: true })
 
 // Seconds of catch-up between scroll and animation — what makes a section trail the
 // wheel and coast to a stop rather than being welded to the scrollbar.
-export const SCRUB_LAG = 1
+const SCRUB_LAG = 1
 
 // How far an incoming section trails the scroll carrying it. A share of the viewport,
 // since the distance scales with the screen.

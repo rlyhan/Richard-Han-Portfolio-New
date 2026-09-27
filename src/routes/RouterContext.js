@@ -21,7 +21,6 @@ export const RouterContext = createContext(null)
 // rendered outside the router — a test, a story — still works, with nowhere to go.
 export const EMPTY_SLOT = {
     isFront: false,
-    nextPath: null,
     nextSelector: null,
     isNextStaged: false,
 }

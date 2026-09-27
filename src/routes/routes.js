@@ -7,7 +7,7 @@
 //
 // Each page is its own chunk, which is the point of the split: the hero's spread,
 // the project data and the modal no longer ship to someone who came to read About.
-export const ROUTES = [
+const ROUTES = [
     {
         path: "/",
         // The id the page's top-level section carries. Every handoff and every
@@ -61,7 +61,7 @@ export const ROUTES = [
     },
 ]
 
-export const HOME_PATH = "/"
+const HOME_PATH = "/"
 
 // Paths by section id, derived rather than restated — for the few places inside a page
 // that link to one page by name instead of to whatever comes after them.
