@@ -42,16 +42,21 @@ const PREFETCH_DELAY = 800
 // Gives the smooth scroller a scroll position it did not perform itself. Lenis holds
 // its own idea of where the page is and writes it back every frame, so setting the
 // window alone is undone on the next tick.
+//
+// Stopped first, and not merely told where it now is: a wheel gesture is a scroll
+// Lenis is still easing out, and that easing survives being given a new position —
+// it carries on toward wherever the gesture was heading, which is a place in the
+// document that has just been taken apart. Stopping drops it, the window is set,
+// and starting again reads the position back off the page. A flick that carries the
+// viewer through a join stops where the join put them.
 const seatScroll = (offset) => {
-    window.scrollTo(0, offset)
-
     const lenis = getLenis()
-    if (!lenis) return
 
-    // Resize first: the page it measured its limits against is not the one it is
-    // being seated in.
-    lenis.resize()
-    lenis.scrollTo(offset, { immediate: true, force: true })
+    lenis?.stop()
+    window.scrollTo(0, offset)
+    // Its limits were measured against the page that has just left.
+    lenis?.resize()
+    lenis?.start()
 }
 
 const scrollPageToTop = () => {
