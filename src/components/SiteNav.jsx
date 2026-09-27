@@ -1,9 +1,7 @@
 import cn from "classnames";
 import NavMenu from "./layout/NavMenu";
-import BackToTop from "./common/Buttons/BackToTop";
 import { useRouter } from "../routes/RouterContext";
 import { useNavItems } from "../routes/useNavLinks";
-import { useScriptedScroll } from "../hooks/useScriptedScroll";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
 
 // The site's nav: the hero's own bar, pinned to the foot of the viewport for the
@@ -18,12 +16,6 @@ import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
 // why nothing is shown over the hero, which carries a copy of this bar in its own
 // layout.
 const SiteNav = () => {
-    // #main, not the page's own section: the hero is sticky, so resolving it as a
-    // target reads its stuck position and scrolls nowhere. The main element starts at
-    // the first pixel of the document and stays where it is, so it resolves to the
-    // top of whichever page is in it.
-    const { scrollToTarget: scrollToTop } = useScriptedScroll("#main");
-
     // Which page this bar is standing on decides where its floor is, and the router
     // is what knows: the hero draws a copy of this bar in its own layout, and a page
     // that doesn't has nothing for a pinned bar to be drawn twice over.
@@ -73,14 +65,7 @@ const SiteNav = () => {
             // fallback for browsers without inert.
             inert={!isUp}
         >
-            <NavMenu items={navItems} ariaLabel="Site navigation">
-                {/* No ring over the hero: there is nowhere to go back to up
-                    there, and the hero's own bar has no ring in the middle of it.
-                    Dropping it also takes the bar back to the hero's own
-                    two-column grid, so the pair sit exactly on top of one
-                    another. */}
-                {!isOverOwnBar && <BackToTop onClick={scrollToTop} />}
-            </NavMenu>
+            <NavMenu items={navItems} ariaLabel="Site navigation" />
         </div>
     );
 };

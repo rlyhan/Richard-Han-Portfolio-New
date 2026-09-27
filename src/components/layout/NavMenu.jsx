@@ -1,4 +1,3 @@
-import cn from "classnames";
 import { PATHS } from "../../routes/routes";
 import { useNavLink } from "../../routes/useNavLinks";
 import { INTRO_TOPLINE } from "../../data/home.data";
@@ -7,12 +6,9 @@ const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 
 // The bar at the foot of the hero, and — pinned to the viewport by SiteNav — at the
 // foot of every screen below it: the name at display size, the section links
-// opposite it. One component for both, so the hero and the rest of the page can't
-// drift apart on the one piece of furniture they share.
-//
-// `children` is the middle of the bar. The hero leaves it empty — there is nowhere to
-// go back to from the top of the site — and the pinned copy puts its back-to-top ring
-// there, which is what opens the third column.
+// opposite it, and nothing between them. One component for both, and now one layout
+// as well, so the pinned copy sits exactly on top of the hero's own wherever the two
+// are stacked.
 //
 // The items are pages rather than sections of one, so each carries a real link to a
 // real URL — see useNavLinks, which is where both copies of this bar get them.
@@ -26,19 +22,13 @@ const NavMenu = ({
   setNameRef,
   setNavRef,
   ariaLabel = "Portfolio sections",
-  children,
 }) => {
   const homeLink = useNavLink(PATHS.home);
 
   return (
   <nav
     aria-label={ariaLabel}
-    className={cn(
-      "relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:items-end md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4",
-      children
-        ? "md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]"
-        : "md:grid-cols-[minmax(0,1fr)_auto]",
-    )}
+    className="relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4"
   >
     <a
       {...homeLink}
@@ -48,8 +38,6 @@ const NavMenu = ({
       {FIRST_NAME}&nbsp; <br />
       {LAST_NAME}.
     </a>
-
-    {children}
 
     <div
       ref={setNavRef}
