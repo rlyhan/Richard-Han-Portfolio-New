@@ -36,8 +36,19 @@ const LANDING_SLACK = 1
 
 // When the next page's chunk is fetched, on a page the viewer is sitting still on.
 // Late enough to stay out of the way of the current page's own work — its fonts, its
-// images — and early enough to be here before the first scroll asks for it.
+// images — and early enough to be here before the scroll asks for it.
 const PREFETCH_DELAY = 800
+
+// How close to the end of what is in the document the viewer has to be before the
+// next page is mounted below it, in viewports.
+//
+// A page is not put in the document to be scrolled past: it is put there so the join
+// has something to play against, and that is the last screenful of the page above.
+// One viewport of warning is a whole screen of scrolling before the hesitation
+// starts, which is time enough for a chunk already fetched to mount and for its
+// triggers to be measured — and it keeps the page below out of the document for
+// everyone still reading the one above.
+const STAGE_MARGIN = 1
 
 // Gives the smooth scroller a scroll position it did not perform itself. Lenis holds
 // its own idea of where the page is and writes it back every frame, so setting the
@@ -218,27 +229,48 @@ const RouterProvider = ({ children }) => {
         return () => clearTimeout(id)
     }, [nextRoute])
 
-    // The page itself, mounted on the first sign the viewer is leaving this one.
+    // The page itself, mounted once the viewer is within reach of the join.
     //
-    // Any scroll at all, rather than a measured approach: the join is what the page
-    // below has to be there for, and the whole point of the wait is the visitor who
-    // never scrolls — the one whose page weight this was all about.
+    // While nothing is staged, the end of the document IS the end of this page, so
+    // that is what the distance is measured against. A viewer who stays on the page
+    // they opened never has the next one in their document at all — which is the
+    // weight this was about — and one on their way down has it in place before the
+    // hesitation that hands them over.
     useEffect(() => {
         if (!nextRoute || isNextStaged) return
 
-        if (window.scrollY > 0) {
-            stageNext()
-            return
-        }
+        let frame = null
 
-        const onScroll = () => {
+        const measure = () => {
+            frame = null
+
+            // Standing still at the top is not on the way anywhere, however short
+            // the page is.
             if (window.scrollY <= 0) return
+
+            const viewport = window.innerHeight
+            const remaining = document.documentElement.scrollHeight - (window.scrollY + viewport)
+            if (remaining > viewport * STAGE_MARGIN) return
+
             window.removeEventListener("scroll", onScroll)
             stageNext()
         }
 
+        // Read in a frame of its own rather than in the handler: the page's height is
+        // a layout read, and a scroll handler is the last place to force one.
+        const onScroll = () => {
+            if (frame === null) frame = requestAnimationFrame(measure)
+        }
+
         window.addEventListener("scroll", onScroll, { passive: true })
-        return () => window.removeEventListener("scroll", onScroll)
+        // A page opened part-way down — entered with the scroll the page above was
+        // left at — may already be within reach of its own join.
+        measure()
+
+        return () => {
+            window.removeEventListener("scroll", onScroll)
+            if (frame !== null) cancelAnimationFrame(frame)
+        }
     }, [nextRoute, isNextStaged, stageNext])
 
     // The join, crossed: the staged page has the viewport, so the URL follows it.
