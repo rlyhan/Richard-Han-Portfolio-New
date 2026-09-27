@@ -124,7 +124,7 @@ const ProjectsPage = () => {
                 against the section instead of the viewport. */}
             {
                 isModalOpen && selectedProject && (
-                    <Modal project={selectedProject} modalTitle={selectedProject.name} isOpen={isModalOpen} onClose={closeProject}>
+                    <Modal isOpen={isModalOpen} onClose={closeProject}>
                         <ProjectCard project={selectedProject} isModalContent={true} />
                     </Modal>
                 )

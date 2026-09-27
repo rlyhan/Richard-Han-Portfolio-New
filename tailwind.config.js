@@ -93,7 +93,6 @@ export default {
         // Hover adds a neon bloom. On a dark page a bigger black shadow is
         // nearly invisible, so the accent is what signals the hover.
         "card-hover": `0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(${NEON_RGB}, 0.35)`,
-        bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
         modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
       },
       // Three faces, and each one has a job — see the @font-face block in
