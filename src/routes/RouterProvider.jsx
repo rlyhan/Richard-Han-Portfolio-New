@@ -1,0 +1,433 @@
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
+import gsap from "gsap"
+import ScrollTrigger from "gsap/ScrollTrigger"
+import { EMPTY_SLOT, RouterContext } from "./RouterContext"
+import {
+    findRoute,
+    getLoadedPage,
+    loadPage,
+    nextRouteOf,
+    resolvePath,
+    sectionSelectorOf,
+} from "./routes"
+import { getSectionFlowTop } from "../helpers/sectionScroll"
+import { getLenis } from "../hooks/useLenis"
+
+gsap.registerPlugin(ScrollTrigger)
+
+// The scroll a page opens at is the router's to decide, not the browser's: it hands
+// the URL over mid-scroll (see below), and a reload the browser restored to that
+// offset would open the page part-way down with nothing above it.
+if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual"
+
+// How long the scroll has to be quiet before the URL is handed over.
+//
+// The handover takes the page above out of the document and takes its height off the
+// scroll position in the same frame, which is invisible standing still and a stall
+// mid-flick: the wheel's remaining momentum lives in the smooth scroller's target
+// position, and re-seating that position spends it. So it waits for the gesture to
+// finish — which is a beat after the takeover's scripted scroll eases to its landing
+// anyway, and unnoticeable when the viewer is reading rather than moving.
+const SETTLE_MS = 140
+
+// Subpixel slack on the landing. Page zoom and a fractional viewport height both
+// leave the scroll a hair short of a position summed off the layout.
+const LANDING_SLACK = 1
+
+// When the next page's chunk is fetched, on a page the viewer is sitting still on.
+// Late enough to stay out of the way of the current page's own work — its fonts, its
+// images — and early enough to be here before the first scroll asks for it.
+const PREFETCH_DELAY = 800
+
+// Gives the smooth scroller a scroll position it did not perform itself. Lenis holds
+// its own idea of where the page is and writes it back every frame, so setting the
+// window alone is undone on the next tick.
+const seatScroll = (offset) => {
+    window.scrollTo(0, offset)
+
+    const lenis = getLenis()
+    if (!lenis) return
+
+    // Resize first: the page it measured its limits against is not the one it is
+    // being seated in.
+    lenis.resize()
+    lenis.scrollTo(offset, { immediate: true, force: true })
+}
+
+const scrollPageToTop = () => {
+    const lenis = getLenis()
+    if (lenis) {
+        lenis.scrollTo(0)
+        return
+    }
+
+    // No Lenis means reduced motion, which is also what decides the behaviour here.
+    window.scrollTo({ top: 0, behavior: "auto" })
+}
+
+// The site's pages, one URL at a time — and, for the length of a handoff, two of them
+// in one document.
+//
+// Wraps the whole app rather than only the pages: the chrome that outlives them — the
+// pinned nav bar, the footer — asks it where the site is and how to get elsewhere,
+// and the pages themselves are mounted wherever PageOutlet is put.
+//
+// A page is not a screen that replaces another here. The scroll runs through the site
+// in the order routes.js lists, and every join between two pages is the same
+// sequence:
+//
+//   staged     the next page's chunk is fetched and the page is mounted BELOW the
+//              current one, in the same scroll document. This is what lets the joins
+//              stay exactly what they were when the whole site was one page: the
+//              hero pins and empties out while About climbs over it, a section parks
+//              and dissolves under the one arriving. See useHandoff.
+//   the join   the scroll crosses it. Either the viewer scrolls there, or the
+//              handoff's takeover spends the scroll for them, or a nav item asks for
+//              the page and the router runs that same scroll — one path, so the
+//              sequence is the same however it was asked for.
+//   handover   the staged page has the viewport and the scroll has settled, so the
+//              page above comes out of the document, its height comes off the scroll
+//              position, and the URL becomes the staged page's. Nothing moves.
+//
+// Arriving at a page directly is the same site with the chain entered part-way: the
+// page loads on its own, and stages the one after it on the first scroll.
+const RouterProvider = ({ children }) => {
+    // The path and the component are one piece of state, so there is no frame where
+    // the URL says one page and the document holds another.
+    const [current, setCurrent] = useState(() => {
+        const path = resolvePath(window.location.pathname)
+        return { path, Page: getLoadedPage(findRoute(path)) }
+    })
+    const { path, Page } = current
+
+    // The page mounted below the current one, as its path and its component together:
+    // holding the component rather than a flag is what guarantees the two agree, and
+    // that a page is never mounted for a join it doesn't belong to.
+    const [staged, setStaged] = useState(null)
+
+    // Bumped by a nav item that asks for the next page: the scroll it wants can only
+    // run once that page is mounted, so the request outlives the click.
+    const [advanceRequest, setAdvanceRequest] = useState(0)
+
+    const route = findRoute(path)
+    const nextRoute = nextRouteOf(route)
+    const StagedPage = staged?.path && staged.path === nextRoute?.path ? staged.Page : null
+    const isNextStaged = StagedPage !== null
+
+    // The scroll the page in front leaves by, handed over by the page itself — see
+    // useAdvance. A ref because it is called from events rather than rendered.
+    const advanceRef = useRef(null)
+    // What the scroll has to be set to once the document has changed, applied before
+    // the browser paints it. Set by whatever asked for the change, since only that
+    // knows whether the page is being entered at the top or taken over mid-scroll.
+    const handoverRef = useRef(null)
+
+    // Only reached on a cold arrival — every other path loads the chunk before it
+    // swaps the page in, so there is nothing to wait for by then.
+    useEffect(() => {
+        if (Page) return
+
+        let cancelled = false
+
+        loadPage(route)
+            .then((Component) => {
+                if (!cancelled) setCurrent({ path, Page: Component })
+            })
+            .catch((error) => {
+                // Nothing to fall back to: the URL the server would serve is the one
+                // that produced this. Left for the browser's own error surface.
+                console.error(`Could not load ${path}`, error)
+            })
+
+        return () => {
+            cancelled = true
+        }
+    }, [Page, route, path])
+
+    const stageNext = useCallback(() => {
+        if (!nextRoute) return Promise.resolve(false)
+
+        return loadPage(nextRoute)
+            .then((Component) => {
+                setStaged({ path: nextRoute.path, Page: Component })
+                return true
+            })
+            .catch(() => false)
+    }, [nextRoute])
+
+    const enterRoute = useCallback((target, { push = true, offset = 0 } = {}) => {
+        // A scripted scroll still pointing into the document about to be taken
+        // apart. Killing it runs its own cleanup, which is what unlocks the page if
+        // it was a takeover holding the scroll.
+        gsap.killTweensOf(window)
+
+        handoverRef.current = { offset }
+
+        if (push) window.history.pushState({ path: target.path }, "", target.path)
+
+        setStaged(null)
+        setAdvanceRequest(0)
+        setCurrent({ path: target.path, Page: getLoadedPage(target) })
+    }, [])
+
+    // Before the paint, never after: this is the frame the page above leaves the
+    // document in, and the scroll has to lose that page's height in the same one.
+    useLayoutEffect(() => {
+        const handover = handoverRef.current
+        if (!handover) return
+
+        handoverRef.current = null
+
+        // ScrollTrigger saves the scroll position and puts it back across a refresh,
+        // which is right for a resize and wrong here: the position it remembers was a
+        // position in a document that no longer exists, and on a page returned to it
+        // would drop the viewer part-way down instead of at the top.
+        ScrollTrigger.clearScrollMemory()
+        seatScroll(handover.offset)
+        // Every trigger left standing was measured against the document that just
+        // changed under it.
+        ScrollTrigger.refresh()
+    }, [current])
+
+    // The set of mounted pages has changed, so every page's position in the document
+    // has too. A passive effect, which is what puts it after the pages' own — the
+    // triggers being re-resolved here are built in theirs.
+    useEffect(() => {
+        ScrollTrigger.refresh()
+    }, [current, isNextStaged])
+
+    // The chunk, on a page the viewer has not moved on yet.
+    useEffect(() => {
+        if (!nextRoute) return
+
+        const warm = () => {
+            loadPage(nextRoute).catch(() => {})
+        }
+
+        if (typeof window.requestIdleCallback === "function") {
+            const id = window.requestIdleCallback(warm)
+            return () => window.cancelIdleCallback(id)
+        }
+
+        const id = setTimeout(warm, PREFETCH_DELAY)
+        return () => clearTimeout(id)
+    }, [nextRoute])
+
+    // The page itself, mounted on the first sign the viewer is leaving this one.
+    //
+    // Any scroll at all, rather than a measured approach: the join is what the page
+    // below has to be there for, and the whole point of the wait is the visitor who
+    // never scrolls — the one whose page weight this was all about.
+    useEffect(() => {
+        if (!nextRoute || isNextStaged) return
+
+        if (window.scrollY > 0) {
+            stageNext()
+            return
+        }
+
+        const onScroll = () => {
+            if (window.scrollY <= 0) return
+            window.removeEventListener("scroll", onScroll)
+            stageNext()
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true })
+        return () => window.removeEventListener("scroll", onScroll)
+    }, [nextRoute, isNextStaged, stageNext])
+
+    // The join, crossed: the staged page has the viewport, so the URL follows it.
+    //
+    // Position, not the scroll that got there — the takeover, a nav item's scroll,
+    // the viewer's own wheel and a reduced-motion page with no runway at all arrive
+    // at the same place, and all four are this.
+    useEffect(() => {
+        if (!isNextStaged || !nextRoute) return
+
+        let timer = null
+
+        const handOver = () => {
+            const section = document.getElementById(nextRoute.sectionId)
+            if (!section) return
+
+            // Summed off the layout, as everywhere else: the staged page carries the
+            // handoff's transform while it climbs, and a box read mid-climb is
+            // displaced by however far it has left to go.
+            const landing = getSectionFlowTop(section)
+            if (window.scrollY + LANDING_SLACK < landing) return
+
+            // A scripted scroll is still spending the runway above.
+            if (gsap.isTweening(window)) return
+
+            // Whatever is left over is scroll the viewer has spent inside the page
+            // already, and it belongs to the page, not to the join.
+            enterRoute(nextRoute, { offset: Math.max(window.scrollY - landing, 0) })
+        }
+
+        const onScroll = () => {
+            clearTimeout(timer)
+            timer = setTimeout(handOver, SETTLE_MS)
+        }
+
+        // The join may already be behind us — a page staged into a document the
+        // viewer is scrolled well down, a reload part-way through.
+        timer = setTimeout(handOver, SETTLE_MS)
+
+        window.addEventListener("scroll", onScroll, { passive: true })
+        return () => {
+            clearTimeout(timer)
+            window.removeEventListener("scroll", onScroll)
+        }
+    }, [isNextStaged, nextRoute, enterRoute])
+
+    // A nav item asked for the next page, and the page it asked from is now mounted
+    // below: the scroll that page leaves by can run. A frame's wait, so the triggers
+    // refreshed above are measuring the document the scroll is about to cross.
+    //
+    // Not every page has such a scroll. A page with no runway — About, which the hero
+    // hands over to and which simply ends — has nothing to play and registers nothing,
+    // so asking for the page after it is a page change like any other.
+    useEffect(() => {
+        if (!advanceRequest || !isNextStaged) return
+
+        const frame = requestAnimationFrame(() => {
+            const advance = advanceRef.current
+
+            if (advance) advance()
+            else enterRoute(nextRoute)
+        })
+
+        return () => cancelAnimationFrame(frame)
+    }, [advanceRequest, isNextStaged, nextRoute, enterRoute])
+
+    useEffect(() => {
+        const onPopState = () => {
+            const target = findRoute(resolvePath(window.location.pathname))
+            if (!target || target.path === path) return
+
+            // Loaded before the swap, so going back never shows an empty document
+            // — a page already visited is in hand, and this is only a wait the
+            // first time a page is reached by the back button.
+            loadPage(target)
+                .then(() => enterRoute(target, { push: false }))
+                .catch(() => window.location.assign(target.path))
+        }
+
+        window.addEventListener("popstate", onPopState)
+        return () => window.removeEventListener("popstate", onPopState)
+    }, [path, enterRoute])
+
+    useEffect(() => {
+        if (route) document.title = route.title
+    }, [route])
+
+    // The ground under the page, on the body rather than inside it, so it is up
+    // while the chunk is still arriving and under an overscroll at either end.
+    useEffect(() => {
+        const ground = route?.ground
+        if (!ground) return
+
+        document.body.classList.add(ground)
+        return () => document.body.classList.remove(ground)
+    }, [route])
+
+    // Every way of asking for another page comes through here, so the rule about
+    // which of them plays a join and which is a jump is stated once:
+    //
+    //   the page already up   back to the top of it
+    //   the page this one hands over to   the join, played in full — the page's own
+    //                                     scroll, the same one the viewer would get
+    //                                     by scrolling there themselves
+    //   anything else   entered at its top. There is no sequence between two pages
+    //                   that aren't neighbours, and mounting the pages in between to
+    //                   scrub through them is the weight this split was undoing.
+    const navigate = useCallback(
+        (to) => {
+            const target = findRoute(to)
+            if (!target || !route) return
+
+            if (target.path === route.path) {
+                scrollPageToTop()
+                return
+            }
+
+            if (route.next === target.path) {
+                stageNext().then((staged) => {
+                    if (staged) setAdvanceRequest((request) => request + 1)
+                })
+                return
+            }
+
+            loadPage(target)
+                .then(() => enterRoute(target))
+                // The chunk is not to be had, so the URL goes to the server: a
+                // full page load is slow, and it is not a dead link.
+                .catch(() => window.location.assign(target.path))
+        },
+        [route, stageNext, enterRoute],
+    )
+
+    const prefetch = useCallback((to) => {
+        const target = findRoute(to)
+        if (target) loadPage(target).catch(() => {})
+    }, [])
+
+    const registerAdvance = useCallback((advance) => {
+        advanceRef.current = advance
+
+        return () => {
+            if (advanceRef.current === advance) advanceRef.current = null
+        }
+    }, [])
+
+    const frontSlot = useMemo(
+        () => ({
+            isFront: true,
+            nextPath: nextRoute?.path ?? null,
+            nextSelector: sectionSelectorOf(nextRoute),
+            isNextStaged,
+        }),
+        [nextRoute, isNextStaged],
+    )
+
+    // What PageOutlet mounts, in the order they sit in the document: the page in
+    // front, and for the length of a handoff the page staged below it. Keyed by path,
+    // so the staged page becomes the page in front without its DOM being rebuilt
+    // underneath it, and so what React takes out is the page being left.
+    const pages = useMemo(
+        () =>
+            [
+                Page && { key: path, Page, slot: frontSlot },
+                // A staged page is handed a slot with nothing in it: it is not the page
+                // the viewer is on, so it has no next page of its own to reach for and
+                // nothing to advance to. See RouterContext.
+                StagedPage && { key: nextRoute.path, Page: StagedPage, slot: EMPTY_SLOT },
+            ].filter(Boolean),
+        [Page, path, StagedPage, nextRoute, frontSlot],
+    )
+
+    const routerValue = useMemo(
+        () => ({
+            path,
+            route,
+            pages,
+            navigate,
+            prefetch,
+            registerAdvance,
+            // The floor the pinned nav bar answers for: on a page that draws the bar
+            // in its own layout, the pinned copy stays down until the page below has
+            // taken over. Read as a selector so it is measured, not remembered — and
+            // a page still to be staged has no element, which reads as a floor below
+            // everything. See useRevealOnScrollUp.
+            navFloorSelector: route?.hasOwnNav ? sectionSelectorOf(nextRoute) : null,
+            // Changes whenever the document's pages do, for anything outside them
+            // that measures a position and has to measure it again.
+            layoutKey: `${path}:${isNextStaged}`,
+        }),
+        [path, route, nextRoute, isNextStaged, pages, navigate, prefetch, registerAdvance],
+    )
+
+    return <RouterContext.Provider value={routerValue}>{children}</RouterContext.Provider>
+}
+
+export default RouterProvider

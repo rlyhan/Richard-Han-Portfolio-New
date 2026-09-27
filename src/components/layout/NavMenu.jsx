@@ -11,6 +11,9 @@ const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 // `children` is the middle of the bar. The hero leaves it empty, since its scroll
 // cue is fixed to the viewport and floats over that slot; the pinned copy puts its
 // back-to-top ring there, which is what opens the third column.
+//
+// The items are pages rather than sections of one, so each carries a real link to a
+// real URL — see useNavLinks, which is where both copies of this bar get them.
 const NavMenu = ({
   items,
   setNameRef,
@@ -41,11 +44,10 @@ const NavMenu = ({
       ref={setNavRef}
       className="flex flex-row justify-end gap-[0.7rem] md:flex-col md:items-end md:gap-0 md:pb-[0.3rem]"
     >
-      {items.map(({ id, label, onSelect }, i) => (
+      {items.map(({ id, label, link }, i) => (
         <a
           key={id}
-          href={`#${id}`}
-          onClick={onSelect}
+          {...link}
           className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.7rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
         >
           <span

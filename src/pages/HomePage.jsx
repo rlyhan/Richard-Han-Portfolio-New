@@ -5,7 +5,8 @@ import HomeIntro from "../components/home/HomeIntro";
 import HomeWork from "../components/home/HomeWork";
 import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
-import { useCueScroll } from "../hooks/useCueScroll";
+import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
+import { useNavItems } from "../routes/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 import { useKeyShortcut } from "../hooks/useKeyShortcut";
@@ -13,10 +14,6 @@ import { useKeyShortcut } from "../hooks/useKeyShortcut";
 // Scrolled less than this, the hero still owns the viewport, so the cue and its
 // shortcut both still apply.
 const NEAR_TOP_THRESHOLD = 40;
-
-// The page the hero hands the scroll over to. Named here rather than inside the
-// handoff: the exit belongs to the hero, and where it leads does not.
-const NEXT_SELECTOR = "#about";
 
 // What the hero's exit throws off the screen, in the order it goes. The stagger is
 // indexed off this list, so the spread runs down the left column and then takes the
@@ -28,7 +25,16 @@ const NEXT_SELECTOR = "#about";
 const NOTE_LINE_INDEX = INTRO_LINES.length;
 const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
 
+// The home page: the hero, and the runway it empties out across.
+//
+// The page below it is the router's to mount, not this page's to know — all this page
+// says is where the scroll it leaves by goes, and the router decides when there is
+// something down there to go to. See Router for the join, and useHeroHandoff for the
+// exit this page plays across the runway.
 const HomePage = () => {
+  const { navigate } = useRouter();
+  const { nextPath, nextSelector, isNextStaged } = usePage();
+
   const displayLineRefs = useRef([]);
   const outroLineRefs = useRef([]);
   const runwayRef = useRef(null);
@@ -63,44 +69,25 @@ const HomePage = () => {
     displayLineRefs,
     outroLineRefs,
     runwayRef,
-    nextSelector: NEXT_SELECTOR,
-    // Always, here: About is in the same document as the hero, below it.
-    isNextStaged: true,
+    nextSelector,
+    isNextStaged,
   });
 
-  // The rest of the page from the hero's own nav, on the same terms as the cue's
-  // shortcut: one scripted scroll, so every fade scrubbed off the way there plays
-  // as it would have, and a gesture mid-flight hands control straight back.
-  const { scrollToTarget: scrollToProjects } = useCueScroll("#projects");
-  const { scrollToTarget: scrollToContact } = useCueScroll("#contact");
+  // The scroll this page leaves by, handed to the router so that asking for the next
+  // page from anywhere on the site — the cue below, either copy of the nav bar — runs
+  // this one scripted scroll. Every fade scrubbed off the way there plays as it would
+  // have, and a gesture mid-flight hands control straight back.
+  useAdvance(scrollToNext);
 
-  // The href is the real destination; this only upgrades the jump. Left as an
-  // ordinary anchor for modified clicks and for a page without JS.
-  const handleNavClick = useCallback(
-    (scroll) => (event) => {
-      if (
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey ||
-        event.button !== 0
-      )
-        return;
-      event.preventDefault();
-      scroll();
-    },
-    [],
+  // Through the router rather than straight into the scroll above: the page that
+  // scroll crosses into may not be mounted yet, and the router is what fetches it and
+  // then plays this page's own exit across it.
+  const goToNextPage = useCallback(
+    () => navigate(nextPath),
+    [navigate, nextPath],
   );
 
-  const selectAbout = handleNavClick(scrollToNext);
-  const selectProjects = handleNavClick(scrollToProjects);
-  const selectContact = handleNavClick(scrollToContact);
-
-  const navItems = [
-    { id: "about", label: "About", onSelect: selectAbout },
-    { id: "projects", label: "Projects", onSelect: selectProjects },
-    { id: "contact", label: "Contact", onSelect: selectContact },
-  ];
+  const navItems = useNavItems();
 
   // The cue belongs to the top of the page: any scroll away from the hero retires
   // it, including the one the cue itself starts.
@@ -109,7 +96,7 @@ const HomePage = () => {
 
   // Space is the cue's gesture from the keyboard, bound on the same terms: past
   // the hero it goes back to being page-down.
-  useKeyShortcut("Space", scrollToNext, { enabled: isCueVisible });
+  useKeyShortcut("Space", goToNextPage, { enabled: isCueVisible });
 
   // contained: false — the hero is the one section that runs to the viewport edge,
   // so it opts out of the page frame the rest of the page sits in.
@@ -151,7 +138,7 @@ const HomePage = () => {
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}
           />
-          <HomeWork setGridRef={setWorkRef} onSelectProject={selectProjects} />
+          <HomeWork setGridRef={setWorkRef} />
         </div>
 
         <NavMenu
@@ -162,9 +149,9 @@ const HomePage = () => {
       </PageSection>
 
       {/* The runway: the scroll where the hero holds the viewport alone and empties
-                out, before the handoff takes over into About. Carries no content, so its
-                only job is height — and it's what every trigger in the handoff measures
-                against, hence the ref.
+                out, before the handoff takes over into the page below. Carries no
+                content, so its only job is height — and it's what every trigger in the
+                handoff measures against, hence the ref.
 
                 Reduced motion collapses it: with the fades gone there's nothing to
                 watch, and it would read as a dead screen. */}
@@ -180,7 +167,7 @@ const HomePage = () => {
                 goes to the top-right corner instead, and the intro panel's top padding
                 is what keeps the byline clear of it. */}
       <ScrollCue
-        onClick={scrollToNext}
+        onClick={goToNextPage}
         tone="ink"
         visible={isCueVisible}
         positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"

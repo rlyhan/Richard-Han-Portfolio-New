@@ -28,7 +28,13 @@ const SCROLL_DELTA = 6
 // own bar is underneath the pinned one, so a pinned bar going away there should go
 // at once. Sliding it out from under an identical bar smears the two apart for as
 // long as the slide lasts.
-export function useRevealOnScrollUp(floorSelector) {
+//
+// A floor is asked for by selector, and on this site the element it names is a page
+// the router has not necessarily mounted yet — so a selector that matches nothing is
+// a floor below everything rather than one at the top of the page: the section it
+// answers for is still ahead. `measureKey` is what re-reads it, for a caller whose
+// floor arrives in the document later than this hook does.
+export function useRevealOnScrollUp(floorSelector, measureKey) {
     const [isRevealed, setIsRevealed] = useState(false)
     const [isAboveFloor, setIsAboveFloor] = useState(true)
 
@@ -42,8 +48,13 @@ export function useRevealOnScrollUp(floorSelector) {
         // scroll-driven transforms, and a box read mid-flight is displaced by
         // however far the section has yet to travel.
         const measureFloor = () => {
-            const section = floorSelector && document.querySelector(floorSelector)
-            floor = section ? getSectionFlowTop(section) : 0
+            if (!floorSelector) {
+                floor = 0
+                return
+            }
+
+            const section = document.querySelector(floorSelector)
+            floor = section ? getSectionFlowTop(section) : Infinity
         }
 
         const update = () => {
@@ -90,7 +101,7 @@ export function useRevealOnScrollUp(floorSelector) {
             window.removeEventListener("resize", onResize)
             if (frame !== null) cancelAnimationFrame(frame)
         }
-    }, [floorSelector])
+    }, [floorSelector, measureKey])
 
     return { isRevealed, isAboveFloor }
 }

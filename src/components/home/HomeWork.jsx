@@ -46,7 +46,7 @@ const HEADING_CLASS = "font-urbanist text-base leading-none font-bold text-ink";
 // The counter on the far right is the second half of that rule — it states the
 // depth of the set, which is the one thing a three-card spread can't say for
 // itself.
-const WorkGrid = ({ onSelectProject }) => (
+const WorkGrid = () => (
   <div className="grid h-full min-h-0 grid-rows-[3.375rem_minmax(0,1fr)]">
     <header className="flex items-center justify-between gap-6 px-[clamp(1rem,1.6vw,1.75rem)]">
       <h2 className={HEADING_CLASS}>{FEATURED_LABEL}</h2>
@@ -78,7 +78,6 @@ const WorkGrid = ({ onSelectProject }) => (
           index={i}
           position={CELLS[i]}
           eager={i === 0}
-          onSelect={onSelectProject}
         />
       ))}
     </div>
@@ -93,7 +92,7 @@ const WorkGrid = ({ onSelectProject }) => (
 // The heading keeps the narrower column — it wraps, where a card can only crop —
 // and sits on `shell` so the pair reads as a label beside a frame rather than as
 // two cells of the same kind.
-const WorkColumns = ({ onSelectProject }) => (
+const WorkColumns = () => (
   <div className="grid h-full grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
     <h2
       className={`${HEADING_CLASS} flex items-center border-r ${GRID_BORDER_COLOR} bg-shell p-3 leading-tight`}
@@ -101,10 +100,7 @@ const WorkColumns = ({ onSelectProject }) => (
       {FEATURED_LABEL}
     </h2>
 
-    <HomeProjectCarousel
-      projects={FEATURED_PROJECTS}
-      onSelectProject={onSelectProject}
-    />
+    <HomeProjectCarousel projects={FEATURED_PROJECTS} />
   </div>
 );
 
@@ -130,7 +126,7 @@ const WorkColumns = ({ onSelectProject }) => (
 // `setGridRef` hands the whole panel to the hero's exit as one plane — see Home. It
 // sits on the wrapper rather than on either layout, so the exit doesn't care which
 // one is mounted.
-const HomeWork = ({ setGridRef, onSelectProject }) => {
+const HomeWork = ({ setGridRef }) => {
   const isMdUp = useMediaQuery(MD_UP);
 
   return (
@@ -139,11 +135,7 @@ const HomeWork = ({ setGridRef, onSelectProject }) => {
       className={`h-[35svh] min-h-[7.5rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:h-full md:min-h-0 md:border-t-0 md:border-l`}
     >
       <div ref={setGridRef} className="h-full">
-        {isMdUp ? (
-          <WorkGrid onSelectProject={onSelectProject} />
-        ) : (
-          <WorkColumns onSelectProject={onSelectProject} />
-        )}
+        {isMdUp ? <WorkGrid /> : <WorkColumns />}
       </div>
     </section>
   );
