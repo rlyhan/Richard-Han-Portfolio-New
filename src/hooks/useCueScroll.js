@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import gsap from "gsap"
 import ScrollToPlugin from "gsap/ScrollToPlugin"
 import { holdScroll } from "../helpers/scrollHold"
@@ -11,13 +11,11 @@ gsap.registerPlugin(ScrollToPlugin)
 // together.
 const CUE_SCROLL_DURATION = 2.4
 
-// A scripted scroll to where a section comes to rest — the cue's shortcut and the
-// handoff's takeover are both this.
+// A scripted scroll to where a section comes to rest — a nav item asking for the page
+// below, the handoff's takeover, and the ring back to the top of a page are all this.
 //
-// It drives the scroll and nothing else, so the pointer, keyboard and wheel paths can't
-// describe different sequences: everything scrubbed off the scroll plays as it would
-// have. `isScrolling` is true while it runs, so whatever started it can retire for the
-// duration.
+// It drives the scroll and nothing else, so the pointer and wheel paths can't describe
+// different sequences: everything scrubbed off the scroll plays as it would have.
 //
 // `locked` decides what happens to the gestures that arrive mid-scroll:
 //
@@ -31,8 +29,6 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
     // Holds the last scroll's listeners, so unmounting mid-scroll doesn't leave them
     // on the window — or, locked, leave the page unable to scroll.
     const detachRef = useRef(null)
-    const [isScrolling, setIsScrolling] = useState(false)
-
     useEffect(() => () => {
         tweenRef.current?.kill()
         detachRef.current?.()
@@ -47,8 +43,6 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
         if (!target) return
 
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
-        setIsScrolling(true)
 
         // Listening for the gestures rather than ScrollToPlugin's autoKill, which reads
         // iOS's collapsing toolbar as an unexpected delta and cancels on the spot, so
@@ -73,10 +67,7 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
 
         const detach = locked ? holdScroll() : handBack()
 
-        const finish = () => {
-            detach()
-            setIsScrolling(false)
-        }
+        const finish = () => detach()
 
         detachRef.current = detach
 
@@ -92,5 +83,5 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
         })
     }, [selector, locked, duration])
 
-    return { scrollToTarget, isScrolling }
+    return { scrollToTarget }
 }

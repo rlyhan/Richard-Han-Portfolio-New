@@ -1,11 +1,10 @@
 import ArrowDownIcon from "../../icons/ArrowDownIcon";
 
-// The ring in the middle of the nav bar — the same place the hero's scroll cue
-// holds on the homepage, which is why that slot in the bar is left empty.
+// The ring in the middle of the nav bar, in the slot the hero's own copy of the bar
+// leaves empty.
 //
-// The arrow is the page's one arrow, turned over, rather than a second icon: the
-// cue pointing down into the page and this pointing back up out of it are the same
-// gesture in two directions.
+// The arrow is the site's one arrow, turned over: the page runs down and this points
+// back up out of it.
 //
 // Hidden below md, where the bar is a single row with no middle to sit in — and a
 // phone's own scroll back up is a flick rather than a journey.

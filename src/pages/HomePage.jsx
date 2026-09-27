@@ -1,19 +1,12 @@
 import { useCallback, useRef } from "react";
 import PageSection from "../components/layout/PageSection";
-import ScrollCue from "../components/common/Buttons/ScrollCue";
 import HomeIntro from "../components/home/HomeIntro";
 import HomeWork from "../components/home/HomeWork";
 import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
-import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
+import { useAdvance, usePage } from "../routes/RouterContext";
 import { useNavItems } from "../routes/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
-import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
-import { useKeyShortcut } from "../hooks/useKeyShortcut";
-
-// Scrolled less than this, the hero still owns the viewport, so the cue and its
-// shortcut both still apply.
-const NEAR_TOP_THRESHOLD = 40;
 
 // What the hero's exit throws off the screen, in the order it goes. The stagger is
 // indexed off this list, so the spread runs down the left column and then takes the
@@ -32,8 +25,7 @@ const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
 // something down there to go to. See Router for the join, and useHeroHandoff for the
 // exit this page plays across the runway.
 const HomePage = () => {
-  const { navigate } = useRouter();
-  const { nextPath, nextSelector, isNextStaged } = usePage();
+  const { nextSelector, isNextStaged } = usePage();
 
   const displayLineRefs = useRef([]);
   const outroLineRefs = useRef([]);
@@ -65,7 +57,7 @@ const HomePage = () => {
     outroLineRefs.current[2] = el;
   }, []);
 
-  const { scrollToNext, isScrollingToNext } = useHeroHandoff({
+  const { scrollToNext } = useHeroHandoff({
     displayLineRefs,
     outroLineRefs,
     runwayRef,
@@ -73,30 +65,13 @@ const HomePage = () => {
     isNextStaged,
   });
 
-  // The scroll this page leaves by, handed to the router so that asking for the next
-  // page from anywhere on the site — the cue below, either copy of the nav bar — runs
-  // this one scripted scroll. Every fade scrubbed off the way there plays as it would
-  // have, and a gesture mid-flight hands control straight back.
+  // The scroll this page leaves by, handed to the router so that a nav item asking
+  // for the page below — from either copy of the bar — runs this one scripted scroll
+  // rather than a jump. Every fade scrubbed off the way there plays as it would have,
+  // and a gesture mid-flight hands control straight back.
   useAdvance(scrollToNext);
 
-  // Through the router rather than straight into the scroll above: the page that
-  // scroll crosses into may not be mounted yet, and the router is what fetches it and
-  // then plays this page's own exit across it.
-  const goToNextPage = useCallback(
-    () => navigate(nextPath),
-    [navigate, nextPath],
-  );
-
   const navItems = useNavItems();
-
-  // The cue belongs to the top of the page: any scroll away from the hero retires
-  // it, including the one the cue itself starts.
-  const isCueVisible =
-    useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToNext;
-
-  // Space is the cue's gesture from the keyboard, bound on the same terms: past
-  // the hero it goes back to being page-down.
-  useKeyShortcut("Space", goToNextPage, { enabled: isCueVisible });
 
   // contained: false — the hero is the one section that runs to the viewport edge,
   // so it opts out of the page frame the rest of the page sits in.
@@ -159,18 +134,6 @@ const HomePage = () => {
         ref={runwayRef}
         aria-hidden="true"
         className="h-[140svh] motion-reduce:h-0"
-      />
-
-      {/* From md up the cue lands in the middle of the nav bar, between the name
-                and the section links — the one part of that bar left empty for it. On a
-                phone the bar is a single row with no middle to sit in, so the cue
-                goes to the top-right corner instead, and the intro panel's top padding
-                is what keeps the byline clear of it. */}
-      <ScrollCue
-        onClick={goToNextPage}
-        tone="ink"
-        visible={isCueVisible}
-        positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"
       />
     </>
   );

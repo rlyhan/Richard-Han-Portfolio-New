@@ -10,9 +10,9 @@ const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 // opposite it. One component for both, so the hero and the rest of the page can't
 // drift apart on the one piece of furniture they share.
 //
-// `children` is the middle of the bar. The hero leaves it empty, since its scroll
-// cue is fixed to the viewport and floats over that slot; the pinned copy puts its
-// back-to-top ring there, which is what opens the third column.
+// `children` is the middle of the bar. The hero leaves it empty — there is nowhere to
+// go back to from the top of the site — and the pinned copy puts its back-to-top ring
+// there, which is what opens the third column.
 //
 // The items are pages rather than sections of one, so each carries a real link to a
 // real URL — see useNavLinks, which is where both copies of this bar get them.

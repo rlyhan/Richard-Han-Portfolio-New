@@ -74,8 +74,6 @@ const getExitEndShare = ({ displayLines, outroLines }) => Math.max(
     OUTRO_START + OUTRO_STAGGER * (outroLines.length - 1) + OUTRO_DURATION,
 )
 
-// No hold is raised: the hero's cue belongs to the top of the page rather than to this
-// range, so Home decides when it is up — see useIsNearPageTop there.
 const buildHeroExitTimeline = ({ displayLines, outroLines, runway, range }) =>
     buildExitTimeline({ runway, range, scrub: EXIT_SCRUB_LAG })
         .to(displayLines, {
@@ -109,13 +107,11 @@ export function useHeroHandoff({ displayLineRefs, outroLineRefs, runwayRef, next
         return getExitEndShare(lines)
     }, [displayLineRefs, outroLineRefs])
 
-    const { scrollToNext, isScrolling } = useHandoff({
+    return useHandoff({
         runwayRef,
         nextSelector,
         isNextStaged,
         getExitRange,
         buildExit,
     })
-
-    return { scrollToNext, isScrollingToNext: isScrolling }
 }

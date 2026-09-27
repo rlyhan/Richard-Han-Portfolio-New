@@ -8,24 +8,23 @@ import {
 } from "../helpers/handoff"
 import { useCueScroll } from "./useCueScroll"
 
-// Every handoff on the site is these four things:
+// The handoff the homepage hands over on, in four parts:
 //
 //   the range     the scroll the outgoing page spends emptying out — its runway
 //   the exit      whatever it does while it empties, scrubbed across that range
 //   the takeover  where the exit has finished, the scroll is taken off the viewer and
 //                 spent on the next page instead
 //   the landing   the next page riding up from the end of the range to its resting
-//                 place, where the cue's shortcut and the takeover both put it
+//                 place, where the takeover and a nav item's request both put it
 //
-// Only the exit differs between them — the hero throws its lines off the screen
-// (useHeroHandoff), a section parks and dissolves (useSectionHandoff) — so that is
-// all the two callers pass in, and the handoffs can't drift apart.
+// The exit is the caller's — the hero throws its lines off the screen, see
+// useHeroHandoff — and everything around it is here, so a second page that wanted to
+// hand over on the scroll would have only its own exit to describe.
 //
-// `buildExit({ runway, range, onHold })` builds its own timeline across the range and
-// returns where in it the last fade lands: the point the takeover fires at. A share
-// rather than a position, because the range is re-measured on every refresh while a
-// timeline's proportions never change. It raises `onHold` if it has a hesitation
-// worth offering the cue for.
+// `buildExit({ runway, range })` builds its own timeline across the range and returns
+// where in it the last fade lands: the point the takeover fires at. A share rather
+// than a position, because the range is re-measured on every refresh while a
+// timeline's proportions never change.
 //
 // The two halves are built separately, because only one of them needs the next page
 // to exist. The exit is this page emptying and is measured entirely against its own
@@ -35,19 +34,19 @@ import { useCueScroll } from "./useCueScroll"
 // for `isNextStaged`: until the router has mounted it there is nothing to measure,
 // and nothing to hand the scroll to.
 export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange, buildExit }) {
-    const [isHolding, setIsHolding] = useState(false)
     // Where the exit's last fade lands, published by the effect that builds it so the
     // effect below can put the takeover there.
     const [exitEndsAt, setExitEndsAt] = useState(null)
 
-    // The cue's shortcut is an offer: it hands control back the moment the viewer
-    // scrolls for themselves.
-    const { scrollToTarget, isScrolling } = useCueScroll(nextSelector)
+    // What a nav item asking for the page below runs instead of a jump, and an offer
+    // while it runs: it hands control back the moment the viewer scrolls for
+    // themselves. See useAdvance, which is how the bar reaches it.
+    const { scrollToTarget } = useCueScroll(nextSelector)
 
     // The takeover is the same scroll on the opposite terms — it holds the page for
     // its duration, since it fires from the scroll itself rather than from anyone
     // asking.
-    const { scrollToTarget: advance, isScrolling: isAdvancing } = useCueScroll(nextSelector, {
+    const { scrollToTarget: advance } = useCueScroll(nextSelector, {
         locked: true,
         duration: ADVANCE_DURATION,
     })
@@ -62,12 +61,9 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
             // below arriving — moves the whole handoff together.
             const range = () => getExitRange(runway)
 
-            setExitEndsAt(buildExit({ runway, range, onHold: setIsHolding }))
+            setExitEndsAt(buildExit({ runway, range }))
 
-            return () => {
-                setIsHolding(false)
-                setExitEndsAt(null)
-            }
+            return () => setExitEndsAt(null)
         })
 
         // Under reduced motion none of it is built and the runway is collapsed in the
@@ -109,10 +105,5 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
         return () => mm.revert()
     }, [isNextStaged, nextSelector, exitEndsAt, runwayRef, getExitRange, advance])
 
-    return {
-        scrollToNext: scrollToTarget,
-        isHolding,
-        // Either scroll retires the cue: what it offers is already happening.
-        isScrolling: isScrolling || isAdvancing,
-    }
+    return { scrollToNext: scrollToTarget }
 }

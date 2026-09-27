@@ -24,12 +24,11 @@ export const SCRUB_LAG = 1
 // since the distance scales with the screen.
 const INCOMING_LAG = 0.12
 
-// How long a takeover takes. Shorter than a cue's shortcut, which crosses a whole
-// hesitation: a takeover starts where the hesitation has already ended.
+// How long a takeover takes. Shorter than the scroll a nav item asks for, which crosses
+// the whole runway: a takeover starts where most of it has already been spent.
 export const ADVANCE_DURATION = 1.2
 
-// Where an incoming section comes to rest: the same landing the nav items and the cues
-// scroll to. Capped at the maximum scroll, since the last handoff can rest past it on a
+// Where an incoming page comes to rest: the same landing the nav items scroll to. Capped at the maximum scroll, since the last handoff can rest past it on a
 // tall viewport — an end that can never be reached would leave the section stuck
 // part-way through its rise.
 export const getLandingScroll = (section) =>
@@ -43,9 +42,8 @@ export const getLandingScroll = (section) =>
 // unpinned one would scale away the quiet tail after the last fade.
 //
 // Triggered off the runway, never off what is being animated — an element used as its own
-// trigger is measured with its own transform already applied. `onHold` is raised while the
-// viewer is inside the range, for an exit whose hesitation is worth offering a cue for.
-export const buildExitTimeline = ({ runway, range, scrub, invalidateOnRefresh, onHold }) =>
+// trigger is measured with its own transform already applied.
+export const buildExitTimeline = ({ runway, range, scrub, invalidateOnRefresh }) =>
     gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
@@ -54,12 +52,11 @@ export const buildExitTimeline = ({ runway, range, scrub, invalidateOnRefresh, o
             end: () => range().end,
             scrub,
             invalidateOnRefresh,
-            onToggle: onHold && ((self) => onHold(self.isActive)),
         },
     }).to({}, { duration: 1 }, 0)
 
 // The outgoing section has emptied, so the scroll stops being the viewer's to spend and
-// is handed to the next section: `advance` is a locked cue scroll, see useCueScroll.
+// is handed to the next page: `advance` is a locked scripted scroll, see useCueScroll.
 //
 // onEnter only, so it answers a downward crossing and nothing else — coming back up out
 // of the next section crosses this same point, and being pulled forwards there would
@@ -70,9 +67,8 @@ export const buildTakeoverTrigger = ({ runway, start, landing, advance }) =>
         start,
         end: landing,
         onEnter: () => {
-            // Never over the top of another scripted scroll: a nav item's jump and the
-            // cue's shortcut both tween the window past this point on their way
-            // somewhere else.
+            // Never over the top of another scripted scroll: a nav item asking for the
+            // page below tweens the window past this point on its way there.
             if (gsap.isTweening(window)) return
 
             // A hard flick can clear the landing inside one frame, and from below it
@@ -87,8 +83,8 @@ export const buildTakeoverTrigger = ({ runway, start, landing, advance }) =>
 //
 // Note what this transform costs, since it stays on the element at y: 0: the section
 // becomes the containing block for any `position: fixed` inside it, which would then
-// size itself against the section rather than the viewport. Anything fixed — a modal, a
-// cue — belongs outside the sections a handoff moves.
+// size itself against the section rather than the viewport. Anything fixed — a modal —
+// belongs outside the sections a handoff moves.
 export const buildIncomingRiseTween = ({ incoming, runway, start, end }) =>
     gsap.fromTo(incoming,
         { y: () => window.innerHeight * INCOMING_LAG },

@@ -53,7 +53,7 @@ export function useTabSelect(activeTab, setActiveTab, { panelRef } = {}) {
         tweenRef.current = gsap.to(window, {
             duration: prefersReducedMotion ? 0 : SELECT_SCROLL_DURATION,
             ease: "power2.out",
-            // The landing the nav items and cues use, plus the gap above, and off the
+            // The landing the nav items use, plus the gap above, and off the
             // flow position rather than the live box: both rows sit inside a section's
             // park, which displaces them by up to the runway's height, and a measured
             // box would aim at wherever the hold had carried it.

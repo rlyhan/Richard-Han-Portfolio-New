@@ -1,5 +1,5 @@
-// Where a section comes to rest when navigated to, from a nav item or the hero's
-// scroll cue. Both land in the same place because both ask this.
+// Where a section comes to rest when navigated to, from a nav item or from the
+// handoff's own takeover. Both land in the same place because both ask this.
 
 // Summed from the layout rather than read off the live box: About carries a
 // scroll-driven transform while it climbs over the hero, and a box measurement would

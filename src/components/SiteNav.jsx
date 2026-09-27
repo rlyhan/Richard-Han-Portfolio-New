@@ -51,10 +51,9 @@ const SiteNav = () => {
     return (
         <div
             className={cn(
-                // Over the page, under the hero's scroll cue: at the top of the
-                // site the bar is stacked on the hero's own copy of itself, and
-                // the cue belongs in the middle of that bar rather than behind
-                // it. Under the modal's layer either way.
+                // Over the page and under the layers that take it over: the
+                // modal's scrim, and the page a swap carries in — which is what
+                // this bar goes down for, rather than being slid under.
                 "fixed inset-x-0 bottom-0 z-30",
                 // No slide over the hero, which has this same bar in its own
                 // layout: up there the two are stacked, and sliding one out from
@@ -76,10 +75,10 @@ const SiteNav = () => {
         >
             <NavMenu items={navItems} ariaLabel="Site navigation">
                 {/* No ring over the hero: there is nowhere to go back to up
-                    there, the hero's own bar has no ring in the middle of it, and
-                    that slot belongs to the scroll cue. Dropping it also takes the
-                    bar back to the hero's own two-column grid, so the pair sit
-                    exactly on top of one another. */}
+                    there, and the hero's own bar has no ring in the middle of it.
+                    Dropping it also takes the bar back to the hero's own
+                    two-column grid, so the pair sit exactly on top of one
+                    another. */}
                 {!isOverOwnBar && <BackToTop onClick={scrollToTop} />}
             </NavMenu>
         </div>
