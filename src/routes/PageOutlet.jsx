@@ -7,11 +7,17 @@ import { PageContext, useRouter } from "./RouterContext"
 // behind the page that has covered it. During a handoff there are two pages in here,
 // stacked in the order the scroll runs through them — see RouterProvider, which
 // decides what is mounted and hands each one the slot it is in.
+//
+// overflow-anchor: none, because the router moves the scroll itself. A handover takes
+// the page above out of the document and takes its height off the scroll position in
+// the same frame; the browser's scroll anchoring answers a change like that by moving
+// the scroll as well, which would double it. It is Chrome's alone besides, so leaving
+// it on would make the join behave one way there and another in Safari.
 const PageOutlet = () => {
     const { pages } = useRouter()
 
     return (
-        <div className="relative">
+        <div className="relative [overflow-anchor:none]">
             {pages.map((page) => {
                 // Read out under a capitalised name, which is what JSX needs to treat
                 // it as a component rather than as an HTML tag.

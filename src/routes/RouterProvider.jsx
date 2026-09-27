@@ -16,9 +16,18 @@ import { getLenis } from "../hooks/useLenis"
 gsap.registerPlugin(ScrollTrigger)
 
 // The scroll a page opens at is the router's to decide, not the browser's: it hands
-// the URL over mid-scroll (see below), and a reload the browser restored to that
-// offset would open the page part-way down with nothing above it.
-if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual"
+// the URL over mid-scroll (see below), and an entry the browser restored to that
+// offset would open the page part-way down with nothing above it — or, going back to
+// the first page of a visit, part-way down a document built from other pages since.
+//
+// Stated for every entry rather than once for the document: this is a property of the
+// history entry, and an entry pushed later does not carry the value of the one before
+// it.
+const keepScrollOurs = () => {
+    if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual"
+}
+
+keepScrollOurs()
 
 // How long the scroll has to be quiet before the URL is handed over.
 //
@@ -68,6 +77,20 @@ const seatScroll = (offset) => {
     // Its limits were measured against the page that has just left.
     lenis?.resize()
     lenis?.start()
+}
+
+// The same position, put back a frame later if anything has moved it. The scroll is
+// not ours alone: going back to the first page of a visit, the browser restores that
+// entry's own position after the event that took us there — a position in a document
+// built from different pages, and one it will not be talked out of by
+// scrollRestoration. Nothing a viewer can do inside a single frame is worth more than
+// opening a page where it was meant to open.
+const holdSeat = (offset) => {
+    requestAnimationFrame(() => {
+        if (Math.abs(window.scrollY - offset) < 1) return
+
+        seatScroll(offset)
+    })
 }
 
 const scrollPageToTop = () => {
@@ -179,7 +202,10 @@ const RouterProvider = ({ children }) => {
 
         handoverRef.current = { offset }
 
-        if (push) window.history.pushState({ path: target.path }, "", target.path)
+        if (push) {
+            window.history.pushState({ path: target.path }, "", target.path)
+            keepScrollOurs()
+        }
 
         setStaged(null)
         setAdvanceRequest(0)
@@ -200,6 +226,7 @@ const RouterProvider = ({ children }) => {
         // would drop the viewer part-way down instead of at the top.
         ScrollTrigger.clearScrollMemory()
         seatScroll(handover.offset)
+        holdSeat(handover.offset)
         // Every trigger left standing was measured against the document that just
         // changed under it.
         ScrollTrigger.refresh()
@@ -339,6 +366,8 @@ const RouterProvider = ({ children }) => {
 
     useEffect(() => {
         const onPopState = () => {
+            keepScrollOurs()
+
             const target = findRoute(resolvePath(window.location.pathname))
             if (!target || target.path === path) return
 
