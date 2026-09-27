@@ -6,7 +6,7 @@ import {
     buildTakeoverTrigger,
     getLandingScroll,
 } from "../helpers/handoff"
-import { useCueScroll } from "./useCueScroll"
+import { useScriptedScroll } from "./useScriptedScroll"
 
 // The handoff the homepage hands over on, in four parts:
 //
@@ -41,12 +41,12 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
     // What a nav item asking for the page below runs instead of a jump, and an offer
     // while it runs: it hands control back the moment the viewer scrolls for
     // themselves. See useAdvance, which is how the bar reaches it.
-    const { scrollToTarget } = useCueScroll(nextSelector)
+    const { scrollToTarget } = useScriptedScroll(nextSelector)
 
     // The takeover is the same scroll on the opposite terms — it holds the page for
     // its duration, since it fires from the scroll itself rather than from anyone
     // asking.
-    const { scrollToTarget: advance } = useCueScroll(nextSelector, {
+    const { scrollToTarget: advance } = useScriptedScroll(nextSelector, {
         locked: true,
         duration: ADVANCE_DURATION,
     })

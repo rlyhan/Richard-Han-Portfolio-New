@@ -6,10 +6,10 @@ import { getSectionRestingScrollY } from "../helpers/sectionScroll"
 
 gsap.registerPlugin(ScrollToPlugin)
 
-// How long a cue's shortcut takes to cross the sequence it skips. Long, because
-// every fade along the way is scrubbed off this scroll — rush it and they blur
-// together.
-const CUE_SCROLL_DURATION = 2.4
+// How long a scroll asked for by a nav item takes to cross the sequence it skips.
+// Long, because every fade along the way is scrubbed off this scroll — rush it and
+// they blur together.
+const ASKED_FOR_DURATION = 2.4
 
 // A scripted scroll to where a section comes to rest — a nav item asking for the page
 // below, the handoff's takeover, and the ring back to the top of a page are all this.
@@ -19,12 +19,13 @@ const CUE_SCROLL_DURATION = 2.4
 //
 // `locked` decides what happens to the gestures that arrive mid-scroll:
 //
-//   interruptible  hands control back the moment the viewer scrolls for themselves — the
-//                  cue is an offer, and nobody should have to fight it to the end.
+//   interruptible  hands control back the moment the viewer scrolls for themselves — a
+//                  scroll asked for is an offer, and nobody should have to fight it to
+//                  the end.
 //   locked         swallows them, which is holdScroll's job and the same hold a page
 //                  swap takes. The takeover isn't an offer: a flick in the middle of
 //                  it would strand the viewer between two pages.
-export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_DURATION } = {}) {
+export function useScriptedScroll(selector, { locked = false, duration = ASKED_FOR_DURATION } = {}) {
     const tweenRef = useRef(null)
     // Holds the last scroll's listeners, so unmounting mid-scroll doesn't leave them
     // on the window — or, locked, leave the page unable to scroll.
@@ -46,7 +47,7 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
 
         // Listening for the gestures rather than ScrollToPlugin's autoKill, which reads
         // iOS's collapsing toolbar as an unexpected delta and cancels on the spot, so
-        // the cue appears to do nothing.
+        // the scroll appears to do nothing.
         //
         // touchmove, not touchstart: the tap that starts the scroll would otherwise
         // count as one.

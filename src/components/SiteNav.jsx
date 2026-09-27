@@ -3,7 +3,7 @@ import NavMenu from "./layout/NavMenu";
 import BackToTop from "./common/Buttons/BackToTop";
 import { useRouter } from "../routes/RouterContext";
 import { useNavItems } from "../routes/useNavLinks";
-import { useCueScroll } from "../hooks/useCueScroll";
+import { useScriptedScroll } from "../hooks/useScriptedScroll";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
 
 // The site's nav: the hero's own bar, pinned to the foot of the viewport for the
@@ -22,7 +22,7 @@ const SiteNav = () => {
     // target reads its stuck position and scrolls nowhere. The main element starts at
     // the first pixel of the document and stays where it is, so it resolves to the
     // top of whichever page is in it.
-    const { scrollToTarget: scrollToTop } = useCueScroll("#main");
+    const { scrollToTarget: scrollToTop } = useScriptedScroll("#main");
 
     // Which page this bar is standing on decides where its floor is, and the router
     // is what knows: the hero draws a copy of this bar in its own layout, and a page

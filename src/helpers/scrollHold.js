@@ -11,7 +11,7 @@ const SCROLL_KEYS = new Set([
 // For the moments the page owns rather than offers: a takeover spending the last of a
 // runway, a swap carrying one page out and the next one in. Both put the viewer
 // somewhere definite, and a gesture through the middle of either would strand them
-// between two pages.
+// between two pages. See useScriptedScroll, which takes this for its locked mode.
 //
 // Stopping Lenis is what closes the wheel, not preventing the event — Lenis binds its
 // own listener first and would scroll regardless. Touch is native (syncTouch is off)

@@ -56,7 +56,8 @@ export const buildExitTimeline = ({ runway, range, scrub, invalidateOnRefresh })
     }).to({}, { duration: 1 }, 0)
 
 // The outgoing section has emptied, so the scroll stops being the viewer's to spend and
-// is handed to the next page: `advance` is a locked scripted scroll, see useCueScroll.
+// is handed to the next page: `advance` is a locked scripted scroll — see
+// useScriptedScroll.
 //
 // onEnter only, so it answers a downward crossing and nothing else — coming back up out
 // of the next section crosses this same point, and being pulled forwards there would
