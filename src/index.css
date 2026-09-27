@@ -116,3 +116,16 @@
   }
 }
 
+/* Lenis clips the document while it is stopped — that is how it stops the page
+   scrolling natively. On any machine whose scrollbars are not overlays, taking the
+   scrollbar away narrows the page by its width and moves every column on it
+   sideways: a layout shift at the start of every held scroll and another when the
+   hold is released, which on this site means each takeover and each page swap.
+   Here the clip buys nothing, because a hold already swallows the wheel, the touch
+   and the keys itself — see helpers/scrollHold.
+
+   Unlayered, and specific enough to beat Lenis's own three classes: a rule inside
+   @layer base would lose to its stylesheet whatever its specificity. */
+html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+  overflow: visible;
+}

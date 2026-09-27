@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import ScrollToPlugin from "gsap/ScrollToPlugin"
 import { holdScroll } from "../helpers/scrollHold"
@@ -16,6 +16,8 @@ const ASKED_FOR_DURATION = 2.4
 //
 // It drives the scroll and nothing else, so the pointer and wheel paths can't describe
 // different sequences: everything scrubbed off the scroll plays as it would have.
+// `isScrolling` is true while it runs, so whatever started it can retire for the
+// duration — see the hero's cue, which is offering exactly what is already happening.
 //
 // `locked` decides what happens to the gestures that arrive mid-scroll:
 //
@@ -30,6 +32,7 @@ export function useScriptedScroll(selector, { locked = false, duration = ASKED_F
     // Holds the last scroll's listeners, so unmounting mid-scroll doesn't leave them
     // on the window — or, locked, leave the page unable to scroll.
     const detachRef = useRef(null)
+    const [isScrolling, setIsScrolling] = useState(false)
     useEffect(() => () => {
         tweenRef.current?.kill()
         detachRef.current?.()
@@ -44,6 +47,8 @@ export function useScriptedScroll(selector, { locked = false, duration = ASKED_F
         if (!target) return
 
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+        setIsScrolling(true)
 
         // Listening for the gestures rather than ScrollToPlugin's autoKill, which reads
         // iOS's collapsing toolbar as an unexpected delta and cancels on the spot, so
@@ -68,7 +73,10 @@ export function useScriptedScroll(selector, { locked = false, duration = ASKED_F
 
         const detach = locked ? holdScroll() : handBack()
 
-        const finish = () => detach()
+        const finish = () => {
+            detach()
+            setIsScrolling(false)
+        }
 
         detachRef.current = detach
 
@@ -84,5 +92,5 @@ export function useScriptedScroll(selector, { locked = false, duration = ASKED_F
         })
     }, [selector, locked, duration])
 
-    return { scrollToTarget }
+    return { scrollToTarget, isScrolling }
 }

@@ -211,6 +211,26 @@ const RouterProvider = ({ children }) => {
         // it was a takeover holding the scroll.
         gsap.killTweensOf(window)
 
+        // And the animation that carried the arriving page in, which is done: this
+        // is the moment it was travelling towards.
+        //
+        // It belongs to the page being left, and React does not run a leaving page's
+        // cleanup until it flushes passive effects — which is after the next paint.
+        // Alive for that long it gets one more update, on the very frame the document
+        // changes: its trigger still describes a document with both pages in it, the
+        // scroll is being re-seated for one, and it reads the difference as progress
+        // to animate toward. A frame of that travel paints, and the page twitches down
+        // and back as the cleanup catches up.
+        //
+        // Cleared as well as killed, because whatever the catch-up had left to spend
+        // is still on the element — and taken here, before the document changes, it
+        // is spent in the same breath as the seat and never paints.
+        const arriving = document.getElementById(target.sectionId)
+        if (arriving) {
+            gsap.killTweensOf(arriving)
+            gsap.set(arriving, { clearProps: "transform" })
+        }
+
         handoverRef.current = { offset, hold }
 
         if (push) {
@@ -239,14 +259,20 @@ const RouterProvider = ({ children }) => {
         ScrollTrigger.clearScrollMemory()
         seatScroll(handover.offset)
         if (handover.hold) holdSeat(handover.offset)
-        // Every trigger left standing was measured against the document that just
-        // changed under it.
-        ScrollTrigger.refresh()
     }, [current])
 
     // The set of mounted pages has changed, so every page's position in the document
-    // has too. A passive effect, which is what puts it after the pages' own — the
-    // triggers being re-resolved here are built in theirs.
+    // has too, and every trigger measured against it has to be re-resolved.
+    //
+    // A passive effect, and that is the whole of why: the page that just left takes
+    // its scroll-driven animations with it, and React does not run an unmounting
+    // page's cleanup until it flushes these. Refreshing before that — in the layout
+    // effect above, where the scroll is re-seated — refreshes tweens that are still
+    // alive and still describing the document that has gone. The one that carries the
+    // incoming page up re-reads its starting offset and, against a scroll now seated
+    // at the top, applies it: the page drops a tenth of a screen for a single frame,
+    // and springs back as the cleanup lands. Running after them, there is nothing
+    // left of the old page to refresh.
     useEffect(() => {
         ScrollTrigger.refresh()
     }, [current, isNextStaged])
@@ -475,6 +501,7 @@ const RouterProvider = ({ children }) => {
     const frontSlot = useMemo(
         () => ({
             isFront: true,
+            nextPath: nextRoute?.path ?? null,
             nextSelector: sectionSelectorOf(nextRoute),
             isNextStaged,
         }),

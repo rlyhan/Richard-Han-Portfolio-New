@@ -41,12 +41,12 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
     // What a nav item asking for the page below runs instead of a jump, and an offer
     // while it runs: it hands control back the moment the viewer scrolls for
     // themselves. See useAdvance, which is how the bar reaches it.
-    const { scrollToTarget } = useScriptedScroll(nextSelector)
+    const { scrollToTarget, isScrolling } = useScriptedScroll(nextSelector)
 
     // The takeover is the same scroll on the opposite terms — it holds the page for
     // its duration, since it fires from the scroll itself rather than from anyone
     // asking.
-    const { scrollToTarget: advance } = useScriptedScroll(nextSelector, {
+    const { scrollToTarget: advance, isScrolling: isAdvancing } = useScriptedScroll(nextSelector, {
         locked: true,
         duration: ADVANCE_DURATION,
     })
@@ -105,5 +105,9 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
         return () => mm.revert()
     }, [isNextStaged, nextSelector, exitEndsAt, runwayRef, getExitRange, advance])
 
-    return { scrollToNext: scrollToTarget }
+    return {
+        scrollToNext: scrollToTarget,
+        // Either scroll retires the cue: what it offers is already happening.
+        isScrollingToNext: isScrolling || isAdvancing,
+    }
 }
