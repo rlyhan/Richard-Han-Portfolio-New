@@ -1,14 +1,14 @@
-import PageSection from "../layout/PageSection";
-import AboutExperience from "./AboutExperience";
-import AboutSection from "./AboutSection";
-import AboutTech from "./AboutTech";
-import AboutInterests from "./AboutInterests";
-import Byline from "../layout/Byline";
+import PageSection from "../components/layout/PageSection";
+import AboutExperience from "../components/about/AboutExperience";
+import AboutSection from "../components/about/AboutSection";
+import AboutTech from "../components/about/AboutTech";
+import AboutInterests from "../components/about/AboutInterests";
+import Byline from "../components/layout/Byline";
 import {
   ABOUT_HEADING,
   ABOUT_NOTE,
   ABOUT_SECTIONS,
-} from "../../data/about.data";
+} from "../data/about.data";
 
 // The About page: a masthead and three banded sections.
 //

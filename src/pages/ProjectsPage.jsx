@@ -1,18 +1,18 @@
 import { useState, useMemo, useRef } from "react"
 import classNames from "classnames"
-import PageSection from "./layout/PageSection"
-import SectionHeading from "./common/SectionHeading"
-import TabButton from "./common/Tabs/TabButton"
-import ScrollCue from "./common/Buttons/ScrollCue"
+import PageSection from "../components/layout/PageSection"
+import SectionHeading from "../components/common/SectionHeading"
+import TabButton from "../components/common/Tabs/TabButton"
+import ScrollCue from "../components/common/Buttons/ScrollCue"
 import { useTabSelect } from "../hooks/useTabSelect"
 import { useScrollReveal } from "../hooks/useScrollReveal"
 import { useSectionHandoff } from "../hooks/useSectionHandoff"
 import { useKeyShortcut } from "../hooks/useKeyShortcut"
 import PROJECTS from "../data/projects.data"
-import ProjectCard from "./common/Cards/ProjectCard"
-import ProjectCardGallery from "./common/Cards/ProjectCardGallery"
-import IconButton from "./common/Buttons/IconButton"
-import Modal from "./common/Modal"
+import ProjectCard from "../components/common/Cards/ProjectCard"
+import ProjectCardGallery from "../components/common/Cards/ProjectCardGallery"
+import IconButton from "../components/common/Buttons/IconButton"
+import Modal from "../components/common/Modal"
 
 const tabs = [
     {
@@ -29,7 +29,7 @@ const tabs = [
     }
 ]
 
-const Projects = () => {
+const ProjectsPage = () => {
     const [activeTab, setActiveTab] = useState("projects-all")
     const [displayMode, setDisplayMode] = useState("default")
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -164,4 +164,4 @@ const Projects = () => {
     )
 }
 
-export default Projects
+export default ProjectsPage

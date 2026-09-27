@@ -1,9 +1,9 @@
 import { useCallback, useRef } from "react";
-import PageSection from "./layout/PageSection";
-import ScrollCue from "./common/Buttons/ScrollCue";
-import HomeIntro from "./home/HomeIntro";
-import HomeWork from "./home/HomeWork";
-import NavMenu from "./layout/NavMenu";
+import PageSection from "../components/layout/PageSection";
+import ScrollCue from "../components/common/Buttons/ScrollCue";
+import HomeIntro from "../components/home/HomeIntro";
+import HomeWork from "../components/home/HomeWork";
+import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useCueScroll } from "../hooks/useCueScroll";
 import { useHeroToAboutHandoff } from "../hooks/useHeroToAboutHandoff";
@@ -24,7 +24,7 @@ const NEAR_TOP_THRESHOLD = 40;
 const NOTE_LINE_INDEX = INTRO_LINES.length;
 const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
 
-const Home = () => {
+const HomePage = () => {
   const displayLineRefs = useRef([]);
   const outroLineRefs = useRef([]);
   const runwayRef = useRef(null);
@@ -182,4 +182,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

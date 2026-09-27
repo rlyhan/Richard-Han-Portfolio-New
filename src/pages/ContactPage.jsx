@@ -1,10 +1,10 @@
 import { useRef } from "react"
-import PageSection from "./layout/PageSection"
-import SectionHeading from "./common/SectionHeading"
-import LinkButton from "./common/Buttons/LinkButton"
+import PageSection from "../components/layout/PageSection"
+import SectionHeading from "../components/common/SectionHeading"
+import LinkButton from "../components/common/Buttons/LinkButton"
 import { useLetterHop } from "../hooks/useLetterHop"
 
-const Contact = () => {
+const ContactPage = () => {
     const inviteRef = useRef(null)
 
     useLetterHop(inviteRef)
@@ -40,4 +40,4 @@ const Contact = () => {
     )
 }
 
-export default Contact
+export default ContactPage

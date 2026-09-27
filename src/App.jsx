@@ -1,7 +1,7 @@
-import Home from './components/Home'
-import AboutPage from './components/about/AboutPage'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ProjectsPage from './pages/ProjectsPage'
+import ContactPage from './pages/ContactPage'
 import Footer from './components/Footer'
 import SiteNav from './components/SiteNav'
 import { useLenis } from './hooks/useLenis'
@@ -20,11 +20,11 @@ function App() {
             viewport: it releases at the end of About, so the pinned hero isn't
             left painting behind the rest of the page. */}
         <div className="relative">
-          <Home />
+          <HomePage />
           <AboutPage />
         </div>
-        <Projects />
-        <Contact />
+        <ProjectsPage />
+        <ContactPage />
       </main>
 
       {/* Outside main, and fixed to the foot of the viewport rather than sitting
