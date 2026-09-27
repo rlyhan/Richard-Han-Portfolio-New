@@ -1,12 +1,13 @@
 import cn from "classnames";
 
-// The bar at the foot of the hero, and at the foot of the About page: the name at
-// display size, the section links opposite it. One component for both, so the two
-// pages can't drift apart on the one piece of furniture they share.
+// The bar at the foot of the hero, and — pinned to the viewport by SiteNav — at the
+// foot of every screen below it: the name at display size, the section links
+// opposite it. One component for both, so the hero and the rest of the page can't
+// drift apart on the one piece of furniture they share.
 //
-// `children` is the middle of the bar. The homepage leaves it empty — the hero's
-// scroll cue is fixed to the viewport and floats over that slot — and the About
-// page puts its back-to-top ring there, which is what opens the third column.
+// `children` is the middle of the bar. The hero leaves it empty, since its scroll
+// cue is fixed to the viewport and floats over that slot; the pinned copy puts its
+// back-to-top ring there, which is what opens the third column.
 const NavMenu = ({
   items,
   setNameRef,

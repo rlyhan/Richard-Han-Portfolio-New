@@ -1,8 +1,7 @@
 import ArrowDownIcon from "../../icons/ArrowDownIcon";
 
-// The ring in the middle of the nav bar at the foot of the About page — the same
-// place the hero's scroll cue holds on the homepage, which is why that slot in the
-// bar is left empty.
+// The ring in the middle of the nav bar — the same place the hero's scroll cue
+// holds on the homepage, which is why that slot in the bar is left empty.
 //
 // The arrow is the page's one arrow, turned over, rather than a second icon: the
 // cue pointing down into the page and this pointing back up out of it are the same
