@@ -26,6 +26,12 @@ export const ROUTES = [
         hasOwnNav: true,
         // No navLabel: the name at the foot of the bar is the way back home, and a
         // "Home" item beside it would be that link drawn twice.
+        //
+        // `next` is the page this one hands the SCROLL to, and the homepage is the
+        // only page that has one: the hero empties out across its runway and About
+        // climbs over it, one document, one gesture. Everywhere else the foot of the
+        // page is the foot of the document and the nav bar is the way on — see
+        // RouterProvider, which plays those as a swap rather than a scroll.
         next: "/about",
         load: () => import("../pages/HomePage.jsx"),
     },
@@ -35,7 +41,6 @@ export const ROUTES = [
         title: "About — Richard Han",
         ground: "bg-cream",
         navLabel: "About",
-        next: "/projects",
         load: () => import("../pages/AboutPage.jsx"),
     },
     {
@@ -44,7 +49,6 @@ export const ROUTES = [
         title: "Projects — Richard Han",
         ground: "bg-carbon-900",
         navLabel: "Projects",
-        next: "/contact",
         load: () => import("../pages/ProjectsPage.jsx"),
     },
     {
@@ -53,7 +57,6 @@ export const ROUTES = [
         title: "Contact — Richard Han",
         ground: "bg-carbon-900",
         navLabel: "Contact",
-        // The end of the chain: nothing to stage, nothing to hand the scroll to.
         load: () => import("../pages/ContactPage.jsx"),
     },
 ]

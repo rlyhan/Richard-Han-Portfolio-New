@@ -1,14 +1,10 @@
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import classNames from "classnames"
 import PageSection from "../components/layout/PageSection"
 import SectionHeading from "../components/common/SectionHeading"
 import TabButton from "../components/common/Tabs/TabButton"
-import ScrollCue from "../components/common/Buttons/ScrollCue"
 import { useTabSelect } from "../hooks/useTabSelect"
 import { useScrollReveal } from "../hooks/useScrollReveal"
-import { useSectionHandoff } from "../hooks/useSectionHandoff"
-import { useKeyShortcut } from "../hooks/useKeyShortcut"
-import { useAdvance, usePage, useRouter } from "../routes/RouterContext"
 import PROJECTS from "../data/projects.data"
 import ProjectCard from "../components/common/Cards/ProjectCard"
 import ProjectCardGallery from "../components/common/Cards/ProjectCardGallery"
@@ -30,20 +26,19 @@ const tabs = [
     }
 ]
 
-// The Projects page: the filterable list, and the runway it parks on before handing
-// over to Contact. Its own chunk, which is where the project data and the modal live.
+// The Projects page: the filterable list. Its own chunk, which is where the project
+// data and the modal live.
+//
+// It ends where its last card does. Only the homepage hands over on the scroll — see
+// RouterProvider — so the foot of this page is the foot of the document, and the way
+// on from here is the nav bar.
 const ProjectsPage = () => {
-    const { navigate } = useRouter()
-    const { nextPath, nextSelector, isNextStaged } = usePage()
-
     const [activeTab, setActiveTab] = useState("projects-all")
     const [displayMode, setDisplayMode] = useState("default")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedProject, setSelectedProject] = useState(null)
 
     const panelRef = useRef(null)
-    const contentRef = useRef(null)
-    const runwayRef = useRef(null)
 
     // The click lands the row at the top of the viewport, so the filtered list opens
     // from its first card rather than part-way down.
@@ -52,28 +47,6 @@ const ProjectsPage = () => {
     // contents without the element changing, so the fade over that swap has to be
     // replayed by hand. See useTabSelect for why it isn't a CSS animation.
     const { rowRef, selectTab } = useTabSelect(activeTab, setActiveTab, { panelRef })
-
-    // The hesitation between this page and the one after it — see useSectionHandoff.
-    // Which page that is, and whether it is mounted yet, is the router's answer.
-    const { scrollToNext, isCueVisible } = useSectionHandoff({
-        contentRef,
-        runwayRef,
-        nextSelector,
-        isNextStaged,
-    })
-
-    // The scroll this page leaves by, for the nav bar to use instead of a jump when
-    // what it is asked for is the page this one hands over to.
-    useAdvance(scrollToNext)
-
-    // Through the router, as on the home page: it fetches the page below if the park
-    // has somehow been reached before it was staged, then plays this same scroll.
-    const goToNextPage = useCallback(() => navigate(nextPath), [navigate, nextPath])
-
-    // Space is the cue's gesture from the keyboard, bound only while the cue is up:
-    // anywhere else on the page it goes back to being page-down. Never behind the
-    // modal, where the press belongs to the panel and the page is locked anyway.
-    useKeyShortcut("Space", goToNextPage, { enabled: isCueVisible && !isModalOpen })
 
     // Keyed on both: the tab re-filters the list and the display mode takes it from
     // one column to a gallery, so either way the rows the reveal measured are gone.
@@ -108,10 +81,7 @@ const ProjectsPage = () => {
                 the ground of whichever page is in front — which on the way in here is
                 About's cream. */}
             <PageSection id="projects" additionalClasses="mb-4 bg-carbon-900">
-                {/* Held by useSectionHandoff once its bottom edge reaches the middle of
-                    the viewport, dissolving as the runway below passes: the hesitation
-                    before Contact. */}
-                <div ref={contentRef} className="max-w-6xl mx-auto w-full">
+                <div className="max-w-6xl mx-auto w-full">
                     <SectionHeading label="Projects" />
                     {/* The ref sits on the whole row, not the tablist: the display-mode
                         buttons share the line, so the row's top edge is what a tab click
@@ -146,16 +116,6 @@ const ProjectsPage = () => {
                         )}
                     </div>
                 </div>
-
-                {/* The runway: the scroll the hesitation is spent against, before the
-                    handoff takes over into Contact. Carries no content, so its only job
-                    is height — and it's what every trigger in the handoff measures
-                    against, hence the ref.
-
-                    Reduced motion collapses it, back to Contact following Projects
-                    directly: with the park and its dissolve gone there would be nothing
-                    to watch, and it would read as a dead screen. */}
-                <div ref={runwayRef} aria-hidden="true" className="h-[80svh] motion-reduce:h-0" />
             </PageSection >
 
             {/* Modal. Outside the section, because the section carries the transform that
@@ -169,16 +129,6 @@ const ProjectsPage = () => {
                     </Modal>
                 )
             }
-
-            {/* Up only while the content is held, so it never floats over a page
-                already on screen — and never behind the modal, where it would sit under
-                the scrim, still in the tab order, offering a scroll the modal has
-                locked. */}
-            <ScrollCue
-                onClick={goToNextPage}
-                visible={isCueVisible && !isModalOpen}
-                label="Scroll to the Contact page"
-            />
         </>
     )
 }
