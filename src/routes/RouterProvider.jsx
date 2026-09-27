@@ -79,12 +79,17 @@ const seatScroll = (offset) => {
     lenis?.start()
 }
 
-// The same position, put back a frame later if anything has moved it. The scroll is
-// not ours alone: going back to the first page of a visit, the browser restores that
-// entry's own position after the event that took us there — a position in a document
-// built from different pages, and one it will not be talked out of by
-// scrollRestoration. Nothing a viewer can do inside a single frame is worth more than
-// opening a page where it was meant to open.
+// The same position, put back a frame later if anything has moved it.
+//
+// For a history traversal and nothing else. The browser restores the entry's own
+// scroll position after the event that took us there — a position in a document built
+// from different pages, and one it will not be talked out of by scrollRestoration —
+// so the seat has to outlast it by a frame.
+//
+// Never on a seat the viewer scrolled their way into. A handoff lands while the wheel
+// may still be turning, and the scroll that arrives in the frame after it is theirs:
+// putting the page back would take a gesture off them and show as a jump down and
+// back up in the same breath.
 const holdSeat = (offset) => {
     requestAnimationFrame(() => {
         if (Math.abs(window.scrollY - offset) < 1) return
@@ -200,13 +205,13 @@ const RouterProvider = ({ children }) => {
             .catch(() => false)
     }, [nextRoute])
 
-    const enterRoute = useCallback((target, { push = true, offset = 0 } = {}) => {
+    const enterRoute = useCallback((target, { push = true, offset = 0, hold = false } = {}) => {
         // A scripted scroll still pointing into the document about to be taken
         // apart. Killing it runs its own cleanup, which is what unlocks the page if
         // it was a takeover holding the scroll.
         gsap.killTweensOf(window)
 
-        handoverRef.current = { offset }
+        handoverRef.current = { offset, hold }
 
         if (push) {
             window.history.pushState({ path: target.path }, "", target.path)
@@ -233,7 +238,7 @@ const RouterProvider = ({ children }) => {
         // would drop the viewer part-way down instead of at the top.
         ScrollTrigger.clearScrollMemory()
         seatScroll(handover.offset)
-        holdSeat(handover.offset)
+        if (handover.hold) holdSeat(handover.offset)
         // Every trigger left standing was measured against the document that just
         // changed under it.
         ScrollTrigger.refresh()
@@ -382,7 +387,9 @@ const RouterProvider = ({ children }) => {
             // — a page already visited is in hand, and this is only a wait the
             // first time a page is reached by the back button.
             loadPage(target)
-                .then(() => enterRoute(target, { push: false }))
+                // hold, because this is the arrival the browser has its own opinion
+                // about — see holdSeat.
+                .then(() => enterRoute(target, { push: false, hold: true }))
                 .catch(() => window.location.assign(target.path))
         }
 
