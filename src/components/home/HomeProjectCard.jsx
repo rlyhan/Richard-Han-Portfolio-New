@@ -80,12 +80,17 @@ const HomeProjectCard = ({
     >
       {/* The frame the shot hangs in. Its foot stops above the caption plate
           rather than running under it: the object stays whole, and the plate has
-          nothing behind it to show through. */}
+          nothing behind it to show through.
+
+          No inset at the top of a slide. A phone gives the deck a third of the
+          screen at most, and matting the shot on all four sides there spends the
+          scarce axis on ground — the well's own top edge is the frame. The sides
+          keep theirs, since that is the axis with room to spare. */}
       <div
         className={cn(
           "absolute overflow-hidden",
           isSlide
-            ? "inset-x-2 top-2 bottom-[3.35rem]"
+            ? "inset-x-2 top-0 bottom-[3.35rem]"
             : "inset-x-[clamp(0.9rem,1.6vw,1.9rem)] top-4 bottom-[clamp(4.25rem,6.5vh,5.25rem)]",
         )}
       >

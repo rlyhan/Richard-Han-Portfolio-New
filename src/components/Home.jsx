@@ -169,7 +169,7 @@ const Home = () => {
 
       {/* From md up the cue lands in the middle of the nav bar, between the name
                 and the section links — the one part of that bar left empty for it. On a
-                phone the bar is a single 45px row with no middle to sit in, so the cue
+                phone the bar is a single row with no middle to sit in, so the cue
                 goes to the top-right corner instead, and the intro panel's top padding
                 is what keeps the byline clear of it. */}
       <ScrollCue
