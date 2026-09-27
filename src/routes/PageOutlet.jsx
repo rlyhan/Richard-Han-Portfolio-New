@@ -1,3 +1,5 @@
+import { useRef } from "react"
+import PageSwap from "./PageSwap"
 import { PageContext, useRouter } from "./RouterContext"
 
 // Where the pages go.
@@ -13,11 +15,16 @@ import { PageContext, useRouter } from "./RouterContext"
 // the same frame; the browser's scroll anchoring answers a change like that by moving
 // the scroll as well, which would double it. It is Chrome's alone besides, so leaving
 // it on would make the join behave one way there and another in Safari.
+//
+// The swap is rendered outside that box rather than in it: the box is what the swap
+// animates away, and the page arriving must not go with it.
 const PageOutlet = () => {
-    const { pages } = useRouter()
+    const { pages, swap, finishSwap } = useRouter()
+    const documentRef = useRef(null)
 
     return (
-        <div className="relative [overflow-anchor:none]">
+        <>
+        <div ref={documentRef} className="relative [overflow-anchor:none]">
             {pages.map((page) => {
                 // Read out under a capitalised name, which is what JSX needs to treat
                 // it as a component rather than as an HTML tag.
@@ -30,6 +37,16 @@ const PageOutlet = () => {
                 )
             })}
         </div>
+
+        {swap && (
+            <PageSwap
+                key={swap.path}
+                Page={swap.Page}
+                outgoingRef={documentRef}
+                onDone={finishSwap}
+            />
+        )}
+        </>
     )
 }
 

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import ScrollToPlugin from "gsap/ScrollToPlugin"
+import { holdScroll } from "../helpers/scrollHold"
 import { getSectionRestingScrollY } from "../helpers/sectionScroll"
-import { getLenis } from "./useLenis"
 
 gsap.registerPlugin(ScrollToPlugin)
 
@@ -10,12 +10,6 @@ gsap.registerPlugin(ScrollToPlugin)
 // every fade along the way is scrubbed off this scroll — rush it and they blur
 // together.
 const CUE_SCROLL_DURATION = 2.4
-
-// The keys the browser scrolls the page with. Lenis owns the wheel and nothing else,
-// so a locked scroll has to answer for these itself.
-const SCROLL_KEYS = new Set([
-    "Space", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End",
-])
 
 // A scripted scroll to where a section comes to rest — the cue's shortcut and the
 // handoff's takeover are both this.
@@ -29,8 +23,9 @@ const SCROLL_KEYS = new Set([
 //
 //   interruptible  hands control back the moment the viewer scrolls for themselves — the
 //                  cue is an offer, and nobody should have to fight it to the end.
-//   locked         swallows them. The takeover isn't an offer: a flick in the middle of
-//                  it would strand the viewer between two sections.
+//   locked         swallows them, which is holdScroll's job and the same hold a page
+//                  swap takes. The takeover isn't an offer: a flick in the middle of
+//                  it would strand the viewer between two pages.
 export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_DURATION } = {}) {
     const tweenRef = useRef(null)
     // Holds the last scroll's listeners, so unmounting mid-scroll doesn't leave them
@@ -55,50 +50,34 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
 
         setIsScrolling(true)
 
-        const detach = () => {
-            window.removeEventListener("wheel", onGesture)
-            window.removeEventListener("touchmove", onGesture)
-            window.removeEventListener("keydown", onKeyDown)
-            if (locked) getLenis()?.start()
-        }
-
-        const finish = () => {
-            detach()
-            setIsScrolling(false)
-        }
-
         // Listening for the gestures rather than ScrollToPlugin's autoKill, which reads
         // iOS's collapsing toolbar as an unexpected delta and cancels on the spot, so
         // the cue appears to do nothing.
         //
         // touchmove, not touchstart: the tap that starts the scroll would otherwise
         // count as one.
-        const onGesture = (event) => {
-            if (!locked) {
+        const handBack = () => {
+            const onGesture = () => {
                 tweenRef.current?.kill()
                 finish()
-                return
             }
 
-            event.preventDefault()
+            window.addEventListener("wheel", onGesture, { passive: true })
+            window.addEventListener("touchmove", onGesture, { passive: true })
+
+            return () => {
+                window.removeEventListener("wheel", onGesture)
+                window.removeEventListener("touchmove", onGesture)
+            }
         }
 
-        const onKeyDown = (event) => {
-            if (locked && SCROLL_KEYS.has(event.code)) event.preventDefault()
+        const detach = locked ? holdScroll() : handBack()
+
+        const finish = () => {
+            detach()
+            setIsScrolling(false)
         }
 
-        // Stopping Lenis is what closes the wheel, not preventing the event — Lenis binds
-        // its own listener first and would scroll regardless. Touch is native (syncTouch
-        // is off) and so are the keys, hence the listeners below, the wheel among them for
-        // the reduced-motion case where Lenis was never constructed.
-        //
-        // Nothing here touches the body's overflow the way the modal's lock does: that
-        // would take the scrollbar with it and shift the page sideways as it scrolls.
-        if (locked) getLenis()?.stop()
-
-        window.addEventListener("wheel", onGesture, { passive: !locked })
-        window.addEventListener("touchmove", onGesture, { passive: !locked })
-        window.addEventListener("keydown", onKeyDown)
         detachRef.current = detach
 
         tweenRef.current = gsap.to(window, {

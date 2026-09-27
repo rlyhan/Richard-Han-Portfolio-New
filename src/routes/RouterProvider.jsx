@@ -144,6 +144,12 @@ const RouterProvider = ({ children }) => {
     // that a page is never mounted for a join it doesn't belong to.
     const [staged, setStaged] = useState(null)
 
+    // The page a nav item has asked for, on its way in over the top of this one. Held
+    // apart from the pages in the document because that is exactly what it is: it
+    // belongs to the viewport until it lands, and only then to the document. See
+    // PageSwap.
+    const [swap, setSwap] = useState(null)
+
     // Bumped by a nav item that asks for the next page: the scroll it wants can only
     // run once that page is mounted, so the request outlives the click.
     const [advanceRequest, setAdvanceRequest] = useState(0)
@@ -207,6 +213,7 @@ const RouterProvider = ({ children }) => {
             keepScrollOurs()
         }
 
+        setSwap(null)
         setStaged(null)
         setAdvanceRequest(0)
         setCurrent({ path: target.path, Page: getLoadedPage(target) })
@@ -306,7 +313,7 @@ const RouterProvider = ({ children }) => {
     // the viewer's own wheel and a reduced-motion page with no runway at all arrive
     // at the same place, and all four are this.
     useEffect(() => {
-        if (!isNextStaged || !nextRoute) return
+        if (!isNextStaged || !nextRoute || swap) return
 
         let timer = null
 
@@ -342,7 +349,7 @@ const RouterProvider = ({ children }) => {
             clearTimeout(timer)
             window.removeEventListener("scroll", onScroll)
         }
-    }, [isNextStaged, nextRoute, enterRoute])
+    }, [isNextStaged, nextRoute, swap, enterRoute])
 
     // A nav item asked for the next page, and the page it asked from is now mounted
     // below: the scroll that page leaves by can run. A frame's wait, so the triggers
@@ -404,13 +411,18 @@ const RouterProvider = ({ children }) => {
     //   the page this one hands over to   the join, played in full — the page's own
     //                                     scroll, the same one the viewer would get
     //                                     by scrolling there themselves
-    //   anything else   entered at its top. There is no sequence between two pages
-    //                   that aren't neighbours, and mounting the pages in between to
-    //                   scrub through them is the weight this split was undoing.
+    //   anything else   a swap: this page lifts and fades, the one asked for comes
+    //                    up from below the fold and takes the screen. The same move
+    //                    the scroll join makes, spent in time rather than in scroll,
+    //                    because there is no scroll between these two pages to spend.
     const navigate = useCallback(
         (to) => {
             const target = findRoute(to)
             if (!target || !route) return
+
+            // One at a time. A second page asked for mid-swap would be a third page
+            // in the air, and the first would still be the one that lands.
+            if (swap) return
 
             if (target.path === route.path) {
                 scrollPageToTop()
@@ -424,14 +436,26 @@ const RouterProvider = ({ children }) => {
                 return
             }
 
+            // Fetched before it is mounted, and mounted only here: until a nav item
+            // is clicked there is no page after this one in the document at all —
+            // which is what makes the foot of a page the foot of the document.
             loadPage(target)
-                .then(() => enterRoute(target))
+                .then((Component) => setSwap({ path: target.path, Page: Component }))
                 // The chunk is not to be had, so the URL goes to the server: a
                 // full page load is slow, and it is not a dead link.
                 .catch(() => window.location.assign(target.path))
         },
-        [route, stageNext, enterRoute],
+        [route, swap, stageNext],
     )
+
+    // The swap has landed: the page it carried in is holding the screen, so it becomes
+    // the document — entered at its top, which is the screenful already showing.
+    const finishSwap = useCallback(() => {
+        const target = swap && findRoute(swap.path)
+        if (!target) return
+
+        enterRoute(target)
+    }, [swap, enterRoute])
 
     const prefetch = useCallback((to) => {
         const target = findRoute(to)
@@ -477,6 +501,8 @@ const RouterProvider = ({ children }) => {
             path,
             route,
             pages,
+            swap,
+            finishSwap,
             navigate,
             prefetch,
             registerAdvance,
@@ -490,7 +516,7 @@ const RouterProvider = ({ children }) => {
             // that measures a position and has to measure it again.
             layoutKey: `${path}:${isNextStaged}`,
         }),
-        [path, route, nextRoute, isNextStaged, pages, navigate, prefetch, registerAdvance],
+        [path, route, nextRoute, isNextStaged, pages, swap, finishSwap, navigate, prefetch, registerAdvance],
     )
 
     return <RouterContext.Provider value={routerValue}>{children}</RouterContext.Provider>
