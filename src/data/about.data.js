@@ -5,7 +5,7 @@
 export const ABOUT_HEADING = "About.";
 
 export const ABOUT_NOTE =
-  "Building thoughtful digital experiences with a clear structure and a human touch.";
+  "5+ years across frontend and full-stack development, specialising in React/Next.js applications and CMS-driven platforms, as well as Django and WordPress based applications. Currently exploring mobile native development and AI-assisted workflows to improve testing, quality and delivery. Currently freelancing.";
 
 // The numbered labels down the left of the page. The number is the page's own
 // running order rather than anything in the data, so it is stated once here
