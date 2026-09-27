@@ -3,9 +3,9 @@ import { buildExitTimeline } from "../helpers/handoff"
 import { getSectionFlowTop } from "../helpers/sectionScroll"
 import { useHandoff } from "./useHandoff"
 
-// The exit for a handoff between two sections that both carry content — About to
-// Projects, Projects to Contact. The range, takeover and landing around it are
-// useHandoff's; this is the park it hands off from:
+// The exit for a handoff between two pages that both carry content — Projects to
+// Contact. The range, takeover and landing around it are useHandoff's; this is the
+// park it hands off from:
 //
 //   the content   held with its bottom edge at the middle of the viewport, so the section
 //                 keeps the view instead of scrolling away, and dissolving as it waits
@@ -19,7 +19,7 @@ import { useHandoff } from "./useHandoff"
 // holding anything.
 
 // Share of the park the content is held for. The rest lifts the transform back off, so
-// the park ends with nothing displaced over the section arriving below — unseen, because
+// the park ends with nothing displaced over the page arriving below — unseen, because
 // the dissolve has finished by then and a runway taller than 50svh has carried the
 // content's own position off the top of the screen.
 const HOLD_SHARE = 0.85
@@ -60,7 +60,7 @@ const buildParkTimeline = ({ content, runway, range, onHold }) =>
         .to(content, { y: 0, duration: 1 - HOLD_SHARE }, HOLD_SHARE)
         .to(content, { opacity: 0, duration: FADE_DURATION }, FADE_START)
 
-export function useSectionHandoff({ contentRef, runwayRef, nextSelector }) {
+export function useSectionHandoff({ contentRef, runwayRef, nextSelector, isNextStaged }) {
     // Stable, because useHandoff builds every trigger off it: an inline closure would
     // rebuild them on each render, one of which is the park raising its own hold.
     const buildExit = useCallback(({ runway, range, onHold }) => {
@@ -85,6 +85,7 @@ export function useSectionHandoff({ contentRef, runwayRef, nextSelector }) {
     const { scrollToNext, isHolding, isScrolling } = useHandoff({
         runwayRef,
         nextSelector,
+        isNextStaged,
         getExitRange,
         buildExit,
     })

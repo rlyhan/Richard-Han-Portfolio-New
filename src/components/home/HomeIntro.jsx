@@ -5,7 +5,7 @@ import Byline from "../layout/Byline";
 // under them, all on the hero's paper ground.
 //
 // Three planes the hero's exit moves, and they don't all leave together — see
-// useHeroToAboutHandoff. The h1's lines and the note rise (`setLineRef`,
+// useHeroHandoff. The h1's lines and the note rise (`setLineRef`,
 // `setNoteRef`); the byline sinks with the furniture at the foot of the hero
 // (`setToplineRef`), because it reads as a masthead line rather than as part of
 // the h1. The indices belong to Home, so this stays unaware of where in either

@@ -53,6 +53,8 @@ const ProjectsPage = () => {
         contentRef,
         runwayRef,
         nextSelector: "#contact",
+        // Always, here: Contact is in the same document, below this section.
+        isNextStaged: true,
     })
 
     // Space is the cue's gesture from the keyboard, bound only while the cue is up:

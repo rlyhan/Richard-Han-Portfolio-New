@@ -46,7 +46,9 @@ export function useCueScroll(selector, { locked = false, duration = CUE_SCROLL_D
     const scrollToTarget = useCallback(() => {
         if (tweenRef.current?.isActive()) return
 
-        const target = document.querySelector(selector)
+        // No selector at all is a page with nowhere to go — the last of the chain, or
+        // one whose next page the router has yet to mount.
+        const target = selector && document.querySelector(selector)
         if (!target) return
 
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches

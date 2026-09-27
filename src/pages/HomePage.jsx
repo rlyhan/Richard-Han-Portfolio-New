@@ -6,7 +6,7 @@ import HomeWork from "../components/home/HomeWork";
 import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useCueScroll } from "../hooks/useCueScroll";
-import { useHeroToAboutHandoff } from "../hooks/useHeroToAboutHandoff";
+import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 import { useKeyShortcut } from "../hooks/useKeyShortcut";
 
@@ -14,9 +14,13 @@ import { useKeyShortcut } from "../hooks/useKeyShortcut";
 // shortcut both still apply.
 const NEAR_TOP_THRESHOLD = 40;
 
+// The page the hero hands the scroll over to. Named here rather than inside the
+// handoff: the exit belongs to the hero, and where it leads does not.
+const NEXT_SELECTOR = "#about";
+
 // What the hero's exit throws off the screen, in the order it goes. The stagger is
 // indexed off this list, so the spread runs down the left column and then takes the
-// work panel with it — see useHeroToAboutHandoff for the travel each index gets.
+// work panel with it — see useHeroHandoff for the travel each index gets.
 //
 // Six is the ceiling: the exit is scrubbed across a unit-length timeline, and a
 // seventh would push the last fade past the end of the runway, leaving the takeover
@@ -55,10 +59,13 @@ const HomePage = () => {
     outroLineRefs.current[2] = el;
   }, []);
 
-  const { scrollToAbout, isScrollingToAbout } = useHeroToAboutHandoff({
+  const { scrollToNext, isScrollingToNext } = useHeroHandoff({
     displayLineRefs,
     outroLineRefs,
     runwayRef,
+    nextSelector: NEXT_SELECTOR,
+    // Always, here: About is in the same document as the hero, below it.
+    isNextStaged: true,
   });
 
   // The rest of the page from the hero's own nav, on the same terms as the cue's
@@ -85,7 +92,7 @@ const HomePage = () => {
     [],
   );
 
-  const selectAbout = handleNavClick(scrollToAbout);
+  const selectAbout = handleNavClick(scrollToNext);
   const selectProjects = handleNavClick(scrollToProjects);
   const selectContact = handleNavClick(scrollToContact);
 
@@ -98,11 +105,11 @@ const HomePage = () => {
   // The cue belongs to the top of the page: any scroll away from the hero retires
   // it, including the one the cue itself starts.
   const isCueVisible =
-    useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToAbout;
+    useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToNext;
 
   // Space is the cue's gesture from the keyboard, bound on the same terms: past
   // the hero it goes back to being page-down.
-  useKeyShortcut("Space", scrollToAbout, { enabled: isCueVisible });
+  useKeyShortcut("Space", scrollToNext, { enabled: isCueVisible });
 
   // contained: false — the hero is the one section that runs to the viewport edge,
   // so it opts out of the page frame the rest of the page sits in.
@@ -173,7 +180,7 @@ const HomePage = () => {
                 goes to the top-right corner instead, and the intro panel's top padding
                 is what keeps the byline clear of it. */}
       <ScrollCue
-        onClick={scrollToAbout}
+        onClick={scrollToNext}
         tone="ink"
         visible={isCueVisible}
         positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"
