@@ -27,12 +27,24 @@ const SiteNav = () => {
     // Which page this bar is standing on decides where its floor is, and the router
     // is what knows: the hero draws a copy of this bar in its own layout, and a page
     // that doesn't has nothing for a pinned bar to be drawn twice over.
-    const { navFloorSelector, layoutKey } = useRouter();
+    const { navFloorSelector, layoutKey, swap } = useRouter();
 
     // Nothing but the direction decides this, on every page: arriving somewhere is
     // not asking for the nav, however you arrived. A page opens without the bar, and
     // scrolling against the page is what calls it up — see useRevealOnScrollUp.
     const { isRevealed, isAboveFloor } = useRevealOnScrollUp(navFloorSelector, layoutKey);
+
+    // Over the hero's own copy of this bar — which is the one place the two are
+    // stacked, and the only reason any of this is conditional. A floor belongs to a
+    // page that draws the bar itself, so a page without one is never over anything.
+    const isOverOwnBar = Boolean(navFloorSelector) && isAboveFloor;
+
+    // The bar belongs to the page under it, and for the length of a swap there are
+    // two. It goes down with the page being left — behind the page rising over it, so
+    // there is nothing to see — and comes back up on the one that arrives, which is
+    // the slide the viewer sees. Uncovering it in place when the curtain lifts is
+    // what made it appear rather than arrive.
+    const isUp = isRevealed && !swap;
 
     const navItems = useNavItems();
 
@@ -50,9 +62,9 @@ const SiteNav = () => {
                 // slide. Off at once instead, under an identical bar that is
                 // already drawn — and on the way in there is nothing to animate,
                 // since the bar only ever arrives from below the floor.
-                !isAboveFloor &&
+                !isOverOwnBar &&
                     "transition-[translate,opacity] duration-300 ease-out motion-reduce:transition-none",
-                isRevealed
+                isUp
                     ? "translate-y-0 opacity-100"
                     : "translate-y-full opacity-0 pointer-events-none",
             )}
@@ -60,7 +72,7 @@ const SiteNav = () => {
             // tab order too, and aria-hidden alone would hide them from a screen
             // reader while leaving them focusable. pointer-events-none above is the
             // fallback for browsers without inert.
-            inert={!isRevealed}
+            inert={!isUp}
         >
             <NavMenu items={navItems} ariaLabel="Site navigation">
                 {/* No ring over the hero: there is nowhere to go back to up
@@ -68,7 +80,7 @@ const SiteNav = () => {
                     that slot belongs to the scroll cue. Dropping it also takes the
                     bar back to the hero's own two-column grid, so the pair sit
                     exactly on top of one another. */}
-                {!isAboveFloor && <BackToTop onClick={scrollToTop} />}
+                {!isOverOwnBar && <BackToTop onClick={scrollToTop} />}
             </NavMenu>
         </div>
     );
