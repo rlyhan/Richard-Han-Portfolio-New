@@ -5,6 +5,14 @@ import { getSectionFlowTop } from "../helpers/sectionScroll"
 // change. Same threshold the old header bar read direction with.
 const SCROLL_DELTA = 6
 
+// Larger movement than this share of the viewport is not a gesture either. A page
+// handing over to the next one takes its own height off the scroll position in the
+// frame it leaves the document (see RouterProvider), and travelling a page upward in
+// one reading is what the viewer would otherwise appear to have done — which is
+// exactly the ask for a nav bar. Nobody scrolls this far in a frame; a flick that
+// comes close is still read on the frames either side of it.
+const JUMP_SHARE = 1
+
 // Whether a bar pinned to the viewport is up, and whether the page is above the
 // point it answers for.
 //
@@ -69,6 +77,14 @@ export function useRevealOnScrollUp(floorSelector, measureKey) {
             // reaching it: which side of the floor the page is on is a position and
             // is true whether or not the viewer is moving.
             setIsAboveFloor(aboveFloor)
+
+            // The document moved under the bar rather than the viewer moving through
+            // it. Taken as the new resting point, so the next real gesture is read
+            // against where the page now is.
+            if (Math.abs(delta) > window.innerHeight * JUMP_SHARE) {
+                lastY = y
+                return
+            }
 
             // Under the threshold lastY is left alone, so a slow drag accumulates
             // into a direction instead of being discarded a frame at a time.

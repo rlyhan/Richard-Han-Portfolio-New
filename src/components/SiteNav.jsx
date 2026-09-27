@@ -4,12 +4,7 @@ import BackToTop from "./common/Buttons/BackToTop";
 import { useRouter } from "../routes/RouterContext";
 import { useNavItems } from "../routes/useNavLinks";
 import { useCueScroll } from "../hooks/useCueScroll";
-import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
-
-// Scrolled less than this, a page is still at its top, so a page with no bar of its
-// own still has this one. The same threshold the hero reads its scroll cue by.
-const NEAR_TOP_THRESHOLD = 40;
 
 // The site's nav: the hero's own bar, pinned to the foot of the viewport for the
 // rest of the site. It replaces the bar that used to be fixed across the top —
@@ -34,15 +29,10 @@ const SiteNav = () => {
     // that doesn't has nothing for a pinned bar to be drawn twice over.
     const { navFloorSelector, layoutKey } = useRouter();
 
+    // Nothing but the direction decides this, on every page: arriving somewhere is
+    // not asking for the nav, however you arrived. A page opens without the bar, and
+    // scrolling against the page is what calls it up — see useRevealOnScrollUp.
     const { isRevealed, isAboveFloor } = useRevealOnScrollUp(navFloorSelector, layoutKey);
-
-    // A floor means the page draws this bar in its own layout, and the hero is the only
-    // page that does. Every other page can be arrived at directly, and at the top of
-    // one there is no other nav to reach for — so the bar is up to begin with and the
-    // first scroll down the page puts it away, rather than being something the viewer
-    // has to know to scroll back for.
-    const isAtPageTop = useIsNearPageTop(NEAR_TOP_THRESHOLD);
-    const isUp = isRevealed || (!navFloorSelector && isAtPageTop);
 
     const navItems = useNavItems();
 
@@ -62,7 +52,7 @@ const SiteNav = () => {
                 // since the bar only ever arrives from below the floor.
                 !isAboveFloor &&
                     "transition-[translate,opacity] duration-300 ease-out motion-reduce:transition-none",
-                isUp
+                isRevealed
                     ? "translate-y-0 opacity-100"
                     : "translate-y-full opacity-0 pointer-events-none",
             )}
@@ -70,7 +60,7 @@ const SiteNav = () => {
             // tab order too, and aria-hidden alone would hide them from a screen
             // reader while leaving them focusable. pointer-events-none above is the
             // fallback for browsers without inert.
-            inert={!isUp}
+            inert={!isRevealed}
         >
             <NavMenu items={navItems} ariaLabel="Site navigation">
                 {/* No ring over the hero: there is nowhere to go back to up
