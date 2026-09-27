@@ -177,7 +177,7 @@ const ProjectsPage = () => {
             <ScrollCue
                 onClick={goToNextPage}
                 visible={isCueVisible && !isModalOpen}
-                label="Scroll to the Contact section"
+                label="Scroll to the Contact page"
             />
         </>
     )

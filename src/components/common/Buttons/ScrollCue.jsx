@@ -21,7 +21,7 @@ const TONE_CLASSES = {
   ink: "border-ink/30 text-ink hover:border-ink/60 hover:bg-ink/[0.07] focus-visible:outline-ink",
 };
 
-// A floating hint at the foot of the hero, handing the viewer into the next section.
+// A floating hint at the foot of a page, handing the viewer into the next one.
 // The bounce lives on an inner element so the infinite y tween and the visibility
 // fade never write to the same target.
 //
@@ -32,7 +32,7 @@ const TONE_CLASSES = {
 const ScrollCue = ({
   onClick,
   visible,
-  label = "Scroll to the About section",
+  label = "Scroll to the next page",
   tone = "neon",
   positionClassName = "bottom-6 justify-center",
 }) => {
