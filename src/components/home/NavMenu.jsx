@@ -1,7 +1,27 @@
-const NavMenu = ({ items, setNameRef, setNavRef }) => (
+import cn from "classnames";
+
+// The bar at the foot of the hero, and at the foot of the About page: the name at
+// display size, the section links opposite it. One component for both, so the two
+// pages can't drift apart on the one piece of furniture they share.
+//
+// `children` is the middle of the bar. The homepage leaves it empty — the hero's
+// scroll cue is fixed to the viewport and floats over that slot — and the About
+// page puts its back-to-top ring there, which is what opens the third column.
+const NavMenu = ({
+  items,
+  setNameRef,
+  setNavRef,
+  ariaLabel = "Portfolio sections",
+  children,
+}) => (
   <nav
-    aria-label="Portfolio sections"
-    className="relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4"
+    aria-label={ariaLabel}
+    className={cn(
+      "relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:items-end md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4",
+      children
+        ? "md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]"
+        : "md:grid-cols-[minmax(0,1fr)_auto]",
+    )}
   >
     <p
       ref={setNameRef}
@@ -10,6 +30,8 @@ const NavMenu = ({ items, setNameRef, setNavRef }) => (
       Richard&nbsp; <br />
       Han.
     </p>
+
+    {children}
 
     <div
       ref={setNavRef}

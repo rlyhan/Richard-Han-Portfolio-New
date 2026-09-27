@@ -1,6 +1,5 @@
-import Header from './components/Header'
 import Home from './components/Home'
-import About from './components/About'
+import AboutPage from './components/about/AboutPage'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -12,8 +11,6 @@ function App() {
 
   return (
     <>
-      <Header />
-
       {/* No frame here: the gutter and max width belong to each section instead
           (see PageSection), so the hero can run to the viewport edge while About
           still paints its background the full width of the page to cover it. */}
@@ -23,7 +20,7 @@ function App() {
             left painting behind the rest of the page. */}
         <div className="relative">
           <Home />
-          <About />
+          <AboutPage />
         </div>
         <Projects />
         <Contact />

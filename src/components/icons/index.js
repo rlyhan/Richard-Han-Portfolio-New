@@ -3,12 +3,18 @@ import ArrowDownIcon from "./ArrowDownIcon";
 import ArrowUpRightIcon from "./ArrowUpRightIcon";
 import BookIcon from "./BookIcon";
 import Chart from "./Chart";
+import ChefHatIcon from "./ChefHatIcon";
+import ClapperboardIcon from "./ClapperboardIcon";
 import CloudIcon from "./CloudIcon";
 import CodeIcon from "./CodeIcon";
 import ExternalLinkIcon from "./ExternalLinkIcon";
 import FileIcon from "./FileIcon";
+import GamepadIcon from "./GamepadIcon";
 import GitHubIcon from "./GitHubIcon";
+import LanguagesIcon from "./LanguagesIcon";
 import LinkedInIcon from "./LinkedInIcon";
+import MountainIcon from "./MountainIcon";
+import MusicIcon from "./MusicIcon";
 import PenIcon from "./PenIcon";
 import RobotIcon from "./RobotIcon";
 import SearchIcon from "./SearchIcon";
@@ -23,12 +29,18 @@ export {
     ArrowUpRightIcon,
     BookIcon,
     Chart,
+    ChefHatIcon,
+    ClapperboardIcon,
     CloudIcon,
     CodeIcon,
     ExternalLinkIcon,
     FileIcon,
+    GamepadIcon,
     GitHubIcon,
+    LanguagesIcon,
     LinkedInIcon,
+    MountainIcon,
+    MusicIcon,
     PenIcon,
     RobotIcon,
     SearchIcon,
