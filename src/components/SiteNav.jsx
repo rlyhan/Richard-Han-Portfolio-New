@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import cn from "classnames";
-import NavMenu from "./home/NavMenu";
+import NavMenu from "./layout/NavMenu";
 import BackToTop from "./common/Buttons/BackToTop";
 import { useCueScroll } from "../hooks/useCueScroll";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";

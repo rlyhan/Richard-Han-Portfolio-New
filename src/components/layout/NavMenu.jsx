@@ -1,4 +1,7 @@
 import cn from "classnames";
+import { INTRO_TOPLINE } from "../../data/home.data";
+
+const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 
 // The bar at the foot of the hero, and — pinned to the viewport by SiteNav — at the
 // foot of every screen below it: the name at display size, the section links
@@ -28,8 +31,8 @@ const NavMenu = ({
       ref={setNameRef}
       className="font-heading text-[1.5rem] leading-none text-ink md:py-[0.12em] md:text-[clamp(3.75rem,6vw,4.5rem)] md:leading-[0.85]"
     >
-      Richard&nbsp; <br />
-      Han.
+      {FIRST_NAME}&nbsp; <br />
+      {LAST_NAME}.
     </p>
 
     {children}
