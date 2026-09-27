@@ -41,11 +41,18 @@ const Home = () => {
   const setWorkRef = useCallback((el) => {
     displayLineRefs.current[WORK_LINE_INDEX] = el;
   }, []);
-  const setNameRef = useCallback((el) => {
+  // The outro sinks in the order it is collected: the byline at the top of the
+  // intro panel first, then the name and the links at the foot of the hero. Three
+  // planes is the ceiling here for the same reason six is above — the last of them
+  // has to land inside the runway.
+  const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
   }, []);
-  const setNavRef = useCallback((el) => {
+  const setNameRef = useCallback((el) => {
     outroLineRefs.current[1] = el;
+  }, []);
+  const setNavRef = useCallback((el) => {
+    outroLineRefs.current[2] = el;
   }, []);
 
   const { scrollToAbout, isScrollingToAbout } = useHeroToAboutHandoff({
@@ -100,13 +107,17 @@ const Home = () => {
   // contained: false — the hero is the one section that runs to the viewport edge,
   // so it opts out of the page frame the rest of the page sits in.
   //
-  // h-svh from md up, because that is what lets flex divide the hero: with an auto
-  // height the container sizes to its content, and a spread of images has a
-  // max-content height far taller than the screen. Both panels clip their own
-  // overflow, so a viewport too short to divide loses the bottom of the spread
-  // rather than spilling it over About.
+  // h-svh, because that is what lets flex divide the hero: with an auto height the
+  // container sizes to its content, and a spread of images has a max-content height
+  // far taller than the screen. Both panels clip their own overflow, so a viewport
+  // too short to divide loses the bottom of the spread rather than spilling it over
+  // About.
   //
-  // Below md the hero is a stack sized by its own copy, so it keeps min-h and grows.
+  // At every size, not just from md up. On a phone it used to be min-h-svh and a
+  // stack sized by its own copy — which put the nav below the fold on any screen
+  // shorter than about 780px, and a sticky hero has no scroll left to reach it. One
+  // screen tall is what makes the division below binding, so the work panel gives up
+  // the height the copy column needs instead of the bar at the foot going off-screen.
   //
   // sticky, so the hero holds the viewport while About scrolls over it. Its
   // containing block is the wrapper it shares with About in App, which ends the
@@ -116,18 +127,23 @@ const Home = () => {
       <PageSection
         id="home"
         contained={false}
-        additionalClasses="sticky top-0 flex min-h-svh flex-col overflow-x-clip bg-ink text-ink md:h-svh"
+        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-cream text-ink"
       >
         {/* flex-1, not a calc against the footer's nominal height: the name block
                     is display type and sets its own height, so measuring the spread
                     off a guess at the footer leaves the hero taller than the viewport
                     and the nav below the fold. Letting flex divide what's left keeps
                     the whole hero inside one screen at any size. */}
-        {/* The work panel keeps the larger share below 1440px — the spread needs more
-                    room than the copy does — but at 1440px and up the copy takes it instead,
-                    on a 7/5 split of a twelve-column layout. */}
-        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] wide:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <HomeIntro setLineRef={setDisplayLine} setNoteRef={setNoteRef} />
+        {/* The spread keeps the larger share of the width at every size — three
+                    framed shots need more room than four lines of type do — but the gap
+                    closes at 1440px, where there is width enough for the halves to run
+                    near even: 56/44 below it, 52/48 above. */}
+        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
+          <HomeIntro
+            setLineRef={setDisplayLine}
+            setNoteRef={setNoteRef}
+            setToplineRef={setToplineRef}
+          />
           <HomeWork setGridRef={setWorkRef} onSelectProject={selectProjects} />
         </div>
 
@@ -151,9 +167,14 @@ const Home = () => {
         className="h-[140svh] motion-reduce:h-0"
       />
 
+      {/* From md up the cue lands in the middle of the nav bar, between the name
+                and the section links — the one part of that bar left empty for it. On a
+                phone the bar is a single row with no middle to sit in, so the cue
+                goes to the top-right corner instead, and the intro panel's top padding
+                is what keeps the byline clear of it. */}
       <ScrollCue
         onClick={scrollToAbout}
-        tone="hero"
+        tone="ink"
         visible={isCueVisible}
         positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"
       />

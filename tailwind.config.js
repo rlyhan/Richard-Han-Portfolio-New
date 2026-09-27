@@ -9,13 +9,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      // The hero's spread has a second breakpoint of its own: from here up the
-      // panel is wide enough to run the halves even, deepen the caption strips
-      // and show each shot whole.
-      //
-      // Tailwind sorts this ahead of md rather than after it, so the rules it
-      // governs pair it with max-wide instead of relying on it to override —
-      // see HomeProjectCard.
+      // The hero has a second breakpoint of its own: from here up there is
+      // width enough to even out the two halves, where below it the spread
+      // takes the larger share — see Home.
       screens: {
         wide: "1440px",
       },
@@ -51,40 +47,44 @@ export default {
           DEFAULT: NEON,
           400: "#5FEDD8", // hover — brighter, never duller
           500: NEON,
-          600: "#00B89E", // pressed
         },
         // A second accent, scoped to awards and nothing else: an award is a
         // different kind of fact from what neon marks (state, interactivity).
         // The moment gold appears elsewhere it stops reading as achievement.
         // 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
-        // The homepage's editorial palette. Scoped to the hero, which is a
-        // light spread the dark page then slides over — everything below it
-        // stays on carbon/neon. Converted from the design's oklch values.
-        cream: "#E9E9DB", // the hero's paper ground
-        sage: "#CBD7C2", // the featured-projects panel
-        ink: "#0E130E", // hero copy on cream (15.3:1), and the intro
-        // panel's own ground, where cream reads 15.3:1
-        // and mineral 7.7:1
-        mineral: {
-          DEFAULT: "#9EA998", // display copy on ink; the image wells' empty state
-          light: "#D2D9C6", // the hero's opening line, "Auckland, NZ"
-        },
-        moss: "#5A645A", // secondary hero copy — 5.0:1 on cream, and 4.1:1
-        // on sage, which only carries display sizes
-
         gold: {
           DEFAULT: "#FFD447",
           400: "#FFE27A", // hover on the filled, linked variant
         },
-        // The hero spread's hairlines: the header rule, each card's frame and
-        // the seam above its meta strip. A true hairline rather than the mid
-        // grey this used to be — at #5D5D5D the line was a visible outline
-        // drawn AROUND each card, which fought the spread's own gaps for the
-        // job of separating them. This is `cream` at ~14% over the panel, so
-        // it reads as a drawn edge and lets the gaps do the separating.
-        grid: "#2E332C",
-        well: "#161E16",
-        surface: "#131913",
+        // The homepage's editorial palette. Scoped to the hero, which is a
+        // light, paper-toned spread the dark page then slides over —
+        // everything below it stays on carbon/neon.
+        cream: "#F5F3EE", // the hero's ground, and the caption plate each
+        // project card's title sits on
+        shell: "#E8E4DD", // the bar at the foot of the hero: a half-step off
+        // the ground, so the nav reads as its own field
+        // without a second line drawn under the spread
+        ink: "#2D2D2D", // hero copy — 12.4:1 on cream, 10.9:1 on shell
+        // Muted hero copy: the intro's byline and closing note, each card's
+        // number and category, the spread's counter.
+        //
+        // A step darker than the design's #787878, which lands at 4.0:1 on
+        // cream and 3.9:1 on shell — every place this is used is label-sized,
+        // so it has to clear AA as normal text. This holds 5.2:1 on cream and
+        // 4.5:1 on shell.
+        ash: "#666666",
+        // The hero spread's hairlines: the rule under the work panel's
+        // heading, the seam between the two halves, the grid the cards sit in
+        // and the frame around each caption plate. Light enough to read as a
+        // drawn edge on cream rather than as an outline around each cell — the
+        // cells share seams, so a heavier line would draw three boxes instead
+        // of one grid.
+        grid: "#C9C2B6",
+        // The well each project shot is matted on. The one dark ground in the
+        // hero, and the reason the shots read as objects on a page rather than
+        // as panels of their own: warm, so it sits with the paper tones above
+        // instead of punching a hole in them.
+        well: "#2A241E",
       },
       boxShadow: {
         // Two layers: a tight core darkening the page at the card's edge (this
@@ -96,9 +96,17 @@ export default {
         bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
         modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
       },
+      // Three faces, and each one has a job — see the @font-face block in
+      // index.css for which weights of them are actually loaded.
+      //
+      // `heading` is the page's own; `urbanist` and `epilogue` are the hero's
+      // pair, and stay scoped to it the way its palette does. The name at the
+      // foot of the hero is the one thing that crosses over: it keeps the
+      // page's heading face rather than the hero's display face.
       fontFamily: {
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],
-        outfit: ['"Outfit"', "system-ui", "sans-serif"],
+        urbanist: ["Urbanist", "system-ui", "sans-serif"],
+        epilogue: ["Epilogue", "system-ui", "sans-serif"],
         sans: ["system-ui", "sans-serif"],
       },
       // The fade tab panels enter on. For panels that swap via `display`, where

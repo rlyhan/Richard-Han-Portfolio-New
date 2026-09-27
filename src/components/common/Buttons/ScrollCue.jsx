@@ -10,11 +10,15 @@ const FADE_DURATION = 0.35;
 // The cue sits on whichever section it is handing the viewer out of, and the two
 // grounds on the page are opposites — hence a tone rather than one fixed palette.
 // The focus ring comes with it: the page's neon default is all but invisible on the
-// light ground, so that tone overrides the outline colour too.
+// hero's paper ground, so that tone overrides the outline colour too.
+//
+// `ink` carries no fill of its own. On the dark page the cue has to announce itself
+// against a busy section, but the hero is paper end to end and a filled disc there
+// reads as a button dropped on a print layout — a hairline ring is enough, and the
+// hover is the wash rather than a flip to solid.
 const TONE_CLASSES = {
   neon: "border-neon/40 bg-carbon-900/70 text-neon hover:border-neon hover:bg-neon hover:text-carbon-950",
-  ink: "border-ink/30 bg-cream/80 text-ink hover:border-ink hover:bg-ink hover:text-cream focus-visible:outline-ink",
-  hero: "border-cream/35 bg-transparent text-cream hover:border-cream hover:bg-cream/10 focus-visible:outline-cream md:border-ink/30 md:bg-cream/80 md:text-ink md:hover:border-ink md:hover:bg-ink md:hover:text-cream md:focus-visible:outline-ink",
+  ink: "border-ink/30 text-ink hover:border-ink/60 hover:bg-ink/[0.07] focus-visible:outline-ink",
 };
 
 // A floating hint at the foot of the hero, handing the viewer into the next section.
