@@ -3,7 +3,7 @@ import PageSection from "./layout/PageSection";
 import ScrollCue from "./common/Buttons/ScrollCue";
 import HomeIntro from "./home/HomeIntro";
 import HomeWork from "./home/HomeWork";
-import NavMenu from "./home/NavMenu";
+import NavMenu from "./layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useCueScroll } from "../hooks/useCueScroll";
 import { useHeroToAboutHandoff } from "../hooks/useHeroToAboutHandoff";

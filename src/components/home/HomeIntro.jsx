@@ -1,5 +1,5 @@
-import { INTRO_LINES, INTRO_NOTE, INTRO_TOPLINE } from "../../data/home.data";
-import LocationPinIcon from "../icons/LocationPinIcon";
+import { INTRO_LINES, INTRO_NOTE } from "../../data/home.data";
+import Byline from "../layout/Byline";
 
 // The left half of the hero: the display lines, the byline above them and the note
 // under them, all on the hero's paper ground.
@@ -27,19 +27,7 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
     aria-labelledby="home-heading"
     className="flex min-h-min min-w-0 flex-1 flex-col overflow-hidden px-[1.4rem] pt-[1.35rem] pb-[clamp(1.25rem,4svh,2.1rem)] md:min-h-0 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-10"
   >
-    <p
-      ref={setToplineRef}
-      className="flex items-center justify-between gap-4
-      font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase"
-    >
-      <span className="hidden md:block">{INTRO_TOPLINE.name}</span>
-      <span className="flex max-w-24 items-center gap-2 md:max-w-none">
-        <LocationPinIcon className="size-3 shrink-0" />
-        <span className="translate-y-px md:text-right">
-          {INTRO_TOPLINE.location}
-        </span>
-      </span>
-    </p>
+    <Byline topLineRef={setToplineRef} hideNameBelowMd />
 
     <h1
       id="home-heading"
