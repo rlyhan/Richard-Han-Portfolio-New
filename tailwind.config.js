@@ -109,18 +109,7 @@ export default {
         epilogue: ["Epilogue", "system-ui", "sans-serif"],
         sans: ["system-ui", "sans-serif"],
       },
-      // The fade tab panels enter on. For panels that swap via `display`, where
-      // the flip restarts the animation itself; a transition would never fire,
-      // since the incoming panel goes straight to its final opacity.
-      //
-      // The projects grid re-filters one panel in place, so nothing changes for
-      // CSS to react to — it runs the same fade from src/hooks/useTabFade.js.
-      // Keep the duration and easing in step with FADE_MS/FADE_EASING there.
       keyframes: {
-        "tab-fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
-        },
         // The hero's project cards arriving on load. `both` holds the end
         // state, so the cards keep a transform once it finishes — nothing
         // inside them is positioned against the viewport, so that's free.
@@ -130,7 +119,6 @@ export default {
         },
       },
       animation: {
-        "tab-fade-in": "tab-fade-in 0.35s ease-out both",
         "project-reveal": "project-reveal 0.8s ease-out both",
       },
     },

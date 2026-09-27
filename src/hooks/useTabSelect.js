@@ -13,23 +13,22 @@ const SELECT_SCROLL_DURATION = 0.7
 // Breathing room between the header bar and the row it lands under, in px.
 const ROW_LANDING_GAP = 24
 
-// The same fade the CSS `tab-fade-in` keyframe runs — keep the two in step by hand
-// (tailwind.config.js), since a keyframe can't read a value from here.
+// The fade a re-filtered list comes back on. Run from here rather than from CSS: the
+// panel stays where it is and only its contents change, so there is nothing for a
+// stylesheet to react to.
 const FADE_MS = 350
 const FADE_EASING = "ease-out"
 
 // Everything a tab row does when its selection changes: the scroll that repositions the
-// page, and — for rows that need it — the fade that covers the swap.
+// page, and — for a row that needs it — the fade that covers the swap.
 //
-// Both tab rows on the page route their buttons through `selectTab` and attach `rowRef`
-// to the row, though they're built differently: About goes through Tabs, Projects lays
-// its own row out beside the display-mode buttons and keeps the active id in its own
-// state.
+// The projects row routes its buttons through `selectTab` and attaches `rowRef` to the
+// row itself rather than to the tablist, since the display-mode buttons share that
+// line and the row's top edge is what a click lands against.
 //
-// `panelRef` is optional, and only for a panel that stays put and swaps its CONTENTS —
-// the projects grid re-filtering one list. Tabs/TabContent omits it: its panels are
-// separate elements swapped via `display`, and that flip restarts a CSS animation
-// itself.
+// `panelRef` is optional, and only for a panel that stays put and swaps its CONTENTS,
+// which is what the fade above is for. A row whose panels are separate elements would
+// have a flip of its own to animate and would leave it out.
 export function useTabSelect(activeTab, setActiveTab, { panelRef } = {}) {
     const rowRef = useRef(null)
     const tweenRef = useRef(null)

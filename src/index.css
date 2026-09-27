@@ -73,18 +73,6 @@
        url(/fonts/epilogue-latin-500-normal.woff) format('woff');
 }
 
-@utility no-scrollbar {
-  /* Firefox. */
-  scrollbar-width: none;
-  /* Legacy Edge/IE. */
-  -ms-overflow-style: none;
-
-  /* Safari and Chrome. Nested so Tailwind keeps it with the utility. */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 @layer base {
   :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
