@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
-import { EMPTY_SLOT, RouterContext } from "./RouterContext"
+import { ARRIVING_SLOT, EMPTY_SLOT, RouterContext } from "./RouterContext"
 import {
     findRoute,
     getLoadedPage,
@@ -504,6 +504,7 @@ const RouterProvider = ({ children }) => {
     const frontSlot = useMemo(
         () => ({
             isFront: true,
+            isArriving: false,
             nextPath: nextRoute?.path ?? null,
             nextSelector: sectionSelectorOf(nextRoute),
             isNextStaged,
@@ -525,7 +526,7 @@ const RouterProvider = ({ children }) => {
     const pages = useMemo(
         () =>
             [
-                SwapPage && { key: swap.path, Page: SwapPage, slot: EMPTY_SLOT, arriving: true },
+                SwapPage && { key: swap.path, Page: SwapPage, slot: ARRIVING_SLOT, arriving: true },
                 Page && { key: path, Page, slot: frontSlot, arriving: false },
                 // A staged page is handed a slot with nothing in it: it is not the page
                 // the viewer is on, so it has no next page of its own to reach for and

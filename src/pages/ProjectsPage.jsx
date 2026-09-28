@@ -3,6 +3,7 @@ import classNames from "classnames"
 import PageSection from "../components/layout/PageSection"
 import SectionHeading from "../components/common/SectionHeading"
 import TabButton from "../components/common/Tabs/TabButton"
+import { usePage } from "../routes/RouterContext"
 import { useTabSelect } from "../hooks/useTabSelect"
 import { useScrollReveal } from "../hooks/useScrollReveal"
 import PROJECTS from "../data/projects.data"
@@ -33,6 +34,8 @@ const tabs = [
 // RouterProvider — so the foot of this page is the foot of the document, and the way
 // on from here is the nav bar.
 const ProjectsPage = () => {
+    const { isArriving } = usePage()
+
     const [activeTab, setActiveTab] = useState("projects-all")
     const [displayMode, setDisplayMode] = useState("default")
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -54,7 +57,10 @@ const ProjectsPage = () => {
     // Alongside the fade rather than instead of it — the fade covers the swap, this
     // carries in the cards below the fold — and they compose, since the panel's
     // opacity and a card's multiply.
-    useScrollReveal(panelRef, `${activeTab}:${displayMode}`)
+    //
+    // Not while the page is still arriving: a swap holds it a screen below the fold
+    // while it travels, and rows measured there are rows measured in the wrong place.
+    useScrollReveal(panelRef, `${activeTab}:${displayMode}`, { enabled: !isArriving })
 
     const projectList = useMemo(() => {
         if (activeTab === "projects-all") return PROJECTS;

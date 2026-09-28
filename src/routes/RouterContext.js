@@ -21,10 +21,18 @@ export const RouterContext = createContext(null)
 // rendered outside the router — a test, a story — still works, with nowhere to go.
 export const EMPTY_SLOT = {
     isFront: false,
+    isArriving: false,
     nextPath: null,
     nextSelector: null,
     isNextStaged: false,
 }
+
+// What a page is told while a swap carries it in: it is mounted, and it is nowhere
+// near where it will be. The outlet holds it to the viewport, a screen below the fold,
+// until it lands — see PageOutlet — so anything that decides what to do by measuring
+// where things sit has to wait for that. A refresh can move a trigger afterwards; it
+// cannot undo a decision already taken from the wrong place.
+export const ARRIVING_SLOT = { ...EMPTY_SLOT, isArriving: true }
 
 export const PageContext = createContext(EMPTY_SLOT)
 

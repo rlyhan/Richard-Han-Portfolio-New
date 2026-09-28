@@ -160,14 +160,23 @@ const buildStackTween = (items, { duration, lift }) =>
 // `duration`, `stagger` and `lift` move how long one item takes, how far behind
 // it the next one follows, and how far each rises. Only `duration` and `lift`
 // reach the stacked path, which has no run to space out.
+//
+// `enabled` is for a container that is mounted somewhere other than where it will
+// live: a page arriving by a swap is held to the viewport a screen below the fold
+// while it travels (see PageOutlet), and every row measured there reads as below the
+// line — so every row would be blanked and handed a trigger for a scroll position
+// that means nothing. Told to wait, the hook builds nothing and the items render at
+// rest; the caller flips it once the page is where it belongs, and the rows are read
+// from their real places. Not a key, because a key would build the wrong thing first
+// and then correct it, and the correction is a page-worth of cards blinking.
 export function useScrollReveal(
     containerRef,
     revealKey,
-    { duration = ITEM_DURATION, stagger = ITEM_STAGGER, lift = ITEM_LIFT } = {},
+    { duration = ITEM_DURATION, stagger = ITEM_STAGGER, lift = ITEM_LIFT, enabled = true } = {},
 ) {
     useEffect(() => {
         const container = containerRef.current
-        if (!container) return
+        if (!container || !enabled) return
 
         const build = () => {
             const mm = gsap.matchMedia()
@@ -240,5 +249,5 @@ export function useScrollReveal(
             window.removeEventListener("resize", onResize)
             mm.revert()
         }
-    }, [containerRef, revealKey, duration, stagger, lift])
+    }, [containerRef, revealKey, duration, stagger, lift, enabled])
 }
