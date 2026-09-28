@@ -5,7 +5,7 @@ import PROJECTS from "./projects.data";
 // projects.data, so the homepage can't drift from the Projects section below it.
 
 // Four lines, because the hero's exit throws them off the screen as four planes —
-// see useHeroToAboutHandoff.
+// see useHeroHandoff.
 export const INTRO_LINES = ["Engaging", "digital", "experiences."];
 
 export const INTRO_NOTE =

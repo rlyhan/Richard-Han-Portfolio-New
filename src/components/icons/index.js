@@ -1,5 +1,4 @@
 import ActivityIcon from "./ActivityIcon";
-import ArrowDownIcon from "./ArrowDownIcon";
 import ArrowUpRightIcon from "./ArrowUpRightIcon";
 import BookIcon from "./BookIcon";
 import Chart from "./Chart";
@@ -25,7 +24,6 @@ import UsersIcon from "./UsersIcon";
 
 export {
     ActivityIcon,
-    ArrowDownIcon,
     ArrowUpRightIcon,
     BookIcon,
     Chart,

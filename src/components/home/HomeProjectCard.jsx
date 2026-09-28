@@ -1,5 +1,7 @@
 import cn from "classnames";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
+import { PATHS } from "../../routes/routes";
+import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 
 // One card of the hero's spread: a dark well with the shot matted whole inside it
@@ -42,8 +44,9 @@ import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 // reveals it, so the first swipe would land on a blank card. The priority hint stays
 // with the lead card either way.
 //
-// The card is a link to the Projects section rather than to the project itself —
-// the page is one document, and the full write-up with its gallery is down there.
+// The card is a link to the Projects page rather than to the project itself — the
+// full write-up with its gallery lives there, and the card asks the router for it
+// directly rather than being handed a click from the hero above.
 
 // The grid's cards arrive one after the other rather than together: the spread is
 // read left to right, and a stagger walks the eye that way instead of flashing the
@@ -56,8 +59,9 @@ const HomeProjectCard = ({
   position,
   variant = "grid",
   eager,
-  onSelect,
 }) => {
+  const projectsLink = useNavLink(PATHS.projects);
+
   const { name, category, image } = project;
   const isSlide = variant === "slide";
   const isLead = index === 0;
@@ -155,8 +159,7 @@ const HomeProjectCard = ({
         {/* Spans both rows and centres on them, so the arrow sits with the plate
             rather than on the baseline of either line of type. */}
         <a
-          href="#projects"
-          onClick={onSelect}
+          {...projectsLink}
           aria-label={`View the ${name} project`}
           className={cn(
             "col-start-3 row-span-2 row-start-1 grid shrink-0 place-items-center self-center",

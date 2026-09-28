@@ -1,18 +1,16 @@
-import { useState, useMemo, useRef } from "react"
+import { useMemo, useRef, useState } from "react"
 import classNames from "classnames"
-import PageSection from "./layout/PageSection"
-import SectionHeading from "./common/SectionHeading"
-import TabButton from "./common/Tabs/TabButton"
-import ScrollCue from "./common/Buttons/ScrollCue"
+import PageSection from "../components/layout/PageSection"
+import SectionHeading from "../components/common/SectionHeading"
+import TabButton from "../components/common/Tabs/TabButton"
+import { usePage } from "../routes/RouterContext"
 import { useTabSelect } from "../hooks/useTabSelect"
 import { useScrollReveal } from "../hooks/useScrollReveal"
-import { useSectionHandoff } from "../hooks/useSectionHandoff"
-import { useKeyShortcut } from "../hooks/useKeyShortcut"
 import PROJECTS from "../data/projects.data"
-import ProjectCard from "./common/Cards/ProjectCard"
-import ProjectCardGallery from "./common/Cards/ProjectCardGallery"
-import IconButton from "./common/Buttons/IconButton"
-import Modal from "./common/Modal"
+import ProjectCard from "../components/common/Cards/ProjectCard"
+import ProjectCardGallery from "../components/common/Cards/ProjectCardGallery"
+import IconButton from "../components/common/Buttons/IconButton"
+import Modal from "../components/common/Modal"
 
 const tabs = [
     {
@@ -29,15 +27,21 @@ const tabs = [
     }
 ]
 
-const Projects = () => {
+// The Projects page: the filterable list. Its own chunk, which is where the project
+// data and the modal live.
+//
+// It ends where its last card does. Only the homepage hands over on the scroll — see
+// RouterProvider — so the foot of this page is the foot of the document, and the way
+// on from here is the nav bar.
+const ProjectsPage = () => {
+    const { isArriving } = usePage()
+
     const [activeTab, setActiveTab] = useState("projects-all")
     const [displayMode, setDisplayMode] = useState("default")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedProject, setSelectedProject] = useState(null)
 
     const panelRef = useRef(null)
-    const contentRef = useRef(null)
-    const runwayRef = useRef(null)
 
     // The click lands the row at the top of the viewport, so the filtered list opens
     // from its first card rather than part-way down.
@@ -47,26 +51,16 @@ const Projects = () => {
     // replayed by hand. See useTabSelect for why it isn't a CSS animation.
     const { rowRef, selectTab } = useTabSelect(activeTab, setActiveTab, { panelRef })
 
-    // The hesitation between Projects and Contact, on the same terms as About's — see
-    // useSectionHandoff.
-    const { scrollToNext, isCueVisible } = useSectionHandoff({
-        contentRef,
-        runwayRef,
-        nextSelector: "#contact",
-    })
-
-    // Space is the cue's gesture from the keyboard, bound only while the cue is up:
-    // anywhere else on the page it goes back to being page-down. Never behind the
-    // modal, where the press belongs to the panel and the page is locked anyway.
-    useKeyShortcut("Space", scrollToNext, { enabled: isCueVisible && !isModalOpen })
-
     // Keyed on both: the tab re-filters the list and the display mode takes it from
     // one column to a gallery, so either way the rows the reveal measured are gone.
     //
     // Alongside the fade rather than instead of it — the fade covers the swap, this
     // carries in the cards below the fold — and they compose, since the panel's
     // opacity and a card's multiply.
-    useScrollReveal(panelRef, `${activeTab}:${displayMode}`)
+    //
+    // Not while the page is still arriving: a swap holds it a screen below the fold
+    // while it travels, and rows measured there are rows measured in the wrong place.
+    useScrollReveal(panelRef, `${activeTab}:${displayMode}`, { enabled: !isArriving })
 
     const projectList = useMemo(() => {
         if (activeTab === "projects-all") return PROJECTS;
@@ -88,11 +82,12 @@ const Projects = () => {
 
     return (
         <>
-            <PageSection id="projects" additionalClasses="mb-4">
-                {/* Held by useSectionHandoff once its bottom edge reaches the middle of
-                    the viewport, dissolving as the runway below passes: the hesitation
-                    before Contact. */}
-                <div ref={contentRef} className="max-w-6xl mx-auto w-full">
+            {/* bg-carbon-900: its own ground rather than the body's. A page staged
+                below another one is in that page's document, and the body is carrying
+                the ground of whichever page is in front — which on the way in here is
+                About's cream. */}
+            <PageSection id="projects" additionalClasses="mb-4 bg-carbon-900">
+                <div className="max-w-6xl mx-auto w-full">
                     <SectionHeading label="Projects" />
                     {/* The ref sits on the whole row, not the tablist: the display-mode
                         buttons share the line, so the row's top edge is what a tab click
@@ -127,16 +122,6 @@ const Projects = () => {
                         )}
                     </div>
                 </div>
-
-                {/* The runway: the scroll the hesitation is spent against, before the
-                    handoff takes over into Contact. Carries no content, so its only job
-                    is height — and it's what every trigger in the handoff measures
-                    against, hence the ref.
-
-                    Reduced motion collapses it, back to Contact following Projects
-                    directly: with the park and its dissolve gone there would be nothing
-                    to watch, and it would read as a dead screen. */}
-                <div ref={runwayRef} aria-hidden="true" className="h-[80svh] motion-reduce:h-0" />
             </PageSection >
 
             {/* Modal. Outside the section, because the section carries the transform that
@@ -145,23 +130,13 @@ const Projects = () => {
                 against the section instead of the viewport. */}
             {
                 isModalOpen && selectedProject && (
-                    <Modal project={selectedProject} modalTitle={selectedProject.name} isOpen={isModalOpen} onClose={closeProject}>
+                    <Modal isOpen={isModalOpen} onClose={closeProject}>
                         <ProjectCard project={selectedProject} isModalContent={true} />
                     </Modal>
                 )
             }
-
-            {/* Up only while the content is held, so it never floats over a section
-                already on screen — and never behind the modal, where it would sit under
-                the scrim, still in the tab order, offering a scroll the modal has
-                locked. */}
-            <ScrollCue
-                onClick={scrollToNext}
-                visible={isCueVisible && !isModalOpen}
-                label="Scroll to the Contact section"
-            />
         </>
     )
 }
 
-export default Projects
+export default ProjectsPage

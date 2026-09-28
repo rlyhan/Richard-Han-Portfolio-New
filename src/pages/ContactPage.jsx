@@ -1,20 +1,25 @@
 import { useRef } from "react"
-import PageSection from "./layout/PageSection"
-import SectionHeading from "./common/SectionHeading"
-import LinkButton from "./common/Buttons/LinkButton"
+import PageSection from "../components/layout/PageSection"
+import SectionHeading from "../components/common/SectionHeading"
+import LinkButton from "../components/common/Buttons/LinkButton"
 import { useLetterHop } from "../hooks/useLetterHop"
 
-const Contact = () => {
+// The Contact page, and the end of the chain: nothing is staged below it, and nothing
+// takes the scroll off the viewer here.
+const ContactPage = () => {
     const inviteRef = useRef(null)
 
     useLetterHop(inviteRef)
 
-    // min-h-svh, not 85% of a viewport: as the last section it has to be tall enough that
-    // the page can still scroll it up to its resting place, where the handoff from
+    // min-h-svh, not 85% of a viewport: as the last page it has to be tall enough that
+    // the document can still scroll it up to its resting place, where the handoff from
     // Projects lands it. Short of that the maximum scroll arrives first and Contact never
     // reaches the top of the viewport.
+    //
+    // bg-carbon-900 for the same reason Projects states its own: staged below the page
+    // that hands over to it, the body is carrying that page's ground, not this one's.
     return (
-        <PageSection id="contact" additionalClasses="flex items-center justify-center min-h-svh">
+        <PageSection id="contact" additionalClasses="flex items-center justify-center min-h-svh bg-carbon-900">
             <div className="w-full h-full sm:min-w-xl mx-auto text-center">
                 <SectionHeading label="Contact" />
                 <div className="my-12 md:mt-16 md:mb-24">
@@ -40,4 +45,4 @@ const Contact = () => {
     )
 }
 
-export default Contact
+export default ContactPage

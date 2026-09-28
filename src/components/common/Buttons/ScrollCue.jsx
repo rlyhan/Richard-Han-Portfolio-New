@@ -7,35 +7,22 @@ const BOUNCE_DISTANCE = 10;
 const BOUNCE_DURATION = 0.9;
 const FADE_DURATION = 0.35;
 
-// The cue sits on whichever section it is handing the viewer out of, and the two
-// grounds on the page are opposites — hence a tone rather than one fixed palette.
-// The focus ring comes with it: the page's neon default is all but invisible on the
-// hero's paper ground, so that tone overrides the outline colour too.
+// The hint at the foot of the hero, handing the viewer into the page below.
 //
-// `ink` carries no fill of its own. On the dark page the cue has to announce itself
-// against a busy section, but the hero is paper end to end and a filled disc there
-// reads as a button dropped on a print layout — a hairline ring is enough, and the
-// hover is the wash rather than a flip to solid.
-const TONE_CLASSES = {
-  neon: "border-neon/40 bg-carbon-900/70 text-neon hover:border-neon hover:bg-neon hover:text-carbon-950",
-  ink: "border-ink/30 text-ink hover:border-ink/60 hover:bg-ink/[0.07] focus-visible:outline-ink",
-};
-
-// A floating hint at the foot of the hero, handing the viewer into the next section.
+// The homepage is the one page that hands over on the scroll, so this is the one
+// place a cue belongs: everywhere else the foot of the page is the foot of the
+// document and the nav bar is the way on. It carries no fill — the hero is paper end
+// to end, and a filled disc there reads as a button dropped on a print layout, so a
+// hairline ring is enough and the hover is a wash rather than a flip to solid. The
+// focus ring comes with it, the page's neon default being all but invisible on that
+// ground.
+//
 // The bounce lives on an inner element so the infinite y tween and the visibility
 // fade never write to the same target.
 //
 // `positionClassName` is where in the viewport it sits — the offset and the
 // alignment both, since a cue that isn't at the foot usually isn't centred either.
-// The default is the foot of the viewport, clearing nothing in particular; a section
-// with its own furniture down there moves it.
-const ScrollCue = ({
-  onClick,
-  visible,
-  label = "Scroll to the About section",
-  tone = "neon",
-  positionClassName = "bottom-6 justify-center",
-}) => {
+const ScrollCue = ({ onClick, visible, label, positionClassName }) => {
   const containerRef = useRef(null);
   const arrowRef = useRef(null);
 
@@ -82,10 +69,7 @@ const ScrollCue = ({
         type="button"
         onClick={onClick}
         aria-label={label}
-        className={cn(
-          "pointer-events-auto rounded-full border p-3 backdrop-blur-sm transition-colors",
-          TONE_CLASSES[tone],
-        )}
+        className="pointer-events-auto rounded-full border border-ink/30 p-3 text-ink backdrop-blur-sm transition-colors hover:border-ink/60 hover:bg-ink/[0.07] focus-visible:outline-ink"
       >
         <span ref={arrowRef} className="block">
           <ArrowDownIcon className="h-6 w-6" />

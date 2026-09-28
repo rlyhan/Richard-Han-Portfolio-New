@@ -93,7 +93,6 @@ export default {
         // Hover adds a neon bloom. On a dark page a bigger black shadow is
         // nearly invisible, so the accent is what signals the hover.
         "card-hover": `0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(${NEON_RGB}, 0.35)`,
-        bar: "0 8px 24px -14px rgba(0, 0, 0, 0.9)",
         modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
       },
       // Three faces, and each one has a job — see the @font-face block in
@@ -109,18 +108,7 @@ export default {
         epilogue: ["Epilogue", "system-ui", "sans-serif"],
         sans: ["system-ui", "sans-serif"],
       },
-      // The fade tab panels enter on. For panels that swap via `display`, where
-      // the flip restarts the animation itself; a transition would never fire,
-      // since the incoming panel goes straight to its final opacity.
-      //
-      // The projects grid re-filters one panel in place, so nothing changes for
-      // CSS to react to — it runs the same fade from src/hooks/useTabFade.js.
-      // Keep the duration and easing in step with FADE_MS/FADE_EASING there.
       keyframes: {
-        "tab-fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
-        },
         // The hero's project cards arriving on load. `both` holds the end
         // state, so the cards keep a transform once it finishes — nothing
         // inside them is positioned against the viewport, so that's free.
@@ -130,7 +118,6 @@ export default {
         },
       },
       animation: {
-        "tab-fade-in": "tab-fade-in 0.35s ease-out both",
         "project-reveal": "project-reveal 0.8s ease-out both",
       },
     },

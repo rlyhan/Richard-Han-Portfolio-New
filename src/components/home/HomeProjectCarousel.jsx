@@ -28,7 +28,7 @@ const OPTIONS = { loop: true };
 // clipping, transformed box that is both the most expensive thing on the page to
 // repaint while a finger is dragging and the least reliable: WebKit samples the
 // wrong backdrop under a transformed ancestor.
-const HomeProjectCarousel = ({ projects, onSelectProject }) => {
+const HomeProjectCarousel = ({ projects }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selected, setSelected] = useState(0);
 
@@ -66,7 +66,6 @@ const HomeProjectCarousel = ({ projects, onSelectProject }) => {
               index={i}
               variant="slide"
               eager={i === 0}
-              onSelect={onSelectProject}
             />
           ))}
         </div>
