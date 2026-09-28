@@ -12,9 +12,9 @@ import PROJECTS, { PROJECTS_HEADING, PROJECTS_NOTE } from "../data/projects.data
 // field read off the project: the list's own flag is `client`, and "personal" is the
 // absence of it rather than a value of its own.
 const FILTERS = [
-    { id: "all", label: "All", matches: () => true },
-    { id: "client", label: "Client", matches: (project) => project.client },
-    { id: "personal", label: "Personal", matches: (project) => !project.client },
+  { id: "all", label: "All", matches: () => true },
+  { id: "client", label: "Client", matches: (project) => project.client },
+  { id: "personal", label: "Personal", matches: (project) => !project.client },
 ];
 
 // The number beside each title, worked out once off the full list. The filters hide
@@ -40,78 +40,72 @@ const NUMBERED_PROJECTS = PROJECTS.map((project, i) => ({ project, number: i + 1
 //
 // The palette is the hero's, as About's is: cream ground, ink copy, a hairline between
 // every band. The one dark thing on the page is the frame each shot is matted on,
-// which is the hero's well seen at a larger size.
+// which is the hero's well seen at a larger size. It's this page's own ground rather
+// than the body's, and — unlike About — needs no stacking context of its own, since
+// this page arrives by a swap rather than sharing a document with a sticky hero.
 //
 // contained: false — the rule above the grid and the grid's own seams run to the
 // viewport edge, so the page frame's max width and gutter would cut every line short.
-// The masthead and the toolbar state the hero's gutter instead; the grid has none.
+// The masthead and the toolbar state the hero's gutter instead; the grid has none, and
+// draws its own seams with tile borders rather than a gap — see ProjectTile.
 const ProjectsPage = () => {
-    const { isArriving } = usePage();
+  const { isArriving } = usePage();
 
-    const [activeFilter, setActiveFilter] = useState(FILTERS[0].id);
+  const [activeFilter, setActiveFilter] = useState(FILTERS[0].id);
 
-    const gridRef = useRef(null);
+  const gridRef = useRef(null);
 
-    // The press lands the toolbar at the top of the viewport, so the filtered grid
-    // opens from its first tile rather than part-way down.
-    //
-    // gridRef as the panel because one grid serves all three filters: pressing a
-    // filter swaps its contents without the element changing, so the fade over that
-    // swap has to be replayed by hand. See useTabSelect for why it isn't a CSS
-    // animation.
-    const { rowRef, selectTab } = useTabSelect(activeFilter, setActiveFilter, {
-        panelRef: gridRef,
-    });
+  // The press lands the toolbar at the top of the viewport, so the filtered grid
+  // opens from its first tile rather than part-way down.
+  //
+  // gridRef as the panel because one grid serves all three filters: pressing a
+  // filter swaps its contents without the element changing, so the fade over that
+  // swap has to be replayed by hand. See useTabSelect for why it isn't a CSS
+  // animation.
+  const { rowRef, selectTab } = useTabSelect(activeFilter, setActiveFilter, {
+    panelRef: gridRef,
+  });
 
-    // Keyed on the filter: it re-filters the grid, so the rows the reveal measured are
-    // gone. Alongside the toolbar's fade rather than instead of it — the fade covers
-    // the swap, this carries in the tiles below the fold — and they compose, since the
-    // grid's opacity and a tile's multiply.
-    //
-    // Not while the page is still arriving: a swap holds it a screen below the fold
-    // while it travels, and rows measured there are rows measured in the wrong place.
-    useScrollReveal(gridRef, activeFilter, { enabled: !isArriving });
+  // Keyed on the filter: it re-filters the grid, so the rows the reveal measured are
+  // gone. Alongside the toolbar's fade rather than instead of it — the fade covers
+  // the swap, this carries in the tiles below the fold — and they compose, since the
+  // grid's opacity and a tile's multiply.
+  //
+  // Not while the page is still arriving: a swap holds it a screen below the fold
+  // while it travels, and rows measured there are rows measured in the wrong place.
+  useScrollReveal(gridRef, activeFilter, { enabled: !isArriving });
 
-    const shown = useMemo(() => {
-        const { matches } = FILTERS.find((filter) => filter.id === activeFilter);
-        return NUMBERED_PROJECTS.filter((entry) => matches(entry.project));
-    }, [activeFilter]);
+  const shown = useMemo(() => {
+    const { matches } = FILTERS.find((filter) => filter.id === activeFilter);
+    return NUMBERED_PROJECTS.filter((entry) => matches(entry.project));
+  }, [activeFilter]);
 
-    return (
-        <PageSection
-            id="projects"
-            contained={false}
-            // bg-cream: its own ground rather than the body's. A page staged below
-            // another one is in that page's document, and the body is carrying the
-            // ground of whichever page is in front.
-            //
-            // No stacking context of its own, unlike About: About has to cover the
-            // sticky hero it shares a document with, and this page arrives by a swap,
-            // over nothing.
-            additionalClasses="flex flex-col bg-cream font-epilogue text-ink"
-        >
-            <PageMasthead heading={PROJECTS_HEADING} note={PROJECTS_NOTE} />
+  return (
+    <PageSection
+      id="projects"
+      contained={false}
+      additionalClasses="flex flex-col bg-cream font-epilogue text-ink"
+    >
+      <PageMasthead heading={PROJECTS_HEADING} note={PROJECTS_NOTE} />
 
-            <section aria-label="Project list" className="border-t border-grid">
-                <ProjectsToolbar
-                    rowRef={rowRef}
-                    filters={FILTERS}
-                    activeFilter={activeFilter}
-                    onSelect={selectTab}
-                    shown={shown.length}
-                    total={NUMBERED_PROJECTS.length}
-                />
+      <section aria-label="Project list" className="border-t border-grid">
+        <ProjectsToolbar
+          rowRef={rowRef}
+          filters={FILTERS}
+          activeFilter={activeFilter}
+          onSelect={selectTab}
+          shown={shown.length}
+          total={NUMBERED_PROJECTS.length}
+        />
 
-                {/* One column, two, then three. No gaps: the tiles draw the grid
-                    rather than sitting in one — see ProjectTile. */}
-                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {shown.map(({ project, number }) => (
-                        <ProjectTile key={project.id} project={project} number={number} />
-                    ))}
-                </div>
-            </section>
-        </PageSection>
-    );
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {shown.map(({ project, number }) => (
+            <ProjectTile key={project.id} project={project} number={number} />
+          ))}
+        </div>
+      </section>
+    </PageSection>
+  );
 };
 
 export default ProjectsPage;
