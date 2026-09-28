@@ -21,18 +21,27 @@ const ROUTES = [
         // them and for the gap before the first paint.
         ground: "bg-cream",
         // The hero draws the site's nav bar inside its own layout, so the pinned
-        // copy has to stay down until this page's scroll has carried that copy away
-        // — see SiteNav, which reads this as the floor.
+        // copy has to stay down while this page holds the screen, or the same
+        // furniture is drawn twice — see SiteNav, which takes the page after this one
+        // as the floor.
         hasOwnNav: true,
         // No navLabel: the name at the foot of the bar is the way back home, and a
         // "Home" item beside it would be that link drawn twice.
         //
-        // `next` is the page this one hands the SCROLL to, and the homepage is the
-        // only page that has one: the hero empties out across its runway and About
-        // climbs over it, one document, one gesture. Everywhere else the foot of the
-        // page is the foot of the document and the nav bar is the way on — see
-        // RouterProvider, which plays those as a swap rather than a scroll.
-        next: "/about",
+        // `next` is the page this one hands the SCROLL to: the hero would empty out
+        // across its runway and About climb over it, one document, one gesture.
+        // Everywhere else the foot of the page is the foot of the document and the
+        // nav bar is the way on — see RouterProvider, which plays those as a swap
+        // rather than a scroll.
+        //
+        // TEMPORARILY OFF. The scroll-driven join left a gentle scroll stranded
+        // part-way along the runway with a half-emptied hero, so until that is
+        // settled this page hands over the way every other page does: a swap, on a
+        // click. Restoring the line below is the whole switch back — the runway, the
+        // hero's exit, the staging of About underneath and the takeover all follow
+        // from it. See useHandoff, which builds nothing without it, and HomePage,
+        // which leaves the runway out of the markup.
+        // next: "/about",
         load: () => import("../pages/HomePage.jsx"),
     },
     {
@@ -74,6 +83,16 @@ export const NAV_ROUTES = ROUTES.filter((route) => route.navLabel)
 export const findRoute = (path) => ROUTES.find((route) => route.path === path) ?? null
 
 export const nextRouteOf = (route) => (route?.next ? findRoute(route.next) : null)
+
+// The page after this one in table order, which is not the same question as `next`:
+// `next` is whether the SCROLL carries on into it, and this is simply what comes
+// after. The pinned nav bar's floor asks this one — a page that draws the bar in its
+// own layout keeps the pinned copy down until the page below it is reached, whether
+// the two are joined by a scroll or by a swap.
+export const routeAfter = (route) => {
+    const index = ROUTES.indexOf(route)
+    return index < 0 ? null : ROUTES[index + 1] ?? null
+}
 
 export const sectionSelectorOf = (route) => (route ? `#${route.sectionId}` : null)
 

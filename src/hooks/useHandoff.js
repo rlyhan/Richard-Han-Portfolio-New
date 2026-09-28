@@ -52,6 +52,11 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
     })
 
     useEffect(() => {
+        // No page to hand the scroll to is no exit to play, and no runway in the
+        // markup to measure one against — see routes, where a page's `next` decides
+        // this, and HomePage, which leaves the runway out without one.
+        if (!nextSelector) return
+
         const mm = gsap.matchMedia()
 
         mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -71,7 +76,7 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
         // through and nothing to take the scroll over. The join still lands — the
         // router hands the URL over on position, not on the takeover.
         return () => mm.revert()
-    }, [runwayRef, getExitRange, buildExit])
+    }, [nextSelector, runwayRef, getExitRange, buildExit])
 
     useEffect(() => {
         if (!isNextStaged || !nextSelector || exitEndsAt === null) return

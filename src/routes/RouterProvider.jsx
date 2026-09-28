@@ -7,6 +7,7 @@ import {
     getLoadedPage,
     loadPage,
     nextRouteOf,
+    routeAfter,
     resolvePath,
     sectionSelectorOf,
 } from "./routes"
@@ -552,15 +553,19 @@ const RouterProvider = ({ children }) => {
             registerAdvance,
             // The floor the pinned nav bar answers for: on a page that draws the bar
             // in its own layout, the pinned copy stays down until the page below has
-            // taken over. Read as a selector so it is measured, not remembered — and
-            // a page still to be staged has no element, which reads as a floor below
-            // everything. See useRevealOnScrollUp.
-            navFloorSelector: route?.hasOwnNav ? sectionSelectorOf(nextRoute) : null,
+            // taken over. Read as a selector so it is measured, not remembered.
+            //
+            // The page below in table order, not the page the scroll joins to — the
+            // pinned bar has to stay off the hero whether the way on from here is a
+            // scroll or a click. Until that page is in the document the selector
+            // matches nothing, which useRevealOnScrollUp reads as a floor below
+            // everything, so the bar never comes up over the hero's own copy.
+            navFloorSelector: route?.hasOwnNav ? sectionSelectorOf(routeAfter(route)) : null,
             // Changes whenever the document's pages do, for anything outside them
             // that measures a position and has to measure it again.
             layoutKey: `${path}:${isNextStaged}`,
         }),
-        [path, route, nextRoute, isNextStaged, pages, swap, finishSwap, navigate, prefetch, registerAdvance],
+        [path, route, isNextStaged, pages, swap, finishSwap, navigate, prefetch, registerAdvance],
     )
 
     return <RouterContext.Provider value={routerValue}>{children}</RouterContext.Provider>

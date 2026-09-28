@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import { findRoute, nextRouteOf, sectionSelectorOf, resolvePath, getLoadedPage, loadPage, PATHS } from "./routes"
+import { findRoute, nextRouteOf, routeAfter, sectionSelectorOf, resolvePath, getLoadedPage, loadPage, PATHS } from "./routes"
 
 describe("resolvePath", () => {
     it("leaves a known path alone", () => {
@@ -38,16 +38,37 @@ describe("findRoute", () => {
 })
 
 describe("nextRouteOf", () => {
-    it("resolves the route the homepage hands its scroll to", () => {
-        expect(nextRouteOf(findRoute("/"))?.path).toBe("/about")
+    it("resolves the route a page hands its scroll to", () => {
+        // Off the table rather than out of it: no page declares `next` while the
+        // homepage's scroll join is turned off, and what this reads is the field.
+        expect(nextRouteOf({ next: "/about" })?.path).toBe("/about")
     })
 
-    it("is null for a route with nothing declared after it", () => {
+    it("is null for every page while no scroll join is declared", () => {
+        // The homepage included — its join is temporarily off, and the way on from it
+        // is the same swap every other page uses. See routes.
+        expect(nextRouteOf(findRoute("/"))).toBeNull()
         expect(nextRouteOf(findRoute("/about"))).toBeNull()
     })
 
     it("is null for a null route", () => {
         expect(nextRouteOf(null)).toBeNull()
+    })
+})
+
+describe("routeAfter", () => {
+    it("gives the next page in table order, whether or not a scroll joins them", () => {
+        expect(routeAfter(findRoute("/"))?.path).toBe("/about")
+        expect(routeAfter(findRoute("/about"))?.path).toBe("/projects")
+    })
+
+    it("is null at the end of the table", () => {
+        expect(routeAfter(findRoute("/contact"))).toBeNull()
+    })
+
+    it("is null for a route the table does not hold", () => {
+        expect(routeAfter({ path: "/nowhere" })).toBeNull()
+        expect(routeAfter(null)).toBeNull()
     })
 })
 

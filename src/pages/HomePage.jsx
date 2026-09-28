@@ -6,6 +6,7 @@ import HomeWork from "../components/home/HomeWork";
 import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
+import { PATHS } from "../routes/routes";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
@@ -29,6 +30,13 @@ const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
 // says is where the scroll it leaves by goes, and the router decides when there is
 // something down there to go to. See Router for the join, and useHeroHandoff for the
 // exit this page plays across the runway.
+//
+// The scroll join is TEMPORARILY OFF — see routes, where this page's `next` is
+// commented out. Without it there is no runway, no exit and nothing staged below: the
+// way on is the cue or the nav bar, and the router plays that as a swap, the same
+// transition every other page arrives by. The machinery is all still here and all
+// still wired; what follows describes it running, which it does again the moment
+// `next` comes back.
 const HomePage = () => {
   const { navigate } = useRouter();
   const { nextPath, nextSelector, isNextStaged } = usePage();
@@ -77,11 +85,18 @@ const HomePage = () => {
   // and a gesture mid-flight hands control straight back.
   useAdvance(scrollToNext);
 
-  // Through the router rather than straight into the scroll above: at the top of the
-  // hero the page below is not mounted yet — it is staged as the join comes into
-  // reach — and the router is what fetches it and then plays this page's own exit
-  // across it.
-  const goToNextPage = useCallback(() => navigate(nextPath), [navigate, nextPath]);
+  // Through the router rather than straight into the scroll above, because the way on
+  // is the router's decision either way: with a `next` the page below is not mounted
+  // yet — it is staged as the join comes into reach — and the router fetches it and
+  // plays this page's exit across it. Without one, the same call is a swap.
+  //
+  // The path is named outright in that second case, since there is then no `next` for
+  // the router to read the way on from. Either way the cue leads to About.
+  const onwardPath = nextPath ?? PATHS.about;
+  const goToNextPage = useCallback(
+    () => navigate(onwardPath),
+    [navigate, onwardPath],
+  );
 
   const navItems = useNavItems();
 
@@ -145,6 +160,10 @@ const HomePage = () => {
                 content, so its only job is height — and it's what every trigger in the
                 handoff measures against, hence the ref.
 
+                Only when there is a page to hand the scroll to. Without one the way on
+                is a click and this would be a screen of dead scroll below a hero that
+                never empties — see routes, where `next` is currently off.
+
                 Shorter on a phone. The takeover fires at 96% of the range this
                 height sets (see useHeroHandoff), so 140svh put it a screen and a
                 quarter of thumb travel past the top — with the browser toolbar
@@ -157,11 +176,13 @@ const HomePage = () => {
                 watch, and it would read as a dead screen. Marked important, because
                 md: sorts after motion-reduce: and would otherwise restore the full
                 height on a desktop that asked for no motion. */}
-      <div
-        ref={runwayRef}
-        aria-hidden="true"
-        className="h-[90svh] motion-reduce:h-0! md:h-[140svh]"
-      />
+      {nextPath && (
+        <div
+          ref={runwayRef}
+          aria-hidden="true"
+          className="h-[90svh] motion-reduce:h-0! md:h-[140svh]"
+        />
+      )}
 
       {/* From md up the cue lands in the middle of the nav bar, between the name and
           the section links — the one part of that bar left empty for it. On a phone
@@ -171,7 +192,7 @@ const HomePage = () => {
       <ScrollCue
         onClick={goToNextPage}
         visible={isCueVisible}
-        label="Scroll to the About page"
+        label={nextPath ? "Scroll to the About page" : "Go to the About page"}
         positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"
       />
     </>
