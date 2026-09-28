@@ -1,7 +1,7 @@
 import cn from "classnames";
 import NavMenu from "./layout/NavMenu";
 import { useRouter } from "../routes/RouterContext";
-import { useNavItems } from "../routes/useNavLinks";
+import { useNavItems } from "../hooks/useNavLinks";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
 
 // The site's nav: the hero's own bar, pinned to the foot of the viewport for the

@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import { NAV_ROUTES } from "./routes"
-import { useRouter } from "./RouterContext"
+import { NAV_ROUTES } from "../routes/routes"
+import { useRouter } from "../routes/RouterContext"
 
 // A modified click belongs to the browser — a new tab, a new window, a download —
 // and so does a click with any button but the first. Only a plain left click is the

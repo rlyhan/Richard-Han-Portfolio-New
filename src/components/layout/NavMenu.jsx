@@ -1,5 +1,5 @@
 import { PATHS } from "../../routes/routes";
-import { useNavLink } from "../../routes/useNavLinks";
+import { useNavLink } from "../../hooks/useNavLinks";
 import { INTRO_TOPLINE } from "../../data/home.data";
 
 const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");

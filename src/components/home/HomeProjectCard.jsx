@@ -1,7 +1,7 @@
 import cn from "classnames";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import { PATHS } from "../../routes/routes";
-import { useNavLink } from "../../routes/useNavLinks";
+import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 
 // One card of the hero's spread: a dark well with the shot matted whole inside it

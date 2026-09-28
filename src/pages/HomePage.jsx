@@ -6,7 +6,7 @@ import HomeWork from "../components/home/HomeWork";
 import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
-import { useNavItems } from "../routes/useNavLinks";
+import { useNavItems } from "../hooks/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 
