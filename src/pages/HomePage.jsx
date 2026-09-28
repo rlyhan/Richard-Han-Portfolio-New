@@ -145,12 +145,22 @@ const HomePage = () => {
                 content, so its only job is height — and it's what every trigger in the
                 handoff measures against, hence the ref.
 
+                Shorter on a phone. The takeover fires at 96% of the range this
+                height sets (see useHeroHandoff), so 140svh put it a screen and a
+                quarter of thumb travel past the top — with the browser toolbar
+                collapsing through the first swipe of that, moving the document
+                barely at all. 90svh brings it inside one screen and still leaves
+                range enough that the fades read as scroll-driven rather than as
+                something that plays once a flick has ended.
+
                 Reduced motion collapses it: with the fades gone there's nothing to
-                watch, and it would read as a dead screen. */}
+                watch, and it would read as a dead screen. Marked important, because
+                md: sorts after motion-reduce: and would otherwise restore the full
+                height on a desktop that asked for no motion. */}
       <div
         ref={runwayRef}
         aria-hidden="true"
-        className="h-[140svh] motion-reduce:h-0"
+        className="h-[90svh] motion-reduce:h-0! md:h-[140svh]"
       />
 
       {/* From md up the cue lands in the middle of the nav bar, between the name and
