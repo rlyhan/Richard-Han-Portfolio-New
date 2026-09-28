@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { useScrollLock } from "../../hooks/useScrollLock";
 
+// A centred panel over a scrim, with the page scroll held behind it.
+//
+// Nothing mounts it at present. It was the way into a project's write-up on the dark
+// Projects page, and the cream rebuild sends that write-up to a page of its own
+// instead — so this is kept deliberately, against the standing rule that a component
+// goes when it loses its last consumer. Left here for the next thing that needs a
+// panel rather than a page.
+//
+// It is still the dark palette: carbon panel, paper copy. Whatever mounts it next on
+// a cream page has to answer for that first.
 const Modal = ({ isOpen, onClose, children }) => {
     const [entered, setEntered] = useState(false);
 
