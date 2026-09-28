@@ -149,10 +149,10 @@ const RouterProvider = ({ children }) => {
     // that a page is never mounted for a join it doesn't belong to.
     const [staged, setStaged] = useState(null)
 
-    // The page a nav item has asked for, on its way in over the top of this one. Held
-    // apart from the pages in the document because that is exactly what it is: it
-    // belongs to the viewport until it lands, and only then to the document. See
-    // PageSwap.
+    // The page a nav item has asked for, on its way in over the top of this one. It is
+    // mounted with the rest — the outlet holds it to the viewport while it travels
+    // rather than laying it out — so that landing costs it nothing: the box it
+    // arrives in is the box it stays in. See PageOutlet and useSwapTransition.
     const [swap, setSwap] = useState(null)
 
     // Bumped by a nav item that asks for the next page: the scroll it wants can only
@@ -166,6 +166,9 @@ const RouterProvider = ({ children }) => {
 
     // The scroll the page in front leaves by, handed over by the page itself — see
     // useAdvance. A ref because it is called from events rather than rendered.
+    // The page a swap is carrying in, if there is one.
+    const SwapPage = swap?.Page ?? null
+
     const advanceRef = useRef(null)
     // What the scroll has to be set to once the document has changed, applied before
     // the browser paints it. Set by whatever asked for the change, since only that
@@ -508,20 +511,28 @@ const RouterProvider = ({ children }) => {
         [nextRoute, isNextStaged],
     )
 
-    // What PageOutlet mounts, in the order they sit in the document: the page in
-    // front, and for the length of a handoff the page staged below it. Keyed by path,
-    // so the staged page becomes the page in front without its DOM being rebuilt
-    // underneath it, and so what React takes out is the page being left.
+    // What PageOutlet mounts. Keyed by path, so a page that changes its part in the
+    // document — staged below becoming the page in front, arriving over the top
+    // becoming the page itself — keeps the DOM it already has.
+    //
+    // The page arriving by a swap goes FIRST and stays first. React reuses an element
+    // when its key and its parent match, but a node it has to move between positions
+    // is disconnected on the way, and disconnecting a node cancels the CSS animations
+    // inside it — which is a page's whole arrival replaying at the moment it lands.
+    // Held at the head of the list, it is never moved: the pages under it are simply
+    // deleted. Paint order is not DOM order for it anyway; it is fixed, over
+    // everything, until it settles. See PageOutlet.
     const pages = useMemo(
         () =>
             [
-                Page && { key: path, Page, slot: frontSlot },
+                SwapPage && { key: swap.path, Page: SwapPage, slot: EMPTY_SLOT, arriving: true },
+                Page && { key: path, Page, slot: frontSlot, arriving: false },
                 // A staged page is handed a slot with nothing in it: it is not the page
                 // the viewer is on, so it has no next page of its own to reach for and
                 // nothing to advance to. See RouterContext.
-                StagedPage && { key: nextRoute.path, Page: StagedPage, slot: EMPTY_SLOT },
+                StagedPage && { key: nextRoute.path, Page: StagedPage, slot: EMPTY_SLOT, arriving: false },
             ].filter(Boolean),
-        [Page, path, StagedPage, nextRoute, frontSlot],
+        [SwapPage, swap, Page, path, StagedPage, nextRoute, frontSlot],
     )
 
     const routerValue = useMemo(
@@ -529,6 +540,11 @@ const RouterProvider = ({ children }) => {
             path,
             pages,
             swap,
+            // The page a swap carries out, named for the timeline that lifts it: the
+            // one arriving now sits inside the same box, so the box itself can no
+            // longer be the thing that moves. See useSwapTransition.
+            leavingSelector: sectionSelectorOf(route),
+            swapKey: swap?.path ?? null,
             finishSwap,
             navigate,
             prefetch,

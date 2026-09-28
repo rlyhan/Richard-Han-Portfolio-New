@@ -23,18 +23,25 @@ const OUT_DURATION = 0.55
 const IN_DURATION = 0.75
 const IN_START = 0.15
 
-export const buildSwapTimeline = ({ outgoing, incoming, onComplete }) =>
-    gsap.timeline({ defaults: { ease: "power2.inOut" }, onComplete })
-        .to(outgoing, {
+// `leaving` is the section of the page being left rather than the box the pages sit
+// in: the page arriving is inside that box too now, and a box that moved would take
+// it along. `arriving` is that page's own box, which is held to the viewport while it
+// travels — hence yPercent, where 100 is one screen down wherever the page underneath
+// happens to be scrolled to. See useSwapTransition.
+export const buildSwapTimeline = ({ leaving, arriving, onComplete }) => {
+    const timeline = gsap.timeline({ defaults: { ease: "power2.inOut" }, onComplete })
+
+    if (leaving) {
+        timeline.to(leaving, {
             y: () => -window.innerHeight * OUT_TRAVEL,
             opacity: 0,
             duration: OUT_DURATION,
         }, 0)
-        // yPercent, because the incoming page is held to the viewport while it
-        // travels: 100 is one screen down, wherever the page underneath is scrolled
-        // to. See PageSwap.
-        .fromTo(incoming,
-            { yPercent: 100 },
-            { yPercent: 0, duration: IN_DURATION, ease: "power3.out" },
-            IN_START,
-        )
+    }
+
+    return timeline.fromTo(arriving,
+        { yPercent: 100 },
+        { yPercent: 0, duration: IN_DURATION, ease: "power3.out" },
+        IN_START,
+    )
+}
