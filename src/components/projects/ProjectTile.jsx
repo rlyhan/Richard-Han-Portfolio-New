@@ -93,15 +93,21 @@ const ProjectTile = ({ project, number }) => {
                 <p
                     className={cn(
                         EYEBROW_CLASS,
-                        "col-start-2 row-start-2 flex min-w-0 items-center gap-2 self-end text-ash",
+                        // A fixed min-height so the row costs the same whether or not
+                        // the award pill is there — otherwise only award tiles grow
+                        // past the plate's min-height and the grid goes uneven.
+                        "col-start-2 row-start-2 flex min-h-[1.1875rem] min-w-0 items-center gap-2 self-end text-ash",
                     )}
                 >
                     <span className="truncate">{category}</span>
 
+                    {/* The description is nudged a px down: caps have no descenders
+                        to fill their line box, so next to the icon — which fills its
+                        box evenly — they read as sitting high. */}
                     {award && (
                         <span className="inline-flex shrink-0 items-center rounded-full bg-well px-[0.5625rem] py-1 leading-[0.6875rem] font-bold text-cream">
                             <AwardIcon className="mr-[0.3125rem] h-[0.6875rem] w-[0.6875rem]" />
-                            {award.description}
+                            <span className="translate-y-px">{award.description}</span>
                         </span>
                     )}
                 </p>
