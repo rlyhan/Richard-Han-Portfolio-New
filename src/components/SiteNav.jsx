@@ -11,19 +11,23 @@ import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
 // It lives outside the pages, so a page change is not this bar being rebuilt: it
 // stays exactly where it is while the document underneath it is handed over.
 //
-// It is down while the viewer reads forward and comes back up the moment they
-// scroll against the page; see useRevealOnScrollUp for the direction rule and for
-// why nothing is shown over the hero, which carries a copy of this bar in its own
-// layout.
+// A page opens with it up, it goes down while the viewer reads forward, and it comes
+// back the moment they scroll against the page; see useRevealOnScrollUp for the
+// direction rule, for the opening state, and for why nothing is shown over the hero,
+// which carries a copy of this bar in its own layout.
 const SiteNav = () => {
     // Which page this bar is standing on decides where its floor is, and the router
     // is what knows: the hero draws a copy of this bar in its own layout, and a page
     // that doesn't has nothing for a pinned bar to be drawn twice over.
     const { navFloorSelector, layoutKey, swap } = useRouter();
 
-    // Nothing but the direction decides this, on every page: arriving somewhere is
-    // not asking for the nav, however you arrived. A page opens without the bar, and
-    // scrolling against the page is what calls it up — see useRevealOnScrollUp.
+    // The direction owns every moment after the first, and arriving is the first: a
+    // page opens with the bar up, whichever page was left and however it was left.
+    // Reading forward is what puts it away.
+    //
+    // layoutKey is what tells it a page has changed, and so what returns the bar to
+    // that opening state — this bar is never unmounted, so nothing else would. See
+    // useRevealOnScrollUp, which also keeps the hero out of it.
     const { isRevealed, isAboveFloor } = useRevealOnScrollUp(navFloorSelector, layoutKey);
 
     // Over the hero's own copy of this bar — which is the one place the two are
