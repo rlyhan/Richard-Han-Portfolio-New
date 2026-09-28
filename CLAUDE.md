@@ -61,6 +61,18 @@ scroll.
   in `Modal.jsx`.
 - **Comments say why.** When the reason changes, rewrite the comment in the same commit.
   A comment naming something that has been deleted is a bug.
+- **No comments inside JSX markup.** None on the elements, none between them. If a
+  className or a prop needs explaining, the explanation belongs on the line above the
+  JSX block, not threaded through the return.
+- **No file-header comment on a UI component** walking through what it is and how it's
+  built — `ProjectTile.jsx` is what this looks like: a multi-paragraph preamble
+  restating the layout the JSX already shows. A component file opens on the import or
+  the component itself. Non-obvious behaviour — the *why* behind a genuinely
+  complicated piece of logic, like the animation timing and layering rules in
+  `HomeProjectCard.jsx` — still deserves a comment, but scoped tightly to the lines it
+  explains, not a block ahead of the whole file. Even there, prefer the fewest
+  sentences that carry the reason; `HomeProjectCard.jsx`'s current comments are more
+  than the logic needs.
 - **No dead code behind a refactor.** When something loses its last consumer it goes in
   the same change — exports, props, slot fields, CSS tokens and design tokens included.
 - **Reproduce before fixing.** These bugs appear in `npm run dev` (StrictMode runs
@@ -72,6 +84,19 @@ scroll.
 - **Ask before building a join.** Whether a transition is scroll-driven or click-driven
   is a design decision, not an implementation detail. Settle it in words first — what
   moves, from where, how long for, what holds the scroll, and what the URL does.
+- **Translating a design or existing HTML into Tailwind follows the same best
+  practices a hand-written page would.** Semantic HTML over generic divs where an
+  element exists for the job. No hard-coded values standing in for what should follow
+  from content or a token — a line-height pinned to a magic number, a pill or button
+  given a fixed height instead of sizing from its padding and line-height. A class
+  combination repeated across the file becomes a variable (as `EYEBROW_CLASS` already
+  does in `ProjectTile.jsx` and `HomeProjectCard.jsx`) instead of being retyped at
+  each call site.
+- **Format with Prettier before treating a change as done.** This project has no
+  Prettier devDependency or config — formatting runs through the editor's Prettier
+  extension on save, not a CLI script. Save through the editor (or otherwise trigger
+  format-on-save) so the formatting matches what Richard's editor produces, rather than
+  hand-formatting to a guess.
 
 ## Still outstanding
 
