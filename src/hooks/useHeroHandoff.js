@@ -95,7 +95,8 @@ const buildHeroExitTimeline = ({ displayLines, outroLines, runway, range }) =>
         }, OUTRO_START)
 
 export function useHeroHandoff({ displayLineRefs, outroLineRefs, runwayRef, nextSelector, isNextStaged }) {
-    // Stable, because useHandoff builds every trigger off it — as in useSectionHandoff.
+    // Stable, because useHandoff builds every trigger off it: a new identity every
+    // render would tear the triggers down and rebuild them on each one.
     const buildExit = useCallback(({ runway, range }) => {
         const lines = {
             displayLines: displayLineRefs.current.filter(Boolean),
