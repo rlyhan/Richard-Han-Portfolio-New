@@ -3,7 +3,7 @@ import AboutExperience from "../components/about/AboutExperience";
 import AboutSection from "../components/about/AboutSection";
 import AboutTech from "../components/about/AboutTech";
 import AboutInterests from "../components/about/AboutInterests";
-import Byline from "../components/layout/Byline";
+import PageMasthead from "../components/layout/PageMasthead";
 import {
   ABOUT_HEADING,
   ABOUT_NOTE,
@@ -36,17 +36,7 @@ const AboutPage = () => (
     contained={false}
     additionalClasses="relative z-10 flex flex-col bg-cream font-epilogue text-ink"
   >
-    <header className="flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12">
-      <Byline />
-
-      <h1 className="mt-14 font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:mt-[clamp(2.375rem,7vh,5.625rem)] md:text-[clamp(3.375rem,5.9vw,5.875rem)]">
-        {ABOUT_HEADING}
-      </h1>
-
-      <p className="mt-7 max-w-[25rem] text-[0.8125rem] leading-[1.65] text-ash">
-        {ABOUT_NOTE}
-      </p>
-    </header>
+    <PageMasthead heading={ABOUT_HEADING} note={ABOUT_NOTE} />
 
     <AboutSection index="01" {...ABOUT_SECTIONS.experience}>
       <AboutExperience />
