@@ -43,7 +43,7 @@ const PROJECTS = [
             "Refactored entire CMS, reducing complexity while maintaining flexibility.",
             "Helped deliver responsive, performance optimised UI through collaboration on wireframes and implementation."
         ],
-        "images": ["neatplaces.webp"]
+        "images": ["neatplaces-tall.webp"]
     },
     {
         "name": "G.Network",
@@ -173,19 +173,19 @@ const PROJECTS = [
             "jamesdunlop.webp"
         ]
     },
-    {
-        "name": "ECC",
-        "id": "ecc",
-        "url": "https://ecc.co.nz/",
-        "category": "Furniture",
-        "client": true,
-        "association": "Sons & Co.",
-        "description": "New Zealand based furniture company.",
-        "work_involved": [
-            "Front end functionality and styling.",
-            "Back end development including highly customisable content management system, data optimisation."
-        ]
-    },
+    // {
+    //     "name": "ECC",
+    //     "id": "ecc",
+    //     "url": "https://ecc.co.nz/",
+    //     "category": "Furniture",
+    //     "client": true,
+    //     "association": "Sons & Co.",
+    //     "description": "New Zealand based furniture company.",
+    //     "work_involved": [
+    //         "Front end functionality and styling.",
+    //         "Back end development including highly customisable content management system, data optimisation."
+    //     ]
+    // },
     {
         "name": "Never Have I Ever",
         "id": "never-have-i-ever",
@@ -197,21 +197,22 @@ const PROJECTS = [
         "work_involved": [
             "Front end functionality and styling.",
             "Back end development including highly customisable content management system, data optimisation."
-        ]
+        ],
+        "images": ["neverhaveiever.webp"],
     },
-    {
-        "name": "RTA Studio",
-        "id": "rta-studio",
-        "url": "https://rtastudio.co.nz/",
-        "category": "Architects",
-        "client": true,
-        "association": "Sons & Co.",
-        "description": "New Zealand based architects.",
-        "work_involved": [
-            "Front end functionality and styling.",
-            "Back end development including highly customisable content management system, data optimisation."
-        ]
-    },
+    // {
+    //     "name": "RTA Studio",
+    //     "id": "rta-studio",
+    //     "url": "https://rtastudio.co.nz/",
+    //     "category": "Architects",
+    //     "client": true,
+    //     "association": "Sons & Co.",
+    //     "description": "New Zealand based architects.",
+    //     "work_involved": [
+    //         "Front end functionality and styling.",
+    //         "Back end development including highly customisable content management system, data optimisation."
+    //     ]
+    // },
     {
         "name": "Image Board",
         "id": "image-board",
