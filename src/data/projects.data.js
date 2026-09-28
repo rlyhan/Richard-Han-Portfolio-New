@@ -1,3 +1,13 @@
+// The Projects page's own copy. Here rather than in the page, so the masthead reads
+// its heading and note off the same module as the list underneath it.
+//
+// The full stop is part of the heading: every display heading on the site is a
+// sentence set at size — see the nav's items and the name at the foot of the bar.
+export const PROJECTS_HEADING = "Projects."
+
+export const PROJECTS_NOTE =
+    "A selection of client and personal work — websites, apps and everything in between."
+
 const PROJECTS = [
     {
         "name": "Study With New Zealand",

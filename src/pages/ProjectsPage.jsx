@@ -1,142 +1,117 @@
-import { useMemo, useRef, useState } from "react"
-import classNames from "classnames"
-import PageSection from "../components/layout/PageSection"
-import SectionHeading from "../components/common/SectionHeading"
-import TabButton from "../components/common/Tabs/TabButton"
-import { usePage } from "../routes/RouterContext"
-import { useTabSelect } from "../hooks/useTabSelect"
-import { useScrollReveal } from "../hooks/useScrollReveal"
-import PROJECTS from "../data/projects.data"
-import ProjectCard from "../components/common/Cards/ProjectCard"
-import ProjectCardGallery from "../components/common/Cards/ProjectCardGallery"
-import IconButton from "../components/common/Buttons/IconButton"
-import Modal from "../components/common/Modal"
+import { useMemo, useRef, useState } from "react";
+import PageSection from "../components/layout/PageSection";
+import PageMasthead from "../components/layout/PageMasthead";
+import ProjectsToolbar from "../components/projects/ProjectsToolbar";
+import ProjectTile from "../components/projects/ProjectTile";
+import { usePage } from "../routes/RouterContext";
+import { useTabSelect } from "../hooks/useTabSelect";
+import { useScrollReveal } from "../hooks/useScrollReveal";
+import PROJECTS, { PROJECTS_HEADING, PROJECTS_NOTE } from "../data/projects.data";
 
-const tabs = [
-    {
-        id: "projects-all",
-        tabName: "All"
-    },
-    {
-        id: "projects-client",
-        tabName: "Client"
-    },
-    {
-        id: "projects-personal",
-        tabName: "Personal"
-    }
-]
+// `all` is not a category, which is why the predicate is per filter rather than a
+// field read off the project: the list's own flag is `client`, and "personal" is the
+// absence of it rather than a value of its own.
+const FILTERS = [
+    { id: "all", label: "All", matches: () => true },
+    { id: "client", label: "Client", matches: (project) => project.client },
+    { id: "personal", label: "Personal", matches: (project) => !project.client },
+];
 
-// The Projects page: the filterable list. Its own chunk, which is where the project
-// data and the modal live.
+// The number beside each title, worked out once off the full list. The filters hide
+// tiles rather than renumbering them, so a project keeps its number whichever filter
+// is up — see ProjectTile.
+const NUMBERED_PROJECTS = PROJECTS.map((project, i) => ({ project, number: i + 1 }));
+
+// The Projects page: a masthead, a rule carrying the filters and the count, and the
+// whole list as a grid of framed shots. Its own chunk, which is where the project
+// data lives.
 //
-// It ends where its last card does. Only the homepage hands over on the scroll — see
+// Every project, not a featured subset — the count on the rule is the point of the
+// page ("14 / 14"), and a list that silently left three out could not state it.
+//
+// The tiles lead nowhere yet. Each project's write-up belongs on a page of its own and
+// those pages are the next piece of work, so until they exist a tile is a framed shot
+// with a caption and nothing to click — see ProjectTile, which carries no hover or
+// focus state for that reason.
+//
+// It ends where its last tile does. Only the homepage hands over on the scroll — see
 // RouterProvider — so the foot of this page is the foot of the document, and the way
-// on from here is the nav bar.
+// on from here is the nav bar pinned across it.
+//
+// The palette is the hero's, as About's is: cream ground, ink copy, a hairline between
+// every band. The one dark thing on the page is the frame each shot is matted on,
+// which is the hero's well seen at a larger size.
+//
+// contained: false — the rule above the grid and the grid's own seams run to the
+// viewport edge, so the page frame's max width and gutter would cut every line short.
+// The masthead and the toolbar state the hero's gutter instead; the grid has none.
 const ProjectsPage = () => {
-    const { isArriving } = usePage()
+    const { isArriving } = usePage();
 
-    const [activeTab, setActiveTab] = useState("projects-all")
-    const [displayMode, setDisplayMode] = useState("default")
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [selectedProject, setSelectedProject] = useState(null)
+    const [activeFilter, setActiveFilter] = useState(FILTERS[0].id);
 
-    const panelRef = useRef(null)
+    const gridRef = useRef(null);
 
-    // The click lands the row at the top of the viewport, so the filtered list opens
-    // from its first card rather than part-way down.
+    // The press lands the toolbar at the top of the viewport, so the filtered grid
+    // opens from its first tile rather than part-way down.
     //
-    // panelRef because one panel serves all three categories: switching tabs swaps its
-    // contents without the element changing, so the fade over that swap has to be
-    // replayed by hand. See useTabSelect for why it isn't a CSS animation.
-    const { rowRef, selectTab } = useTabSelect(activeTab, setActiveTab, { panelRef })
+    // gridRef as the panel because one grid serves all three filters: pressing a
+    // filter swaps its contents without the element changing, so the fade over that
+    // swap has to be replayed by hand. See useTabSelect for why it isn't a CSS
+    // animation.
+    const { rowRef, selectTab } = useTabSelect(activeFilter, setActiveFilter, {
+        panelRef: gridRef,
+    });
 
-    // Keyed on both: the tab re-filters the list and the display mode takes it from
-    // one column to a gallery, so either way the rows the reveal measured are gone.
-    //
-    // Alongside the fade rather than instead of it — the fade covers the swap, this
-    // carries in the cards below the fold — and they compose, since the panel's
-    // opacity and a card's multiply.
+    // Keyed on the filter: it re-filters the grid, so the rows the reveal measured are
+    // gone. Alongside the toolbar's fade rather than instead of it — the fade covers
+    // the swap, this carries in the tiles below the fold — and they compose, since the
+    // grid's opacity and a tile's multiply.
     //
     // Not while the page is still arriving: a swap holds it a screen below the fold
     // while it travels, and rows measured there are rows measured in the wrong place.
-    useScrollReveal(panelRef, `${activeTab}:${displayMode}`, { enabled: !isArriving })
+    useScrollReveal(gridRef, activeFilter, { enabled: !isArriving });
 
-    const projectList = useMemo(() => {
-        if (activeTab === "projects-all") return PROJECTS;
-        const clientProject = activeTab === "projects-client";
-        return PROJECTS.filter(p => (clientProject ? p.client : !p.client));
-    }, [activeTab]);
-
-    const featuredProjects = useMemo(() => projectList.filter(project => project.featured), [projectList])
-
-    const openProject = (project) => {
-        setSelectedProject(project);
-        setIsModalOpen(true);
-    };
-
-    const closeProject = () => {
-        setIsModalOpen(false);
-        setSelectedProject(null);
-    };
+    const shown = useMemo(() => {
+        const { matches } = FILTERS.find((filter) => filter.id === activeFilter);
+        return NUMBERED_PROJECTS.filter((entry) => matches(entry.project));
+    }, [activeFilter]);
 
     return (
-        <>
-            {/* bg-carbon-900: its own ground rather than the body's. A page staged
-                below another one is in that page's document, and the body is carrying
-                the ground of whichever page is in front — which on the way in here is
-                About's cream. */}
-            <PageSection id="projects" additionalClasses="mb-4 bg-carbon-900">
-                <div className="max-w-6xl mx-auto w-full">
-                    <SectionHeading label="Projects" />
-                    {/* The ref sits on the whole row, not the tablist: the display-mode
-                        buttons share the line, so the row's top edge is what a tab click
-                        lands against. */}
-                    <div ref={rowRef} className="flex justify-between">
-                        <div role="tablist" className="flex gap-4 mb-6" aria-label="Project category tabs">
-                            {tabs.map((t) => (
-                                <TabButton
-                                    key={t.id}
-                                    id={t.id}
-                                    tabName={t.tabName}
-                                    activeTab={activeTab}
-                                    setActiveTab={selectTab}
-                                />
-                            ))}
-                        </div>
-                        <div role="group" aria-label="Project display mode" className="hidden md:flex gap-4 mb-6">
-                            <IconButton type="list" onClick={() => setDisplayMode("default")} isActive={displayMode === "default"} />
-                            <IconButton type="gallery" onClick={() => setDisplayMode("gallery")} isActive={displayMode === "gallery"} />
-                        </div>
-                    </div>
-                    <div ref={panelRef} className={classNames("grid gap-6", {
-                        "grid-cols-1": displayMode === "default",
-                        "md:grid-cols-2 lg:grid-cols-3": displayMode === "gallery",
-                    })}>
-                        {featuredProjects.map((project) =>
-                            displayMode === "gallery" ? (
-                                <ProjectCardGallery key={project.id} project={project} onClick={() => openProject(project)} />
-                            ) : (
-                                <ProjectCard key={project.id} project={project} onClick={() => openProject(project)} />
-                            )
-                        )}
-                    </div>
+        <PageSection
+            id="projects"
+            contained={false}
+            // bg-cream: its own ground rather than the body's. A page staged below
+            // another one is in that page's document, and the body is carrying the
+            // ground of whichever page is in front.
+            //
+            // No stacking context of its own, unlike About: About has to cover the
+            // sticky hero it shares a document with, and this page arrives by a swap,
+            // over nothing.
+            additionalClasses="flex flex-col bg-cream font-epilogue text-ink"
+        >
+            <PageMasthead heading={PROJECTS_HEADING} note={PROJECTS_NOTE} />
+
+            <section aria-label="Project list" className="border-t border-grid">
+                <ProjectsToolbar
+                    rowRef={rowRef}
+                    filters={FILTERS}
+                    activeFilter={activeFilter}
+                    onSelect={selectTab}
+                    shown={shown.length}
+                    total={NUMBERED_PROJECTS.length}
+                />
+
+                {/* One column, two, then three. No gaps: the tiles draw the grid
+                    rather than sitting in one — see ProjectTile. */}
+                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    {shown.map(({ project, number }) => (
+                        <ProjectTile key={project.id} project={project} number={number} />
+                    ))}
                 </div>
-            </PageSection >
+            </section>
+        </PageSection>
+    );
+};
 
-            {/* Modal. Outside the section, because the section carries the transform that
-                lands it under the handoff from About — and a transformed ancestor becomes
-                the containing block for `position: fixed`, so the scrim would size itself
-                against the section instead of the viewport. */}
-            {
-                isModalOpen && selectedProject && (
-                    <Modal isOpen={isModalOpen} onClose={closeProject}>
-                        <ProjectCard project={selectedProject} isModalContent={true} />
-                    </Modal>
-                )
-            }
-        </>
-    )
-}
-
-export default ProjectsPage
+export default ProjectsPage;

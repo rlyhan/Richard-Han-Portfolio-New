@@ -56,7 +56,7 @@ const ROUTES = [
         path: "/projects",
         sectionId: "projects",
         title: "Projects — Richard Han",
-        ground: "bg-carbon-900",
+        ground: "bg-cream",
         navLabel: "Projects",
         load: () => import("../pages/ProjectsPage.jsx"),
     },
