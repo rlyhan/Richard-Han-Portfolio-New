@@ -3,6 +3,7 @@ import NavMenu from "./layout/NavMenu";
 import { useRouter } from "../routes/RouterContext";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
+import { useNavHeightVar } from "../hooks/useNavHeightVar";
 
 // The site's nav: the hero's own bar, pinned to the foot of the viewport for the
 // rest of the site. It replaces the bar that used to be fixed across the top —
@@ -44,8 +45,12 @@ const SiteNav = () => {
 
     const navItems = useNavItems();
 
+    // The height the document reserves for this bar at its foot — see Footer.
+    const barRef = useNavHeightVar();
+
     return (
         <div
+            ref={barRef}
             className={cn(
                 // Over the page and under the layers that take it over: the
                 // modal's scrim, and the page a swap carries in — which is what
