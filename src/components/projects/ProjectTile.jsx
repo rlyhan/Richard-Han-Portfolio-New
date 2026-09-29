@@ -59,7 +59,7 @@ const ProjectTile = ({ project, number }) => {
             {String(number).padStart(2, "0")}
           </span>
 
-          <h2 className="font-urbanist truncate text-[1.1875rem] leading-none font-bold text-ink">
+          <h2 className="font-urbanist truncate text-[1.1875rem] font-bold text-ink">
             {name}
           </h2>
 
