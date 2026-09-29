@@ -1,3 +1,4 @@
+import PointList from "../layout/PointList";
 import { WORK } from "../../data/work.data";
 
 const AboutExperience = () => (
@@ -16,16 +17,7 @@ const AboutExperience = () => (
           </p>
         </div>
 
-        <ul className="grid gap-2.5">
-          {listItems.map((point) => (
-            <li
-              key={point}
-              className="relative pl-[1.125rem] text-[0.84375rem] leading-[1.6] before:absolute before:top-[0.68em] before:left-0 before:h-px before:w-2 before:bg-ash before:content-['']"
-            >
-              {point}
-            </li>
-          ))}
-        </ul>
+        <PointList points={listItems} />
       </article>
     ))}
   </>

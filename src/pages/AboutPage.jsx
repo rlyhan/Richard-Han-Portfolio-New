@@ -1,14 +1,10 @@
 import PageSection from "../components/layout/PageSection";
 import AboutExperience from "../components/about/AboutExperience";
-import AboutSection from "../components/about/AboutSection";
+import PageBand from "../components/layout/PageBand";
 import AboutTech from "../components/about/AboutTech";
 import AboutInterests from "../components/about/AboutInterests";
 import PageMasthead from "../components/layout/PageMasthead";
-import {
-  ABOUT_HEADING,
-  ABOUT_NOTE,
-  ABOUT_SECTIONS,
-} from "../data/about.data";
+import { ABOUT_HEADING, ABOUT_NOTE, ABOUT_SECTIONS } from "../data/about.data";
 
 // The About page: a masthead and three banded sections.
 //
@@ -38,17 +34,17 @@ const AboutPage = () => (
   >
     <PageMasthead heading={ABOUT_HEADING} note={ABOUT_NOTE} />
 
-    <AboutSection index="01" {...ABOUT_SECTIONS.experience}>
+    <PageBand index="01" {...ABOUT_SECTIONS.experience}>
       <AboutExperience />
-    </AboutSection>
+    </PageBand>
 
-    <AboutSection index="02" {...ABOUT_SECTIONS.technologies}>
+    <PageBand index="02" {...ABOUT_SECTIONS.technologies}>
       <AboutTech />
-    </AboutSection>
+    </PageBand>
 
-    <AboutSection index="03" {...ABOUT_SECTIONS.interests}>
+    <PageBand index="03" {...ABOUT_SECTIONS.interests}>
       <AboutInterests />
-    </AboutSection>
+    </PageBand>
   </PageSection>
 );
 
