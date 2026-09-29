@@ -6,7 +6,10 @@ import ProjectTile from "../components/projects/ProjectTile";
 import { usePage } from "../routes/RouterContext";
 import { useTabSelect } from "../hooks/useTabSelect";
 import { useScrollReveal } from "../hooks/useScrollReveal";
-import PROJECTS, { PROJECTS_HEADING, PROJECTS_NOTE } from "../data/projects.data";
+import PROJECTS, {
+  PROJECTS_HEADING,
+  PROJECTS_NOTE,
+} from "../data/projects.data";
 
 // `all` is not a category, which is why the predicate is per filter rather than a
 // field read off the project: the list's own flag is `client`, and "personal" is the
@@ -20,19 +23,19 @@ const FILTERS = [
 // The number beside each title, worked out once off the full list. The filters hide
 // tiles rather than renumbering them, so a project keeps its number whichever filter
 // is up — see ProjectTile.
-const NUMBERED_PROJECTS = PROJECTS.map((project, i) => ({ project, number: i + 1 }));
+const NUMBERED_PROJECTS = PROJECTS.map((project, i) => ({
+  project,
+  number: i + 1,
+}));
 
 // The Projects page: a masthead, a rule carrying the filters and the count, and the
-// whole list as a grid of framed shots. Its own chunk, which is where the project
-// data lives.
+// whole list as a grid of framed shots.
 //
 // Every project, not a featured subset — the count on the rule is the point of the
 // page ("14 / 14"), and a list that silently left three out could not state it.
 //
-// The tiles lead nowhere yet. Each project's write-up belongs on a page of its own and
-// those pages are the next piece of work, so until they exist a tile is a framed shot
-// with a caption and nothing to click — see ProjectTile, which carries no hover or
-// focus state for that reason.
+// A tile is the link to that project's write-up, at /projects/<id> — see ProjectPage,
+// and routes, which builds a record per project off the same list this page lists.
 //
 // It ends where its last tile does. Only the homepage hands over on the scroll — see
 // RouterProvider — so the foot of this page is the foot of the document, and the way
@@ -98,7 +101,10 @@ const ProjectsPage = () => {
           total={NUMBERED_PROJECTS.length}
         />
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        >
           {shown.map(({ project, number }) => (
             <ProjectTile key={project.id} project={project} number={number} />
           ))}
