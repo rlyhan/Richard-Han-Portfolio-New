@@ -58,14 +58,11 @@ const ProjectsPage = () => {
 
   const gridRef = useRef(null);
 
-  // The press lands the toolbar at the top of the viewport, so the filtered grid
-  // opens from its first tile rather than part-way down.
-  //
   // gridRef as the panel because one grid serves all three filters: pressing a
   // filter swaps its contents without the element changing, so the fade over that
   // swap has to be replayed by hand. See useTabSelect for why it isn't a CSS
   // animation.
-  const { rowRef, selectTab } = useTabSelect(activeFilter, setActiveFilter, {
+  const { selectTab } = useTabSelect(activeFilter, setActiveFilter, {
     panelRef: gridRef,
   });
 
@@ -93,7 +90,6 @@ const ProjectsPage = () => {
 
       <section aria-label="Project list" className="border-t border-grid">
         <ProjectsToolbar
-          rowRef={rowRef}
           filters={FILTERS}
           activeFilter={activeFilter}
           onSelect={selectTab}

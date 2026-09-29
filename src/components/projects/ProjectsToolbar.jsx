@@ -14,11 +14,8 @@ import cn from "classnames";
 //
 // rounded-none on the buttons is not a style choice being restated: index.css gives
 // every button an 8px radius in its base layer, and this page's controls are square.
-const ProjectsToolbar = ({ rowRef, filters, activeFilter, onSelect, shown, total }) => (
-  <div
-    ref={rowRef}
-    className="flex items-center justify-between gap-4 border-b border-grid px-[1.4rem] py-3.5 md:px-[clamp(1.75rem,3.2vw,3.5rem)]"
-  >
+const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
+  <div className="flex items-center justify-between gap-4 border-b border-grid px-[1.4rem] py-3.5 md:px-[clamp(1.75rem,3.2vw,3.5rem)]">
     <div role="group" aria-label="Filter projects" className="flex gap-2">
       {filters.map(({ id, label }) => {
         const isActive = id === activeFilter;
