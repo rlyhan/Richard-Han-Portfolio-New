@@ -106,10 +106,17 @@ const PROJECTS = [
         "client": false,
         "association": "Personal",
         "description": "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you. Built with React Native, Expo, TypeScript, Express, PostgreSQL, BetterAuth and Sanity.",
+        "idea": [
+            "Instead of overwhelming users with random hobbies that they will never do, the app focuses on personalised, identity-aligned suggestions based on who the user is and what they are capable of doing right now.",
+            "The core idea is: Help users who are thinking \"I want to try something new, but I don't know what to choose\" to become decisive and say \"I am going to do this because I am feeling this way and it is realistic for me\"."
+        ],
         "work_involved": [
             "Algorithm based off the BFAS (Big Five Aspect Scales) and NEO-PI-R personality models to calculate alignment to various types of activities.",
             "Integration with Sanity CMS to manage and update activity database.",
             "API with Express and PostgreSQL to handle authentication and profile data."
+        ],
+        "technologies": [
+            "React Native", "Expo", "TypeScript", "Express", "PostgreSQL", "BetterAuth", "Sanity"
         ],
         "images": ["touchgrass.webp"]
     },

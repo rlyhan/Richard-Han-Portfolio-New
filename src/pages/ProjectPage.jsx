@@ -1,10 +1,13 @@
+import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
-import PageBand from "../components/layout/PageBand";
-import PointList from "../components/layout/PointList";
+import ArticleParagraphs from "../components/layout/ArticleParagraphs";
 import ProjectMasthead from "../components/projects/ProjectMasthead";
 import { usePage } from "../routes/RouterContext";
 import { projectPathOf, projectSectionId } from "../routes/routes";
 import PROJECTS from "../data/projects.data";
+
+const TECH_ITEM_CLASS =
+  "border-t border-grid py-2.5 text-[0.8125rem] leading-[1.45] font-medium text-ink first:border-t-0 first:pt-0";
 
 // One project's write-up, at /projects/<id>.
 //
@@ -18,18 +21,21 @@ import PROJECTS from "../data/projects.data";
 // project is data: a chunk each would be fetched on the click that opened it, where
 // this one is in hand from the first tile the viewer hovers.
 //
-// contained: false — the bands run their rules to the viewport edge, so the page
-// frame's max width and gutter would cut each one short. The masthead, the shot and
-// each band state the hero's gutter instead.
+// contained: false — the write-up's rule runs to the viewport edge, so the page
+// frame's max width and gutter would cut it short. The masthead, the shot and the
+// article state the hero's gutter instead.
 //
 // The shot is matted on the vignetted well the Projects page frames its tiles on — see
 // ProjectTile — inset nearly evenly rather than with that page's deep foot, which is
 // room a tile leaves for its caption plate and a write-up has spent on the masthead.
+//
+// The masthead and shot are the page's chrome; the technologies rail and the copy
+// beside it are the write-up itself, so only those sit inside the <article>.
 const ProjectPage = () => {
   const { path } = usePage();
 
   const project = PROJECTS.find(({ id }) => projectPathOf(id) === path);
-  const { id, name, images, work_involved } = project;
+  const { id, name, images, idea, work_involved, technologies } = project;
   const image = images?.[0];
 
   return (
@@ -60,9 +66,39 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <PageBand id="work-involved" label="Work involved">
-        <PointList points={work_involved} />
-      </PageBand>
+      <article
+        className={cn(
+          "grid grid-cols-1 gap-8 border-t border-grid px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]",
+          {
+            "lg:grid-cols-[minmax(0,30%)_minmax(0,70%)] lg:gap-x-10":
+              technologies?.length > 0,
+          },
+        )}
+      >
+        {technologies?.length > 0 && (
+          <div className="min-w-0">
+            <p className="font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase">
+              Technologies
+            </p>
+
+            <ul className="mt-3.5 grid">
+              {technologies.map((technology) => (
+                <li key={technology} className={TECH_ITEM_CLASS}>
+                  {technology}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="flex flex-col gap-10 md:gap-14">
+          {idea?.length > 0 && (
+            <ArticleParagraphs heading="The idea" paragraphs={idea} />
+          )}
+
+          <ArticleParagraphs heading="Work involved" paragraphs={work_involved} />
+        </div>
+      </article>
     </PageSection>
   );
 };
