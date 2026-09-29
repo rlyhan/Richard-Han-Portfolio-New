@@ -57,22 +57,26 @@ scroll.
 ## Working rules
 
 - **One purpose per commit**, and each commit builds and lints on its own:
-  `npx vite build`, `npx eslint .`. The only expected lint error is the pre-existing one
-  in `Modal.jsx`.
+  `npx vite build`, `npx eslint .`.
 - **Comments say why.** When the reason changes, rewrite the comment in the same commit.
   A comment naming something that has been deleted is a bug.
-- **No comments inside JSX markup.** None on the elements, none between them. If a
-  className or a prop needs explaining, the explanation belongs on the line above the
-  JSX block, not threaded through the return.
+- **No comments inside JSX markup.** None on the elements, none between them. When one
+  has to come out, moving it to the line above the JSX block is not the default —
+  most inline comments restate what the markup already shows, or explain a decision
+  that's actually made and owned somewhere else: a hook's own doc comment, a value
+  computed a few lines up, a sibling component. Delete those. Only what's left after
+  that cut — something a reader would genuinely be stuck on, with nowhere else to
+  learn it — moves above the block.
 - **No file-header comment on a UI component** walking through what it is and how it's
-  built — `ProjectTile.jsx` is what this looks like: a multi-paragraph preamble
-  restating the layout the JSX already shows. A component file opens on the import or
-  the component itself. Non-obvious behaviour — the *why* behind a genuinely
-  complicated piece of logic, like the animation timing and layering rules in
-  `HomeProjectCard.jsx` — still deserves a comment, but scoped tightly to the lines it
-  explains, not a block ahead of the whole file. Even there, prefer the fewest
-  sentences that carry the reason; `HomeProjectCard.jsx`'s current comments are more
-  than the logic needs.
+  built. A component file opens on the import or the component itself. Non-obvious
+  behaviour — the *why* behind a genuinely complicated piece of logic, like the
+  animation timing and layering rules in `HomeProjectCard.jsx` — still deserves a
+  comment, but prefer the fewest sentences that carry the reason, and when in doubt,
+  cut rather than keep. `ProjectTile.jsx` is the calibration: one short paragraph on
+  what it borrows from `HomeProjectCard` and one on why the title is a heading,
+  nothing on the plate layout or the matting inset, because both are readable off the
+  JSX or already decided in `ProjectsPage.jsx`. `HomeProjectCard.jsx`'s current
+  comments are still more than the logic needs.
 - **No dead code behind a refactor.** When something loses its last consumer it goes in
   the same change — exports, props, slot fields, CSS tokens and design tokens included.
 - **Reproduce before fixing.** These bugs appear in `npm run dev` (StrictMode runs
