@@ -1,5 +1,6 @@
 import cn from "classnames";
 import AwardIcon from "../icons/AwardIcon";
+import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { projectPathOf } from "../../routes/routes";
 
@@ -11,10 +12,10 @@ const EYEBROW_CLASS =
   "font-epilogue text-[0.5625rem] font-medium uppercase leading-none tracking-[0.06em]";
 
 // The hero card's frame at three-column size — see HomeProjectCard for why the shots
-// are matted rather than cropped. Two things differ at this size: the ground is
-// `bg-frame`, a vignetted well rather than a flat one, since a flat fill reads as a
-// slab this large (see tailwind.config); and there's no hover zoom, since the frame
-// already fills and fourteen cells moving under the cursor would read as restless.
+// are matted rather than cropped. The ground differs at this size: `bg-frame`, a
+// vignetted well rather than a flat one, since a flat fill reads as a slab this large
+// (see tailwind.config). The zoom is the hero's too, held to one subtle step since a
+// fourteen-cell grid only ever has one shot moving at a time under the cursor.
 //
 // The whole cell is the link to the project's write-up, and the plate's edge going to
 // `ash` is all the hover there is — for the same reason: the affordance has to be
@@ -40,12 +41,10 @@ const ProjectTile = ({ project, number }) => {
       >
         <div className="absolute inset-x-5 top-3 bottom-24 flex items-center justify-center overflow-hidden md:inset-x-[1.625rem] md:top-4">
           {image ? (
-            <img
-              src={`/images/projects/${image}`}
+            <MattedShot
+              src={image}
               alt={`The ${name} site`}
-              loading="lazy"
-              decoding="async"
-              className="block h-full w-full object-contain object-center"
+              zoom="group-hover:scale-[1.05]"
             />
           ) : (
             <div
