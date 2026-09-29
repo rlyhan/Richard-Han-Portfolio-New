@@ -40,8 +40,14 @@ const JUMP_SHARE = 1
 // A floor is asked for by selector, and on this site the element it names is a page
 // the router has not necessarily mounted yet — so a selector that matches nothing is
 // a floor below everything rather than one at the top of the page: the section it
-// answers for is still ahead. `measureKey` is what re-reads it, and — being the page
-// the bar is standing on — is also what returns the bar to its opening state.
+// answers for is still ahead. No selector is the opposite, a floor above everything:
+// there is no page underneath this bar for it to wait for. Not zero, which reads as
+// the viewer being above the floor whenever they are at the top of the page — and on
+// a page with barely a screen of scroll, the whole way back up lands there in a
+// single frame, so the bar is never asked to come up.
+//
+// `measureKey` is what re-reads it, and — being the page the bar is standing on — is
+// also what returns the bar to its opening state.
 //
 // A page opens with the bar UP, and reading forward is what puts it away. Arriving is
 // the one moment the viewer has certainly not asked for anything yet, and a page that
@@ -87,7 +93,7 @@ export function useRevealOnScrollUp(floorSelector, measureKey) {
         // however far the section has yet to travel.
         const measureFloor = () => {
             if (!floorSelector) {
-                floor = 0
+                floor = -Infinity
                 return
             }
 
