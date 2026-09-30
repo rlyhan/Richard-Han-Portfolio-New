@@ -40,11 +40,47 @@ const JUMP_SHARE = 1
 // A floor is asked for by selector, and on this site the element it names is a page
 // the router has not necessarily mounted yet — so a selector that matches nothing is
 // a floor below everything rather than one at the top of the page: the section it
-// answers for is still ahead. `measureKey` is what re-reads it, for a caller whose
-// floor arrives in the document later than this hook does.
+// answers for is still ahead. No selector is the opposite, a floor above everything:
+// there is no page underneath this bar for it to wait for. Not zero, which reads as
+// the viewer being above the floor whenever they are at the top of the page — and on
+// a page with barely a screen of scroll, the whole way back up lands there in a
+// single frame, so the bar is never asked to come up.
+//
+// `measureKey` is what re-reads it, and — being the page the bar is standing on — is
+// also what returns the bar to its opening state.
+//
+// A page opens with the bar UP, and reading forward is what puts it away. Arriving is
+// the one moment the viewer has certainly not asked for anything yet, and a page that
+// opens with no way off it asks them to scroll against it to find one. The direction
+// rule above still owns every moment after that.
+//
+// The exception is a page that draws this bar in its own layout, which is the hero:
+// down there the pinned copy would be the same furniture drawn twice, and both copies
+// would put their links in the accessibility tree. Having a floor is what says a page
+// draws its own — see SiteNav, which reads the pair the same way — so the opening
+// state falls out of the floor rather than being passed in beside it.
 export function useRevealOnScrollUp(floorSelector, measureKey) {
-    const [isRevealed, setIsRevealed] = useState(false)
+    const opensRevealed = !floorSelector
+
+    const [isRevealed, setIsRevealed] = useState(opensRevealed)
     const [isAboveFloor, setIsAboveFloor] = useState(true)
+
+    // The page the bar is currently standing on. This bar outlives every page change
+    // — that is the point of it living outside the pages — so there is no unmount to
+    // return it to its opening state and it would otherwise inherit whatever the last
+    // page left it in: put away by reading down About, and so missing on the page
+    // About was left for.
+    //
+    // Adjusted during render rather than in an effect, which is what React asks for
+    // when state has to follow a prop. An effect would paint the previous page's bar
+    // for a frame first, and this bar is animated — a frame of the wrong state here is
+    // a slide that starts from the wrong place.
+    const [barPage, setBarPage] = useState(measureKey)
+
+    if (barPage !== measureKey) {
+        setBarPage(measureKey)
+        setIsRevealed(opensRevealed)
+    }
 
     useEffect(() => {
         let frame = null
@@ -57,7 +93,7 @@ export function useRevealOnScrollUp(floorSelector, measureKey) {
         // however far the section has yet to travel.
         const measureFloor = () => {
             if (!floorSelector) {
-                floor = 0
+                floor = -Infinity
                 return
             }
 

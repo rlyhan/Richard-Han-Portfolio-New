@@ -57,10 +57,26 @@ scroll.
 ## Working rules
 
 - **One purpose per commit**, and each commit builds and lints on its own:
-  `npx vite build`, `npx eslint .`. The only expected lint error is the pre-existing one
-  in `Modal.jsx`.
+  `npx vite build`, `npx eslint .`.
 - **Comments say why.** When the reason changes, rewrite the comment in the same commit.
   A comment naming something that has been deleted is a bug.
+- **No comments inside JSX markup.** None on the elements, none between them. When one
+  has to come out, moving it to the line above the JSX block is not the default —
+  most inline comments restate what the markup already shows, or explain a decision
+  that's actually made and owned somewhere else: a hook's own doc comment, a value
+  computed a few lines up, a sibling component. Delete those. Only what's left after
+  that cut — something a reader would genuinely be stuck on, with nowhere else to
+  learn it — moves above the block.
+- **No file-header comment on a UI component** walking through what it is and how it's
+  built. A component file opens on the import or the component itself. Non-obvious
+  behaviour — the *why* behind a genuinely complicated piece of logic, like the
+  animation timing and layering rules in `HomeProjectCard.jsx` — still deserves a
+  comment, but prefer the fewest sentences that carry the reason, and when in doubt,
+  cut rather than keep. `ProjectTile.jsx` is the calibration: one short paragraph on
+  what it borrows from `HomeProjectCard` and one on why the title is a heading,
+  nothing on the plate layout or the matting inset, because both are readable off the
+  JSX or already decided in `ProjectsPage.jsx`. `HomeProjectCard.jsx`'s current
+  comments are still more than the logic needs.
 - **No dead code behind a refactor.** When something loses its last consumer it goes in
   the same change — exports, props, slot fields, CSS tokens and design tokens included.
 - **Reproduce before fixing.** These bugs appear in `npm run dev` (StrictMode runs
@@ -72,6 +88,19 @@ scroll.
 - **Ask before building a join.** Whether a transition is scroll-driven or click-driven
   is a design decision, not an implementation detail. Settle it in words first — what
   moves, from where, how long for, what holds the scroll, and what the URL does.
+- **Translating a design or existing HTML into Tailwind follows the same best
+  practices a hand-written page would.** Semantic HTML over generic divs where an
+  element exists for the job. No hard-coded values standing in for what should follow
+  from content or a token — a line-height pinned to a magic number, a pill or button
+  given a fixed height instead of sizing from its padding and line-height. A class
+  combination repeated across the file becomes a variable (as `EYEBROW_CLASS` already
+  does in `ProjectTile.jsx` and `HomeProjectCard.jsx`) instead of being retyped at
+  each call site.
+- **Format with Prettier before treating a change as done.** This project has no
+  Prettier devDependency or config — formatting runs through the editor's Prettier
+  extension on save, not a CLI script. Save through the editor (or otherwise trigger
+  format-on-save) so the formatting matches what Richard's editor produces, rather than
+  hand-formatting to a guess.
 
 ## Still outstanding
 

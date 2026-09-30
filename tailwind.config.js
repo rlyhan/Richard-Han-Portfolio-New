@@ -86,6 +86,22 @@ export default {
         // instead of punching a hole in them.
         well: "#2A241E",
       },
+      backgroundImage: {
+        // The ground the Projects page mats each shot on: `well`, vignetted.
+        //
+        // Flat `well` is right for the hero's cells, which are small enough that one
+        // tone reads as a frame. At three-column size the same flat fill reads as a
+        // slab, so this lifts the centre and takes the corners down — which is what
+        // puts the shot in a frame rather than on a panel.
+        //
+        // The two stops sit either side of `well` in lightness, so the frame is the
+        // hero's well with light falling on it rather than a second dark tone. Off
+        // the 45% centre, because the shot is matted higher in the cell than it is
+        // low — the caption plate takes the foot — so a centred highlight would sit
+        // under the plate instead of behind the object.
+        frame:
+          "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
+      },
       boxShadow: {
         // Two layers: a tight core darkening the page at the card's edge (this
         // replaces the border line), and a wide falloff that reads as height.

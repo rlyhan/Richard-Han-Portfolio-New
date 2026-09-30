@@ -1,4 +1,4 @@
-const ListIcon = ({ className = "" }) => (
+const LinkedInIcon = ({ className = "" }) => (
     <svg
         className={className}
         xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ const ListIcon = ({ className = "" }) => (
 
 );
 
-export default ListIcon
+export default LinkedInIcon
