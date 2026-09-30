@@ -2,9 +2,11 @@ import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
 import ArticleParagraphs from "../components/layout/ArticleParagraphs";
 import ProjectMasthead from "../components/projects/ProjectMasthead";
+import MattedShot from "../components/common/MattedShot";
 import { usePage } from "../routes/RouterContext";
 import { projectPathOf, projectSectionId } from "../routes/routes";
 import PROJECTS from "../data/projects.data";
+import { fitOf } from "../data/shots.data";
 
 const TECH_ITEM_CLASS =
   "border-t border-grid py-2.5 text-[0.8125rem] leading-[1.45] font-medium text-ink first:border-t-0 first:pt-0";
@@ -28,6 +30,8 @@ const TECH_ITEM_CLASS =
 // The shot is matted on the vignetted well the Projects page frames its tiles on — see
 // ProjectTile — inset nearly evenly rather than with that page's deep foot, which is
 // room a tile leaves for its caption plate and a write-up has spent on the masthead.
+// A shot that carries its own ground fills the well instead, and takes no lift: there
+// is no plate on this page for the crop to clear.
 //
 // The masthead and shot are the page's chrome; the technologies rail and the copy
 // beside it are the write-up itself, so only those sit inside the <article>.
@@ -37,6 +41,7 @@ const ProjectPage = () => {
   const project = PROJECTS.find(({ id }) => projectPathOf(id) === path);
   const { id, name, images, idea, work_involved, technologies } = project;
   const image = images?.[0];
+  const fit = image && fitOf(image);
 
   return (
     <PageSection
@@ -48,13 +53,20 @@ const ProjectPage = () => {
 
       <figure className="px-[1.4rem] pb-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pb-[3.25rem]">
         <div className="relative h-[23.75rem] overflow-hidden bg-frame md:h-[clamp(21.25rem,52vw,40rem)]">
-          <div className="absolute top-3.5 right-5 bottom-6 left-5 flex items-center justify-center overflow-hidden md:top-5 md:right-[2.125rem] md:bottom-[2.125rem] md:left-[2.125rem]">
+          <div
+            className={cn(
+              "absolute overflow-hidden",
+              fit === "bleed"
+                ? "inset-0"
+                : "top-3.5 right-5 bottom-6 left-5 flex items-center justify-center md:top-5 md:right-[2.125rem] md:bottom-[2.125rem] md:left-[2.125rem]",
+            )}
+          >
             {image ? (
-              <img
-                src={`/images/projects/${image}`}
+              <MattedShot
+                src={image}
                 alt={`The ${name} site`}
-                decoding="async"
-                className="block h-full w-full object-contain object-center"
+                eager
+                fit={fit}
               />
             ) : (
               <div

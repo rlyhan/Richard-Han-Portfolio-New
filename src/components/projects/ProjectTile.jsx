@@ -3,6 +3,7 @@ import AwardIcon from "../icons/AwardIcon";
 import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { projectPathOf } from "../../routes/routes";
+import { fitOf } from "../../data/shots.data";
 
 // The Projects page's small-caps voice: each tile's number and category, and the
 // award mark inside the category line. Tighter tracking than the hero's spread — at
@@ -11,8 +12,9 @@ import { projectPathOf } from "../../routes/routes";
 const EYEBROW_CLASS =
   "font-epilogue text-[0.5625rem] font-medium uppercase leading-none tracking-[0.06em]";
 
-// The hero card's frame at three-column size — see HomeProjectCard for why the shots
-// are matted rather than cropped. The ground differs at this size: `bg-frame`, a
+// The hero card's frame at three-column size — see HomeProjectCard for why most
+// shots are matted rather than cropped, and why the ones photographed in a room run
+// to the tile's edges instead. The ground differs at this size: `bg-frame`, a
 // vignetted well rather than a flat one, since a flat fill reads as a slab this large
 // (see tailwind.config). The zoom is the hero's too, held to one subtle step since a
 // fourteen-cell grid only ever has one shot moving at a time under the cursor.
@@ -27,23 +29,32 @@ const EYEBROW_CLASS =
 const ProjectTile = ({ project, number }) => {
   const { id, name, category, award, images } = project;
   const image = images?.[0];
+  const fit = image && fitOf(image);
   const link = useNavLink(projectPathOf(id));
 
   return (
     <article
       data-reveal
-      className="relative h-[clamp(21.25rem,60vw,27.5rem)] overflow-hidden border-r border-b border-grid bg-frame md:h-[clamp(17.5rem,44vw,25rem)] lg:h-[clamp(18.75rem,34vw,28.75rem)]"
+      className="relative h-[clamp(21.25rem,60vw,27.5rem)] overflow-hidden border-b border-grid bg-frame md:h-[clamp(17.5rem,44vw,25rem)] lg:h-[clamp(18.75rem,34vw,28.75rem)]"
     >
       <a
         {...link}
         aria-label={`${name} — ${category}`}
         className="group block h-full focus-visible:outline-cream focus-visible:-outline-offset-4"
       >
-        <div className="absolute inset-x-5 top-3 bottom-24 flex items-center justify-center overflow-hidden md:inset-x-[1.625rem] md:top-4">
+        <div
+          className={cn(
+            "absolute overflow-hidden",
+            fit === "bleed"
+              ? "inset-0"
+              : "inset-x-5 top-3 bottom-24 flex items-center justify-center md:inset-x-[1.625rem] md:top-4",
+          )}
+        >
           {image ? (
             <MattedShot
               src={image}
               alt={`The ${name} site`}
+              fit={fit}
               zoom="group-hover:scale-[1.05]"
             />
           ) : (

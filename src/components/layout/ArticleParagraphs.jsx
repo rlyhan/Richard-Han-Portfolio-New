@@ -4,16 +4,18 @@ const ArticleParagraphs = ({ heading, paragraphs }) => (
       {heading}
     </h2>
 
-    <div className="grid gap-4 md:pr-16 lg:pr-24">
-      {paragraphs.map((paragraph) => (
-        <p
-          key={paragraph}
-          className="font-epilogue text-[0.9375rem] leading-[1.7] text-ink"
-        >
-          {paragraph}
-        </p>
-      ))}
-    </div>
+    {paragraphs?.length > 0 && (
+      <div className="grid gap-4 md:pr-16 lg:pr-24">
+        {paragraphs.map((paragraph) => (
+          <p
+            key={paragraph}
+            className="font-epilogue text-[0.9375rem] leading-[1.7] text-ink"
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
+    )}
   </div>
 );
 

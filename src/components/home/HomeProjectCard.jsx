@@ -16,6 +16,19 @@ import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 // is the point rather than a shortfall. The slight scale-up is there to keep the
 // object filling its frame; the hover takes it a step further.
 //
+// A shot photographed in a room is the exception and runs to the edges of the cell
+// instead — see MattedShot and shots.data. It brings a ground with it, so the well
+// has nothing to show and the inset frame would read as a picture inside a picture.
+// It keeps no base scale for the same reason it needs none: it already fills.
+//
+// A matted shot's frame stops above the caption plate rather than running under it:
+// the object stays whole, and the plate has nothing behind it to show through. A
+// bleed shot has to run under it — the ground is the picture — so what keeps the
+// device whole there is the shot's own floor, and the crop that never touches it.
+// The slide drops the top inset either way: a phone gives the deck a third of the
+// screen at most, and matting the scarce axis spends it on ground, where the well's
+// own top edge already reads as the frame.
+//
 // The caption sits ON the well instead of in a strip under it. A plate in the
 // hero's paper tone, over a dark ground, reads as a label pinned to the frame —
 // and it costs the shot nothing, because what it covers is matting.
@@ -64,6 +77,18 @@ const HomeProjectCard = ({
   const projectLink = useNavLink(projectPathOf(id));
   const isSlide = variant === "slide";
   const isLead = index === 0;
+  const isBleed = image.fit === "bleed";
+
+  // A bleed shot takes no base scale, since it already fills the cell — only the
+  // hover step. A matted lead cell takes the widest gesture of the three: it is the
+  // tall cell and takes the tall shot, so it has the least matting to give back.
+  const zoom = isSlide
+    ? undefined
+    : isBleed
+      ? "group-hover:scale-[1.04]"
+      : isLead
+        ? "scale-[1.12] group-hover:scale-[1.18]"
+        : "scale-[1.06] group-hover:scale-[1.11]";
 
   return (
     <article
@@ -86,20 +111,14 @@ const HomeProjectCard = ({
         aria-label={`View the ${name} project`}
         className="group block h-full focus-visible:outline-cream focus-visible:-outline-offset-4"
       >
-        {/* The frame the shot hangs in. Its foot stops above the caption plate
-            rather than running under it: the object stays whole, and the plate
-            has nothing behind it to show through.
-
-            No inset at the top of a slide. A phone gives the deck a third of the
-            screen at most, and matting the shot on all four sides there spends
-            the scarce axis on ground — the well's own top edge is the frame. The
-            sides keep theirs, since that is the axis with room to spare. */}
         <div
           className={cn(
             "absolute overflow-hidden",
-            isSlide
-              ? "inset-x-2 top-0 bottom-[3.35rem]"
-              : "inset-x-[clamp(0.9rem,1.6vw,1.9rem)] top-4 bottom-[clamp(4.25rem,6.5vh,5.25rem)]",
+            isBleed
+              ? "inset-0"
+              : isSlide
+                ? "inset-x-2 top-0 bottom-[3.35rem]"
+                : "inset-x-[clamp(0.9rem,1.6vw,1.9rem)] top-4 bottom-[clamp(4.25rem,6.5vh,5.25rem)]",
           )}
         >
           <MattedShot
@@ -108,17 +127,9 @@ const HomeProjectCard = ({
             width={image.width}
             height={image.height}
             eager={eager || isSlide}
-            className={isSlide ? "scale-[1.03]" : undefined}
-            zoom={
-              isSlide
-                ? undefined
-                : // The lead cell is the tall one and its shot is the tall
-                  // one, so it has the least matting to give back and can
-                  // afford the wider gesture.
-                  isLead
-                  ? "scale-[1.12] group-hover:scale-[1.18]"
-                  : "scale-[1.06] group-hover:scale-[1.11]"
-            }
+            fit={image.fit}
+            className={isSlide && !isBleed ? "scale-[1.03]" : undefined}
+            zoom={zoom}
           />
         </div>
 
