@@ -71,9 +71,14 @@ const PAGES = [
     path: "/contact",
     sectionId: "contact",
     title: "Contact — Richard Han",
-    ground: "bg-carbon-900",
+    ground: "bg-cream",
     navLabel: "Contact",
-    load: () => import("../pages/ContactPage.jsx"),
+    // As the hero does, this page draws the site's nav bar inside its own layout:
+    // it is one screen with no scroll, so the bar is furniture rather than
+    // something to be found. See SiteNav, which keeps its pinned copy down over a
+    // page that draws its own.
+    hasOwnNav: true,
+    load: () => import("../pages/ContactTemplate.jsx"),
   },
 ];
 
