@@ -8,8 +8,12 @@ import { projectPathOf, projectSectionId } from "../routes/routes";
 import PROJECTS from "../data/projects.data";
 import { fitOf } from "../data/shots.data";
 
-const TECH_ITEM_CLASS =
-  "border-t border-grid py-2.5 text-[0.8125rem] leading-[1.45] font-medium text-ink first:border-t-0 first:pt-0";
+const RAIL_LABEL_CLASS =
+  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
+
+const RAIL_VALUE_CLASS = "text-[0.8125rem] leading-[1.45] font-medium text-ink";
+
+const TECH_ITEM_CLASS = `${RAIL_VALUE_CLASS} border-t border-grid py-2.5 first:border-t-0 first:pt-0`;
 
 // One project's write-up, at /projects/<id>.
 //
@@ -33,13 +37,13 @@ const TECH_ITEM_CLASS =
 // A shot that carries its own ground fills the well instead, and takes no lift: there
 // is no plate on this page for the crop to clear.
 //
-// The masthead and shot are the page's chrome; the technologies rail and the copy
-// beside it are the write-up itself, so only those sit inside the <article>.
+// The masthead and shot are the page's chrome; the rail of facts and the copy beside
+// it are the write-up itself, so only those sit inside the <article>.
 const ProjectPage = () => {
   const { path } = usePage();
 
   const project = PROJECTS.find(({ id }) => projectPathOf(id) === path);
-  const { id, name, images, idea, work_involved, technologies } = project;
+  const { id, name, year, images, idea, work_involved, technologies } = project;
   const image = images?.[0];
   const fit = image && fitOf(image);
 
@@ -78,30 +82,33 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <article
-        className={cn(
-          "grid grid-cols-1 gap-8 border-t border-grid px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]",
-          {
-            "lg:grid-cols-[minmax(0,30%)_minmax(0,70%)] lg:gap-x-10":
-              technologies?.length > 0,
-          },
-        )}
-      >
-        {technologies?.length > 0 && (
-          <div className="min-w-0">
-            <p className="font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase">
-              Technologies
-            </p>
+      <article className="grid grid-cols-1 gap-8 border-t border-grid px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem] lg:grid-cols-[minmax(0,30%)_minmax(0,70%)] lg:gap-x-10">
+        <div className="flex min-w-0 flex-col gap-8">
+          <div>
+            <p className={RAIL_LABEL_CLASS}>Year worked on</p>
 
-            <ul className="mt-3.5 grid">
-              {technologies.map((technology) => (
-                <li key={technology} className={TECH_ITEM_CLASS}>
-                  {technology}
-                </li>
-              ))}
-            </ul>
+            <time
+              dateTime={String(year)}
+              className={cn("mt-3.5 block", RAIL_VALUE_CLASS)}
+            >
+              {year}
+            </time>
           </div>
-        )}
+
+          {technologies?.length > 0 && (
+            <div>
+              <p className={RAIL_LABEL_CLASS}>Technologies</p>
+
+              <ul className="mt-3.5 grid">
+                {technologies.map((technology) => (
+                  <li key={technology} className={TECH_ITEM_CLASS}>
+                    {technology}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
 
         <div className="flex flex-col gap-10 md:gap-14">
           {idea?.length > 0 && (

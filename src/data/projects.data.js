@@ -12,6 +12,7 @@ const PROJECTS = [
   {
     name: "Neat Places",
     id: "neat-places",
+    year: 2021,
     url: "https://neatplaces.co.nz/",
     award: {
       description: "Best Awards 2022 Recipient",
@@ -37,6 +38,7 @@ const PROJECTS = [
   {
     name: "Thakeham",
     id: "thakeham",
+    year: 2025,
     url: "https://thakeham.com/",
     category: "Residential Housing",
     client: true,
@@ -57,6 +59,7 @@ const PROJECTS = [
   {
     name: "Touchgrass",
     id: "touchgrass",
+    year: 2026,
     url: "https://touchgrass-mobile.vercel.app/",
     category: "Lifestyle",
     client: false,
@@ -89,6 +92,7 @@ const PROJECTS = [
   {
     name: "Study With New Zealand",
     id: "study-with-nz",
+    year: 2022,
     url: "https://www.studywithnewzealand.govt.nz/en",
     category: "Government / Education",
     client: true,
@@ -117,6 +121,7 @@ const PROJECTS = [
   {
     name: "G.Network",
     id: "g-network",
+    year: 2023,
     url: "https://www.g.network/",
     category: "Broadband",
     client: true,
@@ -137,6 +142,7 @@ const PROJECTS = [
   {
     name: "Gigs of London",
     id: "gigs-of-london",
+    year: 2023,
     url: "https://gigs-of-london.vercel.app/",
     category: "Events",
     client: false,
@@ -157,6 +163,7 @@ const PROJECTS = [
   {
     name: "Deadly Ponies",
     id: "deadly-ponies",
+    year: 2021,
     url: "https://deadlyponies.com/",
     category: "Fashion",
     client: true,
@@ -175,6 +182,7 @@ const PROJECTS = [
   {
     name: "The Physics Room",
     id: "the-physics-room",
+    year: 2020,
     url: "https://physicsroom.org.nz/",
     category: "Art galleries",
     client: true,
@@ -193,6 +201,7 @@ const PROJECTS = [
   {
     name: "Coloursmith",
     id: "coloursmith",
+    year: 2020,
     url: "https://coloursmith.com.au/",
     category: "Paints",
     client: true,
@@ -212,6 +221,7 @@ const PROJECTS = [
   {
     name: "James Dunlop Textiles",
     id: "james-dunlop-textiles",
+    year: 2021,
     url: "https://www.jamesdunloptextiles.com/",
     category: "Textiles",
     client: true,
@@ -231,6 +241,7 @@ const PROJECTS = [
   {
     name: "West Coast Tas",
     id: "west-coast-tas",
+    year: 2020,
     url: "https://westcoasttas.com.au/",
     category: "Tourism",
     client: true,
@@ -250,6 +261,7 @@ const PROJECTS = [
   {
     name: "Never Have I Ever",
     id: "never-have-i-ever",
+    year: 2020,
     url: "https://neverhaveiever.neatplaces.co.nz/",
     category: "Travel and tourism",
     client: true,
