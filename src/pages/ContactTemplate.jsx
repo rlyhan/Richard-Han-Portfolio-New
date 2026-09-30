@@ -1,3 +1,4 @@
+import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
 import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
@@ -10,13 +11,38 @@ import {
   CONTACT_PORTRAIT,
 } from "../data/contact.data";
 
+// The gutter the pages that band to the viewport edge carry — here it sets the title
+// against the copy below or beside it, so both read off one margin. See PageMasthead,
+// which carries the same one.
 const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
+// The channels take their height from their own padding and type rather than stating
+// one, so the row can't crop its labels when the type scale moves. Three abreast on a
+// phone, where they share the width; their own width from md up, where the shortest of
+// them still has to read as the same object as the longest.
 const CHANNEL_CLASS =
-  "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border border-grid px-[0.5625rem] py-3 font-urbanist text-[0.8125rem] leading-none font-semibold transition-colors duration-200 hover:border-ink hover:bg-shell focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-4 md:py-4 md:text-base";
+  "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border px-[0.5625rem] py-4 font-urbanist text-[0.875rem] leading-none font-semibold transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-5 md:py-5 md:text-base";
 
+// Cream on well, which is the title's own pairing where it sits on the photograph: the
+// channel that actually reaches me answers the invitation in the same two tones, rather
+// than being one of three identical outlines. Applied to the first channel, rather than
+// one flagged in the data — the list is already ordered by which is worth trying, and a
+// flag beside that order could disagree with it.
+const CHANNEL_PRIMARY_CLASS =
+  "border-well bg-well text-cream hover:border-ink hover:bg-ink";
+
+const CHANNEL_SECONDARY_CLASS = "border-grid hover:border-ink hover:bg-shell";
+
+// A channel that leaves the site, read off the href rather than flagged in the data.
 const isExternal = (href) => href.startsWith("http");
 
+// One screen, like the hero, so the nav bar below is drawn here rather than left to
+// the pinned SiteNav — see `hasOwnNav` on this page's route record.
+//
+// The title sits inside the photograph's own box, over the scrim, rather than beside
+// it in a shared grid cell: two grid items sharing a cell can drift apart on
+// alignment, a title positioned inside one box can't. svh rather than vh sizes the
+// split so it holds while the browser's own chrome is showing.
 const ContactTemplate = () => {
   const navItems = useNavItems();
 
@@ -26,8 +52,17 @@ const ContactTemplate = () => {
       contained={false}
       additionalClasses="grid h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-cream font-epilogue text-ink"
     >
-      <div className="grid min-h-0 grid-rows-[minmax(0,50%)_minmax(0,50%)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-none lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
-        <figure className="relative min-h-0 w-full overflow-hidden bg-shell">
+      <div className="grid min-h-0 grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
+        <div
+          className={cn(
+            "row-start-1 grid items-center border-b border-grid py-3 md:col-start-2 md:row-start-1 md:py-0",
+            GUTTER_CLASS,
+          )}
+        >
+          <Byline />
+        </div>
+
+        <figure className="relative row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-shell md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
           <img
             src={CONTACT_PORTRAIT.src}
             alt={CONTACT_PORTRAIT.alt}
@@ -35,62 +70,65 @@ const ContactTemplate = () => {
             height={CONTACT_PORTRAIT.height}
             fetchPriority="high"
             decoding="async"
-            className="absolute top-0 left-[46%] h-full w-auto max-w-none min-w-full -translate-x-1/2 object-cover md:left-1/2"
+            className="absolute inset-0 h-full w-full object-cover object-[46%_center]"
           />
+
+          <div aria-hidden="true" className="absolute inset-0 bg-scrim" />
+
+          <h1
+            id="contact-heading"
+            className={cn(
+              "absolute inset-x-0 bottom-0 pb-5 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:pb-7 md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:pb-9 lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
+              GUTTER_CLASS,
+            )}
+          >
+            {CONTACT_HEADING_LINES.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </h1>
         </figure>
 
-        <div className="grid min-h-0 min-w-0 grid-rows-[2.5rem_minmax(0,1fr)] md:grid-rows-[4rem_minmax(0,1fr)]">
-          <div
-            className={`grid items-center border-b border-grid ${GUTTER_CLASS}`}
+        <section
+          aria-labelledby="contact-heading"
+          className={cn(
+            "row-start-3 flex min-h-0 flex-col justify-center py-5 md:col-start-2 md:row-start-2 md:justify-end md:pt-6 md:pb-7 lg:pb-9",
+            GUTTER_CLASS,
+          )}
+        >
+          <p className="max-w-[32rem] text-[1.0625rem] leading-[1.55] text-ash lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
+            {CONTACT_NOTE}
+          </p>
+
+          <ul
+            aria-label="Ways to reach me"
+            className="mt-7 flex items-center gap-2 md:mt-[clamp(1.75rem,4.5vh,3rem)] md:flex-wrap md:gap-2.5"
           >
-            <Byline />
-          </div>
-
-          <section
-            aria-labelledby="contact-heading"
-            className={`flex min-h-0 flex-col justify-center py-4 md:py-[clamp(1.5rem,4vh,3.5rem)] ${GUTTER_CLASS}`}
-          >
-            <h1
-              id="contact-heading"
-              className="max-w-[43.75rem] font-urbanist text-[clamp(2.25rem,8vw,3.25rem)] leading-[0.95] font-semibold md:text-[clamp(2.25rem,4.8vw,3.125rem)] lg:text-[clamp(3.125rem,5.3vw,4.875rem)]"
-            >
-              {CONTACT_HEADING_LINES.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
-
-            <p className="mt-3.5 max-w-[33.125rem] text-[0.875rem] leading-[1.42] text-ash md:mt-[clamp(1.5rem,3vh,2.375rem)] md:text-[0.9375rem] md:leading-[1.55] lg:text-[clamp(1rem,1.4vw,1.1875rem)]">
-              {CONTACT_NOTE}
-            </p>
-
-            <ul
-              aria-label="Ways to reach me"
-              className="mt-[1.125rem] flex items-center gap-2 md:mt-[clamp(2rem,5vh,3.5rem)] md:flex-wrap md:gap-2.5"
-            >
-              {CONTACT_CHANNELS.map(({ id, label, icon, href }) => (
-                <li
-                  key={id}
-                  className="flex min-w-0 flex-1 md:min-w-[9.375rem] md:flex-none"
+            {CONTACT_CHANNELS.map(({ id, label, icon, href }, i) => (
+              <li
+                key={id}
+                className="flex min-w-0 flex-1 md:min-w-[10.5rem] md:flex-none"
+              >
+                <a
+                  href={href}
+                  target={isExternal(href) ? "_blank" : undefined}
+                  rel={isExternal(href) ? "noreferrer" : undefined}
+                  className={cn(
+                    CHANNEL_CLASS,
+                    i === 0 ? CHANNEL_PRIMARY_CLASS : CHANNEL_SECONDARY_CLASS,
+                  )}
                 >
-                  <a
-                    href={href}
-                    target={isExternal(href) ? "_blank" : undefined}
-                    rel={isExternal(href) ? "noreferrer" : undefined}
-                    className={CHANNEL_CLASS}
-                  >
-                    <IconRenderer
-                      icon={icon}
-                      className="size-4 shrink-0 md:size-[1.1875rem]"
-                    />
-                    <span className="truncate">{label}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
+                  <IconRenderer
+                    icon={icon}
+                    className="size-4 shrink-0 md:size-5"
+                  />
+                  <span className="truncate">{label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
       <NavMenu items={navItems} />
