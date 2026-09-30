@@ -12,6 +12,7 @@ import GamepadIcon from "./GamepadIcon";
 import GitHubIcon from "./GitHubIcon";
 import LanguagesIcon from "./LanguagesIcon";
 import LinkedInIcon from "./LinkedInIcon";
+import MailIcon from "./MailIcon";
 import MountainIcon from "./MountainIcon";
 import MusicIcon from "./MusicIcon";
 import PenIcon from "./PenIcon";
@@ -37,6 +38,7 @@ export {
     GitHubIcon,
     LanguagesIcon,
     LinkedInIcon,
+    MailIcon,
     MountainIcon,
     MusicIcon,
     PenIcon,

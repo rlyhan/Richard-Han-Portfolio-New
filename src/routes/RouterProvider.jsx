@@ -584,8 +584,14 @@ const RouterProvider = ({ children }) => {
       // scroll or a click. Until that page is in the document the selector
       // matches nothing, which useRevealOnScrollUp reads as a floor below
       // everything, so the bar never comes up over the hero's own copy.
+      //
+      // With nothing below it, the page's own section is the floor: Contact is the
+      // last page and draws the bar itself, and a null selector here would be read
+      // as no floor at all — a bar that opens up, over the copy already drawn. Its
+      // own top holds the pinned copy down for as long as it holds the screen, and
+      // still lets it up on the way back if the page is ever scrolled past.
       navFloorSelector: route?.hasOwnNav
-        ? sectionSelectorOf(routeAfter(route))
+        ? sectionSelectorOf(routeAfter(route) ?? route)
         : null,
       // Changes whenever the document's pages do, for anything outside them
       // that measures a position and has to measure it again.

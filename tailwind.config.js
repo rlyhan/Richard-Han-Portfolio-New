@@ -5,6 +5,12 @@
 const NEON = "#00DDBE";
 const NEON_RGB = "0, 221, 190";
 
+// Same again for `well`, which the Contact page's scrim in backgroundImage is built
+// out of: the scrim is that tone falling across a photograph, so it cannot be allowed
+// to drift away from the tone itself.
+const WELL = "#2A241E";
+const WELL_RGB = "42, 36, 30";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -84,7 +90,7 @@ export default {
         // hero, and the reason the shots read as objects on a page rather than
         // as panels of their own: warm, so it sits with the paper tones above
         // instead of punching a hole in them.
-        well: "#2A241E",
+        well: WELL,
       },
       backgroundImage: {
         // The ground the Projects page mats each shot on: `well`, vignetted.
@@ -101,6 +107,16 @@ export default {
         // under the plate instead of behind the object.
         frame:
           "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
+        // The Contact page's photograph carries that page's title, and a photograph
+        // is not a ground to set type on. This is what gives the words something to
+        // sit against.
+        //
+        // `well` rather than black, so it reads as the site's own dark tone falling
+        // across the picture rather than as a grey card laid over it. It holds above
+        // 0.8 through the first third, which is as high as the second line of the
+        // title reaches — the stops are placed against that block, not spread evenly
+        // — and is gone by 82%, so the subject's face is never under it.
+        scrim: `linear-gradient(to top, rgba(${WELL_RGB}, 0.94) 0%, rgba(${WELL_RGB}, 0.88) 26%, rgba(${WELL_RGB}, 0.55) 44%, rgba(${WELL_RGB}, 0.16) 64%, rgba(${WELL_RGB}, 0) 82%)`,
       },
       boxShadow: {
         // Two layers: a tight core darkening the page at the card's edge (this
