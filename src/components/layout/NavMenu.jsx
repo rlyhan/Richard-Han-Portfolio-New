@@ -47,7 +47,7 @@ const NavMenu = ({
         <a
           key={id}
           {...link}
-          className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.7rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
+          className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.8125rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
         >
           <span
             aria-hidden="true"

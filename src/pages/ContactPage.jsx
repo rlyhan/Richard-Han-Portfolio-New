@@ -99,7 +99,7 @@ const ContactPage = () => {
               className="size-[3.25rem] shrink-0 rounded-full border border-grid object-cover md:size-16 lg:size-[4.5rem]"
             />
 
-            <p className="max-w-[32rem] text-[1.0625rem] leading-[1.55] text-ash lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
+            <p className="max-w-[32rem] text-[0.8125rem] leading-[1.55] text-ash md:text-[1.0625rem] lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
               {CONTACT_NOTE}
             </p>
           </div>
