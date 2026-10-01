@@ -53,10 +53,12 @@ import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 // hover zoom goes with it — a touch that starts a drag counts as a hover, so on a
 // phone the shot would swell mid-swipe and stay swollen after it.
 //
-// A slide's shot also loads eagerly whatever its place in the deck: a lazy image
-// parked outside a horizontal track has nothing to bring it in until the swipe that
-// reveals it, so the first swipe would land on a blank card. The priority hint stays
-// with the lead card either way.
+// Every card's shot loads eagerly, in either layout. The spread shows all three
+// cells at once, and a lazy image above the fold is fetched after everything else
+// the page needs; the deck's slides sit outside a horizontal track, where there is
+// nothing to bring a lazy image in until the swipe that reveals it, so the first
+// swipe would land on a blank card. The three of them are preloaded from index.html
+// besides — see there for why this document can't discover them on its own.
 //
 // The card links straight to the project's write-up, the same page ProjectTile
 // points at from the Projects listing.
@@ -66,20 +68,7 @@ import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 // whole panel on at once. Small enough to finish well inside the reveal itself.
 const REVEAL_STAGGER_MS = 120;
 
-// What the browser picks a width for, and in vh because these cells are sized off
-// the viewport's height rather than its width — see MattedShot on why a bleed shot
-// is cropped to its frame's height times the shots' 16:9. The lead cell is the
-// panel's full height, the other two are half of it, and the phone carousel's slide
-// stands in a 35svh panel.
-const SHOT_SIZES = { lead: "150vh", cell: "75vh", slide: "55vh" };
-
-const HomeProjectCard = ({
-  project,
-  index,
-  position,
-  variant = "grid",
-  eager,
-}) => {
+const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
   const { id, name, category, image } = project;
   const projectLink = useNavLink(projectPathOf(id));
   const isSlide = variant === "slide";
@@ -133,14 +122,7 @@ const HomeProjectCard = ({
             alt={image.alt}
             width={image.width}
             height={image.height}
-            eager={eager || isSlide}
-            sizes={
-              isSlide
-                ? SHOT_SIZES.slide
-                : isLead
-                  ? SHOT_SIZES.lead
-                  : SHOT_SIZES.cell
-            }
+            eager
             fit={image.fit}
             className={isSlide && !isBleed ? "scale-[1.03]" : undefined}
             zoom={zoom}

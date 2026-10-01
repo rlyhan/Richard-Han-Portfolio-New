@@ -65,7 +65,6 @@ const HomeProjectCarousel = ({ projects }) => {
               project={project}
               index={i}
               variant="slide"
-              eager={i === 0}
             />
           ))}
         </div>

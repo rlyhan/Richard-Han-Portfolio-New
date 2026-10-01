@@ -77,7 +77,6 @@ const WorkGrid = () => (
           project={project}
           index={i}
           position={CELLS[i]}
-          eager={i === 0}
         />
       ))}
     </div>

@@ -22,15 +22,16 @@ const FILTERS = [
 
 // How many shots load with the page rather than when the reader reaches them.
 //
-// These tiles are on screen the moment Projects opens, and an above-the-fold image
-// left to lazy loading is fetched after everything else on the page — so the tiles
-// paint, and then the pictures drop into them. The rows further down need no hint:
-// they are revealed on the scroll, and that reveal waits for its own shots (see
-// useScrollReveal), which is a wait there is nothing to see during.
+// One, because one is all that is on screen at every width — and it is the largest
+// thing this page paints. The two beside it on a desktop grid are named in
+// index.html instead, which is earlier than any hint here can be; on a phone they
+// are below the fold, where this would have fetched them at high priority for
+// nothing.
 //
-// Three is the widest breakpoint's row. Narrower ones take the row below with it,
-// which is the next thing the reader scrolls to anyway.
-const EAGER_TILES = 3;
+// The rows further down need no hint either: they are revealed on the scroll, and
+// that reveal waits for its own shots (see useScrollReveal), which is a wait there
+// is nothing to see during.
+const EAGER_TILES = 1;
 
 // The number beside each title, worked out once off the full list. The filters hide
 // tiles rather than renumbering them, so a project keeps its number whichever filter
