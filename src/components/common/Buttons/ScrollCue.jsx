@@ -14,7 +14,7 @@ const FADE_DURATION = 0.35;
 // document and the nav bar is the way on. It carries no fill — the hero is paper end
 // to end, and a filled disc there reads as a button dropped on a print layout, so a
 // hairline ring is enough and the hover is a wash rather than a flip to solid. The
-// focus ring comes with it, the page's neon default being all but invisible on that
+// focus ring comes with it, the page's default being all but invisible on that
 // ground.
 //
 // The bounce lives on an inner element so the infinite y tween and the visibility
