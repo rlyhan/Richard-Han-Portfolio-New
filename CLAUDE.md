@@ -21,6 +21,9 @@ chunk, and the only page in the document.
 - `src/helpers/scrollHold.js` — taking the scroll off the viewer for the length of
   something that owns it.
 - `src/components/SiteNav.jsx`, `Footer.jsx` — chrome that outlives page changes.
+- `vercel.json` — every path serves `index.html`, so a direct `/about` reaches the
+  router rather than the host's 404. Vercel applies rewrites after it has checked
+  the filesystem, so `/assets` and `/images` still serve their own files.
 
 ## Invariants
 
@@ -104,5 +107,7 @@ scroll.
 
 ## Still outstanding
 
-- Direct URLs need an SPA rewrite on the host: `/about` and the rest 404 without one.
 - No prerendering, so those pages have no server-rendered HTML for crawlers.
+- `index.html` preloads the three shots that open the hero and the Projects grid.
+  Now that direct URLs resolve, a visitor landing on `/about` or `/contact` is
+  served them too and needs none of them.
