@@ -5,9 +5,9 @@
 const NEON = "#00DDBE";
 const NEON_RGB = "0, 221, 190";
 
-// Same again for `well`, which the Contact page's scrim in backgroundImage is built
-// out of: the scrim is that tone falling across a photograph, so it cannot be allowed
-// to drift away from the tone itself.
+// Same again for `well`, which the Contact page's panel fills with and the About
+// page's mobile scrim in backgroundImage falls across its portrait with: both have
+// to answer to the same tone, not a swatch that can drift from it.
 const WELL = "#2A241E";
 const WELL_RGB = "42, 36, 30";
 
@@ -19,7 +19,7 @@ export default {
       // width enough to even out the two halves, where below it the spread
       // takes the larger share — see Home.
       screens: {
-        wide: "1440px",
+        wide: "90rem",
       },
 
       // Single source of truth for the palette — index.css pulls the same

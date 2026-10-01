@@ -8,8 +8,8 @@ import {
   CONTACT_CHANNELS,
   CONTACT_HEADING_LINES,
   CONTACT_NOTE,
-  CONTACT_PORTRAIT,
 } from "../data/contact.data";
+import { HEADSHOT } from "../data/photos.data";
 
 // The gutter the pages that band to the viewport edge carry — here it sets the title
 // against the copy below or beside it, so both read off one margin. See PageMasthead,
@@ -23,7 +23,7 @@ const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 const CHANNEL_CLASS =
   "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border px-[0.5625rem] py-4 font-urbanist text-[0.875rem] leading-none font-semibold transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-5 md:py-5 md:text-base";
 
-// Cream on well, which is the title's own pairing where it sits on the photograph: the
+// Cream on well, which is the panel's own pairing where the title sits on it: the
 // channel that actually reaches me answers the invitation in the same two tones, rather
 // than being one of three identical outlines. Applied to the first channel, rather than
 // one flagged in the data — the list is already ordered by which is worth trying, and a
@@ -39,10 +39,14 @@ const isExternal = (href) => href.startsWith("http");
 // One screen, like the hero, so the nav bar below is drawn here rather than left to
 // the pinned SiteNav — see `hasOwnNav` on this page's route record.
 //
-// The title sits inside the photograph's own box, over the scrim, rather than beside
-// it in a shared grid cell: two grid items sharing a cell can drift apart on
-// alignment, a title positioned inside one box can't. svh rather than vh sizes the
-// split so it holds while the browser's own chrome is showing.
+// The title sits inside the panel's own box rather than beside it in a shared grid
+// cell: two grid items sharing a cell can drift apart on alignment, a title
+// positioned inside one box can't. svh rather than vh sizes the split so it holds
+// while the browser's own chrome is showing.
+//
+// The panel is a flat fill rather than a photograph, which is why it carries no
+// scrim: the scrim is there to hold cream type over a picture, and well already does
+// that on its own. The one photograph on the site is the About page's.
 const ContactTemplate = () => {
   const navItems = useNavItems();
 
@@ -62,19 +66,7 @@ const ContactTemplate = () => {
           <Byline />
         </div>
 
-        <figure className="relative row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-shell md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
-          <img
-            src={CONTACT_PORTRAIT.src}
-            alt={CONTACT_PORTRAIT.alt}
-            width={CONTACT_PORTRAIT.width}
-            height={CONTACT_PORTRAIT.height}
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-[46%_center]"
-          />
-
-          <div aria-hidden="true" className="absolute inset-0 bg-scrim" />
-
+        <div className="relative row-start-2 h-[50svh] min-h-0 w-full bg-well md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
           <h1
             id="contact-heading"
             className={cn(
@@ -88,7 +80,7 @@ const ContactTemplate = () => {
               </span>
             ))}
           </h1>
-        </figure>
+        </div>
 
         <section
           aria-labelledby="contact-heading"
@@ -97,9 +89,20 @@ const ContactTemplate = () => {
             GUTTER_CLASS,
           )}
         >
-          <p className="max-w-[32rem] text-[1.0625rem] leading-[1.55] text-ash lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
-            {CONTACT_NOTE}
-          </p>
+          <div className="flex items-center gap-4 md:gap-5">
+            <img
+              src={HEADSHOT.src}
+              alt={HEADSHOT.alt}
+              width={HEADSHOT.width}
+              height={HEADSHOT.height}
+              decoding="async"
+              className="size-[3.25rem] shrink-0 rounded-full border border-grid object-cover md:size-16 lg:size-[4.5rem]"
+            />
+
+            <p className="max-w-[32rem] text-[1.0625rem] leading-[1.55] text-ash lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
+              {CONTACT_NOTE}
+            </p>
+          </div>
 
           <ul
             aria-label="Ways to reach me"

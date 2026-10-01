@@ -83,12 +83,6 @@ const TECH = [
     icon: "server",
   },
   {
-    id: "seo-analytics",
-    heading: "SEO & Analytics",
-    listItems: ["Google Analytics", "Screaming Frog"],
-    icon: "search",
-  },
-  {
     id: "devops",
     heading: "DevOps, CI/CD, Tools",
     listItems: ["GitHub Actions", "Docker", "Sentry"],

@@ -1,12 +1,15 @@
 import PageSection from "../components/layout/PageSection";
+import AboutOpening from "../components/about/AboutOpening";
 import AboutExperience from "../components/about/AboutExperience";
 import PageBand from "../components/layout/PageBand";
 import AboutTech from "../components/about/AboutTech";
 import AboutInterests from "../components/about/AboutInterests";
-import PageMasthead from "../components/layout/PageMasthead";
-import { ABOUT_HEADING, ABOUT_NOTE, ABOUT_SECTIONS } from "../data/about.data";
+import { ABOUT_SECTIONS } from "../data/about.data";
 
-// The About page: a masthead and three banded sections.
+// The About page: the Contact page's opening carrying this page's copy, then three
+// banded sections. The opening replaces the masthead the other pages below the
+// homepage wear — it draws the byline and the title itself, so a masthead above it
+// would be both of those twice. See AboutOpening.
 //
 // Its own page, at /about, and its own chunk — the hero's spread and the project data
 // are not sent to someone who came here to read. The router mounts it below the hero
@@ -32,7 +35,7 @@ const AboutPage = () => (
     contained={false}
     additionalClasses="relative z-10 flex flex-col bg-cream font-epilogue text-ink"
   >
-    <PageMasthead heading={ABOUT_HEADING} note={ABOUT_NOTE} />
+    <AboutOpening />
 
     <PageBand index="01" {...ABOUT_SECTIONS.experience}>
       <AboutExperience />

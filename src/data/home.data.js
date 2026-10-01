@@ -10,7 +10,7 @@ import { fitOf } from "./shots.data";
 export const INTRO_LINES = ["Engaging", "digital", "experiences."];
 
 export const INTRO_NOTE =
-  "Front End and Full Stack Development. Thoughtful engineering. Powered by collaboration. Enhanced by AI.";
+  "Front End and Full Stack Developer, passionate about user experience, collaboration and creativity. Currently freelancing and open to opportunities.";
 
 // The byline above the display lines: who and where, stated once in small caps so
 // the h1 underneath is free to be four lines of type rather than an introduction.
