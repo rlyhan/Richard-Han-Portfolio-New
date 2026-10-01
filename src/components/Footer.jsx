@@ -9,7 +9,7 @@
 const Footer = () => {
   return (
     <footer className="flex min-h-[var(--nav-height,4rem)] items-center justify-center px-6 py-6 text-center text-sm text-carbon-400">
-      © 2026 Richard Han. Icons by Freepik from Flaticon.
+      © 2026 Richard Han.
     </footer>
   );
 };
