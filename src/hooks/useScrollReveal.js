@@ -91,14 +91,52 @@ const isStacked = (rows) => rows.every((row) => row.items.length === 1)
 const isPastRevealLine = (row) =>
     row[0].getBoundingClientRect().top <= window.innerHeight * REVEAL_LINE
 
-// A row arriving as a run, its items a fixed beat apart.
+// How long a row waits on its own shots before coming in without them, in ms. A
+// request that never settles would otherwise leave the row blank for good — the
+// reveal plays once and nothing comes back for it — and a tile whose picture is
+// still in flight is still a tile worth reading.
+const SHOT_WAIT_CAP_MS = 2000
+
+// Resolves once every image inside `items` has pixels to paint, or the cap runs out.
 //
-// The visible offset between neighbours falls out of the same two numbers: with
-// this ease they sit roughly `(stagger / duration) * lift` px apart early in the
-// flight. Tighten the stagger without answering for that and the items travel as
-// one flat block.
-const buildRowTween = (items, { duration, stagger, lift }) =>
-    gsap.fromTo(items,
+// decode() over the load event: a decoded image paints next frame, where one that
+// has merely arrived still turns up a frame or two late. It also frees an image
+// still behind its lazy-load threshold — the case this is really for. A broken
+// image rejects, which counts as ready.
+//
+// Waits on the row's shots together, not each item alone, so the run starts as one
+// instead of being ordered by the network.
+const whenShotsReady = (items) => {
+    const decoded = items
+        .flatMap((item) => Array.from(item.querySelectorAll("img")))
+        .map((image) => image.decode().catch(() => {}))
+
+    return Promise.race([
+        Promise.all(decoded),
+        new Promise((resolve) => setTimeout(resolve, SHOT_WAIT_CAP_MS)),
+    ])
+}
+
+// A reveal, blanked at build time and played by its own trigger once the row has
+// both reached the line and got something to show.
+//
+// The trigger is created beside the tween rather than handed to it: GSAP starts a
+// tween the moment its trigger is crossed, and crossing the line is only half of
+// what has to be true. The other half is the pictures — a project tile is mostly
+// its shot, and a fade that starts while the shot is still in flight plays out
+// around a hole the picture then drops into.
+//
+// `stagger`:
+// - left off, a stack rises as one — the whole point of the stacked path. The
+//   reveal is over by the time the reader is past the first item, and everything
+//   below stays at rest however far the stack runs on, so the effect greets the
+//   section rather than following the reader down it.
+// - included, the row arrives as a run, its items a fixed beat apart; with this
+//   ease they sit roughly `(stagger / duration) * lift` px apart early in the
+//   flight. Tighten the stagger without answering for that and the items travel
+//   as one flat block.
+const buildReveal = (items, { duration, stagger, lift }, isLive) => {
+    const tween = gsap.fromTo(items,
         { opacity: 0, y: lift },
         {
             opacity: 1,
@@ -106,43 +144,25 @@ const buildRowTween = (items, { duration, stagger, lift }) =>
             duration,
             stagger,
             ease: ITEM_EASE,
-            scrollTrigger: {
-                // The first item stands in for the row — there's no row element,
-                // and sharing a top edge is what made them a row anyway.
-                trigger: items[0],
-                start: REVEAL_START,
-                // Plays once and retires: nothing to reverse on the way back up,
-                // and nothing left listening for a row that is done.
-                once: true,
-            },
+            paused: true,
         }
     )
 
-// A whole stack rising as one, on the scroll that brings its first item to the
-// line.
-//
-// No stagger: the point is that the reveal is over by the time the reader is
-// past the first item. Everything below it is already at rest and stays there,
-// however far the stack runs on — so the effect greets the section rather than
-// following the reader down it.
-//
-// A container of a single item takes this path too, which is what it always was:
-// one item, no stagger, and nothing left behind it to wait for.
-const buildStackTween = (items, { duration, lift }) =>
-    gsap.fromTo(items,
-        { opacity: 0, y: lift },
-        {
-            opacity: 1,
-            y: 0,
-            duration,
-            ease: ITEM_EASE,
-            scrollTrigger: {
-                trigger: items[0],
-                start: REVEAL_START,
-                once: true,
-            },
-        }
-    )
+    ScrollTrigger.create({
+        // The first item stands in for the row — there's no row element, and
+        // sharing a top edge is what made them a row anyway.
+        trigger: items[0],
+        start: REVEAL_START,
+        // Fires once and retires: nothing to reverse on the way back up, and
+        // nothing left listening for a row that is done.
+        once: true,
+        onEnter: () => {
+            whenShotsReady(items).then(() => {
+                if (isLive()) tween.play()
+            })
+        },
+    })
+}
 
 // Every `data-reveal` item inside `containerRef` fading up into place, on the
 // scroll that brings it on screen — and, once it starts, running to its rest
@@ -153,21 +173,33 @@ const buildStackTween = (items, { duration, lift }) =>
 // running one item per row — which is most of them on a phone — reveals in a
 // single pass at the top instead, and is at rest from there down.
 //
-// Pass `revealKey` for containers whose contents are swapped rather than
-// re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
-// anything changing WHICH elements are present has to say so.
+// Reaching the line is necessary but not sufficient: a row with images in it waits
+// for them as well, so a picture fades in with the frame around it rather than
+// landing part-way through the fade — see whenShotsReady for how long it waits.
 //
-// `duration`, `stagger` and `lift` move how long one item takes, how far behind
-// it the next one follows, and how far each rises. Only `duration` and `lift`
-// reach the stacked path, which has no run to space out.
+// - `revealKey`: pass it for containers whose contents are swapped rather than
+//   re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
+//   anything changing WHICH elements are present has to say so.
+// - `duration`, `stagger`, `lift`: how long one item takes, how far behind it the
+//   next one follows, and how far each rises. Only `duration` and `lift` reach the
+//   stacked path, which has no run to space out.
+// - `enabled`: for a container mounted somewhere other than where it will live —
+//   a page arriving by a swap is held to the viewport a screen below the fold
+//   while it travels (see PageOutlet), and every row measured there reads as below
+//   the line, so every row would be blanked and handed a trigger for a scroll
+//   position that means nothing. Told to wait, the hook builds nothing and the
+//   items render at rest; the caller flips it once the page is where it belongs,
+//   and the rows are read from their real places. Not a key, because a key would
+//   build the wrong thing first and then correct it, and the correction is a
+//   page-worth of cards blinking.
 export function useScrollReveal(
     containerRef,
     revealKey,
-    { duration = ITEM_DURATION, stagger = ITEM_STAGGER, lift = ITEM_LIFT } = {},
+    { duration = ITEM_DURATION, stagger = ITEM_STAGGER, lift = ITEM_LIFT, enabled = true } = {},
 ) {
     useEffect(() => {
         const container = containerRef.current
-        if (!container) return
+        if (!container || !enabled) return
 
         const build = () => {
             const mm = gsap.matchMedia()
@@ -185,24 +217,32 @@ export function useScrollReveal(
 
                 if (items.length === 0) return
 
+                // A row crossing the line can still be waiting on its shots when
+                // this build is torn down — a filter press, a resize, the page
+                // leaving. revert() has put its items back at rest by then, so the
+                // wait has to know not to play what it was holding.
+                let live = true
+                const isLive = () => live
+
                 const rows = groupIntoRows(items)
 
-                // One trigger for the lot, or one per row — and within a grid, a
-                // row left holding a single item (a trailing third card, say)
-                // takes the stacked path too: there is nothing for it to
-                // stagger against either.
+                // One trigger for the lot, or one per row. A grid row left holding
+                // a single item (a trailing third card, say) still takes the row
+                // path: a stagger across one target is a stagger across nothing.
                 if (isStacked(rows)) {
                     if (!isPastRevealLine(items)) {
-                        buildStackTween(items, { duration, lift })
+                        buildReveal(items, { duration, lift }, isLive)
                     }
                 } else {
                     rows.forEach(({ items: row }) => {
                         if (isPastRevealLine(row)) return
 
-                        row.length > 1
-                            ? buildRowTween(row, { duration, stagger, lift })
-                            : buildStackTween(row, { duration, lift })
+                        buildReveal(row, { duration, stagger, lift }, isLive)
                     })
+                }
+
+                return () => {
+                    live = false
                 }
             })
 
@@ -240,5 +280,5 @@ export function useScrollReveal(
             window.removeEventListener("resize", onResize)
             mm.revert()
         }
-    }, [containerRef, revealKey, duration, stagger, lift])
+    }, [containerRef, revealKey, duration, stagger, lift, enabled])
 }

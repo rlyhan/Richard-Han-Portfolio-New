@@ -1,9 +1,24 @@
 @config "../tailwind.config.js";
 @import "tailwindcss";
 
-/* Self-hosted from public/fonts. font-display: block (paired with the
-   preload in index.html) renders the hero heading directly in Fjalla One
-   with no fallback-to-webfont swap flash. */
+/* Self-hosted from public/fonts, in three families:
+
+     Fjalla One  the page's headings, and the name at the foot of the hero
+     Urbanist    the hero's display voice — its h1, the work panel's heading
+                 and each project's title
+     Epilogue    the hero's reading voice — its byline, its closing note and
+                 every small-caps label on the spread
+
+   Only the weights actually set are here. `font-synthesis: none` below means
+   an unloaded weight renders as the nearest loaded one rather than as a faked
+   bold, so a stray font-bold is a silent downgrade — not a licence to use a
+   weight that isn't in this list.
+
+   The two faces that carry display-size type block instead of swapping, and
+   are preloaded in index.html to pay for it: at 94px a swap is a visible
+   reflow of the largest thing on the page. The rest swap, because they set
+   labels and a line of copy — a fallback for a moment there costs less than
+   text that isn't painted at all on a slow connection. */
 @font-face {
   font-family: 'Fjalla One';
   font-style: normal;
@@ -13,16 +28,49 @@
        url(/fonts/fjalla-one-latin-400-normal.woff) format('woff');
 }
 
-@utility no-scrollbar {
-  /* Firefox. */
-  scrollbar-width: none;
-  /* Legacy Edge/IE. */
-  -ms-overflow-style: none;
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url(/fonts/urbanist-latin-500-normal.woff2) format('woff2'),
+       url(/fonts/urbanist-latin-500-normal.woff) format('woff');
+}
 
-  /* Safari and Chrome. Nested so Tailwind keeps it with the utility. */
-  &::-webkit-scrollbar {
-    display: none;
-  }
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/urbanist-latin-600-normal.woff2) format('woff2'),
+       url(/fonts/urbanist-latin-600-normal.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/urbanist-latin-700-normal.woff2) format('woff2'),
+       url(/fonts/urbanist-latin-700-normal.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/epilogue-latin-400-normal.woff2) format('woff2'),
+       url(/fonts/epilogue-latin-400-normal.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/epilogue-latin-500-normal.woff2) format('woff2'),
+       url(/fonts/epilogue-latin-500-normal.woff) format('woff');
 }
 
 @layer base {
@@ -46,16 +94,15 @@
     width: 100%;
   }
 
-  /* The accent doubles as the selection colour, so highlighting text reads as
-     part of the scheme rather than as the browser's default blue. */
+  /* Selection inverts the page's own ink, so highlighting text reads as part
+     of the scheme rather than as the browser's default blue. */
   ::selection {
-    @apply bg-neon text-carbon-950;
+    @apply bg-paper text-carbon-950;
   }
 
-  /* Nothing in the app sets its own focus style, and the UA default ring is
-     near-invisible on carbon-950. */
+  /* The UA default ring is near-invisible on carbon-900. */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-neon;
+    @apply outline-2 outline-offset-2 outline-paper;
   }
 
   button {
@@ -68,3 +115,16 @@
   }
 }
 
+/* Lenis clips the document while it is stopped — that is how it stops the page
+   scrolling natively. On any machine whose scrollbars are not overlays, taking the
+   scrollbar away narrows the page by its width and moves every column on it
+   sideways: a layout shift at the start of every held scroll and another when the
+   hold is released, which on this site means each takeover and each page swap.
+   Here the clip buys nothing, because a hold already swallows the wheel, the touch
+   and the keys itself — see helpers/scrollHold.
+
+   Unlayered, and specific enough to beat Lenis's own three classes: a rule inside
+   @layer base would lose to its stylesheet whatever its specificity. */
+html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+  overflow: visible;
+}
