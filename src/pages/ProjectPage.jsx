@@ -8,12 +8,6 @@ import { projectPathOf, projectSectionId } from "../routes/routes";
 import PROJECTS from "../data/projects.data";
 import { fitOf } from "../data/shots.data";
 
-// What the browser picks a width for. The widest frame on the site, and still its
-// HEIGHT that decides — see MattedShot: 23.75rem on a phone is about 175vw of a
-// 390px screen, and from md up the 40rem ceiling on that height leaves the frame's
-// own width as the wider of the two.
-const SHOT_SIZES = "(min-width: 768px) 95vw, 175vw";
-
 const RAIL_LABEL_CLASS =
   "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
 
@@ -75,7 +69,6 @@ const ProjectPage = () => {
               <MattedShot
                 src={image}
                 alt={`The ${name} site`}
-                sizes={SHOT_SIZES}
                 eager
                 fit={fit}
               />
