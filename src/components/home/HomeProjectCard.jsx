@@ -120,8 +120,6 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
           <MattedShot
             src={image.src}
             alt={image.alt}
-            width={image.width}
-            height={image.height}
             eager
             fit={image.fit}
             className={isSlide && !isBleed ? "scale-[1.03]" : undefined}

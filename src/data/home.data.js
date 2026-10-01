@@ -27,24 +27,20 @@ export const FEATURED_LABEL = "Featured work";
 // the layout below only describes these three cells. Adding a fourth here would
 // leave it unplaced.
 //
-// Each cell names its own shot, and its own intrinsic size with it. Some of these are
-// the file the Projects section shows and some aren't: a card and a tile crop the same
-// picture to very different shapes, so which file suits is the cell's question rather
-// than the project's. How a shot meets its frame isn't a question here at all — that
-// travels with the file, in shots.data.
+// Each cell names its own shot. Some of these are the file the Projects section shows
+// and some aren't: a card and a tile crop the same picture to very different shapes,
+// so which file suits is the cell's question rather than the project's. Neither how a
+// shot meets its frame nor the size it comes at is a question here — both travel with
+// the file, in shots.data.
 //
-// The intrinsic size travels with the asset and has to match the file — a ratio
-// stated wrong here reserves the wrong box and shifts the spread when the image
-// lands. So does the alt text: these are device mockups rather than screenshots,
-// and what a card shows is a site ON something, which is the part a description
-// of the project can't supply.
+// The alt text is this list's own, though: these are device mockups rather than
+// screenshots, and what a card shows is a site ON something, which is the part a
+// description of the project can't supply.
 const FEATURED = [
   {
     id: "neat-places",
     image: {
       src: "neatplaces.webp",
-      width: 3000,
-      height: 1688,
       alt: "The Neat Places travel site shown on a tablet",
     },
   },
@@ -52,8 +48,6 @@ const FEATURED = [
     id: "thakeham",
     image: {
       src: "thakeham.webp",
-      width: 1600,
-      height: 1047,
       alt: "The Thakeham housing site shown on a laptop",
     },
   },
@@ -61,8 +55,6 @@ const FEATURED = [
     id: "touchgrass",
     image: {
       src: "touchgrass.webp",
-      width: 3200,
-      height: 2276,
       alt: "Three phones showing screens from the Touchgrass app",
     },
   },

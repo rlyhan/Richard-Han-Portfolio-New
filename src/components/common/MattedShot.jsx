@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { SHOT_HEIGHT, SHOT_WIDTH } from "../../data/shots.data";
 
 // A project shot in its frame. Two fits, and which one a shot takes is a fact about
 // the artwork rather than a choice the card makes — see shots.data:
@@ -23,21 +24,12 @@ import cn from "classnames";
 // transition and its prefers-reduced-motion guard supplied here so every caller
 // gets the same one. Left off where a shot shouldn't move on hover — the
 // carousel's slides, mid-swipe.
-const MattedShot = ({
-  src,
-  alt,
-  width,
-  height,
-  eager,
-  fit = "mat",
-  zoom,
-  className,
-}) => (
+const MattedShot = ({ src, alt, eager, fit = "mat", zoom, className }) => (
   <img
     src={`/images/projects/${src}`}
     alt={alt}
-    width={width}
-    height={height}
+    width={SHOT_WIDTH}
+    height={SHOT_HEIGHT}
     loading={eager ? "eager" : "lazy"}
     fetchPriority={eager ? "high" : undefined}
     decoding="async"

@@ -25,3 +25,14 @@ const BLEED_SHOTS = new Set([
 ]);
 
 export const fitOf = (src) => (BLEED_SHOTS.has(src) ? "bleed" : "mat");
+
+// Every shot is exported at this size, which is why it is stated once here rather
+// than carried per project: it is a fact about the artwork, as the fit is.
+//
+// What it buys is the frame's first layout. A bleed shot is sized from its frame's
+// height with its width left to follow, so without an intrinsic ratio to read the
+// browser has nothing to compute that width from until the file arrives — it sits
+// at the frame's own width and then widens to its real one. A shot that ever came
+// out at another size would make this per-shot data, like the fit above.
+export const SHOT_WIDTH = 1600;
+export const SHOT_HEIGHT = 900;
