@@ -6,10 +6,9 @@ import "lenis/dist/lenis.css"
 
 gsap.registerPlugin(ScrollTrigger)
 
-// The single root instance, or null when there is none — before App mounts, or
-// under reduced motion. Module scope rather than context: there is exactly one
-// scroller and consumers only reach it imperatively (see useScrollLock). Read it
-// at the moment of use, never hold it — a remount replaces it.
+// The single root instance, or null before App mounts or under reduced motion.
+// Module scope, not context — there's one scroller, reached imperatively (see
+// useScrollLock). Read at the moment of use; a remount replaces it.
 let instance = null
 
 export const getLenis = () => instance
@@ -23,10 +22,9 @@ export const getLenis = () => instance
 // smooth scrolls writing conflicting positions to the same scroller.
 export function useLenis() {
     useEffect(() => {
-        // Smooth scroll is exactly what this preference opts out of. Not covered
-        // by Lenis's own respectReducedMotion, which only forces scrollTo() to
-        // jump — wheel smoothing keeps running, so declining to construct the
-        // instance is the only way to honour it.
+        // Exactly what this preference opts out of. Lenis's own respectReducedMotion
+        // only forces scrollTo() to jump — wheel smoothing keeps running — so
+        // skipping construction is the only way to honour it.
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
         // autoRaf off — the ticker below is the loop.

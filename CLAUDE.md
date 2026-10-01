@@ -21,6 +21,9 @@ chunk, and the only page in the document.
 - `src/helpers/scrollHold.js` — taking the scroll off the viewer for the length of
   something that owns it.
 - `src/components/SiteNav.jsx`, `Footer.jsx` — chrome that outlives page changes.
+- `vercel.json` — every path serves `index.html`, so a direct `/about` reaches the
+  router rather than the host's 404. Vercel applies rewrites after it has checked
+  the filesystem, so `/assets` and `/images` still serve their own files.
 
 ## Invariants
 
@@ -60,6 +63,12 @@ scroll.
   `npx vite build`, `npx eslint .`.
 - **Comments say why.** When the reason changes, rewrite the comment in the same commit.
   A comment naming something that has been deleted is a bug.
+- **No comments for styles.** A className or Tailwind value doesn't get a comment
+  defending it — the variable's name is the explanation, and the value is readable
+  off the line itself. This holds even when there's a real reason behind the value
+  (a bug once hit, a browser quirk): if the only thing being explained is why
+  something looks or is sized the way it does, the comment goes, not the reasoning
+  kept in shorter form.
 - **No comments inside JSX markup.** None on the elements, none between them. When one
   has to come out, moving it to the line above the JSX block is not the default —
   most inline comments restate what the markup already shows, or explain a decision
@@ -104,5 +113,7 @@ scroll.
 
 ## Still outstanding
 
-- Direct URLs need an SPA rewrite on the host: `/about` and the rest 404 without one.
 - No prerendering, so those pages have no server-rendered HTML for crawlers.
+- `index.html` preloads the three shots that open the hero and the Projects grid.
+  Now that direct URLs resolve, a visitor landing on `/about` or `/contact` is
+  served them too and needs none of them.

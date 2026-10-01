@@ -9,19 +9,18 @@ const FADE_DURATION = 0.35;
 
 // The hint at the foot of the hero, handing the viewer into the page below.
 //
-// The homepage is the one page that hands over on the scroll, so this is the one
-// place a cue belongs: everywhere else the foot of the page is the foot of the
-// document and the nav bar is the way on. It carries no fill — the hero is paper end
-// to end, and a filled disc there reads as a button dropped on a print layout, so a
-// hairline ring is enough and the hover is a wash rather than a flip to solid. The
-// focus ring comes with it, the page's neon default being all but invisible on that
-// ground.
+// The homepage is the one page that hands over on the scroll, so this is the
+// one place a cue belongs: everywhere else the foot of the page is the foot of
+// the document and the nav bar is the way on.
 //
-// The bounce lives on an inner element so the infinite y tween and the visibility
-// fade never write to the same target.
+// The bounce lives on an inner element so the infinite y tween and the
+// visibility fade never write to the same target.
 //
-// `positionClassName` is where in the viewport it sits — the offset and the
-// alignment both, since a cue that isn't at the foot usually isn't centred either.
+// `positionClassName` is absolute, so the caller has to give it a positioned
+// parent.
+//
+// `inert` follows `visible`, as in the old header: a real button, so hiding it
+// visually has to take it out of the tab order too.
 const ScrollCue = ({ onClick, visible, label, positionClassName }) => {
   const containerRef = useRef(null);
   const arrowRef = useRef(null);
@@ -54,15 +53,10 @@ const ScrollCue = ({ onClick, visible, label, positionClassName }) => {
   return (
     <div
       ref={containerRef}
-      // Fixed rather than pinned to the hero: it holds the foot of the viewport
-      // at any hero height, and is the one thing that shouldn't move as the
-      // hero fades.
       className={cn(
-        "fixed inset-x-0 z-40 flex pointer-events-none",
+        "absolute inset-x-0 z-40 flex pointer-events-none",
         positionClassName,
       )}
-      // As in the header: a real button, so hiding it visually has to take it
-      // out of the tab order too.
       inert={!visible}
     >
       <button

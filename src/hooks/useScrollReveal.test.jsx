@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { describe, it, expect, vi, beforeEach } from "vitest"
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { render } from "@testing-library/react"
 import { useScrollReveal } from "./useScrollReveal"
 import { mockMatchMedia } from "../test/matchMedia"
@@ -9,8 +9,9 @@ const NO_PREFERENCE_QUERY = "(prefers-reduced-motion: no-preference)"
 // useScrollReveal's own job is the decision taken at build time — which items count
 // as a row, whether a row is already past the reveal line and left alone, and
 // whether a layout has rows to stagger at all or is one item deep and gets a single
-// pass instead. The tweens themselves are GSAP's, mocked out so these tests can
-// assert on that decision without a real layout or a real scroll position.
+// pass instead — and then, at the line, whether the row is ready to be played. The
+// tweens themselves are GSAP's, mocked out so these tests can assert on both
+// without a real layout, a real scroll position or a real image.
 //
 // gsap.matchMedia's real contract: `.add(query, setup)` runs `setup()` once, right
 // away, only if `query` currently matches, and calls whatever `setup` returned when
@@ -33,13 +34,13 @@ vi.mock("gsap", () => ({
     default: {
         registerPlugin: vi.fn(),
         matchMedia: vi.fn(),
-        fromTo: vi.fn(),
+        fromTo: vi.fn(() => ({ play: vi.fn() })),
         utils: { toArray: (list) => Array.from(list) },
     },
 }))
 
 vi.mock("gsap/ScrollTrigger", () => ({
-    default: { refresh: vi.fn() },
+    default: { refresh: vi.fn(), create: vi.fn() },
 }))
 
 // getBoundingClientRect and offsetParent are what the hook reads a row's position
@@ -50,16 +51,32 @@ function stubItem(item, { top, visible = true }) {
     Object.defineProperty(item, "offsetParent", { value: visible ? document.body : null, configurable: true })
 }
 
+// `shot` gives the item an image whose decode() the test resolves by hand, which is
+// the whole of what the reveal waits on. jsdom has no decode(), so there is nothing
+// to spy on — the stub is the image's only one.
 function buildContainer(specs) {
     const container = document.createElement("div")
-    const items = specs.map(({ top, visible }) => {
+    const items = specs.map(({ top, visible, shot }) => {
         const item = document.createElement("div")
         item.setAttribute("data-reveal", "")
         stubItem(item, { top, visible })
+
+        if (shot) {
+            const image = document.createElement("img")
+            image.decode = () => shot
+            item.appendChild(image)
+        }
+
         container.appendChild(item)
         return item
     })
     return { container, items }
+}
+
+// The reveal's own trigger, and the tween it was built to play.
+function lastReveal() {
+    const { onEnter } = ScrollTrigger.create.mock.calls.at(-1)[0]
+    return { onEnter, tween: gsap.fromTo.mock.results.at(-1).value }
 }
 
 function Harness({ container, revealKey, options }) {
@@ -73,13 +90,23 @@ function renderReveal(container, { revealKey, options } = {}) {
 }
 
 let gsap
+let ScrollTrigger
+
+// Everything the reveal's wait is queued behind: the decode promises and the race
+// around them, all microtasks.
+const flush = () => new Promise((resolve) => setTimeout(resolve, 0))
 
 beforeEach(async () => {
     vi.clearAllMocks()
     window.innerHeight = 800
     window.matchMedia = mockMatchMedia(NO_PREFERENCE_QUERY)
     gsap = (await import("gsap")).default
+    ScrollTrigger = (await import("gsap/ScrollTrigger")).default
     gsap.matchMedia.mockImplementation(createMatchMediaMock())
+})
+
+afterEach(() => {
+    vi.useRealTimers()
 })
 
 describe("useScrollReveal", () => {
@@ -158,6 +185,59 @@ describe("useScrollReveal", () => {
         const [, from, vars] = gsap.fromTo.mock.calls[0]
         expect(from).toMatchObject({ opacity: 0, y: 30 })
         expect(vars).toMatchObject({ duration: 1, stagger: 0.2 })
+    })
+
+    it("holds a row's reveal until its shots can be painted", async () => {
+        let decoded
+        const shot = new Promise((resolve) => {
+            decoded = resolve
+        })
+        const { container } = buildContainer([{ top: 900, shot }, { top: 900 }])
+
+        renderReveal(container)
+        const { onEnter, tween } = lastReveal()
+
+        onEnter()
+        await flush()
+
+        expect(tween.play).not.toHaveBeenCalled()
+
+        decoded()
+        await vi.waitFor(() => expect(tween.play).toHaveBeenCalledTimes(1))
+    })
+
+    it("comes in without a shot that never arrives", async () => {
+        vi.useFakeTimers()
+        const { container } = buildContainer([
+            { top: 900, shot: new Promise(() => {}) },
+            { top: 900 },
+        ])
+
+        renderReveal(container)
+        const { onEnter, tween } = lastReveal()
+
+        onEnter()
+        await vi.advanceTimersByTimeAsync(5000)
+
+        expect(tween.play).toHaveBeenCalledTimes(1)
+    })
+
+    it("leaves a reveal unplayed when the wait outlives the build that made it", async () => {
+        let decoded
+        const shot = new Promise((resolve) => {
+            decoded = resolve
+        })
+        const { container } = buildContainer([{ top: 900, shot }, { top: 900 }])
+
+        const { unmount } = renderReveal(container)
+        const { onEnter, tween } = lastReveal()
+
+        onEnter()
+        unmount()
+        decoded()
+        await flush()
+
+        expect(tween.play).not.toHaveBeenCalled()
     })
 
     it("rebuilds when revealKey changes, tearing the old reveal down first", () => {

@@ -2,6 +2,10 @@ import cn from "classnames";
 import AwardIcon from "../icons/AwardIcon";
 import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
+import {
+  IMAGE_FALLBACK_CLASS,
+  PROJECT_LINK_CLASS,
+} from "../layout/sharedClasses";
 import { projectPathOf } from "../../routes/routes";
 import { fitOf } from "../../data/shots.data";
 
@@ -26,7 +30,7 @@ const EYEBROW_CLASS =
 // The title stays a heading inside that link rather than becoming a span the link is
 // named by. The list is a list of projects, and a screen reader jumping the page by
 // heading is the fastest way through it; the link says what it is with its own label.
-const ProjectTile = ({ project, number }) => {
+const ProjectTile = ({ project, number, eager }) => {
   const { id, name, category, award, images } = project;
   const image = images?.[0];
   const fit = image && fitOf(image);
@@ -40,7 +44,7 @@ const ProjectTile = ({ project, number }) => {
       <a
         {...link}
         aria-label={`${name} — ${category}`}
-        className="group block h-full focus-visible:outline-cream focus-visible:-outline-offset-4"
+        className={PROJECT_LINK_CLASS}
       >
         <div
           className={cn(
@@ -55,12 +59,13 @@ const ProjectTile = ({ project, number }) => {
               src={image}
               alt={`The ${name} site`}
               fit={fit}
+              eager={eager}
               zoom="group-hover:scale-[1.05]"
             />
           ) : (
             <div
               aria-hidden="true"
-              className="h-full w-full border border-grid bg-shell"
+              className={IMAGE_FALLBACK_CLASS}
             />
           )}
         </div>

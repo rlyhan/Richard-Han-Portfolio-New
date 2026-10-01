@@ -1,27 +1,16 @@
+import cn from "classnames";
 import { INTRO_LINES, INTRO_NOTE } from "../../data/home.data";
 import Byline from "../layout/Byline";
+import { NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 
 // The left half of the hero: the display lines, the byline above them and the note
 // under them, all on the hero's paper ground.
 //
 // Three planes the hero's exit moves, and they don't all leave together — see
-// useHeroHandoff. The h1's lines and the note rise (`setLineRef`,
-// `setNoteRef`); the byline sinks with the furniture at the foot of the hero
-// (`setToplineRef`), because it reads as a masthead line rather than as part of
-// the h1. The indices belong to Home, so this stays unaware of where in either
-// stagger it lands.
-//
-// overflow-hidden is the backstop for that exit: the lines drift sideways as they
-// leave, and the panel clips the drift rather than letting it reach the page and
-// open a horizontal scrollbar.
-//
-// min-h-min is the price of that clip below md. A flex item that hides its overflow
-// has an automatic minimum size of zero, so on a phone — where the hero is one
-// screen divided between this panel, the spread and the nav — this column was the
-// thing that gave way, and what it gave up was the foot of the note. Stated as
-// min-content, the copy keeps its height and the spread yields instead. From md up
-// the panel is a grid cell beside the spread and clipping is the intended backstop,
-// so the floor comes back off.
+// useHeroHandoff. The h1's lines and the note rise (`setLineRef`, `setNoteRef`);
+// the byline sinks with the furniture at the hero's foot (`setToplineRef`),
+// since it reads as a masthead line, not part of the h1. The indices belong to
+// Home, so this stays unaware of where in either stagger it lands.
 const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
   <section
     aria-labelledby="home-heading"
@@ -47,7 +36,10 @@ const HomeIntro = ({ setLineRef, setNoteRef, setToplineRef }) => (
     </h1>
     <p
       ref={setNoteRef}
-      className="mt-auto max-w-[25.5rem] pt-[clamp(0.95rem,3svh,1.6rem)] font-epilogue text-[0.8125rem] leading-[1.65] text-ash md:pt-10"
+      className={cn(
+        "mt-auto max-w-[25.5rem] pt-[clamp(0.95rem,3svh,1.6rem)] font-epilogue md:pt-10",
+        NOTE_TEXT_CLASS,
+      )}
     >
       {INTRO_NOTE}
     </p>

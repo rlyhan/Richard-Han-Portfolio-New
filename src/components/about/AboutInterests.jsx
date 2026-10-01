@@ -1,4 +1,5 @@
 import IconRenderer from "../icons/IconRenderer";
+import { EYEBROW_LABEL_CLASS, NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 import {
   INTEREST_TAGS,
   INTEREST_TAGS_NOTE,
@@ -19,14 +20,14 @@ const AboutInterests = () => (
           <h3 className="font-urbanist text-[1.125rem] leading-[1.2] font-bold text-ink">
             {title}
           </h3>
-          <p className="mt-1.5 max-w-[36.25rem] text-[0.8125rem] leading-[1.65] text-ash">
+          <p className={`mt-1.5 max-w-[36.25rem] ${NOTE_TEXT_CLASS}`}>
             {text}
           </p>
         </div>
       </article>
     ))}
 
-    <p className="mt-1.5 mb-3 font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase">
+    <p className={`mt-1.5 mb-3 ${EYEBROW_LABEL_CLASS}`}>
       {INTEREST_TAGS_NOTE}
     </p>
 

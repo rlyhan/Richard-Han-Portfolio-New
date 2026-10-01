@@ -4,19 +4,18 @@ import { INTRO_TOPLINE } from "../../data/home.data";
 
 const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 
-// The bar at the foot of the hero, and — pinned to the viewport by SiteNav — at the
-// foot of every screen below it: the name at display size, the section links
-// opposite it, and nothing between them. One component for both, and now one layout
-// as well, so the pinned copy sits exactly on top of the hero's own wherever the two
-// are stacked.
+// The bar at the foot of the hero, and — pinned to the viewport by SiteNav —
+// at the foot of every screen below it: the name at display size, the section
+// links opposite it, nothing between them. One component for both, and now one
+// layout.
 //
 // The items are pages rather than sections of one, so each carries a real link to a
 // real URL — see useNavLinks, which is where both copies of this bar get them.
 //
-// The name is the way back to the homepage, which is why there is no "Home" item
-// beside the other three: a wordmark that leads home is the one piece of navigation
-// every site already agrees on, and stating it twice in one bar would be the same
-// link drawn twice. On the homepage itself it leads to the top of the page.
+// The name is the way back to the homepage, why there's no "Home" item beside
+// the other three: a wordmark that leads home is the one piece of navigation
+// every site already agrees on, and stating it twice would be the same link
+// drawn twice. On the homepage itself it leads to the top of the page.
 const NavMenu = ({
   items,
   setNameRef,
@@ -47,7 +46,7 @@ const NavMenu = ({
         <a
           key={id}
           {...link}
-          className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.7rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
+          className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.8125rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
         >
           <span
             aria-hidden="true"

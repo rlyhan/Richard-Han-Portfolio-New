@@ -1,13 +1,9 @@
 // tailwind.config.js
 
-// Kept as constants so the neon glow in boxShadow below can't drift out of step
-// with the accent itself.
-const NEON = "#00DDBE";
-const NEON_RGB = "0, 221, 190";
-
-// Same again for `well`, which the Contact page's scrim in backgroundImage is built
-// out of: the scrim is that tone falling across a photograph, so it cannot be allowed
-// to drift away from the tone itself.
+// Kept as a constant so `well` — which the Contact page's panel fills with and the
+// About page's mobile scrim in backgroundImage falls across its portrait with —
+// can't drift out of step between the two: both have to answer to the same tone,
+// not a swatch that can drift from it.
 const WELL = "#2A241E";
 const WELL_RGB = "42, 36, 30";
 
@@ -19,7 +15,7 @@ export default {
       // width enough to even out the two halves, where below it the spread
       // takes the larger share — see Home.
       screens: {
-        wide: "1440px",
+        wide: "90rem",
       },
 
       // Single source of truth for the palette — index.css pulls the same
@@ -31,7 +27,7 @@ export default {
       // has nothing left to darken and lands at 1.05:1.
       colors: {
         carbon: {
-          950: "#080C0F", // ink on a neon fill; the shadow's base
+          950: "#080C0F", // ink on the selection highlight; the shadow's base
           900: "#12181E", // page background
           850: "#26303A", // modal panel. No darker: the scrim behind
           // composites to #0a0e11, where carbon-900 would be
@@ -47,16 +43,9 @@ export default {
         // Secondary copy. Sized to clear AA on the card's HOVER surface
         // (4.78:1), which is the tightest place it has to survive.
         mute: "#AAB6C0",
-        // 10.3:1 on the page, and 11.3:1 the other way when carbon-950 sits
-        // on a neon fill, so the accent works as ink or as surface.
-        neon: {
-          DEFAULT: NEON,
-          400: "#5FEDD8", // hover — brighter, never duller
-          500: NEON,
-        },
-        // A second accent, scoped to awards and nothing else: an award is a
-        // different kind of fact from what neon marks (state, interactivity).
-        // The moment gold appears elsewhere it stops reading as achievement.
+        // Scoped to awards and nothing else: an award is a different kind of
+        // fact from state or interactivity. The moment gold appears elsewhere
+        // it stops reading as achievement.
         // 8.0:1 on a card, 13.8:1 with carbon-950 ink on the fill.
         gold: {
           DEFAULT: "#FFD447",
@@ -64,7 +53,7 @@ export default {
         },
         // The homepage's editorial palette. Scoped to the hero, which is a
         // light, paper-toned spread the dark page then slides over —
-        // everything below it stays on carbon/neon.
+        // everything below it stays on carbon.
         cream: "#F5F3EE", // the hero's ground, and the caption plate each
         // project card's title sits on
         shell: "#E8E4DD", // the bar at the foot of the hero: a half-step off
@@ -122,9 +111,8 @@ export default {
         // Two layers: a tight core darkening the page at the card's edge (this
         // replaces the border line), and a wide falloff that reads as height.
         card: "0 1px 2px rgba(0, 0, 0, 0.6), 0 10px 24px -6px rgba(0, 0, 0, 0.7)",
-        // Hover adds a neon bloom. On a dark page a bigger black shadow is
-        // nearly invisible, so the accent is what signals the hover.
-        "card-hover": `0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(${NEON_RGB}, 0.35)`,
+        // Same two layers, further out — the card's hover lift.
+        "card-hover": "0 2px 4px rgba(0, 0, 0, 0.6), 0 18px 40px -8px rgba(0, 0, 0, 0.85)",
         modal: "0 24px 70px -12px rgba(0, 0, 0, 0.9)",
       },
       // Three faces, and each one has a job — see the @font-face block in
@@ -144,8 +132,16 @@ export default {
         // The hero's project cards arriving on load. `both` holds the end
         // state, so the cards keep a transform once it finishes — nothing
         // inside them is positioned against the viewport, so that's free.
+        //
+        // It starts part-visible rather than at nothing, and that 0.25 is load
+        // time rather than taste: a fully transparent element is not a largest-
+        // contentful-paint candidate, so starting at 0 put this animation, plus
+        // the stagger in front of it, inside the LCP measurement — the card's
+        // shot was decoded and waiting while the fade ran. At 0.25 the card
+        // counts from its first frame (`both` holds that state through the
+        // stagger too), and the rise is what carries the entrance.
         "project-reveal": {
-          from: { opacity: "0", transform: "translateY(1.25rem)" },
+          from: { opacity: "0.25", transform: "translateY(1.25rem)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
       },

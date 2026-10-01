@@ -3,13 +3,14 @@ import PageSection from "../components/layout/PageSection";
 import ArticleParagraphs from "../components/layout/ArticleParagraphs";
 import ProjectMasthead from "../components/projects/ProjectMasthead";
 import MattedShot from "../components/common/MattedShot";
+import {
+  EYEBROW_LABEL_CLASS,
+  IMAGE_FALLBACK_CLASS,
+} from "../components/layout/sharedClasses";
 import { usePage } from "../routes/RouterContext";
 import { projectPathOf, projectSectionId } from "../routes/routes";
 import PROJECTS from "../data/projects.data";
 import { fitOf } from "../data/shots.data";
-
-const RAIL_LABEL_CLASS =
-  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
 
 const RAIL_VALUE_CLASS = "text-[0.8125rem] leading-[1.45] font-medium text-ink";
 
@@ -17,25 +18,15 @@ const TECH_ITEM_CLASS = `${RAIL_VALUE_CLASS} border-t border-grid py-2.5 first:b
 
 // One project's write-up, at /projects/<id>.
 //
-// Which project it is comes off this page's own path rather than from a prop: the
-// outlet mounts a page with none — see PageOutlet. Its own, not the site's, because a
-// swap carries this page in while the site is still at the Projects page behind it.
-// The route table builds these paths off the same list this reads, so a path the
-// router resolved always names a project here.
+// Which project it is comes off this page's own path, not a prop — the outlet
+// mounts a page with none (see PageOutlet). Its own, not the site's, since a
+// swap carries this page in while the site is still at the Projects page behind
+// it. The route table builds these paths off the same list this reads, so a
+// path the router resolved always names a project here.
 //
 // Every write-up shares this one chunk, which is why the page is the component and the
 // project is data: a chunk each would be fetched on the click that opened it, where
 // this one is in hand from the first tile the viewer hovers.
-//
-// contained: false — the write-up's rule runs to the viewport edge, so the page
-// frame's max width and gutter would cut it short. The masthead, the shot and the
-// article state the hero's gutter instead.
-//
-// The shot is matted on the vignetted well the Projects page frames its tiles on — see
-// ProjectTile — inset nearly evenly rather than with that page's deep foot, which is
-// room a tile leaves for its caption plate and a write-up has spent on the masthead.
-// A shot that carries its own ground fills the well instead, and takes no lift: there
-// is no plate on this page for the crop to clear.
 //
 // The masthead and shot are the page's chrome; the rail of facts and the copy beside
 // it are the write-up itself, so only those sit inside the <article>.
@@ -75,7 +66,7 @@ const ProjectPage = () => {
             ) : (
               <div
                 aria-hidden="true"
-                className="h-full w-full border border-grid bg-shell"
+                className={IMAGE_FALLBACK_CLASS}
               />
             )}
           </div>
@@ -85,7 +76,7 @@ const ProjectPage = () => {
       <article className="grid grid-cols-1 gap-8 border-t border-grid px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem] lg:grid-cols-[minmax(0,30%)_minmax(0,70%)] lg:gap-x-10">
         <div className="flex min-w-0 flex-col gap-8">
           <div>
-            <p className={RAIL_LABEL_CLASS}>Year worked on</p>
+            <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
 
             <time
               dateTime={String(year)}
@@ -97,7 +88,7 @@ const ProjectPage = () => {
 
           {technologies?.length > 0 && (
             <div>
-              <p className={RAIL_LABEL_CLASS}>Technologies</p>
+              <p className={EYEBROW_LABEL_CLASS}>Technologies</p>
 
               <ul className="mt-3.5 grid">
                 {technologies.map((technology) => (

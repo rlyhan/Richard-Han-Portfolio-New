@@ -8,18 +8,18 @@ const SCROLL_KEYS = new Set([
 
 // Takes the scroll off the viewer until the returned release is called.
 //
-// For the moments the page owns rather than offers: a takeover spending the last of a
-// runway, a swap carrying one page out and the next one in. Both put the viewer
-// somewhere definite, and a gesture through the middle of either would strand them
-// between two pages. See useScriptedScroll, which takes this for its locked mode.
+// For moments the page owns rather than offers: a takeover spending the last of
+// a runway, a swap carrying one page out and the next in. Both put the viewer
+// somewhere definite, and a gesture through the middle would strand them between
+// two pages. See useScriptedScroll, which takes this for its locked mode.
 //
-// Stopping Lenis is what closes the wheel, not preventing the event — Lenis binds its
-// own listener first and would scroll regardless. Touch is native (syncTouch is off)
-// and so are the keys, hence the listeners below, the wheel among them for the
-// reduced-motion case where Lenis was never constructed.
+// Stopping Lenis closes the wheel — it binds its own listener first and would
+// scroll regardless of preventDefault. Touch and the keys are already native, so
+// the listeners below cover them too, the wheel included for when Lenis was
+// never constructed (reduced motion).
 //
-// Nothing here touches the body's overflow the way the modal's lock does: that would
-// take the scrollbar with it and shift the page sideways as it goes.
+// Doesn't touch the body's overflow the way the modal's lock does — that would
+// take the scrollbar with it and shift the page sideways.
 export function holdScroll() {
     const swallow = (event) => event.preventDefault()
     const onKeyDown = (event) => {

@@ -3,11 +3,9 @@ import ArrowDownIcon from "../icons/ArrowDownIcon";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import AwardIcon from "../icons/AwardIcon";
 import { useNavLink } from "../../hooks/useNavLinks";
+import { EYEBROW_LABEL_CLASS, NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
 
-// The facts about the project, each in a bordered plate on the shell tone — a step off
-// the cream ground, as the bar at the foot of the hero is, so the row reads as its own
-// field without a rule drawn under the copy above it.
 const META_CLASS =
   "inline-flex items-center gap-2 border border-grid bg-shell px-3.5 py-[0.5625rem] font-epilogue text-[0.6875rem] leading-none font-medium tracking-[0.03em] text-ink uppercase";
 
@@ -20,11 +18,11 @@ const META_ICON_CLASS = "size-[0.6875rem] shrink-0 text-ash";
 // at display size, the line of copy the Projects page captions it with, and the facts
 // about it.
 //
-// Not PageMasthead, which About and Projects share. Three things differ, and all
-// three are what makes this a write-up rather than a page of the site: the line above
-// the heading is the way back rather than the name and location, the heading is set
-// smaller because a project's name runs longer than one word, and the facts below the
-// copy have no equivalent up there.
+// Not PageMasthead, which About and Projects share. Three things differ, and
+// all three are what makes this a write-up rather than a page of the site: the
+// line above the heading is the way back, not the name and location; the
+// heading is set smaller since a project's name runs longer than one word; and
+// the facts below the copy have no equivalent up there.
 const ProjectMasthead = ({ project }) => {
   const { name, year, category, association, description, url, award } =
     project;
@@ -32,7 +30,12 @@ const ProjectMasthead = ({ project }) => {
 
   return (
     <header className="flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12">
-      <div className="flex items-baseline justify-between gap-4 font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase">
+      <div
+        className={cn(
+          "flex items-baseline justify-between gap-4",
+          EYEBROW_LABEL_CLASS,
+        )}
+      >
         <a
           {...backLink}
           className="inline-flex items-center gap-[0.4375rem] transition-colors duration-200 hover:text-ink focus-visible:outline-ink motion-reduce:transition-none"
@@ -48,7 +51,7 @@ const ProjectMasthead = ({ project }) => {
         {name}
       </h1>
 
-      <p className="mt-7 max-w-[25rem] text-[0.8125rem] leading-[1.65] text-ash">
+      <p className={cn("mt-7 max-w-[25rem]", NOTE_TEXT_CLASS)}>
         {description}
       </p>
 

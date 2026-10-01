@@ -94,16 +94,15 @@
     width: 100%;
   }
 
-  /* The accent doubles as the selection colour, so highlighting text reads as
-     part of the scheme rather than as the browser's default blue. */
+  /* Selection inverts the page's own ink, so highlighting text reads as part
+     of the scheme rather than as the browser's default blue. */
   ::selection {
-    @apply bg-neon text-carbon-950;
+    @apply bg-paper text-carbon-950;
   }
 
-  /* Nothing in the app sets its own focus style, and the UA default ring is
-     near-invisible on carbon-950. */
+  /* The UA default ring is near-invisible on carbon-900. */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-neon;
+    @apply outline-2 outline-offset-2 outline-paper;
   }
 
   button {

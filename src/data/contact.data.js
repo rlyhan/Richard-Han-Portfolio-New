@@ -30,12 +30,3 @@ export const CONTACT_CHANNELS = [
     href: "https://github.com/rlyhan",
   },
 ];
-
-// The intrinsic size travels with the asset and has to match the file, as the
-// homepage's featured shots do: a ratio stated wrong here reserves the wrong box.
-export const CONTACT_PORTRAIT = {
-  src: "/images/portrait.webp",
-  width: 2688,
-  height: 1680,
-  alt: "Richard Han working at a laptop in a bright studio",
-};

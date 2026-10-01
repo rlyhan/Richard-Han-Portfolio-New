@@ -26,44 +26,39 @@ import { useScriptedScroll } from "./useScriptedScroll"
 // than a position, because the range is re-measured on every refresh while a
 // timeline's proportions never change.
 //
-// The two halves are built separately, because only one of them needs the next page
-// to exist. The exit is this page emptying and is measured entirely against its own
-// runway, so it is built on mount — the range starts at the top of the page, and a
-// hero that only began fading once the page below it had been fetched would snap to
-// catch up. The landing and the takeover are positions in the next page, so they wait
-// for `isNextStaged`: until the router has mounted it there is nothing to measure,
-// and nothing to hand the scroll to.
+// The two halves are built separately — only one needs the next page to exist:
+// - the exit is measured against its own runway, so it builds on mount; waiting
+//   on the next page would mean the hero snapping to catch up once it arrived.
+// - the landing and takeover are positions in the next page, so they wait for
+//   `isNextStaged` — nothing to measure, or hand the scroll to, before then.
 export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange, buildExit }) {
     // Where the exit's last fade lands, published by the effect that builds it so the
     // effect below can put the takeover there.
     const [exitEndsAt, setExitEndsAt] = useState(null)
 
-    // What a nav item asking for the page below runs instead of a jump, and an offer
-    // while it runs: it hands control back the moment the viewer scrolls for
-    // themselves. See useAdvance, which is how the bar reaches it.
+    // What a nav item runs instead of a jump — an offer that hands control back the
+    // moment the viewer scrolls themselves. See useAdvance, how the bar reaches it.
     const { scrollToTarget, isScrolling } = useScriptedScroll(nextSelector)
 
-    // The takeover is the same scroll on the opposite terms — it holds the page for
-    // its duration, since it fires from the scroll itself rather than from anyone
-    // asking.
+    // The takeover is the same scroll on opposite terms: it holds the page for its
+    // duration, since the scroll triggers it rather than anyone asking.
     const { scrollToTarget: advance, isScrolling: isAdvancing } = useScriptedScroll(nextSelector, {
         locked: true,
         duration: ADVANCE_DURATION,
     })
 
     useEffect(() => {
-        // No page to hand the scroll to is no exit to play, and no runway in the
-        // markup to measure one against — see routes, where a page's `next` decides
-        // this, and HomePage, which leaves the runway out without one.
+        // No next page is no exit to play and no runway to measure it against —
+        // see routes, where a page's `next` decides this; HomePage leaves it out.
         if (!nextSelector) return
 
         const mm = gsap.matchMedia()
 
         mm.add("(prefers-reduced-motion: no-preference)", () => {
             const runway = runwayRef.current
-            // Read through a function, not measured once: every position is
-            // re-resolved on each ScrollTrigger refresh, so a resize — or the page
-            // below arriving — moves the whole handoff together.
+            // A function, not a measured-once value: re-resolved on every
+            // ScrollTrigger refresh, so a resize — or the next page arriving —
+            // moves the whole handoff together.
             const range = () => getExitRange(runway)
 
             setExitEndsAt(buildExit({ runway, range }))
@@ -71,10 +66,9 @@ export function useHandoff({ runwayRef, nextSelector, isNextStaged, getExitRange
             return () => setExitEndsAt(null)
         })
 
-        // Under reduced motion none of it is built and the runway is collapsed in the
-        // markup: the pages simply follow one another, with no hesitation to sit
-        // through and nothing to take the scroll over. The join still lands — the
-        // router hands the URL over on position, not on the takeover.
+        // Under reduced motion nothing here builds and the runway collapses in the
+        // markup, so the pages simply follow each other. The join still lands — the
+        // router hands over the URL on position, not on the takeover.
         return () => mm.revert()
     }, [nextSelector, runwayRef, getExitRange, buildExit])
 

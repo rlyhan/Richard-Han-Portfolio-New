@@ -6,28 +6,21 @@ import HomeProjectCard from "./HomeProjectCard";
 // The mobile half of the hero's spread: the three featured projects as one swipable
 // card rather than the desktop masonry, which has no room to spread at phone widths.
 //
-// loop, because the deck is three cards deep — a swipe past the last one wrapping
-// round reads better than a dead end at either edge. It is also the one option here
-// that carries a standing condition: looping moves a slide to the far end of the
-// track by writing an inline transform to that slide element, so nothing may animate
-// or transform a slide itself. The reveal below is on the deck rather than on the
-// cards for that reason, and the cards' hover zoom is scoped to the desktop grid —
-// see HomeProjectCard.
+// loop: the deck is three cards deep, and a swipe past the last one wrapping
+// round reads better than a dead end at either edge. It's also the one option
+// here with a standing condition — looping moves a slide to the far end of the
+// track by writing an inline transform to it, so nothing may animate or
+// transform a slide itself. That's why the reveal below is on the deck, not the
+// cards, and why the cards' hover zoom is scoped to the desktop grid — see
+// HomeProjectCard.
 //
-// Nothing else is set. With one slide per view the alignment and containment options
-// have nothing left to choose between, and carrying them anyway only leaves the snap
-// maths looking like a decision that could be revisited.
+// Nothing else is set: with one slide per view, alignment and containment have
+// nothing left to choose between, and carrying them anyway would only leave the
+// snap maths looking like a decision that could be revisited.
 const OPTIONS = { loop: true };
 
 // The track is the only thing here that claims the horizontal axis, so a vertical
 // swipe over a card still scrolls the page.
-//
-// The dots are the only sign that the deck is deeper than one card, so they sit in
-// the corner of the well, over the matting rather than over the shot. A flat
-// translucent fill lifts them off it — no backdrop blur, since inside the carousel's
-// clipping, transformed box that is both the most expensive thing on the page to
-// repaint while a finger is dragging and the least reliable: WebKit samples the
-// wrong backdrop under a transformed ancestor.
 const HomeProjectCarousel = ({ projects }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selected, setSelected] = useState(0);
@@ -65,7 +58,6 @@ const HomeProjectCarousel = ({ projects }) => {
               project={project}
               index={i}
               variant="slide"
-              eager={i === 0}
             />
           ))}
         </div>
