@@ -144,8 +144,16 @@ export default {
         // The hero's project cards arriving on load. `both` holds the end
         // state, so the cards keep a transform once it finishes — nothing
         // inside them is positioned against the viewport, so that's free.
+        //
+        // It starts part-visible rather than at nothing, and that 0.25 is load
+        // time rather than taste: a fully transparent element is not a largest-
+        // contentful-paint candidate, so starting at 0 put this animation, plus
+        // the stagger in front of it, inside the LCP measurement — the card's
+        // shot was decoded and waiting while the fade ran. At 0.25 the card
+        // counts from its first frame (`both` holds that state through the
+        // stagger too), and the rise is what carries the entrance.
         "project-reveal": {
-          from: { opacity: "0", transform: "translateY(1.25rem)" },
+          from: { opacity: "0.25", transform: "translateY(1.25rem)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
       },
