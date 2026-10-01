@@ -66,6 +66,13 @@ import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
 // whole panel on at once. Small enough to finish well inside the reveal itself.
 const REVEAL_STAGGER_MS = 120;
 
+// What the browser picks a width for, and in vh because these cells are sized off
+// the viewport's height rather than its width — see MattedShot on why a bleed shot
+// is cropped to its frame's height times the shots' 16:9. The lead cell is the
+// panel's full height, the other two are half of it, and the phone carousel's slide
+// stands in a 35svh panel.
+const SHOT_SIZES = { lead: "150vh", cell: "75vh", slide: "55vh" };
+
 const HomeProjectCard = ({
   project,
   index,
@@ -127,6 +134,13 @@ const HomeProjectCard = ({
             width={image.width}
             height={image.height}
             eager={eager || isSlide}
+            sizes={
+              isSlide
+                ? SHOT_SIZES.slide
+                : isLead
+                  ? SHOT_SIZES.lead
+                  : SHOT_SIZES.cell
+            }
             fit={image.fit}
             className={isSlide && !isBleed ? "scale-[1.03]" : undefined}
             zoom={zoom}

@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { shotOf } from "../../data/shots.data";
 
 // A project shot in its frame. Two fits, and which one a shot takes is a fact about
 // the artwork rather than a choice the card makes — see shots.data:
@@ -23,18 +24,28 @@ import cn from "classnames";
 // transition and its prefers-reduced-motion guard supplied here so every caller
 // gets the same one. Left off where a shot shouldn't move on hover — the
 // carousel's slides, mid-swipe.
+//
+// `sizes` is not optional, and it is the caller's to state rather than this
+// component's to assume: the frames differ by a factor of three, and a srcset
+// without a sizes has the browser pick for the whole viewport and fetch the top of
+// the ladder every time. A bleed shot is the case that catches people out — it is
+// pinned to the frame's HEIGHT and cropped either side, so what has to be stated is
+// that height times this artwork's 16:9, which at every breakpoint comes out wider
+// than the frame itself.
 const MattedShot = ({
   src,
   alt,
   width,
   height,
   eager,
+  sizes,
   fit = "mat",
   zoom,
   className,
 }) => (
   <img
-    src={`/images/projects/${src}`}
+    {...shotOf(src)}
+    sizes={sizes}
     alt={alt}
     width={width}
     height={height}
