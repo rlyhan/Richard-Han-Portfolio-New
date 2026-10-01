@@ -575,9 +575,11 @@ const RouterProvider = ({ children }) => {
       navigate,
       prefetch,
       registerAdvance,
-      // The floor the pinned nav bar answers for: on a page that draws the bar
-      // in its own layout, the pinned copy stays down until the page below has
-      // taken over. Read as a selector so it is measured, not remembered.
+      // Whether this page draws the nav bar in its own layout, and so whether the
+      // pinned copy waits for a floor at all rather than being free from the top.
+      pageDrawsNav: Boolean(route?.hasOwnNav),
+      // The floor that pinned copy answers for: it stays down until the page below
+      // has taken over. Read as a selector so it is measured, not remembered.
       //
       // The page below in table order, not the page the scroll joins to — the
       // pinned bar has to stay off the hero whether the way on from here is a
@@ -585,13 +587,12 @@ const RouterProvider = ({ children }) => {
       // matches nothing, which useRevealOnScrollUp reads as a floor below
       // everything, so the bar never comes up over the hero's own copy.
       //
-      // With nothing below it, the page's own section is the floor: Contact is the
-      // last page and draws the bar itself, and a null selector here would be read
-      // as no floor at all — a bar that opens up, over the copy already drawn. Its
-      // own top holds the pinned copy down for as long as it holds the screen, and
-      // still lets it up on the way back if the page is ever scrolled past.
+      // Null with nothing below at all, which is Contact: it draws the bar itself
+      // and is the last page, so there is no floor for the pinned copy to arrive
+      // at and it stays down the whole way. The scroll off the foot of that page
+      // is the footer coming up, not a second bar.
       navFloorSelector: route?.hasOwnNav
-        ? sectionSelectorOf(routeAfter(route) ?? route)
+        ? sectionSelectorOf(routeAfter(route))
         : null,
       // Changes whenever the document's pages do, for anything outside them
       // that measures a position and has to measure it again.

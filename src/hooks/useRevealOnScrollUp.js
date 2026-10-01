@@ -37,14 +37,19 @@ const JUMP_SHARE = 1
 // at once. Sliding it out from under an identical bar smears the two apart for as
 // long as the slide lasts.
 //
-// A floor is asked for by selector, and on this site the element it names is a page
-// the router has not necessarily mounted yet — so a selector that matches nothing is
-// a floor below everything rather than one at the top of the page: the section it
-// answers for is still ahead. No selector is the opposite, a floor above everything:
-// there is no page underneath this bar for it to wait for. Not zero, which reads as
-// the viewer being above the floor whenever they are at the top of the page — and on
-// a page with barely a screen of scroll, the whole way back up lands there in a
-// single frame, so the bar is never asked to come up.
+// `pageDrawsBar` is whether the page under this bar draws a copy of it in its own
+// layout, and so whether there is a floor at all. A page that does not is a floor
+// above everything: there is nothing down there for this bar to wait for. Not zero,
+// which reads as the viewer being above the floor whenever they are at the top of the
+// page — and on a page with barely a screen of scroll, the whole way back up lands
+// there in a single frame, so the bar is never asked to come up.
+//
+// A page that does takes its floor from `floorSelector`, and on this site the element
+// it names is a page the router has not necessarily mounted yet — so a selector
+// matching nothing is a floor below everything rather than one at the top of the
+// page: the section it answers for is still ahead. No selector at all is the same
+// floor for a plainer reason — the page draws the bar itself and nothing follows it,
+// so the pinned copy has nowhere to come up and stays down for the whole page.
 //
 // `measureKey` is what re-reads it, and — being the page the bar is standing on — is
 // also what returns the bar to its opening state.
@@ -54,13 +59,12 @@ const JUMP_SHARE = 1
 // opens with no way off it asks them to scroll against it to find one. The direction
 // rule above still owns every moment after that.
 //
-// The exception is a page that draws this bar in its own layout, which is the hero:
-// down there the pinned copy would be the same furniture drawn twice, and both copies
-// would put their links in the accessibility tree. Having a floor is what says a page
-// draws its own — see SiteNav, which reads the pair the same way — so the opening
-// state falls out of the floor rather than being passed in beside it.
-export function useRevealOnScrollUp(floorSelector, measureKey) {
-    const opensRevealed = !floorSelector
+// The exception is a page that draws this bar in its own layout: there the pinned
+// copy would be the same furniture drawn twice, and both copies would put their links
+// in the accessibility tree. So the opening state falls out of `pageDrawsBar` — see
+// SiteNav, which reads the same flag for the join below.
+export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
+    const opensRevealed = !pageDrawsBar
 
     const [isRevealed, setIsRevealed] = useState(opensRevealed)
     const [isAboveFloor, setIsAboveFloor] = useState(true)
@@ -92,12 +96,14 @@ export function useRevealOnScrollUp(floorSelector, measureKey) {
         // scroll-driven transforms, and a box read mid-flight is displaced by
         // however far the section has yet to travel.
         const measureFloor = () => {
-            if (!floorSelector) {
+            if (!pageDrawsBar) {
                 floor = -Infinity
                 return
             }
 
-            const section = document.querySelector(floorSelector)
+            const section = floorSelector
+                ? document.querySelector(floorSelector)
+                : null
             floor = section ? getSectionFlowTop(section) : Infinity
         }
 
@@ -153,7 +159,7 @@ export function useRevealOnScrollUp(floorSelector, measureKey) {
             window.removeEventListener("resize", onResize)
             if (frame !== null) cancelAnimationFrame(frame)
         }
-    }, [floorSelector, measureKey])
+    }, [floorSelector, pageDrawsBar, measureKey])
 
     return { isRevealed, isAboveFloor }
 }

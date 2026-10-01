@@ -14,13 +14,13 @@ import { useNavHeightVar } from "../hooks/useNavHeightVar";
 //
 // A page opens with it up, it goes down while the viewer reads forward, and it comes
 // back the moment they scroll against the page; see useRevealOnScrollUp for the
-// direction rule, for the opening state, and for why nothing is shown over the hero,
-// which carries a copy of this bar in its own layout.
+// direction rule, for the opening state, and for why nothing is shown over a page
+// that carries a copy of this bar in its own layout.
 const SiteNav = () => {
-    // Which page this bar is standing on decides where its floor is, and the router
-    // is what knows: the hero draws a copy of this bar in its own layout, and a page
-    // that doesn't has nothing for a pinned bar to be drawn twice over.
-    const { navFloorSelector, layoutKey, swap } = useRouter();
+    // Which page this bar is standing on decides whether it has a floor and where,
+    // and the router is what knows: the hero and Contact draw a copy of this bar in
+    // their own layout, and a page that doesn't has nothing to be drawn twice over.
+    const { navFloorSelector, pageDrawsNav, layoutKey, swap } = useRouter();
 
     // The direction owns every moment after the first, and arriving is the first: a
     // page opens with the bar up, whichever page was left and however it was left.
@@ -29,12 +29,16 @@ const SiteNav = () => {
     // layoutKey is what tells it a page has changed, and so what returns the bar to
     // that opening state — this bar is never unmounted, so nothing else would. See
     // useRevealOnScrollUp, which also keeps the hero out of it.
-    const { isRevealed, isAboveFloor } = useRevealOnScrollUp(navFloorSelector, layoutKey);
+    const { isRevealed, isAboveFloor } = useRevealOnScrollUp(
+        navFloorSelector,
+        pageDrawsNav,
+        layoutKey,
+    );
 
-    // Over the hero's own copy of this bar — which is the one place the two are
-    // stacked, and the only reason any of this is conditional. A floor belongs to a
-    // page that draws the bar itself, so a page without one is never over anything.
-    const isOverOwnBar = Boolean(navFloorSelector) && isAboveFloor;
+    // Over the copy the page draws itself — the only place the two are stacked, and
+    // the only reason any of this is conditional. A page that draws no copy is never
+    // over anything.
+    const isOverOwnBar = pageDrawsNav && isAboveFloor;
 
     // The bar belongs to the page under it, and for the length of a swap there are
     // two. It goes down with the page being left — behind the page rising over it, so
@@ -56,8 +60,8 @@ const SiteNav = () => {
                 // modal's scrim, and the page a swap carries in — which is what
                 // this bar goes down for, rather than being slid under.
                 "fixed inset-x-0 bottom-0 z-30",
-                // No slide over the hero, which has this same bar in its own
-                // layout: up there the two are stacked, and sliding one out from
+                // No slide over a page with this same bar in its own layout:
+                // there the two are stacked, and sliding one out from
                 // under the other smears the pair apart for the length of the
                 // slide. Off at once instead, under an identical bar that is
                 // already drawn — and on the way in there is nothing to animate,
