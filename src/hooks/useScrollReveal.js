@@ -97,19 +97,15 @@ const isPastRevealLine = (row) =>
 // still in flight is still a tile worth reading.
 const SHOT_WAIT_CAP_MS = 2000
 
-// Resolves once every image inside `items` has pixels to paint, or once the cap
-// runs out, whichever comes first.
+// Resolves once every image inside `items` has pixels to paint, or the cap runs out.
 //
-// decode() rather than the load event: a decoded image is one the next frame can
-// paint, where an image that has merely arrived still turns up a frame or two into
-// the fade. It also releases an image still held behind its lazy-load threshold,
-// which is the case this is really for — a shot the reader reached before the
-// browser thought to fetch it. A broken image rejects, and a broken image is as
-// ready as it is ever going to be.
+// decode() over the load event: a decoded image paints next frame, where one that
+// has merely arrived still turns up a frame or two late. It also frees an image
+// still behind its lazy-load threshold — the case this is really for. A broken
+// image rejects, which counts as ready.
 //
-// The row waits on all of its shots together rather than each item on its own: it
-// comes in as one run, and letting items start as their pictures happened to land
-// would hand the order of that run to the network.
+// Waits on the row's shots together, not each item alone, so the run starts as one
+// instead of being ordered by the network.
 const whenShotsReady = (items) => {
     const decoded = items
         .flatMap((item) => Array.from(item.querySelectorAll("img")))
@@ -130,15 +126,15 @@ const whenShotsReady = (items) => {
 // its shot, and a fade that starts while the shot is still in flight plays out
 // around a hole the picture then drops into.
 //
-// `stagger` left off is a stack rising as one, which is the whole point of the
-// stacked path: the reveal is over by the time the reader is past the first item,
-// and everything below it is already at rest and stays there, however far the
-// stack runs on — so the effect greets the section rather than following the
-// reader down it. With it, the row arrives as a run, its items a fixed beat
-// apart; the visible offset between neighbours falls out of the same two numbers,
-// since with this ease they sit roughly `(stagger / duration) * lift` px apart
-// early in the flight. Tighten the stagger without answering for that and the
-// items travel as one flat block.
+// `stagger`:
+// - left off, a stack rises as one — the whole point of the stacked path. The
+//   reveal is over by the time the reader is past the first item, and everything
+//   below stays at rest however far the stack runs on, so the effect greets the
+//   section rather than following the reader down it.
+// - included, the row arrives as a run, its items a fixed beat apart; with this
+//   ease they sit roughly `(stagger / duration) * lift` px apart early in the
+//   flight. Tighten the stagger without answering for that and the items travel
+//   as one flat block.
 const buildReveal = (items, { duration, stagger, lift }, isLive) => {
     const tween = gsap.fromTo(items,
         { opacity: 0, y: lift },
@@ -181,22 +177,21 @@ const buildReveal = (items, { duration, stagger, lift }, isLive) => {
 // for them as well, so a picture fades in with the frame around it rather than
 // landing part-way through the fade — see whenShotsReady for how long it waits.
 //
-// Pass `revealKey` for containers whose contents are swapped rather than
-// re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
-// anything changing WHICH elements are present has to say so.
-//
-// `duration`, `stagger` and `lift` move how long one item takes, how far behind
-// it the next one follows, and how far each rises. Only `duration` and `lift`
-// reach the stacked path, which has no run to space out.
-//
-// `enabled` is for a container that is mounted somewhere other than where it will
-// live: a page arriving by a swap is held to the viewport a screen below the fold
-// while it travels (see PageOutlet), and every row measured there reads as below the
-// line — so every row would be blanked and handed a trigger for a scroll position
-// that means nothing. Told to wait, the hook builds nothing and the items render at
-// rest; the caller flips it once the page is where it belongs, and the rows are read
-// from their real places. Not a key, because a key would build the wrong thing first
-// and then correct it, and the correction is a page-worth of cards blinking.
+// - `revealKey`: pass it for containers whose contents are swapped rather than
+//   re-rendered — a re-filtering grid, a tab panel. Rows are measured once, so
+//   anything changing WHICH elements are present has to say so.
+// - `duration`, `stagger`, `lift`: how long one item takes, how far behind it the
+//   next one follows, and how far each rises. Only `duration` and `lift` reach the
+//   stacked path, which has no run to space out.
+// - `enabled`: for a container mounted somewhere other than where it will live —
+//   a page arriving by a swap is held to the viewport a screen below the fold
+//   while it travels (see PageOutlet), and every row measured there reads as below
+//   the line, so every row would be blanked and handed a trigger for a scroll
+//   position that means nothing. Told to wait, the hook builds nothing and the
+//   items render at rest; the caller flips it once the page is where it belongs,
+//   and the rows are read from their real places. Not a key, because a key would
+//   build the wrong thing first and then correct it, and the correction is a
+//   page-worth of cards blinking.
 export function useScrollReveal(
     containerRef,
     revealKey,

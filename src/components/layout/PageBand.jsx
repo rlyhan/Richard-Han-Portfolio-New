@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { EYEBROW_LABEL_CLASS } from "./sharedClasses";
 
 // The chrome every band wears: the rule that opens it, the page's gutter, and its
 // own vertical padding.
@@ -18,10 +19,7 @@ const PageBand = ({ id, index, label, children }) => (
     aria-labelledby={`${id}-heading`}
     className={cn("grid grid-cols-1 gap-6", BAND_CLASS, BAND_COLUMNS_CLASS)}
   >
-    <h2
-      id={`${id}-heading`}
-      className="font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase"
-    >
+    <h2 id={`${id}-heading`} className={EYEBROW_LABEL_CLASS}>
       {index && (
         <small aria-hidden="true" className="mr-2.5 text-[0.5625rem]">
           {index}

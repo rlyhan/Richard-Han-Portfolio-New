@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react"
 import { getSectionFlowTop } from "../helpers/sectionScroll"
 
-// Smaller movement is jitter (trackpad drift, iOS rubber-banding), not a direction
-// change. Same threshold the old header bar read direction with.
+// Jitter (trackpad drift, iOS rubber-banding), not a direction change — same
+// threshold the old header bar used.
 const SCROLL_DELTA = 6
 
-// Larger movement than this share of the viewport is not a gesture either. A page
-// handing over to the next one takes its own height off the scroll position in the
-// frame it leaves the document (see RouterProvider), and travelling a page upward in
-// one reading is what the viewer would otherwise appear to have done — which is
-// exactly the ask for a nav bar. Nobody scrolls this far in a frame; a flick that
-// comes close is still read on the frames either side of it.
+// Larger than this share of the viewport isn't a gesture either — a page handoff
+// moves the scroll a full page in one frame (see RouterProvider), which would
+// otherwise read as the ask for a nav bar. No real scroll comes this close.
 const JUMP_SHARE = 1
 
 // Whether a bar pinned to the viewport is up, and whether the page is above the
@@ -20,49 +17,26 @@ const JUMP_SHARE = 1
 // is in the way; the moment they turn around they are looking for something, and
 // that is what it is for.
 //
-// `floorSelector` is the section it starts answering for — the floor being the
-// scroll position where that section's top edge reaches the top of the viewport.
-// The floor gates the bar arriving, not the bar staying: above it the bar will not
-// slide in, but one already up rides all the way to the top rather than dropping
-// away and being replaced.
+// - `floorSelector`: the section this bar starts answering for, as the scroll
+//   position where its top edge reaches the viewport's top. Gates arrival only —
+//   above the floor the bar won't slide in, but one already up stays up.
 //
-// That asymmetry is the hero. It carries a copy of this bar in its own layout, so
-// pinning a second one over it while the viewer is down there is the same furniture
-// drawn twice — but a viewer travelling back up to it has the bar in hand already,
-// and taking it away at the join, for the hero's identical copy to fade in behind,
-// is a flicker rather than an arrival.
+// - `pageDrawsBar`: whether the page already has its own copy, and so whether a
+//   floor exists at all. No copy, no floor (not zero — that would read a short
+//   page's own top as past it). A copy takes its floor from `floorSelector`; no
+//   match, or no selector, both read as a floor below everything.
 //
-// `isAboveFloor` is that join, for the caller to animate around: above it the hero's
-// own bar is underneath the pinned one, so a pinned bar going away there should go
-// at once. Sliding it out from under an identical bar smears the two apart for as
-// long as the slide lasts.
+// - `isAboveFloor`: the hero's join. It carries its own copy of the bar, so a
+//   viewer scrolling back up already has one in hand — losing it there for the
+//   hero's copy to fade in behind would be a flicker. Above the floor the hero's
+//   bar already sits underneath, so the pinned one can leave at once instead of
+//   sliding out from under an identical twin.
 //
-// `pageDrawsBar` is whether the page under this bar draws a copy of it in its own
-// layout, and so whether there is a floor at all. A page that does not is a floor
-// above everything: there is nothing down there for this bar to wait for. Not zero,
-// which reads as the viewer being above the floor whenever they are at the top of the
-// page — and on a page with barely a screen of scroll, the whole way back up lands
-// there in a single frame, so the bar is never asked to come up.
-//
-// A page that does takes its floor from `floorSelector`, and on this site the element
-// it names is a page the router has not necessarily mounted yet — so a selector
-// matching nothing is a floor below everything rather than one at the top of the
-// page: the section it answers for is still ahead. No selector at all is the same
-// floor for a plainer reason — the page draws the bar itself and nothing follows it,
-// so the pinned copy has nowhere to come up and stays down for the whole page.
-//
-// `measureKey` is what re-reads it, and — being the page the bar is standing on — is
-// also what returns the bar to its opening state.
-//
-// A page opens with the bar UP, and reading forward is what puts it away. Arriving is
-// the one moment the viewer has certainly not asked for anything yet, and a page that
-// opens with no way off it asks them to scroll against it to find one. The direction
-// rule above still owns every moment after that.
-//
-// The exception is a page that draws this bar in its own layout: there the pinned
-// copy would be the same furniture drawn twice, and both copies would put their links
-// in the accessibility tree. So the opening state falls out of `pageDrawsBar` — see
-// SiteNav, which reads the same flag for the join below.
+// - `measureKey`: re-reads the floor, and resets the bar's opening state for a
+//   new page. Pages open with the bar UP, so there's a way off it before any
+//   scroll happens — unless the page draws its own copy, where a second visible
+//   bar would double the links in the accessibility tree, so it opens DOWN
+//   instead (see SiteNav, same flag). The direction rule takes over from there.
 export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
     const opensRevealed = !pageDrawsBar
 

@@ -22,15 +22,14 @@ const FILTERS = [
 
 // How many shots load with the page rather than when the reader reaches them.
 //
-// One, because one is all that is on screen at every width — and it is the largest
-// thing this page paints. The two beside it on a desktop grid are named in
-// index.html instead, which is earlier than any hint here can be; on a phone they
-// are below the fold, where this would have fetched them at high priority for
-// nothing.
+// One: it's all that's on screen at every width, and the largest thing this page
+// paints. The two beside it on a desktop grid are named in index.html instead —
+// earlier than any hint here can be — and on a phone they're below the fold,
+// where this would fetch them at high priority for nothing.
 //
-// The rows further down need no hint either: they are revealed on the scroll, and
-// that reveal waits for its own shots (see useScrollReveal), which is a wait there
-// is nothing to see during.
+// The rows further down need no hint either: they're revealed on the scroll, and
+// that reveal waits for its own shots (see useScrollReveal) — a wait there's
+// nothing to see during.
 const EAGER_TILES = 1;
 
 // The number beside each title, worked out once off the full list. The filters hide
@@ -44,8 +43,8 @@ const NUMBERED_PROJECTS = PROJECTS.map((project, i) => ({
 // The Projects page: a masthead, a rule carrying the filters and the count, and the
 // whole list as a grid of framed shots.
 //
-// Every project, not a featured subset — the count on the rule is the point of the
-// page ("14 / 14"), and a list that silently left three out could not state it.
+// Every project, not a featured subset — the count on the rule is the point of
+// the page ("14 / 14"), and a list that silently left three out couldn't state it.
 //
 // A tile is the link to that project's write-up, at /projects/<id> — see ProjectPage,
 // and routes, which builds a record per project off the same list this page lists.
@@ -54,16 +53,8 @@ const NUMBERED_PROJECTS = PROJECTS.map((project, i) => ({
 // RouterProvider — so the foot of this page is the foot of the document, and the way
 // on from here is the nav bar pinned across it.
 //
-// The palette is the hero's, as About's is: cream ground, ink copy, a hairline between
-// every band. The one dark thing on the page is the frame each shot is matted on,
-// which is the hero's well seen at a larger size. It's this page's own ground rather
-// than the body's, and — unlike About — needs no stacking context of its own, since
-// this page arrives by a swap rather than sharing a document with a sticky hero.
-//
-// contained: false — the rule above the grid and the grid's own seams run to the
-// viewport edge, so the page frame's max width and gutter would cut every line short.
-// The masthead and the toolbar state the hero's gutter instead; the grid has none, and
-// draws its own seams with tile borders rather than a gap — see ProjectTile.
+// Unlike About, this page needs no stacking context of its own, since it
+// arrives by a swap rather than sharing a document with a sticky hero.
 const ProjectsPage = () => {
   const { isArriving } = usePage();
 
@@ -71,21 +62,20 @@ const ProjectsPage = () => {
 
   const gridRef = useRef(null);
 
-  // gridRef as the panel because one grid serves all three filters: pressing a
-  // filter swaps its contents without the element changing, so the fade over that
-  // swap has to be replayed by hand. See useTabSelect for why it isn't a CSS
-  // animation.
+  // gridRef as the panel, since one grid serves all three filters: pressing a
+  // filter swaps its contents without the element changing, so the fade over the
+  // swap is replayed by hand — see useTabSelect for why it isn't a CSS animation.
   const { selectTab } = useTabSelect(activeFilter, setActiveFilter, {
     panelRef: gridRef,
   });
 
-  // Keyed on the filter: it re-filters the grid, so the rows the reveal measured are
-  // gone. Alongside the toolbar's fade rather than instead of it — the fade covers
-  // the swap, this carries in the tiles below the fold — and they compose, since the
+  // Keyed on the filter: re-filtering the grid leaves the rows the reveal measured
+  // gone. Alongside the toolbar's fade, not instead of it — the fade covers the
+  // swap, this carries in the tiles below the fold, and they compose since the
   // grid's opacity and a tile's multiply.
   //
   // Not while the page is still arriving: a swap holds it a screen below the fold
-  // while it travels, and rows measured there are rows measured in the wrong place.
+  // while it travels, and rows measured there are measured in the wrong place.
   useScrollReveal(gridRef, activeFilter, { enabled: !isArriving });
 
   const shown = useMemo(() => {

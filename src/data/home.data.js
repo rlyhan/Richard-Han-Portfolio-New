@@ -27,11 +27,11 @@ export const FEATURED_LABEL = "Featured work";
 // the layout below only describes these three cells. Adding a fourth here would
 // leave it unplaced.
 //
-// Each cell names its own shot. Some of these are the file the Projects section shows
-// and some aren't: a card and a tile crop the same picture to very different shapes,
-// so which file suits is the cell's question rather than the project's. Neither how a
-// shot meets its frame nor the size it comes at is a question here — both travel with
-// the file, in shots.data.
+// Each cell names its own shot. Some are the file the Projects section shows and
+// some aren't: a card and a tile crop the same picture to very different shapes, so
+// which file suits is the cell's question, not the project's. Neither how a shot
+// meets its frame nor its size is a question here — both travel with the file, in
+// shots.data.
 //
 // The alt text is this list's own, though: these are device mockups rather than
 // screenshots, and what a card shows is a site ON something, which is the part a

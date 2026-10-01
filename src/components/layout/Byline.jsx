@@ -1,6 +1,7 @@
 import cn from "classnames";
 import LocationPinIcon from "../icons/LocationPinIcon";
 import { INTRO_TOPLINE } from "../../data/home.data";
+import { EYEBROW_LABEL_CLASS } from "./sharedClasses";
 
 // The name/location masthead line shared by the hero and the About page. Only the
 // hero hides the name below md, which is why the location's own width cap and
@@ -9,7 +10,10 @@ import { INTRO_TOPLINE } from "../../data/home.data";
 const Byline = ({ topLineRef, hideNameBelowMd = false }) => (
   <p
     ref={topLineRef}
-    className="flex items-center justify-between gap-4 font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase"
+    className={cn(
+      "flex items-center justify-between gap-4",
+      EYEBROW_LABEL_CLASS,
+    )}
   >
     <span className={hideNameBelowMd ? "hidden md:block" : undefined}>
       {INTRO_TOPLINE.name}

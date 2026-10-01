@@ -8,17 +8,13 @@ import { PORTRAIT } from "../../data/photos.data";
 // not a module, and this one is not allowed to change when that one does.
 const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
-// The Contact page's opening carrying this page's copy, so that two pages opening the
-// same way read as one site. What differs is the nav: Contact draws its own bar in
-// the flow below this, where here the bar is pinned over the page — so the height is
-// one screen less that bar, and from md the title leaves the picture for the column
-// beside it, which is the bug the masthead was shaped around.
+// The Contact page's opening carrying this page's copy, so two pages opening
+// the same way read as one site. What differs is the nav: Contact draws its own
+// bar in the flow below this, where here the bar is pinned over the page.
 //
-// The title is one element sharing the picture's grid cell on a phone and taking its
-// own cell beside it from md, rather than one heading per breakpoint — two would be
-// two h1s and one id. min-h, not height, because this page holds a bio rather than
-// Contact's one line, and a fixed screen would cut the last paragraph off on a short
-// viewport.
+// The title is one element sharing the picture's grid cell on a phone and
+// taking its own cell beside it from md, rather than one heading per
+// breakpoint — two would be two h1s and one id.
 const AboutOpening = () => (
   <div className="grid min-h-[calc(100svh-var(--nav-height,4rem))] grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
     <div

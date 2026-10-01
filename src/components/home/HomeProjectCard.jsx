@@ -4,68 +4,28 @@ import MattedShot from "../common/MattedShot";
 import { projectPathOf } from "../../routes/routes";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
+import { PROJECT_LINK_CLASS } from "../layout/sharedClasses";
 
 // One card of the hero's spread: a dark well with the shot matted whole inside it
 // and a caption plate framed over the foot of it.
 //
-// Matted rather than cropped, at every size. The three shots are device mockups of
-// three different shapes — a tablet, a laptop, three phones — and a fill would cut
-// each one down to whatever band its cell happens to be: a laptop with its screen
-// halved, phones with their feet gone. Containing them on a ground darker than the
-// page is what makes the cell read as a frame the object hangs in, so the matting
-// is the point rather than a shortfall. The slight scale-up is there to keep the
-// object filling its frame; the hover takes it a step further.
+// Two variants — `grid`, a hand-placed masonry cell, and `slide`, a full-width
+// carousel track item — see HomeWork and HomeProjectCarousel.
 //
-// A shot photographed in a room is the exception and runs to the edges of the cell
-// instead — see MattedShot and shots.data. It brings a ground with it, so the well
-// has nothing to show and the inset frame would read as a picture inside a picture.
-// It keeps no base scale for the same reason it needs none: it already fills.
+// Nothing animates a slide — not a preference: the carousel loops by writing an
+// inline transform to the slide element, and an animation's transform outranks
+// an inline style, so a filled-forwards reveal would pin the slide while the
+// wrap opens a gap where the card should be. The deck carries the reveal
+// instead, and the hover zoom goes with it — a touch that starts a drag counts
+// as a hover, so a phone's shot would swell mid-swipe and stay swollen after.
 //
-// A matted shot's frame stops above the caption plate rather than running under it:
-// the object stays whole, and the plate has nothing behind it to show through. A
-// bleed shot has to run under it — the ground is the picture — so what keeps the
-// device whole there is the shot's own floor, and the crop that never touches it.
-// The slide drops the top inset either way: a phone gives the deck a third of the
-// screen at most, and matting the scarce axis spends it on ground, where the well's
-// own top edge already reads as the frame.
-//
-// The caption sits ON the well instead of in a strip under it. A plate in the
-// hero's paper tone, over a dark ground, reads as a label pinned to the frame —
-// and it costs the shot nothing, because what it covers is matting.
-//
-// Two variants, because the spread is a hand-placed masonry grid from md up and a
-// swipable carousel below it — see HomeWork and HomeProjectCarousel:
-//
-//   grid   `position` is the cell, passed in rather than derived, since the three
-//          cells are hand-placed and that layout lives with the grid. The cells
-//          share seams, so each one draws only its right and bottom edge — the
-//          grid supplies the two no cell owns. The reveal and the hover zoom
-//          belong to this variant.
-//   slide  a full-width track item, sized to the view and neither shrinking nor
-//          growing to its neighbours. No seams — there is no neighbouring cell for
-//          a line to sit against — and a shallower caption, since the plate has a
-//          phone's column to fit in rather than half a screen.
-//
-// Nothing animates a slide, and that isn't a preference: the carousel loops by
-// writing an inline transform to the slide element, and an animation's transform
-// outranks an inline style, so a filled-forwards reveal pins the slide and the wrap
-// opens a gap where the card should be. The deck carries the reveal instead. The
-// hover zoom goes with it — a touch that starts a drag counts as a hover, so on a
-// phone the shot would swell mid-swipe and stay swollen after it.
-//
-// Every card's shot loads eagerly, in either layout. The spread shows all three
-// cells at once, and a lazy image above the fold is fetched after everything else
-// the page needs; the deck's slides sit outside a horizontal track, where there is
-// nothing to bring a lazy image in until the swipe that reveals it, so the first
-// swipe would land on a blank card. The three of them are preloaded from index.html
-// besides — see there for why this document can't discover them on its own.
-//
-// The card links straight to the project's write-up, the same page ProjectTile
-// points at from the Projects listing.
+// Every shot loads eagerly, in either layout: the spread shows all three cells
+// at once, and a lazy image above the fold fetches after everything else the
+// page needs; the deck's slides sit outside a horizontal track, so nothing
+// brings a lazy image in before the swipe that reveals it, landing the first
+// swipe on a blank card. All three are also preloaded from index.html — see
+// there for why this document can't discover them on its own.
 
-// The grid's cards arrive one after the other rather than together: the spread is
-// read left to right, and a stagger walks the eye that way instead of flashing the
-// whole panel on at once. Small enough to finish well inside the reveal itself.
 const REVEAL_STAGGER_MS = 120;
 
 const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
@@ -75,9 +35,6 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
   const isLead = index === 0;
   const isBleed = image.fit === "bleed";
 
-  // A bleed shot takes no base scale, since it already fills the cell — only the
-  // hover step. A matted lead cell takes the widest gesture of the three: it is the
-  // tall cell and takes the tall shot, so it has the least matting to give back.
   const zoom = isSlide
     ? undefined
     : isBleed
@@ -105,7 +62,7 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
       <a
         {...projectLink}
         aria-label={`View the ${name} project`}
-        className="group block h-full focus-visible:outline-cream focus-visible:-outline-offset-4"
+        className={PROJECT_LINK_CLASS}
       >
         <div
           className={cn(
@@ -127,12 +84,6 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
           />
         </div>
 
-        {/* The plate: number and title on one line, category under the title,
-            and the arrow held to the right of both — decorative, since the
-            link is the whole card now.
-
-            A minimum depth rather than a set one, so a title that has to wrap
-            grows the plate instead of spilling out of it. */}
         <div
           className={cn(
             `absolute grid items-baseline border ${GRID_BORDER_COLOR} bg-cream`,
@@ -161,8 +112,6 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
             {name}
           </h3>
 
-          {/* Spans both rows and centres on them, so the arrow sits with the
-              plate rather than on the baseline of either line of type. */}
           <span
             aria-hidden="true"
             className={cn(

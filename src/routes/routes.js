@@ -4,16 +4,16 @@ import PROJECTS from "../data/projects.data";
 //
 // One record per page, and everything else reads the list off this table: which
 // chunk to fetch, what the nav says, which page the scroll continues into, what the
-// tab is called. Adding a page is a record here and a component under src/pages —
+// tab is called. Adding a page is a record here and a component under src/pages;
 // nothing else knows the list.
 //
-// Each page is its own chunk, which is the point of the split: the hero's spread and
-// its carousel are not sent to someone who came to read About.
+// Each page is its own chunk, the point of the split: the hero's spread and its
+// carousel aren't sent to someone who came to read About.
 //
-// The project list is imported here rather than only by the pages that show it,
-// because the write-ups below are a page per project and the table cannot be built
-// without it. That costs nothing: the homepage's featured cards read the same list, so
-// it was already shared between three chunks and hoisted out of all of them.
+// The project list is imported here, not only by the pages that show it, since the
+// write-ups below are a page per project and the table can't be built without it.
+// That costs nothing — the homepage's featured cards read the same list, already
+// shared between three chunks and hoisted out of all of them.
 const PAGES = [
   {
     path: "/",
@@ -35,19 +35,15 @@ const PAGES = [
     // No navLabel: the name at the foot of the bar is the way back home, and a
     // "Home" item beside it would be that link drawn twice.
     //
-    // `next` is the page this one hands the SCROLL to: the hero would empty out
-    // across its runway and About climb over it, one document, one gesture.
-    // Everywhere else the foot of the page is the foot of the document and the
-    // nav bar is the way on — see RouterProvider, which plays those as a swap
-    // rather than a scroll.
+    // `next` hands the SCROLL to the next page — the hero empties out across its
+    // runway and About climbs over it, one document, one gesture. Everywhere
+    // else the foot of the page is the foot of the document and the nav bar is
+    // the way on — see RouterProvider, which plays those as a swap instead.
     //
-    // TEMPORARILY OFF. The scroll-driven join left a gentle scroll stranded
-    // part-way along the runway with a half-emptied hero, so until that is
-    // settled this page hands over the way every other page does: a swap, on a
-    // click. Restoring the line below is the whole switch back — the runway, the
-    // hero's exit, the staging of About underneath and the takeover all follow
-    // from it. See useHandoff, which builds nothing without it, and HomePage,
-    // which leaves the runway out of the markup.
+    // TEMPORARILY OFF: the scroll-driven join left a gentle scroll stranded
+    // part-way along the runway with a half-emptied hero. Restoring the line
+    // below is the whole switch back — useHandoff builds nothing without it, and
+    // HomePage leaves the runway out of the markup until it does.
     // next: "/about",
     load: () => import("../pages/HomePage.jsx"),
   },
@@ -96,15 +92,15 @@ export const projectPathOf = (id) => `${PROJECT_BASE}/${id}`;
 export const projectSectionId = (id) => `project-${id}`;
 
 // A page per project, off the same list the Projects page lists: a write-up exists
-// for exactly the projects the site has, and there is no second list to keep in step.
+// for exactly the projects the site has, with no second list to keep in step.
 //
-// One chunk between them — every record loads the same component, which reads which
-// project it is off the path. What differs per record is only what the router needs
-// before that chunk lands: the URL, the tab's title and the ground.
+// One chunk between them — every record loads the same component, which reads
+// which project it is off the path. What differs per record is only what the
+// router needs before that chunk lands: the URL, the tab's title, the ground.
 //
-// Not part of PAGES, because they are not in the order the scroll runs through the
-// site: nothing hands over to a write-up, and a write-up hands over to nothing. The
-// way in is a tile on the Projects page and the way out is the link back to it.
+// Not part of PAGES: they aren't in the order the scroll runs through the site —
+// nothing hands over to a write-up, and a write-up hands over to nothing. The way
+// in is a tile on the Projects page, the way out is the link back to it.
 const PROJECT_PAGES = PROJECTS.map(({ id, name }) => ({
   path: projectPathOf(id),
   sectionId: projectSectionId(id),
@@ -134,14 +130,14 @@ export const findRoute = (path) =>
 export const nextRouteOf = (route) =>
   route?.next ? findRoute(route.next) : null;
 
-// The page after this one in reading order, which is not the same question as `next`:
-// `next` is whether the SCROLL carries on into it, and this is simply what comes
-// after. The pinned nav bar's floor asks this one — a page that draws the bar in its
-// own layout keeps the pinned copy down until the page below it is reached, whether
-// the two are joined by a scroll or by a swap.
+// The page after this one in reading order — not the same question as `next`,
+// which is whether the SCROLL carries on into it. The pinned nav bar's floor
+// asks this one: a page that draws the bar in its own layout keeps the pinned
+// copy down until the page below is reached, whether the two are joined by a
+// scroll or a swap.
 //
-// Off PAGES, so a project's write-up has nothing after it: the site reads through the
-// four pages, and a write-up sits off to the side of that run.
+// Off PAGES, so a write-up has nothing after it: the site reads through the four
+// pages, and a write-up sits off to the side of that run.
 export const routeAfter = (route) => {
   const index = PAGES.indexOf(route);
   return index < 0 ? null : (PAGES[index + 1] ?? null);

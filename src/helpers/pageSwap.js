@@ -2,11 +2,11 @@ import gsap from "gsap"
 
 // The transition between two pages that share no scroll.
 //
-// Only the homepage hands over on the scroll — the hero empties out across a runway
-// while About climbs over it, one document and one gesture (see useHandoff). Every
-// other page ends where its content does, and the way on is the nav bar: a click, not
-// a scroll, and so a transition on its own clock rather than one scrubbed off the
-// wheel.
+// Only the homepage hands over on the scroll — the hero empties out across a
+// runway while About climbs over it, one document and one gesture (see
+// useHandoff). Every other page ends where its content does; the way on is the
+// nav bar, a click rather than a scroll, so the transition runs on its own
+// clock instead of one scrubbed off the wheel.
 //
 // It reads as the same move all the same, because it is the same move: the page being
 // left lifts and fades, the page arriving comes up from below the fold and takes the
@@ -23,11 +23,13 @@ const OUT_DURATION = 0.55
 const IN_DURATION = 0.75
 const IN_START = 0.15
 
-// `leaving` is the section of the page being left rather than the box the pages sit
-// in: the page arriving is inside that box too now, and a box that moved would take
-// it along. `arriving` is that page's own box, which is held to the viewport while it
-// travels — hence yPercent, where 100 is one screen down wherever the page underneath
-// happens to be scrolled to. See useSwapTransition.
+// See useSwapTransition.
+// - `leaving`: the section of the page being left, not the box the pages sit in
+//   — the arriving page is inside that box too now, and a box that moved would
+//   take it along.
+// - `arriving`: that page's own box, held to the viewport while it travels —
+//   hence yPercent, where 100 is one screen down wherever the page underneath
+//   happens to be scrolled to.
 export const buildSwapTimeline = ({ leaving, arriving, onComplete }) => {
     const timeline = gsap.timeline({ defaults: { ease: "power2.inOut" }, onComplete })
 

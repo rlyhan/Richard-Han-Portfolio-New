@@ -2,6 +2,10 @@ import cn from "classnames";
 import AwardIcon from "../icons/AwardIcon";
 import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
+import {
+  IMAGE_FALLBACK_CLASS,
+  PROJECT_LINK_CLASS,
+} from "../layout/sharedClasses";
 import { projectPathOf } from "../../routes/routes";
 import { fitOf } from "../../data/shots.data";
 
@@ -40,7 +44,7 @@ const ProjectTile = ({ project, number, eager }) => {
       <a
         {...link}
         aria-label={`${name} — ${category}`}
-        className="group block h-full focus-visible:outline-cream focus-visible:-outline-offset-4"
+        className={PROJECT_LINK_CLASS}
       >
         <div
           className={cn(
@@ -61,7 +65,7 @@ const ProjectTile = ({ project, number, eager }) => {
           ) : (
             <div
               aria-hidden="true"
-              className="h-full w-full border border-grid bg-shell"
+              className={IMAGE_FALLBACK_CLASS}
             />
           )}
         </div>

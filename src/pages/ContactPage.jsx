@@ -11,23 +11,14 @@ import {
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
 
-// The gutter the pages that band to the viewport edge carry — here it sets the title
-// against the copy below or beside it, so both read off one margin. See PageMasthead,
-// which carries the same one.
 const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
-// The channels take their height from their own padding and type rather than stating
-// one, so the row can't crop its labels when the type scale moves. Three abreast on a
-// phone, where they share the width; their own width from md up, where the shortest of
-// them still has to read as the same object as the longest.
 const CHANNEL_CLASS =
   "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border px-[0.5625rem] py-4 font-urbanist text-[0.875rem] leading-none font-semibold transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-5 md:py-5 md:text-base";
 
-// Cream on well, which is the panel's own pairing where the title sits on it: the
-// channel that actually reaches me answers the invitation in the same two tones, rather
-// than being one of three identical outlines. Applied to the first channel, rather than
-// one flagged in the data — the list is already ordered by which is worth trying, and a
-// flag beside that order could disagree with it.
+// Applied to the first channel, not flagged in the data — the list is already
+// ordered by what's worth trying, and a flag beside that order could disagree
+// with it.
 const CHANNEL_PRIMARY_CLASS =
   "border-well bg-well text-cream hover:border-ink hover:bg-ink";
 
@@ -38,15 +29,6 @@ const isExternal = (href) => href.startsWith("http");
 
 // One screen, like the hero, so the nav bar below is drawn here rather than left to
 // the pinned SiteNav — see `hasOwnNav` on this page's route record.
-//
-// The title sits inside the panel's own box rather than beside it in a shared grid
-// cell: two grid items sharing a cell can drift apart on alignment, a title
-// positioned inside one box can't. svh rather than vh sizes the split so it holds
-// while the browser's own chrome is showing.
-//
-// The panel is a flat fill rather than a photograph, which is why it carries no
-// scrim: the scrim is there to hold cream type over a picture, and well already does
-// that on its own. The one photograph on the site is the About page's.
 const ContactPage = () => {
   const navItems = useNavItems();
 

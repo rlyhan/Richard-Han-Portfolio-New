@@ -25,12 +25,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 // The scroll a page opens at is the router's to decide, not the browser's: it hands
 // the URL over mid-scroll (see below), and an entry the browser restored to that
-// offset would open the page part-way down with nothing above it — or, going back to
-// the first page of a visit, part-way down a document built from other pages since.
+// offset would open the page part-way down — or, going back to the first page of a
+// visit, part-way down a document built from other pages since.
 //
-// Stated for every entry rather than once for the document: this is a property of the
-// history entry, and an entry pushed later does not carry the value of the one before
-// it.
+// Stated for every entry, not once for the document: a later-pushed entry doesn't
+// carry the value of the one before it.
 const keepScrollOurs = () => {
   if ("scrollRestoration" in window.history)
     window.history.scrollRestoration = "manual";
@@ -40,12 +39,12 @@ keepScrollOurs();
 
 // How long the scroll has to be quiet before the URL is handed over.
 //
-// The handover takes the page above out of the document and takes its height off the
-// scroll position in the same frame, which is invisible standing still and a stall
+// The handover takes the page above out of the document and its height off the
+// scroll position in the same frame — invisible standing still, but a stall
 // mid-flick: the wheel's remaining momentum lives in the smooth scroller's target
-// position, and re-seating that position spends it. So it waits for the gesture to
-// finish — which is a beat after the takeover's scripted scroll eases to its landing
-// anyway, and unnoticeable when the viewer is reading rather than moving.
+// position, and re-seating it spends that momentum. So it waits for the gesture to
+// finish, a beat after the takeover's scripted scroll lands anyway and unnoticeable
+// while reading.
 const SETTLE_MS = 140;
 
 // Subpixel slack on the landing. Page zoom and a fractional viewport height both
@@ -60,24 +59,22 @@ const PREFETCH_DELAY = 800;
 // How close to the end of what is in the document the viewer has to be before the
 // next page is mounted below it, in viewports.
 //
-// A page is not put in the document to be scrolled past: it is put there so the join
-// has something to play against, and that is the last screenful of the page above.
-// One viewport of warning is a whole screen of scrolling before the hesitation
-// starts, which is time enough for a chunk already fetched to mount and for its
-// triggers to be measured — and it keeps the page below out of the document for
-// everyone still reading the one above.
+// A page isn't put in the document to be scrolled past: it's there so the join has
+// something to play against — the last screenful of the page above. One viewport of
+// warning is a full screen of scrolling before the hesitation starts, time enough
+// for an already-fetched chunk to mount and its triggers to be measured, while
+// keeping the page out of the document for everyone still reading the one above.
 const STAGE_MARGIN = 1;
 
 // Gives the smooth scroller a scroll position it did not perform itself. Lenis holds
 // its own idea of where the page is and writes it back every frame, so setting the
 // window alone is undone on the next tick.
 //
-// Stopped first, and not merely told where it now is: a wheel gesture is a scroll
-// Lenis is still easing out, and that easing survives being given a new position —
-// it carries on toward wherever the gesture was heading, which is a place in the
-// document that has just been taken apart. Stopping drops it, the window is set,
-// and starting again reads the position back off the page. A flick that carries the
-// viewer through a join stops where the join put them.
+// Stopped first, not merely told where it now is: a wheel gesture is a scroll Lenis
+// is still easing out, and that easing survives a new position — it carries on
+// toward wherever the gesture was heading, a place in the document just taken
+// apart. Stopping drops it, the window is set, and starting again reads the
+// position back off the page. A flick through a join stops where the join put it.
 const seatScroll = (offset) => {
   const lenis = getLenis();
 
@@ -91,14 +88,14 @@ const seatScroll = (offset) => {
 // The same position, put back a frame later if anything has moved it.
 //
 // For a history traversal and nothing else. The browser restores the entry's own
-// scroll position after the event that took us there — a position in a document built
-// from different pages, and one it will not be talked out of by scrollRestoration —
-// so the seat has to outlast it by a frame.
+// scroll position after the event that took us there — a position in a document
+// built from different pages, and one scrollRestoration won't talk it out of — so
+// the seat has to outlast it by a frame.
 //
-// Never on a seat the viewer scrolled their way into. A handoff lands while the wheel
-// may still be turning, and the scroll that arrives in the frame after it is theirs:
-// putting the page back would take a gesture off them and show as a jump down and
-// back up in the same breath.
+// Never on a seat the viewer scrolled their way into: a handoff lands while the
+// wheel may still be turning, and the scroll that arrives the frame after is
+// theirs. Putting the page back would take a gesture off them and show as a jump
+// down and back up in the same breath.
 const holdSeat = (offset) => {
   requestAnimationFrame(() => {
     if (Math.abs(window.scrollY - offset) < 1) return;
@@ -221,24 +218,22 @@ const RouterProvider = ({ children }) => {
   const enterRoute = useCallback(
     (target, { push = true, offset = 0, hold = false } = {}) => {
       // A scripted scroll still pointing into the document about to be taken
-      // apart. Killing it runs its own cleanup, which is what unlocks the page if
-      // it was a takeover holding the scroll.
+      // apart. Killing it runs its own cleanup, which unlocks the page if it
+      // was a takeover holding the scroll.
       gsap.killTweensOf(window);
 
-      // And the animation that carried the arriving page in, which is done: this
-      // is the moment it was travelling towards.
+      // And the animation that carried the arriving page in, done now — this is
+      // the moment it was travelling toward. It belongs to the page being left,
+      // and React doesn't run a leaving page's cleanup until it flushes passive
+      // effects, after the next paint. Alive that long, it gets one more update
+      // on the very frame the document changes: its trigger still describes a
+      // document with both pages in it, the scroll is being re-seated for one,
+      // and it reads the difference as progress to animate toward — the page
+      // twitches down and back for a frame as the cleanup catches up.
       //
-      // It belongs to the page being left, and React does not run a leaving page's
-      // cleanup until it flushes passive effects — which is after the next paint.
-      // Alive for that long it gets one more update, on the very frame the document
-      // changes: its trigger still describes a document with both pages in it, the
-      // scroll is being re-seated for one, and it reads the difference as progress
-      // to animate toward. A frame of that travel paints, and the page twitches down
-      // and back as the cleanup catches up.
-      //
-      // Cleared as well as killed, because whatever the catch-up had left to spend
-      // is still on the element — and taken here, before the document changes, it
-      // is spent in the same breath as the seat and never paints.
+      // Cleared as well as killed: whatever the catch-up had left to spend is
+      // still on the element, and taken here, before the document changes, it's
+      // spent in the same breath as the seat and never paints.
       const arriving = document.getElementById(target.sectionId);
       if (arriving) {
         gsap.killTweensOf(arriving);
@@ -280,15 +275,15 @@ const RouterProvider = ({ children }) => {
   // The set of mounted pages has changed, so every page's position in the document
   // has too, and every trigger measured against it has to be re-resolved.
   //
-  // A passive effect, and that is the whole of why: the page that just left takes
-  // its scroll-driven animations with it, and React does not run an unmounting
-  // page's cleanup until it flushes these. Refreshing before that — in the layout
-  // effect above, where the scroll is re-seated — refreshes tweens that are still
-  // alive and still describing the document that has gone. The one that carries the
-  // incoming page up re-reads its starting offset and, against a scroll now seated
-  // at the top, applies it: the page drops a tenth of a screen for a single frame,
-  // and springs back as the cleanup lands. Running after them, there is nothing
-  // left of the old page to refresh.
+  // A passive effect, and that's the whole of why: the page that just left takes
+  // its scroll-driven animations with it, and React doesn't run an unmounting
+  // page's cleanup until it flushes these. Refreshing earlier — in the layout
+  // effect above, where the scroll is re-seated — would refresh tweens still
+  // alive and still describing the document that's gone: the one carrying the
+  // incoming page up would re-read its starting offset against a scroll now
+  // seated at the top, applying it — the page drops a tenth of a screen for a
+  // frame and springs back as the cleanup lands. Running after them, there's
+  // nothing left of the old page to refresh.
   useEffect(() => {
     ScrollTrigger.refresh();
   }, [current, isNextStaged]);
@@ -531,13 +526,13 @@ const RouterProvider = ({ children }) => {
   // document — staged below becoming the page in front, arriving over the top
   // becoming the page itself — keeps the DOM it already has.
   //
-  // The page arriving by a swap goes FIRST and stays first. React reuses an element
-  // when its key and its parent match, but a node it has to move between positions
-  // is disconnected on the way, and disconnecting a node cancels the CSS animations
-  // inside it — which is a page's whole arrival replaying at the moment it lands.
-  // Held at the head of the list, it is never moved: the pages under it are simply
-  // deleted. Paint order is not DOM order for it anyway; it is fixed, over
-  // everything, until it settles. See PageOutlet.
+  // The page arriving by a swap goes FIRST and stays first. React reuses an
+  // element when its key and parent match, but a node it has to move between
+  // positions is disconnected on the way, and disconnecting cancels the CSS
+  // animations inside it — a page's whole arrival replaying at the moment it
+  // lands. Held at the head of the list, it's never moved; the pages under it
+  // are simply deleted. Paint order isn't DOM order for it anyway — it's fixed,
+  // over everything, until it settles. See PageOutlet.
   const pages = useMemo(
     () =>
       [
@@ -579,18 +574,17 @@ const RouterProvider = ({ children }) => {
       // pinned copy waits for a floor at all rather than being free from the top.
       pageDrawsNav: Boolean(route?.hasOwnNav),
       // The floor that pinned copy answers for: it stays down until the page below
-      // has taken over. Read as a selector so it is measured, not remembered.
+      // has taken over. Read as a selector so it's measured, not remembered.
       //
-      // The page below in table order, not the page the scroll joins to — the
-      // pinned bar has to stay off the hero whether the way on from here is a
-      // scroll or a click. Until that page is in the document the selector
-      // matches nothing, which useRevealOnScrollUp reads as a floor below
-      // everything, so the bar never comes up over the hero's own copy.
-      //
-      // Null with nothing below at all, which is Contact: it draws the bar itself
-      // and is the last page, so there is no floor for the pinned copy to arrive
-      // at and it stays down the whole way. The scroll off the foot of that page
-      // is the footer coming up, not a second bar.
+      // - the page below in table order, not the page the scroll joins to — the
+      //   bar has to stay off the hero whether the way on is a scroll or a
+      //   click. Until that page is in the document the selector matches
+      //   nothing, which useRevealOnScrollUp reads as a floor below
+      //   everything, so the bar never comes up over the hero's own copy.
+      // - null with nothing below at all, which is Contact: it draws the bar
+      //   itself and is the last page, so there's no floor to arrive at and it
+      //   stays down the whole way — the scroll off its foot is the footer
+      //   coming up, not a second bar.
       navFloorSelector: route?.hasOwnNav
         ? sectionSelectorOf(routeAfter(route))
         : null,

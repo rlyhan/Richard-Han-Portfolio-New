@@ -4,19 +4,18 @@ import { INTRO_TOPLINE } from "../../data/home.data";
 
 const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 
-// The bar at the foot of the hero, and — pinned to the viewport by SiteNav — at the
-// foot of every screen below it: the name at display size, the section links
-// opposite it, and nothing between them. One component for both, and now one layout
-// as well, so the pinned copy sits exactly on top of the hero's own wherever the two
-// are stacked.
+// The bar at the foot of the hero, and — pinned to the viewport by SiteNav —
+// at the foot of every screen below it: the name at display size, the section
+// links opposite it, nothing between them. One component for both, and now one
+// layout.
 //
 // The items are pages rather than sections of one, so each carries a real link to a
 // real URL — see useNavLinks, which is where both copies of this bar get them.
 //
-// The name is the way back to the homepage, which is why there is no "Home" item
-// beside the other three: a wordmark that leads home is the one piece of navigation
-// every site already agrees on, and stating it twice in one bar would be the same
-// link drawn twice. On the homepage itself it leads to the top of the page.
+// The name is the way back to the homepage, why there's no "Home" item beside
+// the other three: a wordmark that leads home is the one piece of navigation
+// every site already agrees on, and stating it twice would be the same link
+// drawn twice. On the homepage itself it leads to the top of the page.
 const NavMenu = ({
   items,
   setNameRef,
