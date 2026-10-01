@@ -14,6 +14,18 @@ import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
 const NEAR_TOP_THRESHOLD = 40;
 
+// From md up the cue lands in the middle of the nav bar, between the name and the
+// section links — the one part of that bar left empty for it. On a phone the bar is a
+// single row with no middle to sit in, so the cue goes to the top-right corner
+// instead, and the intro panel's top padding is what keeps the byline clear of it.
+//
+// Off the hero rather than the viewport (see ScrollCue, which is absolute): the one
+// scroll this page has is the slack the footer adds below it, and a cue pinned to the
+// viewport spends that scroll sitting on the copyright line. Riding with the bar it
+// belongs to, it is in the same place on the hero at either end of that scroll.
+const CUE_POSITION_CLASS =
+  "top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0";
+
 // What the hero's exit throws off the screen, in the order it goes. The stagger is
 // indexed off this list, so the spread runs down the left column and then takes the
 // work panel with it — see useHeroHandoff for the travel each index gets.
@@ -100,10 +112,13 @@ const HomePage = () => {
 
   const navItems = useNavItems();
 
-  // The cue belongs to the top of the page: any scroll away from the hero retires it,
-  // including the one the cue itself starts.
-  const isCueVisible =
-    useIsNearPageTop(NEAR_TOP_THRESHOLD) && !isScrollingToNext;
+  // Any scroll away from the hero retires the cue, including the one the cue itself
+  // starts — but only where there is a runway to scroll away along. Without one the
+  // hero is the whole page and the only scroll under it is the slack the footer adds,
+  // so a cue that went away down there would read as having been the way to the
+  // footer rather than the way to About.
+  const isNearPageTop = useIsNearPageTop(NEAR_TOP_THRESHOLD);
+  const isCueVisible = (!nextPath || isNearPageTop) && !isScrollingToNext;
 
   // contained: false — the hero is the one section that runs to the viewport edge,
   // so it opts out of the page frame the rest of the page sits in.
@@ -153,6 +168,13 @@ const HomePage = () => {
           setNameRef={setNameRef}
           setNavRef={setNavRef}
         />
+
+        <ScrollCue
+          onClick={goToNextPage}
+          visible={isCueVisible}
+          label={nextPath ? "Scroll to the About page" : "Go to the About page"}
+          positionClassName={CUE_POSITION_CLASS}
+        />
       </PageSection>
 
       {/* The runway: the scroll where the hero holds the viewport alone and empties
@@ -183,18 +205,6 @@ const HomePage = () => {
           className="h-[90svh] motion-reduce:h-0! md:h-[140svh]"
         />
       )}
-
-      {/* From md up the cue lands in the middle of the nav bar, between the name and
-          the section links — the one part of that bar left empty for it. On a phone
-          the bar is a single row with no middle to sit in, so the cue goes to the
-          top-right corner instead, and the intro panel's top padding is what keeps
-          the byline clear of it. */}
-      <ScrollCue
-        onClick={goToNextPage}
-        visible={isCueVisible}
-        label={nextPath ? "Scroll to the About page" : "Go to the About page"}
-        positionClassName="top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0"
-      />
     </>
   );
 };

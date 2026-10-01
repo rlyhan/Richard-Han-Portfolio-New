@@ -20,8 +20,8 @@ const FADE_DURATION = 0.35;
 // The bounce lives on an inner element so the infinite y tween and the visibility
 // fade never write to the same target.
 //
-// `positionClassName` is where in the viewport it sits — the offset and the
-// alignment both, since a cue that isn't at the foot usually isn't centred either.
+// `positionClassName` is where in its parent it sits — the offset and the alignment
+// both, since a cue that isn't at the foot usually isn't centred either.
 const ScrollCue = ({ onClick, visible, label, positionClassName }) => {
   const containerRef = useRef(null);
   const arrowRef = useRef(null);
@@ -54,11 +54,12 @@ const ScrollCue = ({ onClick, visible, label, positionClassName }) => {
   return (
     <div
       ref={containerRef}
-      // Fixed rather than pinned to the hero: it holds the foot of the viewport
-      // at any hero height, and is the one thing that shouldn't move as the
-      // hero fades.
+      // Absolute, so the caller has to give it a positioned parent: the cue
+      // belongs to the foot of the page it leads off, not to the foot of the
+      // viewport, and the two part company over the last stretch of scroll —
+      // where a cue held to the viewport sits on whatever is below the page.
       className={cn(
-        "fixed inset-x-0 z-40 flex pointer-events-none",
+        "absolute inset-x-0 z-40 flex pointer-events-none",
         positionClassName,
       )}
       // As in the header: a real button, so hiding it visually has to take it
