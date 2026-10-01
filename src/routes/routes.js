@@ -78,7 +78,7 @@ const PAGES = [
     // something to be found. See SiteNav, which keeps its pinned copy down over a
     // page that draws its own.
     hasOwnNav: true,
-    load: () => import("../pages/ContactTemplate.jsx"),
+    load: () => import("../pages/ContactPage.jsx"),
   },
 ];
 

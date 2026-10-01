@@ -4,7 +4,7 @@ import { ABOUT_BIO, ABOUT_HEADING } from "../../data/about.data";
 import { PORTRAIT } from "../../data/photos.data";
 
 // The gutter the pages that band to the viewport edge carry. Stated here rather than
-// taken from ContactTemplate, which owns the same line: the two pages share a shape,
+// taken from ContactPage, which owns the same line: the two pages share a shape,
 // not a module, and this one is not allowed to change when that one does.
 const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
