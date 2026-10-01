@@ -20,6 +20,18 @@ const FILTERS = [
   { id: "personal", label: "Personal", matches: (project) => !project.client },
 ];
 
+// How many shots load with the page rather than when the reader reaches them.
+//
+// These tiles are on screen the moment Projects opens, and an above-the-fold image
+// left to lazy loading is fetched after everything else on the page — so the tiles
+// paint, and then the pictures drop into them. The rows further down need no hint:
+// they are revealed on the scroll, and that reveal waits for its own shots (see
+// useScrollReveal), which is a wait there is nothing to see during.
+//
+// Three is the widest breakpoint's row. Narrower ones take the row below with it,
+// which is the next thing the reader scrolls to anyway.
+const EAGER_TILES = 3;
+
 // The number beside each title, worked out once off the full list. The filters hide
 // tiles rather than renumbering them, so a project keeps its number whichever filter
 // is up — see ProjectTile.
@@ -101,8 +113,13 @@ const ProjectsPage = () => {
           ref={gridRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
         >
-          {shown.map(({ project, number }) => (
-            <ProjectTile key={project.id} project={project} number={number} />
+          {shown.map(({ project, number }, i) => (
+            <ProjectTile
+              key={project.id}
+              project={project}
+              number={number}
+              eager={i < EAGER_TILES}
+            />
           ))}
         </div>
       </section>

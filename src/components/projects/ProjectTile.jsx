@@ -12,6 +12,13 @@ import { fitOf } from "../../data/shots.data";
 const EYEBROW_CLASS =
   "font-epilogue text-[0.5625rem] font-medium uppercase leading-none tracking-[0.06em]";
 
+// What the browser picks a width for. Worked off the frame's own clamps, as its
+// HEIGHT rather than its width — see MattedShot: 34vw x 16:9 is about 60vw at lg,
+// 44vw about 78vw at md, and on a phone it is the 21.25rem floor that stands rather
+// than the 60vw in the middle of the clamp, which is about 160vw of a 390px screen.
+const SHOT_SIZES =
+  "(min-width: 1024px) 60vw, (min-width: 768px) 78vw, 160vw";
+
 // The hero card's frame at three-column size — see HomeProjectCard for why most
 // shots are matted rather than cropped, and why the ones photographed in a room run
 // to the tile's edges instead. The ground differs at this size: `bg-frame`, a
@@ -26,7 +33,7 @@ const EYEBROW_CLASS =
 // The title stays a heading inside that link rather than becoming a span the link is
 // named by. The list is a list of projects, and a screen reader jumping the page by
 // heading is the fastest way through it; the link says what it is with its own label.
-const ProjectTile = ({ project, number }) => {
+const ProjectTile = ({ project, number, eager }) => {
   const { id, name, category, award, images } = project;
   const image = images?.[0];
   const fit = image && fitOf(image);
@@ -55,6 +62,8 @@ const ProjectTile = ({ project, number }) => {
               src={image}
               alt={`The ${name} site`}
               fit={fit}
+              sizes={SHOT_SIZES}
+              eager={eager}
               zoom="group-hover:scale-[1.05]"
             />
           ) : (
