@@ -65,7 +65,7 @@ const PROJECTS = [
     client: false,
     association: "Personal",
     description:
-      "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you.",
+      "A mobile app that analyses your Big Five traits and provides personalised activities/hobbies for you. (currently Vercel deployed only, not on app stores)",
     idea: [
       "The idea for the app itself came from the feeling some of us get when we feel like we need a new hobby, but just can't commit the time and effort --- especially if we might not end up enjoying the hobby.",
       "As somebody who is fascinated by popular personality indicators such as Myers-Briggs and how it aligns with our strengths and what we enjoy doing, I decided to deep-dive into research-backed models such as BFAS (Big Five Aspect Scales) and NEO-PI-R (Revised NEO Personality Inventory).",
