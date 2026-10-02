@@ -173,8 +173,8 @@ const PROJECTS = [
       "One of the first high-traffic eCommerce websites I worked on --- I introduced new features, pages, editor flexibility and redesigns.",
     ],
     work_involved: [
-      "I built new sections of the Django site, including Careers (job listings and flexible page layouts) and Product Care (content blocks with video and mobile-only options). I also restructured the navigation menu, making it more mobile friendly and allowing editorial images within it.",
-      "I added a new layer of interactivity to the product grid: shoppers could add items to their cart or wishlist in one click, without opening the product page or reloading. I used AJAX for speed, extending the existing Django endpoints to return JSON so regular page loads kept working unchanged during the Christmas rush. The main bug I fixed was that the buttons didn't work on products loaded by infinite scroll. I solved it by running the button setup on each product card as it loads, then finished with mobile confirmation messages and icons that change state.",
+      "One-click add to cart and wishlist (Christmas 2021): I made it possible for shoppers to add items to their cart or wishlist straight from the product grid, without opening the product page or reloading. Before building anything, I studied how the product page already handled these actions and reused that code, which sends the request in the background and updates the cart and wishlist in place. I then worked through the edge cases. I adjusted the wishlist's remove endpoint to check where each request came from, returning the updated data to the product grid while keeping the existing redirect for the wishlist page. And because products load dynamically as shoppers scroll, I set up the click-to-add buttons on each product as it loads, not just the ones there initially.",
+      "I also built new sections of the site, including Careers (job listings and flexible page layouts) and Product Care (content blocks with video and mobile-only options). I also restructured the navigation menu, making it more mobile friendly and allowing editorial images within it.",
     ],
     technologies: ["Django", "HTML", "CSS", "JavaScript"],
     images: ["deadlyponies.webp"],
@@ -189,14 +189,34 @@ const PROJECTS = [
     association: "Sons & Co.",
     description: "Christchurch, New Zealand based art gallery.",
     idea: [
-      "A website with intricate page transitions and animations amongst a minimalist design, I worked on some major features such as a rebuild of the navigation menu and a custome e-commerce solution.",
+      "A website with some unique animations amongst a minimalist design, I worked on some major features such as a rebuild of the navigation menu and a custome e-commerce solution.",
     ],
     work_involved: [
-      "The existing navigation menu built in jQuery originally pushed the selected nav item to the left of the screen. I was tasked with a complex restyle where the menu would open right in the middle of the screen, splitting the page in two.",
-      "I added online sales to site by combining two existing pieces: an open-source Django eCommerce library for the cart and checkout, and a reusable Stripe payment module. I joined them by changing the checkout so completed orders go to Stripe, connected shoptools to the site's existing product catalogue, and restyled the cart, checkout and payment pages in the site's Jinja2 templates. I also wrote a jQuery layer that adds items to the cart, updates totals and checks stock without reloading the page, and card details are sent directly to Stripe as a token so they never touch the site's server.",
+      "The existing navigation menu built in jQuery originally pushed the selected nav item to the left of the screen. I updated it so the menu would open right in the middle of the screen, splitting the page in two. Alongside that I redesigned the homepage layout, cleaned up the page transitions, and built a separate mobile version, working through several rounds of design review with the client.",
+      "I added online sales to site by combining two existing pieces: an open-source Django eCommerce library for the cart and checkout, and a reusable Stripe payment module. I joined them by changing the checkout so completed orders go to Stripe, connected shoptools to the site's existing product catalogue, and restyled the cart, checkout and payment pages in the site's templates. I also wrote a jQuery layer that adds items to the cart, updates totals and checks stock without reloading the page, and card details are sent directly to Stripe as a token so they never touch the site's server.",
     ],
     technologies: ["Django", "HTML", "CSS", "JavaScript", "jQuery"],
     images: ["physicsroom.webp"],
+  },
+  {
+    name: "ECC",
+    id: "ecc",
+    year: 2021,
+    url: "https://ecc.co.nz/",
+    category: "Furniture",
+    client: true,
+    association: "Sons & Co.",
+    description: "NZ-based furniture retailer.",
+    idea: [
+      "ECC, a New Zealand furniture and lighting retailer, need a range of updates on their website such as changing how stock was counted to giving featured catalogue page-by-page editor control.",
+    ],
+    work_involved: [
+      "Warehouse stock count logic: I reworked the SAP-imported stock count from a single total into separate figures for the warehouse (which fulfils online orders) and showrooms (enquiry only), creating a single backend source of truth for sellable stock so customers can only order what can actually ship.",
+      'I reworked the cart so customers ordering more than is in stock see exactly what happens to their order, for example "3 in stock, 2 with a lead time of 6–8 weeks", instead of a generic error. The rules depend on stock level, lead time and clearance status together, so I moved them into the product model and gave the page clean stock and lead-time data for each variant, which let the cart show the split instantly.',
+      "Featured content by page: The site's hero galleries and featured products were tied to catalogue areas, but the client wanted to organise their existing featured content across specific pages, such as the home page or architectural landing page. I restructured the models around pages and wrote a data migration that reassigned all existing content automatically, so editors didn't have to redo anything by hand.",
+    ],
+    technologies: ["Django", "HTML", "CSS", "JavaScript"],
+    images: ["ecc.webp"],
   },
   {
     name: "Coloursmith",
@@ -258,26 +278,26 @@ const PROJECTS = [
     technologies: ["Django", "HTML", "CSS", "JavaScript"],
     images: ["westcoasttas.webp"],
   },
-  {
-    name: "Never Have I Ever",
-    id: "never-have-i-ever",
-    year: 2020,
-    url: "https://neverhaveiever.neatplaces.co.nz/",
-    category: "Travel and tourism",
-    client: true,
-    association: "Sons & Co.",
-    description:
-      "Curated New Zealand city guides by creative personalities and business owners. In association with Neat Places.",
-    idea: [
-      "One of the first full website builds I worked on, Neat Places wanted a campaign showcasing New Zealand cities through the recommendations of local creatives, business owners and other notable people.",
-    ],
-    work_involved: [
-      "We forked models from the existing Neat Places platform to display curated guides on both homepage and category specific pages, as well as building new ones to reflect unique content such as the navigation menu containing a list of 'never have I ever's.",
-      "I also built in a full bleed video introducing people to the campaign.",
-    ],
-    technologies: ["Django", "HTML", "CSS", "JavaScript"],
-    images: ["neverhaveiever.webp"],
-  },
+  // {
+  //   name: "Never Have I Ever",
+  //   id: "never-have-i-ever",
+  //   year: 2020,
+  //   url: "https://neverhaveiever.neatplaces.co.nz/",
+  //   category: "Travel and tourism",
+  //   client: true,
+  //   association: "Sons & Co.",
+  //   description:
+  //     "Curated New Zealand city guides by creative personalities and business owners. In association with Neat Places.",
+  //   idea: [
+  //     "One of the first full website builds I worked on, Neat Places wanted a campaign showcasing New Zealand cities through the recommendations of local creatives, business owners and other notable people.",
+  //   ],
+  //   work_involved: [
+  //     "We forked models from the existing Neat Places platform to display curated guides on both homepage and category specific pages, as well as building new ones to reflect unique content such as the navigation menu containing a list of 'never have I ever's.",
+  //     "I also built in a full bleed video introducing people to the campaign.",
+  //   ],
+  //   technologies: ["Django", "HTML", "CSS", "JavaScript"],
+  //   images: ["neverhaveiever.webp"],
+  // },
   // {
   //   name: "Image Board App",
   //   id: "image-board",

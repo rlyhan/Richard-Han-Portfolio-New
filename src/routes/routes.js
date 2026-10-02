@@ -21,7 +21,7 @@ const PAGES = [
     // scroll helper resolves a page by `#sectionId` rather than by its path —
     // they measure elements, and only the router deals in URLs.
     sectionId: "home",
-    title: "Richard Han — Front End and Full Stack Developer",
+    title: "Richard Han — Full Stack Developer",
     // Painted on the body the moment the route is entered, ahead of its chunk
     // arriving, so a page never opens over the ground of the one before it. The
     // sections paint their own besides this; it answers for the frame around

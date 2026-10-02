@@ -10,7 +10,8 @@ export const ABOUT_HEADING = "About.";
 export const ABOUT_BIO = [
   "After studying full stack web development at Enspiral Dev Academy, I began my career working with Christchurch, New Zealand based studios Sons & Co and Voyage, gaining hands-on experience with both React/Next.js and Django/Python platforms across a range of client projects spanning eCommerce, architecture portfolios, government websites, and more.",
   "I then moved overseas for a few years to London, UK, where I worked with Make Agency, focused on Next.js, React, TypeScript and headless CMS-driven applications, as well as expanding to WordPress based applications.",
-  "Currently I am freelancing back in NZ, recently working on a video-driven cinematographer's portfolio. I've also been broadening my skillset into areas including mobile development and AI-assisted development, using tools like Claude Code within a structured specification, testing and review process to move quickly without losing sight of maintainability, scalability or quality.",
+  "My ability to adapt to different product domains and expand my knowledge across the full stack and different tools is a strength I bring to any team.",
+  "Currently I am freelancing back in NZ, recently working on a cinematographer portfolio. I've also been broadening my skillset into areas including mobile development and AI-assisted development, using tools like Claude Code within a structured specification, testing and review process to move quickly without losing sight of maintainability, scalability or quality.",
 ];
 
 // The numbered labels down the left of the page. The number is the page's own

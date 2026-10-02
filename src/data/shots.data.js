@@ -20,8 +20,9 @@ const BLEED_SHOTS = new Set([
   "physicsroom.webp",
   "coloursmith.webp",
   "jamesdunlop.webp",
-  "neverhaveiever.webp",
+  // "neverhaveiever.webp",
   "westcoasttas.webp",
+  "ecc.webp",
 ]);
 
 export const fitOf = (src) => (BLEED_SHOTS.has(src) ? "bleed" : "mat");
