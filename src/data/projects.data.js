@@ -173,7 +173,7 @@ const PROJECTS = [
       "One of the first high-traffic eCommerce websites I worked on --- I introduced new features, pages, editor flexibility and redesigns.",
     ],
     work_involved: [
-      "One-click add to cart and wishlist (Christmas 2021): I made it possible for shoppers to add items to their cart or wishlist straight from the product grid, without opening the product page or reloading. Before building anything, I studied how the product page already handled these actions and reused that code, which sends the request in the background and updates the cart and wishlist in place. I then worked through the edge cases. I adjusted the wishlist's remove endpoint to check where each request came from, returning the updated data to the product grid while keeping the existing redirect for the wishlist page. And because products load dynamically as shoppers scroll, I set up the click-to-add buttons on each product as it loads, not just the ones there initially.",
+      "One-click add to cart and wishlist (Christmas 2021): I added add-to-cart and wishlist actions directly to the product grid, allowing shoppers to interact with products without opening the product page or reloading. The existing cart and wishlist actions were extended to support background updates from the grid, including the different response behaviour needed when removing wishlist items. Buttons also had to reflect existing cart state and remain functional as new products were loaded through infinite scroll.",
       "I also built new sections of the site, including Careers (job listings and flexible page layouts) and Product Care (content blocks with video and mobile-only options). I also restructured the navigation menu, making it more mobile friendly and allowing editorial images within it.",
     ],
     technologies: ["Django", "HTML", "CSS", "JavaScript"],
@@ -192,8 +192,8 @@ const PROJECTS = [
       "A website with some unique animations amongst a minimalist design, I worked on some major features such as a rebuild of the navigation menu and a custome e-commerce solution.",
     ],
     work_involved: [
+      "I upgraded the site to support online shopping using an open-source Django eCommerce library for cart and checkout, alongside a Stripe payment module for processing payments. This included building new product and category models with catalogue and product detail pages, adding a jQuery layer for cart updates and stock checks without page reloads, and connecting the checkout to Stripe's token-based payment flow.",
       "The existing navigation menu built in jQuery originally pushed the selected nav item to the left of the screen. I updated it so the menu would open right in the middle of the screen, splitting the page in two. Alongside that I redesigned the homepage layout, cleaned up the page transitions, and built a separate mobile version, working through several rounds of design review with the client.",
-      "I added online sales to site by combining two existing pieces: an open-source Django eCommerce library for the cart and checkout, and a reusable Stripe payment module. I joined them by changing the checkout so completed orders go to Stripe, connected shoptools to the site's existing product catalogue, and restyled the cart, checkout and payment pages in the site's templates. I also wrote a jQuery layer that adds items to the cart, updates totals and checks stock without reloading the page, and card details are sent directly to Stripe as a token so they never touch the site's server.",
     ],
     technologies: ["Django", "HTML", "CSS", "JavaScript", "jQuery"],
     images: ["physicsroom.webp"],
@@ -233,7 +233,7 @@ const PROJECTS = [
     work_involved: [
       "I worked on a homepage redesign which includes a full-screen video overlay, a carousel of colour stories, a step-by-step process carousel, and a prompt to download the mobile app. The site loads pages without full refreshes, so I made the video overlay attach and detach cleanly as users move between pages. I also built an alternate layout at a separate URL so the client could compare two designs on real devices before committing to one.",
       "Coloursmith lets users upload a photo and click anywhere on it to pick a paint colour, by reading the pixel colour from an HTML canvas. I added pinch and button zoom, which meant rewriting the code that converts a click position into image coordinates, so the correct pixel is still sampled while the image is scaled and panned. I also kept the custom cursor the same visual size at every zoom level. A later update made clicking to pick a colour and dragging to pan feel clearly different, with the cursor changing to show which one you're about to do.",
-      "Beyond these, I delivered a steady stream of full-stack features across the Django codebase. These included a journal built from scratch, reusable video overlays and downloadable product manuals, and new pages for products, apps and stories. Throughout, I followed the codebase's existing conventions and made sure new content could be managed by PPG's team through the admin, so they could update the site without needing a developer.",
+      "Beyond these, I delivered a steady stream of full-stack features across the Django codebase. These included a journal built from scratch, reusable video overlays and downloadable product manuals, and new pages for products, apps and stories.",
     ],
     technologies: ["Django", "HTML", "CSS", "JavaScript"],
     images: ["coloursmith.webp"],
@@ -251,7 +251,7 @@ const PROJECTS = [
       "A website with a massive database and high user traffic, I was given the opportunity to work on various customer experiences while navigating a complex trade catalogue architecture.",
     ],
     work_involved: [
-      "Swatch visualiser: a carousel showing each fabric on a finished product, which works much like the site's full furniture visualiser. Each swatch is paired with a product image, and the carousel crossfades between them as it cycles. Clicking a swatch restarts the rotation timer, so it doesn't move on straight after the user makes a choice. I set up the swatch and product pairings as reusable lists in the admin, so the client can create new showcases.",
+      "Swatch visualiser: I built a carousel that shows different fabric on a piece of furniture, crossfading between each fabric as it cycles. I set up the swatch and product pairings as reusable lists in the admin, so the client can create new showcases.",
       "Commercial section localisation: I restructured this section so content could target any combination of regions and markets, not just one region each. As this was a high-traffic live site, I shipped the schema change in stages: I added the new structure alongside the old, migrated the existing content, and only removed the old field once everything had moved over. That way, no visitor ever saw missing content. Now each region and market can be given its own content through the admin, with no code changes.",
       "Alongside this was smaller scale work such as converting a one-off promotional popup into a shared component that remembers dismissals per popup.",
     ],
