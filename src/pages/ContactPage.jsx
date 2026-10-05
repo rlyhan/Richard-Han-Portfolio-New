@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef, Fragment } from "react";
+import { useLayoutEffect, useRef } from "react";
 import cn from "classnames";
 import gsap from "gsap";
+import SplitText from "gsap/SplitText";
 import PageSection from "../components/layout/PageSection";
 import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
@@ -14,7 +15,9 @@ import {
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
 
-const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+gsap.registerPlugin(SplitText);
+
+const GUTTER_CLASS ="px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
 // The headshot's rendered width at each breakpoint, for its srcset — the same steps
 // as its size classes below.
@@ -44,11 +47,15 @@ const ContactPage = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+      const { chars } = SplitText.create("[data-split]", {
+        type: "words,chars",
+        aria: "none",
+      });
       if (isArriving) {
-        gsap.set("[data-char]", { y: -30, opacity: 0 });
+        gsap.set(chars, { y: -30, opacity: 0 });
         return;
       }
-      gsap.from("[data-char]", {
+      gsap.from(chars, {
         y: -30,
         opacity: 0,
         duration: 0.6,
@@ -87,19 +94,8 @@ const ContactPage = () => {
             {CONTACT_HEADING_LINES.map((line) => (
               <span key={line} className="block">
                 <span className="sr-only">{line}</span>
-                <span aria-hidden="true">
-                  {line.split(" ").map((word, w) => (
-                    <Fragment key={w}>
-                      {w > 0 && " "}
-                      <span className="inline-block whitespace-nowrap">
-                        {[...word].map((char, c) => (
-                          <span key={c} data-char className="inline-block">
-                            {char}
-                          </span>
-                        ))}
-                      </span>
-                    </Fragment>
-                  ))}
+                <span aria-hidden="true" data-split>
+                  {line}
                 </span>
               </span>
             ))}
