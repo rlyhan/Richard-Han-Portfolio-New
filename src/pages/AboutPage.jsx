@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import PageSection from "../components/layout/PageSection";
 import AboutOpening from "../components/about/AboutOpening";
 import AboutExperience from "../components/about/AboutExperience";
@@ -5,6 +6,8 @@ import PageBand from "../components/layout/PageBand";
 import AboutTech from "../components/about/AboutTech";
 import AboutInterests from "../components/about/AboutInterests";
 import { ABOUT_SECTIONS } from "../data/about.data";
+import { usePage } from "../routes/RouterContext";
+import { useSplitReveal } from "../hooks/useSplitReveal";
 
 // The About page: the Contact page's opening carrying this page's copy, then
 // three banded sections. The opening replaces the masthead other pages below
@@ -23,26 +26,32 @@ import { ABOUT_SECTIONS } from "../data/about.data";
 //
 // Opaque and stacked above the hero, since the hero is sticky and this page
 // covers it while the two share a document: see useHeroHandoff.
-const AboutPage = () => (
-  <PageSection
-    id="about"
-    contained={false}
-    additionalClasses="relative z-10 flex flex-col bg-cream font-epilogue text-ink"
-  >
-    <AboutOpening />
+const AboutPage = () => {
+  const { isArriving } = usePage();
+  const headingRef = useRef(null);
+  useSplitReveal(headingRef, { enabled: !isArriving });
 
-    <PageBand index="01" {...ABOUT_SECTIONS.experience}>
-      <AboutExperience />
-    </PageBand>
+  return (
+    <PageSection
+      id="about"
+      contained={false}
+      additionalClasses="relative z-10 flex flex-col bg-cream font-epilogue text-ink"
+    >
+      <AboutOpening headingRef={headingRef} />
 
-    <PageBand index="02" {...ABOUT_SECTIONS.technologies}>
-      <AboutTech />
-    </PageBand>
+      <PageBand index="01" {...ABOUT_SECTIONS.experience}>
+        <AboutExperience />
+      </PageBand>
 
-    <PageBand index="03" {...ABOUT_SECTIONS.interests}>
-      <AboutInterests />
-    </PageBand>
-  </PageSection>
-);
+      <PageBand index="02" {...ABOUT_SECTIONS.technologies}>
+        <AboutTech />
+      </PageBand>
+
+      <PageBand index="03" {...ABOUT_SECTIONS.interests}>
+        <AboutInterests />
+      </PageBand>
+    </PageSection>
+  );
+};
 
 export default AboutPage;
