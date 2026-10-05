@@ -56,7 +56,7 @@ const ContactPage = () => {
           <h1
             id="contact-heading"
             className={cn(
-              "absolute inset-x-0 bottom-0 pb-5 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:pb-7 md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:pb-9 lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
+              "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
               GUTTER_CLASS,
             )}
           >
@@ -87,7 +87,7 @@ const ContactPage = () => {
               className="size-[3.25rem] shrink-0 rounded-full border border-grid object-cover md:size-16 lg:size-[4.5rem]"
             />
 
-            <p className="max-w-[32rem] text-[0.8125rem] leading-[1.55] text-ash md:text-[1.0625rem] lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
+            <p className="max-w-[32rem] text-sm leading-normal text-ash md:text-base lg:text-lg">
               {CONTACT_NOTE}
             </p>
           </div>
