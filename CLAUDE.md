@@ -114,6 +114,3 @@ scroll.
 ## Still outstanding
 
 - No prerendering, so those pages have no server-rendered HTML for crawlers.
-- `index.html` preloads the three shots that open the hero and the Projects grid.
-  Now that direct URLs resolve, a visitor landing on `/about` or `/contact` is
-  served them too and needs none of them.

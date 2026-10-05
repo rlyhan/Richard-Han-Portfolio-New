@@ -27,26 +27,34 @@
       crossorigin
     />
 
-    <link
-      rel="preload"
-      href="/images/projects/neatplaces.webp"
-      as="image"
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      href="/images/projects/thakeham.webp"
-      as="image"
-      fetchpriority="high"
-      media="(min-width: 768px)"
-    />
-    <link
-      rel="preload"
-      href="/images/projects/touchgrass.webp"
-      as="image"
-      fetchpriority="high"
-      media="(min-width: 768px)"
-    />
+    <script>
+      // Each page's opening pictures are only found once its chunk has mounted, so
+      // they're named here, per path — every path serves this document, and a
+      // preload for another page's pictures takes bandwidth from this one's.
+      {
+        const OPENING_SHOTS = [
+          { href: "/images/projects/neatplaces.webp" },
+          { href: "/images/projects/thakeham.webp", media: "(min-width: 768px)" },
+          { href: "/images/projects/touchgrass.webp", media: "(min-width: 768px)" },
+        ];
+        const PRELOADS = {
+          "/": OPENING_SHOTS,
+          "/projects": OPENING_SHOTS,
+          "/about": [{ href: "/images/portrait.webp" }],
+        };
+        const path = location.pathname.replace(/\/+$/, "") || "/";
+
+        for (const { href, media } of PRELOADS[path] ?? []) {
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.href = href;
+          link.setAttribute("fetchpriority", "high");
+          if (media) link.media = media;
+          document.head.append(link);
+        }
+      }
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
