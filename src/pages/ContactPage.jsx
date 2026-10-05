@@ -49,6 +49,9 @@ const ContactPage = () => {
     const ctx = gsap.context(() => {
       const { chars } = SplitText.create("[data-split]", {
         type: "words,chars",
+        tag: "span",
+        wordsClass: "inline-block",
+        charsClass: "inline-block",
         aria: "none",
       });
       if (isArriving) {
