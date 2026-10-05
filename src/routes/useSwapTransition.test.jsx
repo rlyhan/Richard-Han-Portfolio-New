@@ -18,16 +18,25 @@ vi.mock("../helpers/scrollHold", () => ({
     holdScroll: vi.fn(),
 }))
 
-function Harness({ leavingSelector, swapKey, onDone }) {
+function Harness({ leavingSelector, swapKey, onDone, image }) {
     const arrivingRef = useRef(null)
     useSwapTransition({ arrivingRef, leavingSelector, swapKey, onDone })
 
     return (
         <>
             <div id="leaving-page" />
-            <div data-testid="arriving-page" ref={arrivingRef} />
+            <div data-testid="arriving-page" ref={arrivingRef}>
+                {image && <img alt="" loading={image} />}
+            </div>
         </>
     )
+}
+
+// jsdom has no decode(), so each test that renders an image says when it settles.
+const stubDecode = () => {
+    let settle
+    HTMLImageElement.prototype.decode = vi.fn(() => new Promise((resolve) => { settle = resolve }))
+    return () => settle()
 }
 
 beforeEach(() => {
@@ -130,6 +139,55 @@ describe("useSwapTransition", () => {
         act(() => onComplete())
         unmount()
 
+        expect(release).toHaveBeenCalledTimes(1)
+    })
+
+    it("waits for the arriving page's eager images before building the timeline", async () => {
+        const settle = stubDecode()
+        buildSwapTimeline.mockReturnValue({ kill: vi.fn() })
+
+        render(<Harness leavingSelector="#leaving-page" swapKey="/about" onDone={vi.fn()} image="eager" />)
+
+        expect(buildSwapTimeline).not.toHaveBeenCalled()
+
+        await act(async () => settle())
+
+        expect(buildSwapTimeline).toHaveBeenCalledTimes(1)
+    })
+
+    it("goes without the images once the wait runs out", async () => {
+        vi.useFakeTimers()
+        stubDecode()
+        buildSwapTimeline.mockReturnValue({ kill: vi.fn() })
+
+        render(<Harness leavingSelector="#leaving-page" swapKey="/about" onDone={vi.fn()} image="eager" />)
+        await act(async () => vi.advanceTimersByTimeAsync(1000))
+
+        expect(buildSwapTimeline).toHaveBeenCalledTimes(1)
+        vi.useRealTimers()
+    })
+
+    it("doesn't wait on lazy images", () => {
+        stubDecode()
+        buildSwapTimeline.mockReturnValue({ kill: vi.fn() })
+
+        render(<Harness leavingSelector="#leaving-page" swapKey="/about" onDone={vi.fn()} image="lazy" />)
+
+        expect(buildSwapTimeline).toHaveBeenCalledTimes(1)
+    })
+
+    it("never starts a swap torn down while it was waiting, and releases its hold", async () => {
+        const settle = stubDecode()
+        const release = vi.fn()
+        holdScroll.mockReturnValue(release)
+        const onDone = vi.fn()
+
+        const { unmount } = render(<Harness leavingSelector="#leaving-page" swapKey="/about" onDone={onDone} image="eager" />)
+        unmount()
+        await act(async () => settle())
+
+        expect(buildSwapTimeline).not.toHaveBeenCalled()
+        expect(onDone).not.toHaveBeenCalled()
         expect(release).toHaveBeenCalledTimes(1)
     })
 })

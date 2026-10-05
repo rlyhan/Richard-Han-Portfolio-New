@@ -26,27 +26,68 @@
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/epilogue-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/epilogue-latin-500-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
-    <link
-      rel="preload"
-      href="/images/projects/neatplaces.webp"
-      as="image"
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      href="/images/projects/thakeham.webp"
-      as="image"
-      fetchpriority="high"
-      media="(min-width: 768px)"
-    />
-    <link
-      rel="preload"
-      href="/images/projects/touchgrass.webp"
-      as="image"
-      fetchpriority="high"
-      media="(min-width: 768px)"
-    />
+    <script>
+      // Each page's opening pictures are only found once its chunk has mounted, so
+      // they're named here, per path — every path serves this document, and a
+      // preload for another page's pictures takes bandwidth from this one's.
+      {
+        const OPENING_SHOTS = [
+          { href: "/images/projects/neatplaces.webp" },
+          { href: "/images/projects/thakeham.webp", media: "(min-width: 768px)" },
+          { href: "/images/projects/touchgrass.webp", media: "(min-width: 768px)" },
+        ];
+        const PRELOADS = {
+          "/": OPENING_SHOTS,
+          "/projects": OPENING_SHOTS,
+          "/about": [
+            {
+              href: "/images/portrait-1200.webp",
+              srcset: [800, 1200, 1600, 2000]
+                .map((width) => `/images/portrait-${width}.webp ${width}w`)
+                .join(", "),
+              sizes: "(min-width: 768px) 140vh, 80vh",
+            },
+          ],
+          "/contact": [
+            {
+              href: "/images/headshot-160.webp",
+              srcset: [80, 160, 240]
+                .map((width) => `/images/headshot-${width}.webp ${width}w`)
+                .join(", "),
+              sizes: "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px",
+            },
+          ],
+        };
+        const path = location.pathname.replace(/\/+$/, "") || "/";
+
+        for (const { href, media, srcset, sizes } of PRELOADS[path] ?? []) {
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.href = href;
+          link.setAttribute("fetchpriority", "high");
+          if (media) link.media = media;
+          if (srcset) link.setAttribute("imagesrcset", srcset);
+          if (sizes) link.setAttribute("imagesizes", sizes);
+          document.head.append(link);
+        }
+      }
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
