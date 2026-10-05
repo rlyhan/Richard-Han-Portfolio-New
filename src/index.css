@@ -22,7 +22,9 @@
 
    Epilogue is preloaded as well, though it swaps. A font is only requested once
    text using it renders, which is after the page's chunk has mounted, and About's
-   body re-wrapping on the swap resizes the portrait beside it. */
+   body re-wrapping on the swap resizes the portrait beside it. Urbanist 600 is
+   preloaded for the same reason: it sets the nav links, which otherwise show
+   in the fallback and then change font in front of the viewer. */
 @font-face {
   font-family: 'Fjalla One';
   font-style: normal;
