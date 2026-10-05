@@ -8,6 +8,11 @@ import { PORTRAIT } from "../../data/photos.data";
 // not a module, and this one is not allowed to change when that one does.
 const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
+// The portrait's rendered width, for its srcset. Cropped to cover, so it follows
+// the frame's height rather than its width: 50svh tall at the picture's 1.6:1 on a
+// phone, and close to the full viewport height beside the copy from md.
+const PORTRAIT_SIZES = "(min-width: 768px) 140vh, 80vh";
+
 // The Contact page's opening carrying this page's copy, so two pages opening
 // the same way read as one site. What differs is the nav: Contact draws its own
 // bar in the flow below this, where here the bar is pinned over the page.
@@ -29,6 +34,8 @@ const AboutOpening = () => (
     <figure className="relative col-start-1 row-start-2 h-[50svh] w-full overflow-hidden bg-shell md:col-start-1 md:row-span-3 md:row-start-1 md:h-auto">
       <img
         src={PORTRAIT.src}
+        srcSet={PORTRAIT.srcSet}
+        sizes={PORTRAIT_SIZES}
         alt={PORTRAIT.alt}
         width={PORTRAIT.width}
         height={PORTRAIT.height}

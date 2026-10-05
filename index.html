@@ -54,18 +54,28 @@
         const PRELOADS = {
           "/": OPENING_SHOTS,
           "/projects": OPENING_SHOTS,
-          "/about": [{ href: "/images/portrait.webp" }],
+          "/about": [
+            {
+              href: "/images/portrait-1200.webp",
+              srcset: [800, 1200, 1600, 2000]
+                .map((width) => `/images/portrait-${width}.webp ${width}w`)
+                .join(", "),
+              sizes: "(min-width: 768px) 140vh, 80vh",
+            },
+          ],
           "/contact": [{ href: "/images/headshot.webp" }],
         };
         const path = location.pathname.replace(/\/+$/, "") || "/";
 
-        for (const { href, media } of PRELOADS[path] ?? []) {
+        for (const { href, media, srcset, sizes } of PRELOADS[path] ?? []) {
           const link = document.createElement("link");
           link.rel = "preload";
           link.as = "image";
           link.href = href;
           link.setAttribute("fetchpriority", "high");
           if (media) link.media = media;
+          if (srcset) link.setAttribute("imagesrcset", srcset);
+          if (sizes) link.setAttribute("imagesizes", sizes);
           document.head.append(link);
         }
       }
