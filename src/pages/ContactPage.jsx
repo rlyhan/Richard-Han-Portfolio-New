@@ -4,6 +4,7 @@ import PageSection from "../components/layout/PageSection";
 import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
 import IconRenderer from "../components/icons/IconRenderer";
+import SplitLine from "../components/common/SplitLine";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useSplitReveal } from "../hooks/useSplitReveal";
 import { usePage } from "../routes/RouterContext";
@@ -71,10 +72,7 @@ const ContactPage = () => {
           >
             {CONTACT_HEADING_LINES.map((line) => (
               <span key={line} className="block">
-                <span className="sr-only">{line}</span>
-                <span aria-hidden="true" data-split>
-                  {line}
-                </span>
+                <SplitLine text={line} />
               </span>
             ))}
           </h1>

@@ -2,6 +2,7 @@ import cn from "classnames";
 import ArrowDownIcon from "../icons/ArrowDownIcon";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import AwardIcon from "../icons/AwardIcon";
+import SplitLine from "../common/SplitLine";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_LABEL_CLASS, NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
@@ -51,10 +52,7 @@ const ProjectMasthead = ({ project, headingRef }) => {
         ref={headingRef}
         className="mt-14 font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:mt-[clamp(2.375rem,7vh,5.625rem)] md:text-[clamp(2.75rem,4.6vw,4.75rem)]"
       >
-        <span className="sr-only">{name}</span>
-        <span aria-hidden="true" data-split>
-          {name}
-        </span>
+        <SplitLine text={name} />
       </h1>
 
       <p className={cn("mt-7 max-w-[25rem]", NOTE_TEXT_CLASS)}>

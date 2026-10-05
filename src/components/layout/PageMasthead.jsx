@@ -1,5 +1,6 @@
 import cn from "classnames";
 import Byline from "./Byline";
+import SplitLine from "../common/SplitLine";
 import { NOTE_TEXT_CLASS } from "./sharedClasses";
 
 // The Projects page's masthead: the name/location line, then the title at display
@@ -13,10 +14,7 @@ const PageMasthead = ({ heading, note, headingRef }) => (
         ref={headingRef}
         className="font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:shrink-0 md:text-[clamp(3.375rem,5.9vw,5.875rem)]"
       >
-        <span className="sr-only">{heading}</span>
-        <span aria-hidden="true" data-split>
-          {heading}
-        </span>
+        <SplitLine text={heading} />
       </h1>
 
       <p className={cn("mt-7 max-w-[25rem] md:mt-0", NOTE_TEXT_CLASS)}>

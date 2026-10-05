@@ -1,5 +1,6 @@
 import cn from "classnames";
 import Byline from "../layout/Byline";
+import SplitLine from "../common/SplitLine";
 import { ABOUT_BIO, ABOUT_HEADING } from "../../data/about.data";
 import { PORTRAIT } from "../../data/photos.data";
 
@@ -55,10 +56,7 @@ const AboutOpening = ({ headingRef }) => (
         GUTTER_CLASS,
       )}
     >
-      <span className="sr-only">{ABOUT_HEADING}</span>
-      <span aria-hidden="true" data-split>
-        {ABOUT_HEADING}
-      </span>
+      <SplitLine text={ABOUT_HEADING} />
     </h1>
 
     <section

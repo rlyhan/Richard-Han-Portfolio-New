@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { INTRO_LINES, INTRO_NOTE } from "../../data/home.data";
 import Byline from "../layout/Byline";
+import SplitLine from "../common/SplitLine";
 import { NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 
 // The left half of the hero: the display lines, the byline above them and the note
@@ -31,10 +32,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
           }}
           className="block"
         >
-          <span className="sr-only">{line}</span>
-          <span aria-hidden="true" data-split>
-            {line}
-          </span>
+          <SplitLine text={line} />
         </span>
       ))}
     </h1>
