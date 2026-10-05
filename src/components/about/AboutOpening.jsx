@@ -1,5 +1,6 @@
 import cn from "classnames";
 import Byline from "../layout/Byline";
+import SplitLine from "../common/SplitLine";
 import { ABOUT_BIO, ABOUT_HEADING } from "../../data/about.data";
 import { PORTRAIT } from "../../data/photos.data";
 
@@ -20,7 +21,7 @@ const PORTRAIT_SIZES = "(min-width: 768px) 140vh, 80vh";
 // The title is one element sharing the picture's grid cell on a phone and
 // taking its own cell beside it from md, rather than one heading per
 // breakpoint — two would be two h1s and one id.
-const AboutOpening = () => (
+const AboutOpening = ({ headingRef }) => (
   <div className="grid min-h-[calc(100svh-var(--nav-height,4rem))] grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
     <div
       className={cn(
@@ -48,13 +49,14 @@ const AboutOpening = () => (
     </figure>
 
     <h1
+      ref={headingRef}
       id="about-heading"
       className={cn(
         "relative col-start-1 row-start-2 self-end pb-5 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-medium text-cream md:col-start-2 md:row-start-2 md:self-auto md:pt-6 md:pb-6 md:text-[clamp(1.75rem,3.6vw,2.5rem)] md:text-ink lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
         GUTTER_CLASS,
       )}
     >
-      {ABOUT_HEADING}
+      <SplitLine text={ABOUT_HEADING} />
     </h1>
 
     <section

@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
 import ArticleParagraphs from "../components/layout/ArticleParagraphs";
@@ -8,6 +9,7 @@ import {
   IMAGE_FALLBACK_CLASS,
 } from "../components/layout/sharedClasses";
 import { usePage } from "../routes/RouterContext";
+import { useSplitReveal } from "../hooks/useSplitReveal";
 import { projectPathOf, projectSectionId } from "../routes/routes";
 import PROJECTS from "../data/projects.data";
 import { fitOf } from "../data/shots.data";
@@ -31,7 +33,9 @@ const TECH_ITEM_CLASS = `${RAIL_VALUE_CLASS} border-t border-grid py-2.5 first:b
 // The masthead and shot are the page's chrome; the rail of facts and the copy beside
 // it are the write-up itself, so only those sit inside the <article>.
 const ProjectPage = () => {
-  const { path } = usePage();
+  const { path, isArriving } = usePage();
+  const headingRef = useRef(null);
+  useSplitReveal(headingRef, { enabled: !isArriving });
 
   const project = PROJECTS.find(({ id }) => projectPathOf(id) === path);
   const { id, name, year, images, idea, work_involved, technologies } = project;
@@ -44,7 +48,7 @@ const ProjectPage = () => {
       contained={false}
       additionalClasses="flex flex-col bg-cream font-epilogue text-ink"
     >
-      <ProjectMasthead project={project} />
+      <ProjectMasthead project={project} headingRef={headingRef} />
 
       <figure className="px-[1.4rem] pb-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pb-[3.25rem]">
         <div className="relative h-[23.75rem] overflow-hidden bg-frame md:h-[clamp(21.25rem,52vw,40rem)]">

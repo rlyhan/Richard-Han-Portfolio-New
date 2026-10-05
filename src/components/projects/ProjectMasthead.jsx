@@ -2,6 +2,7 @@ import cn from "classnames";
 import ArrowDownIcon from "../icons/ArrowDownIcon";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import AwardIcon from "../icons/AwardIcon";
+import SplitLine from "../common/SplitLine";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_LABEL_CLASS, NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
@@ -18,12 +19,12 @@ const META_ICON_CLASS = "size-[0.6875rem] shrink-0 text-ash";
 // at display size, the line of copy the Projects page captions it with, and the facts
 // about it.
 //
-// Not PageMasthead, which About and Projects share. Three things differ, and
+// Not PageMasthead, the Projects page's. Three things differ, and
 // all three are what makes this a write-up rather than a page of the site: the
 // line above the heading is the way back, not the name and location; the
 // heading is set smaller since a project's name runs longer than one word; and
 // the facts below the copy have no equivalent up there.
-const ProjectMasthead = ({ project }) => {
+const ProjectMasthead = ({ project, headingRef }) => {
   const { name, year, category, association, description, url, award } =
     project;
   const backLink = useNavLink(PATHS.projects);
@@ -47,8 +48,11 @@ const ProjectMasthead = ({ project }) => {
         <time dateTime={String(year)}>{year}</time>
       </div>
 
-      <h1 className="mt-14 font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:mt-[clamp(2.375rem,7vh,5.625rem)] md:text-[clamp(2.75rem,4.6vw,4.75rem)]">
-        {name}
+      <h1
+        ref={headingRef}
+        className="mt-14 font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:mt-[clamp(2.375rem,7vh,5.625rem)] md:text-[clamp(2.75rem,4.6vw,4.75rem)]"
+      >
+        <SplitLine text={name} />
       </h1>
 
       <p className={cn("mt-7 max-w-[25rem]", NOTE_TEXT_CLASS)}>

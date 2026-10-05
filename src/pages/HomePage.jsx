@@ -10,6 +10,7 @@ import { PATHS } from "../routes/routes";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
+import { useSplitReveal } from "../hooks/useSplitReveal";
 
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
 const NEAR_TOP_THRESHOLD = 40;
@@ -41,7 +42,10 @@ const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
 // which it does again the moment `next` comes back.
 const HomePage = () => {
   const { navigate } = useRouter();
-  const { nextPath, nextSelector, isNextStaged } = usePage();
+  const { nextPath, nextSelector, isNextStaged, isArriving } = usePage();
+
+  const headingRef = useRef(null);
+  useSplitReveal(headingRef, { enabled: !isArriving });
 
   const displayLineRefs = useRef([]);
   const outroLineRefs = useRef([]);
@@ -117,6 +121,7 @@ const HomePage = () => {
       >
         <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
           <HomeIntro
+            headingRef={headingRef}
             setLineRef={setDisplayLine}
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}

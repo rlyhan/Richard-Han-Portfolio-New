@@ -1,9 +1,13 @@
+import { useRef } from "react";
 import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
 import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
 import IconRenderer from "../components/icons/IconRenderer";
+import SplitLine from "../components/common/SplitLine";
 import { useNavItems } from "../hooks/useNavLinks";
+import { useSplitReveal } from "../hooks/useSplitReveal";
+import { usePage } from "../routes/RouterContext";
 import {
   CONTACT_CHANNELS,
   CONTACT_HEADING_LINES,
@@ -11,11 +15,12 @@ import {
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
 
-const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+const GUTTER_CLASS ="px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
 // The headshot's rendered width at each breakpoint, for its srcset — the same steps
 // as its size classes below.
-const HEADSHOT_SIZES = "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px";
+const HEADSHOT_SIZES =
+  "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px";
 
 const CHANNEL_CLASS =
   "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border px-[0.5625rem] py-4 font-urbanist text-[0.875rem] leading-none font-semibold transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-5 md:py-5 md:text-base";
@@ -35,6 +40,10 @@ const isExternal = (href) => href.startsWith("http");
 // the pinned SiteNav — see `hasOwnNav` on this page's route record.
 const ContactPage = () => {
   const navItems = useNavItems();
+  const headingRef = useRef(null);
+  const { isArriving } = usePage();
+
+  useSplitReveal(headingRef, { enabled: !isArriving });
 
   return (
     <PageSection
@@ -56,13 +65,14 @@ const ContactPage = () => {
           <h1
             id="contact-heading"
             className={cn(
-              "absolute inset-x-0 bottom-0 pb-5 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:pb-7 md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:pb-9 lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
+              "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
               GUTTER_CLASS,
             )}
+            ref={headingRef}
           >
             {CONTACT_HEADING_LINES.map((line) => (
               <span key={line} className="block">
-                {line}
+                <SplitLine text={line} />
               </span>
             ))}
           </h1>
@@ -87,7 +97,7 @@ const ContactPage = () => {
               className="size-[3.25rem] shrink-0 rounded-full border border-grid object-cover md:size-16 lg:size-[4.5rem]"
             />
 
-            <p className="max-w-[32rem] text-[0.8125rem] leading-[1.55] text-ash md:text-[1.0625rem] lg:text-[clamp(1.125rem,1.6vw,1.5rem)]">
+            <p className="max-w-[32rem] text-sm leading-normal text-ash md:text-base lg:text-lg">
               {CONTACT_NOTE}
             </p>
           </div>

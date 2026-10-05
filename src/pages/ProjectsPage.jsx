@@ -6,6 +6,7 @@ import ProjectTile from "../components/projects/ProjectTile";
 import { usePage } from "../routes/RouterContext";
 import { useTabSelect } from "../hooks/useTabSelect";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useSplitReveal } from "../hooks/useSplitReveal";
 import PROJECTS, {
   PROJECTS_HEADING,
   PROJECTS_NOTE,
@@ -60,6 +61,9 @@ const ProjectsPage = () => {
 
   const [activeFilter, setActiveFilter] = useState(FILTERS[0].id);
 
+  const headingRef = useRef(null);
+  useSplitReveal(headingRef, { enabled: !isArriving });
+
   const gridRef = useRef(null);
 
   // gridRef as the panel, since one grid serves all three filters: pressing a
@@ -89,7 +93,11 @@ const ProjectsPage = () => {
       contained={false}
       additionalClasses="flex flex-col bg-cream font-epilogue text-ink"
     >
-      <PageMasthead heading={PROJECTS_HEADING} note={PROJECTS_NOTE} />
+      <PageMasthead
+        heading={PROJECTS_HEADING}
+        note={PROJECTS_NOTE}
+        headingRef={headingRef}
+      />
 
       <section aria-label="Project list" className="border-t border-grid">
         <ProjectsToolbar
