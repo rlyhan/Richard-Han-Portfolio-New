@@ -1,12 +1,11 @@
-import { useLayoutEffect, useRef } from "react";
+import { useRef } from "react";
 import cn from "classnames";
-import gsap from "gsap";
-import SplitText from "gsap/SplitText";
 import PageSection from "../components/layout/PageSection";
 import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
 import IconRenderer from "../components/icons/IconRenderer";
 import { useNavItems } from "../hooks/useNavLinks";
+import { useSplitReveal } from "../hooks/useSplitReveal";
 import { usePage } from "../routes/RouterContext";
 import {
   CONTACT_CHANNELS,
@@ -14,8 +13,6 @@ import {
   CONTACT_NOTE,
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
-
-gsap.registerPlugin(SplitText);
 
 const GUTTER_CLASS ="px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
@@ -45,29 +42,7 @@ const ContactPage = () => {
   const headingRef = useRef(null);
   const { isArriving } = usePage();
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const { chars } = SplitText.create("[data-split]", {
-        type: "words,chars",
-        tag: "span",
-        wordsClass: "inline-block",
-        charsClass: "inline-block",
-        aria: "none",
-      });
-      if (isArriving) {
-        gsap.set(chars, { y: -30, opacity: 0 });
-        return;
-      }
-      gsap.from(chars, {
-        y: -30,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        stagger: 0.03,
-      });
-    }, headingRef);
-    return () => ctx.revert();
-  }, [isArriving]);
+  useSplitReveal(headingRef, { enabled: !isArriving });
 
   return (
     <PageSection
