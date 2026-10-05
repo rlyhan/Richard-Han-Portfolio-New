@@ -1,9 +1,12 @@
+import { useLayoutEffect, useRef, Fragment } from "react";
 import cn from "classnames";
+import gsap from "gsap";
 import PageSection from "../components/layout/PageSection";
 import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
 import IconRenderer from "../components/icons/IconRenderer";
 import { useNavItems } from "../hooks/useNavLinks";
+import { usePage } from "../routes/RouterContext";
 import {
   CONTACT_CHANNELS,
   CONTACT_HEADING_LINES,
@@ -15,7 +18,8 @@ const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
 // The headshot's rendered width at each breakpoint, for its srcset — the same steps
 // as its size classes below.
-const HEADSHOT_SIZES = "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px";
+const HEADSHOT_SIZES =
+  "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px";
 
 const CHANNEL_CLASS =
   "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border px-[0.5625rem] py-4 font-urbanist text-[0.875rem] leading-none font-semibold transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-5 md:py-5 md:text-base";
@@ -35,6 +39,25 @@ const isExternal = (href) => href.startsWith("http");
 // the pinned SiteNav — see `hasOwnNav` on this page's route record.
 const ContactPage = () => {
   const navItems = useNavItems();
+  const headingRef = useRef(null);
+  const { isArriving } = usePage();
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      if (isArriving) {
+        gsap.set("[data-char]", { y: -30, opacity: 0 });
+        return;
+      }
+      gsap.from("[data-char]", {
+        y: -30,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.03,
+      });
+    }, headingRef);
+    return () => ctx.revert();
+  }, [isArriving]);
 
   return (
     <PageSection
@@ -59,10 +82,25 @@ const ContactPage = () => {
               "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
               GUTTER_CLASS,
             )}
+            ref={headingRef}
           >
             {CONTACT_HEADING_LINES.map((line) => (
               <span key={line} className="block">
-                {line}
+                <span className="sr-only">{line}</span>
+                <span aria-hidden="true">
+                  {line.split(" ").map((word, w) => (
+                    <Fragment key={w}>
+                      {w > 0 && " "}
+                      <span className="inline-block whitespace-nowrap">
+                        {[...word].map((char, c) => (
+                          <span key={c} data-char className="inline-block">
+                            {char}
+                          </span>
+                        ))}
+                      </span>
+                    </Fragment>
+                  ))}
+                </span>
               </span>
             ))}
           </h1>
