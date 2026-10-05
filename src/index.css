@@ -6,8 +6,8 @@
      Fjalla One  the page's headings, and the name at the foot of the hero
      Urbanist    the hero's display voice — its h1, the work panel's heading
                  and each project's title
-     Epilogue    the hero's reading voice — its byline, its closing note and
-                 every small-caps label on the spread
+     Epilogue    the reading voice — the hero's byline, its closing note and
+                 every small-caps label on the spread, and About's body copy
 
    Only the weights actually set are here. `font-synthesis: none` below means
    an unloaded weight renders as the nearest loaded one rather than as a faked
@@ -17,8 +17,12 @@
    The two faces that carry display-size type block instead of swapping, and
    are preloaded in index.html to pay for it: at 94px a swap is a visible
    reflow of the largest thing on the page. The rest swap, because they set
-   labels and a line of copy — a fallback for a moment there costs less than
-   text that isn't painted at all on a slow connection. */
+   labels and copy — a fallback for a moment there costs less than text that
+   isn't painted at all on a slow connection.
+
+   Epilogue is preloaded as well, though it swaps. A font is only requested once
+   text using it renders, which is after the page's chunk has mounted, and About's
+   body re-wrapping on the swap resizes the portrait beside it. */
 @font-face {
   font-family: 'Fjalla One';
   font-style: normal;
