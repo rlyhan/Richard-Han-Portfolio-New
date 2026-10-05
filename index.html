@@ -63,7 +63,15 @@
               sizes: "(min-width: 768px) 140vh, 80vh",
             },
           ],
-          "/contact": [{ href: "/images/headshot.webp" }],
+          "/contact": [
+            {
+              href: "/images/headshot-160.webp",
+              srcset: [80, 160, 240]
+                .map((width) => `/images/headshot-${width}.webp ${width}w`)
+                .join(", "),
+              sizes: "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px",
+            },
+          ],
         };
         const path = location.pathname.replace(/\/+$/, "") || "/";
 

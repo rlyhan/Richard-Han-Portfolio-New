@@ -18,9 +18,14 @@ export const PORTRAIT = {
   alt: "Richard Han working at a laptop in a bright studio",
 };
 
+// The headshot's widths: about one, two and three times its largest size, 72px. Preloaded
+// on /contact with this set and ContactPage's sizes, under the same rule as above.
 export const HEADSHOT = {
-  src: "/images/headshot.webp",
-  width: 800,
-  height: 800,
+  src: "/images/headshot-160.webp",
+  srcSet: [80, 160, 240]
+    .map((width) => `/images/headshot-${width}.webp ${width}w`)
+    .join(", "),
+  width: 160,
+  height: 160,
   alt: "Richard Han",
 };

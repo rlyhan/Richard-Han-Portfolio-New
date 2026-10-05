@@ -13,6 +13,10 @@ import { HEADSHOT } from "../data/photos.data";
 
 const GUTTER_CLASS = "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
+// The headshot's rendered width at each breakpoint, for its srcset — the same steps
+// as its size classes below.
+const HEADSHOT_SIZES = "(min-width: 1024px) 72px, (min-width: 768px) 64px, 52px";
+
 const CHANNEL_CLASS =
   "flex w-full min-w-0 items-center justify-between gap-1 rounded-[2px] border px-[0.5625rem] py-4 font-urbanist text-[0.875rem] leading-none font-semibold transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none md:gap-3 md:px-5 md:py-5 md:text-base";
 
@@ -74,6 +78,8 @@ const ContactPage = () => {
           <div className="flex items-center gap-4 md:gap-5">
             <img
               src={HEADSHOT.src}
+              srcSet={HEADSHOT.srcSet}
+              sizes={HEADSHOT_SIZES}
               alt={HEADSHOT.alt}
               width={HEADSHOT.width}
               height={HEADSHOT.height}
