@@ -2,12 +2,8 @@ import cn from "classnames";
 import Byline from "./Byline";
 import { NOTE_TEXT_CLASS } from "./sharedClasses";
 
-// The masthead the pages below the homepage open with: the name/location line, then
-// the page's title at display size with its line of copy set beside it.
-//
-// About and Projects open identically, so this is one component rather than the same
-// three elements written twice — the two mastheads can't drift a few pixels apart,
-// and the display size is stated once.
+// The Projects page's masthead: the name/location line, then the title at display
+// size with its line of copy set beside it.
 const PageMasthead = ({ heading, note, headingRef }) => (
   <header className="flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12">
     <Byline />

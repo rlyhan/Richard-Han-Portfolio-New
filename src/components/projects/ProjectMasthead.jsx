@@ -18,7 +18,7 @@ const META_ICON_CLASS = "size-[0.6875rem] shrink-0 text-ash";
 // at display size, the line of copy the Projects page captions it with, and the facts
 // about it.
 //
-// Not PageMasthead, which About and Projects share. Three things differ, and
+// Not PageMasthead, the Projects page's. Three things differ, and
 // all three are what makes this a write-up rather than a page of the site: the
 // line above the heading is the way back, not the name and location; the
 // heading is set smaller since a project's name runs longer than one word; and
