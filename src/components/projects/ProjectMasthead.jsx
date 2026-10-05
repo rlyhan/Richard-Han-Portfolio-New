@@ -23,7 +23,7 @@ const META_ICON_CLASS = "size-[0.6875rem] shrink-0 text-ash";
 // line above the heading is the way back, not the name and location; the
 // heading is set smaller since a project's name runs longer than one word; and
 // the facts below the copy have no equivalent up there.
-const ProjectMasthead = ({ project }) => {
+const ProjectMasthead = ({ project, headingRef }) => {
   const { name, year, category, association, description, url, award } =
     project;
   const backLink = useNavLink(PATHS.projects);
@@ -47,8 +47,14 @@ const ProjectMasthead = ({ project }) => {
         <time dateTime={String(year)}>{year}</time>
       </div>
 
-      <h1 className="mt-14 font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:mt-[clamp(2.375rem,7vh,5.625rem)] md:text-[clamp(2.75rem,4.6vw,4.75rem)]">
-        {name}
+      <h1
+        ref={headingRef}
+        className="mt-14 font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:mt-[clamp(2.375rem,7vh,5.625rem)] md:text-[clamp(2.75rem,4.6vw,4.75rem)]"
+      >
+        <span className="sr-only">{name}</span>
+        <span aria-hidden="true" data-split>
+          {name}
+        </span>
       </h1>
 
       <p className={cn("mt-7 max-w-[25rem]", NOTE_TEXT_CLASS)}>
