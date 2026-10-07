@@ -88,7 +88,7 @@ const ProjectTile = ({ project, number, eager }) => {
             <span className="truncate">{category}</span>
 
             {award && (
-              <span className="inline-flex shrink-0 items-center rounded-full bg-well px-[0.5625rem] py-1 leading-[0.6875rem] font-bold text-cream">
+              <span className="inline-flex shrink-0 items-center rounded-full bg-well px-[0.5625rem] py-1 leading-[0.6875rem] font-bold text-chalk">
                 <AwardIcon className="mr-[0.3125rem] h-[0.6875rem] w-[0.6875rem]" />
                 <span className="translate-y-px">{award.description}</span>
               </span>

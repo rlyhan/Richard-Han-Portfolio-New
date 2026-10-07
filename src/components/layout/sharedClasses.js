@@ -12,7 +12,7 @@ export const NOTE_TEXT_CLASS = "text-[0.8125rem] leading-[1.65] text-ash";
 // The link wrapping a project's shot, in both the hero's cards and the
 // Projects grid's tiles.
 export const PROJECT_LINK_CLASS =
-  "group block h-full focus-visible:outline-cream focus-visible:-outline-offset-4";
+  "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
 
 // The empty well shown in place of a shot a project doesn't have.
 export const IMAGE_FALLBACK_CLASS =

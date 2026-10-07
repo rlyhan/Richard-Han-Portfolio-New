@@ -63,7 +63,7 @@ const HomeProjectCarousel = ({ projects }) => {
         </div>
       </div>
 
-      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-cream/15 px-1.5 py-1">
+      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-chalk/15 px-1.5 py-1">
         {projects.map((project, i) => (
           <button
             key={project.id}
@@ -77,7 +77,7 @@ const HomeProjectCarousel = ({ projects }) => {
               aria-hidden="true"
               className={cn(
                 "h-[0.3rem] w-[0.3rem] rounded-full transition-colors duration-200 motion-reduce:transition-none",
-                i === selected ? "bg-cream" : "bg-cream/45",
+                i === selected ? "bg-chalk" : "bg-chalk/45",
               )}
             />
           </button>

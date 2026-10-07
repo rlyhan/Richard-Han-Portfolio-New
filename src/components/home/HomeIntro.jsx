@@ -17,7 +17,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
     aria-labelledby="home-heading"
     className="flex min-h-min min-w-0 flex-1 flex-col overflow-hidden px-[1.4rem] pt-[1.35rem] pb-[clamp(1.25rem,4svh,2.1rem)] md:min-h-0 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-10"
   >
-    <Byline topLineRef={setToplineRef} hideNameBelowMd />
+    <Byline topLineRef={setToplineRef} wrapLocationBelowMd />
 
     <h1
       ref={headingRef}

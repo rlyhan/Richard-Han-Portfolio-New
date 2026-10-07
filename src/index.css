@@ -85,9 +85,7 @@
     line-height: 1.5;
     font-weight: 400;
 
-    /* The page is dark-only — there is no light variant to opt into, and
-       leaving "light dark" here let the UA paint light form controls. */
-    color-scheme: dark;
+    color-scheme: light dark;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -96,19 +94,18 @@
   }
 
   body {
-    @apply bg-carbon-900 text-paper;
+    @apply bg-cream text-ink;
     width: 100%;
   }
 
   /* Selection inverts the page's own ink, so highlighting text reads as part
      of the scheme rather than as the browser's default blue. */
   ::selection {
-    @apply bg-paper text-carbon-950;
+    @apply bg-ink text-cream;
   }
 
-  /* The UA default ring is near-invisible on carbon-900. */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-paper;
+    @apply outline-2 outline-offset-2 outline-ink;
   }
 
   button {
