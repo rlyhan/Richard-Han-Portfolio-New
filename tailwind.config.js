@@ -10,7 +10,8 @@ const WELL_RGB = "42, 36, 30";
 // The paper tones, each with its value in both schemes. The dark scheme inverts
 // these and leaves the well, its frame and its scrim alone: they mat the shots,
 // which look the same in either scheme. The tokens read through a variable of the
-// same name, which the plugin at the foot of this file sets for each scheme.
+// same name, which the plugin at the foot of this file sets for each scheme: the
+// OS's, unless the nav's toggle has put a `data-theme` on <html>.
 const PAPER = {
   // The hero's ground, and the caption plate each project card's title sits on.
   cream: { light: "#F5F3EE", dark: "#16140F" },
@@ -173,7 +174,11 @@ export default {
     ({ addBase }) =>
       addBase({
         ":root": paperVars("light"),
-        "@media (prefers-color-scheme: dark)": { ":root": paperVars("dark") },
+        "@media (prefers-color-scheme: dark)": {
+          ':root:not([data-theme="light"])': paperVars("dark"),
+        },
+        ':root[data-theme="dark"]': { ...paperVars("dark"), colorScheme: "dark" },
+        ':root[data-theme="light"]': { colorScheme: "light" },
       }),
   ],
 };

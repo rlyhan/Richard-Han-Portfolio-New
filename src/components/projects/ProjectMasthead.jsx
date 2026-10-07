@@ -3,6 +3,7 @@ import ArrowDownIcon from "../icons/ArrowDownIcon";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import AwardIcon from "../icons/AwardIcon";
 import SplitLine from "../common/SplitLine";
+import ThemeToggle from "../common/Buttons/ThemeToggle";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_LABEL_CLASS, NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
@@ -45,7 +46,10 @@ const ProjectMasthead = ({ project, headingRef }) => {
           All projects
         </a>
 
-        <time dateTime={String(year)}>{year}</time>
+        <span className="flex items-center gap-4">
+          <time dateTime={String(year)}>{year}</time>
+          <ThemeToggle />
+        </span>
       </div>
 
       <h1

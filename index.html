@@ -7,6 +7,17 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#000000" />
 
+    <script>
+      // Before first paint, so a saved scheme doesn't open on the OS's for a frame.
+      // See useColorScheme, which writes the same key.
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+        }
+      } catch {}
+    </script>
+
     <meta
       name="description"
       content="Richard Han is a freelance Full Stack Developer based in Auckland, New Zealand."

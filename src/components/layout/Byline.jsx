@@ -1,5 +1,6 @@
 import cn from "classnames";
 import LocationPinIcon from "../icons/LocationPinIcon";
+import ThemeToggle from "../common/Buttons/ThemeToggle";
 import { INTRO_TOPLINE } from "../../data/home.data";
 import { EYEBROW_LABEL_CLASS } from "./sharedClasses";
 
@@ -18,21 +19,24 @@ const Byline = ({ topLineRef, hideNameBelowMd = false }) => (
     <span className={hideNameBelowMd ? "hidden md:block" : undefined}>
       {INTRO_TOPLINE.name}
     </span>
-    <span
-      className={cn(
-        "flex items-center gap-2",
-        hideNameBelowMd && "max-w-24 md:max-w-none",
-      )}
-    >
-      <LocationPinIcon className="size-3 shrink-0" />
+    <span className="flex items-center gap-4">
       <span
         className={cn(
-          "translate-y-px",
-          hideNameBelowMd ? "md:text-right" : "text-right",
+          "flex items-center gap-2",
+          hideNameBelowMd && "max-w-24 md:max-w-none",
         )}
       >
-        {INTRO_TOPLINE.location}
+        <LocationPinIcon className="size-3 shrink-0" />
+        <span
+          className={cn(
+            "translate-y-px",
+            hideNameBelowMd ? "md:text-right" : "text-right",
+          )}
+        >
+          {INTRO_TOPLINE.location}
+        </span>
       </span>
+      <ThemeToggle />
     </span>
   </p>
 );
