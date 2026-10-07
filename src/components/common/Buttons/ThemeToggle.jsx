@@ -4,9 +4,9 @@ import MoonIcon from "../../icons/MoonIcon";
 import { useColorScheme } from "../../../hooks/useColorScheme";
 
 const SEGMENT_CLASS =
-  "grid place-items-center px-1.5 py-1 transition-colors duration-200 motion-reduce:transition-none";
+  "relative grid place-items-center px-1.5 py-1 transition-colors duration-300 motion-reduce:transition-none";
 
-const SELECTED_CLASS = "bg-ink text-cream";
+const SELECTED_CLASS = "text-cream";
 
 const UNSELECTED_CLASS = "text-ash group-hover:text-ink";
 
@@ -23,8 +23,15 @@ const ThemeToggle = () => {
       aria-checked={isDark}
       aria-label="Dark theme"
       onClick={toggleScheme}
-      className="group -my-1 flex shrink-0 rounded-none border border-grid p-0 focus-visible:outline-ink"
+      className="group relative -my-1 flex shrink-0 overflow-hidden rounded-none border border-grid p-0 focus-visible:outline-ink"
     >
+      <span
+        aria-hidden="true"
+        className={cn(
+          "absolute inset-y-0 left-0 w-1/2 bg-ink transition-transform duration-300 ease-[cubic-bezier(0.3,1.3,0.5,1)] motion-reduce:transition-none",
+          isDark && "translate-x-full",
+        )}
+      />
       <span className={cn(SEGMENT_CLASS, isDark ? UNSELECTED_CLASS : SELECTED_CLASS)}>
         <SunIcon className={ICON_CLASS} />
       </span>
