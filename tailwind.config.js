@@ -85,8 +85,8 @@ export default {
         // under the plate instead of behind the object.
         frame:
           "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
-        // The Contact page's photograph carries that page's title, and a photograph
-        // is not a ground to set type on. This is what gives the words something to
+        // Below md, the About page's portrait carries that page's title, and a
+        // photograph is not a ground to set type on. This is what gives the words something to
         // sit against.
         //
         // `well` rather than black, so it reads as the site's own dark tone falling
