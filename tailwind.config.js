@@ -11,14 +11,14 @@ const WELL_RGB = "42, 36, 30";
 // these and leaves the well, its frame and its scrim alone: they mat the shots,
 // which look the same in either scheme. The tokens read through a variable of the
 // same name, which the plugin at the foot of this file sets for each scheme: the
-// OS's, unless the nav's toggle has put a `data-theme` on <html>.
+// OS's, unless the masthead's toggle has put a `data-theme` on <html>.
 const PAPER = {
   // The hero's ground, and the caption plate each project card's title sits on.
-  cream: { light: "#F5F3EE", dark: "#16140F" },
+  cream: { light: "#F5F3EE", dark: "#000000" },
   // The bar at the foot of the hero: a half-step off the ground, so the nav reads
   // as its own field without a second line drawn under the spread.
-  shell: { light: "#E8E4DD", dark: "#201D18" },
-  // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 15.1:1 and 13.8:1
+  shell: { light: "#E8E4DD", dark: "#0F0E0B" },
+  // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 17.2:1 and 15.8:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
   // Muted hero copy: the intro's byline and closing note, each card's number and
@@ -27,13 +27,14 @@ const PAPER = {
   // A step darker than the design's #787878, which lands at 4.0:1 on cream and
   // 3.9:1 on shell — every place this is used is label-sized, so it has to clear
   // AA as normal text. This holds 5.2:1 on cream and 4.5:1 on shell in light,
-  // 6.3:1 and 5.7:1 in dark.
+  // 7.2:1 and 6.6:1 in dark.
   ash: { light: "#666666", dark: "#9C968C" },
   // The hero spread's hairlines: the rule under the work panel's heading, the
   // seam between the two halves, the grid the cards sit in and the frame around
   // each caption plate. Light enough to read as a drawn edge on cream rather than
   // as an outline around each cell — the cells share seams, so a heavier line
-  // would draw three boxes instead of one grid. 1.5:1 on cream in both schemes.
+  // would draw three boxes instead of one grid. 1.5:1 on cream in light, 1.7:1 in
+  // dark.
   grid: { light: "#C9C2B6", dark: "#3A352D" },
 };
 
