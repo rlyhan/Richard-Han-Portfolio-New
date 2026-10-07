@@ -85,9 +85,7 @@
     line-height: 1.5;
     font-weight: 400;
 
-    /* The page is dark-only — there is no light variant to opt into, and
-       leaving "light dark" here let the UA paint light form controls. */
-    color-scheme: dark;
+    color-scheme: light dark;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

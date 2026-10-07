@@ -29,7 +29,7 @@ const CHANNEL_CLASS =
 // ordered by what's worth trying, and a flag beside that order could disagree
 // with it.
 const CHANNEL_PRIMARY_CLASS =
-  "border-well bg-well text-cream hover:border-ink hover:bg-ink";
+  "border-well bg-well text-chalk hover:border-ink hover:bg-ink hover:text-cream";
 
 const CHANNEL_SECONDARY_CLASS = "border-grid hover:border-ink hover:bg-shell";
 
@@ -65,7 +65,7 @@ const ContactPage = () => {
           <h1
             id="contact-heading"
             className={cn(
-              "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
+              "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-chalk md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
               GUTTER_CLASS,
             )}
             ref={headingRef}

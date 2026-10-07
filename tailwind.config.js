@@ -7,6 +7,40 @@
 const WELL = "#2A241E";
 const WELL_RGB = "42, 36, 30";
 
+// The paper tones, each with its value in both schemes. The dark scheme inverts
+// these and leaves the well, its frame and its scrim alone: they mat the shots,
+// which look the same in either scheme. The tokens read through a variable of the
+// same name, which the plugin at the foot of this file sets for each scheme.
+const PAPER = {
+  // The hero's ground, and the caption plate each project card's title sits on.
+  cream: { light: "#F5F3EE", dark: "#16140F" },
+  // The bar at the foot of the hero: a half-step off the ground, so the nav reads
+  // as its own field without a second line drawn under the spread.
+  shell: { light: "#E8E4DD", dark: "#201D18" },
+  // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 15.1:1 and 13.8:1
+  // in dark.
+  ink: { light: "#2D2D2D", dark: "#ECE8E1" },
+  // Muted hero copy: the intro's byline and closing note, each card's number and
+  // category, the spread's counter.
+  //
+  // A step darker than the design's #787878, which lands at 4.0:1 on cream and
+  // 3.9:1 on shell — every place this is used is label-sized, so it has to clear
+  // AA as normal text. This holds 5.2:1 on cream and 4.5:1 on shell in light,
+  // 6.3:1 and 5.7:1 in dark.
+  ash: { light: "#666666", dark: "#9C968C" },
+  // The hero spread's hairlines: the rule under the work panel's heading, the
+  // seam between the two halves, the grid the cards sit in and the frame around
+  // each caption plate. Light enough to read as a drawn edge on cream rather than
+  // as an outline around each cell — the cells share seams, so a heavier line
+  // would draw three boxes instead of one grid. 1.5:1 on cream in both schemes.
+  grid: { light: "#C9C2B6", dark: "#3A352D" },
+};
+
+const paperVars = (scheme) =>
+  Object.fromEntries(
+    Object.entries(PAPER).map(([name, tone]) => [`--${name}`, tone[scheme]]),
+  );
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -54,32 +88,17 @@ export default {
         // The homepage's editorial palette. Scoped to the hero, which is a
         // light, paper-toned spread the dark page then slides over —
         // everything below it stays on carbon.
-        cream: "#F5F3EE", // the hero's ground, and the caption plate each
-        // project card's title sits on
-        shell: "#E8E4DD", // the bar at the foot of the hero: a half-step off
-        // the ground, so the nav reads as its own field
-        // without a second line drawn under the spread
-        ink: "#2D2D2D", // hero copy — 12.4:1 on cream, 10.9:1 on shell
-        // Muted hero copy: the intro's byline and closing note, each card's
-        // number and category, the spread's counter.
-        //
-        // A step darker than the design's #787878, which lands at 4.0:1 on
-        // cream and 3.9:1 on shell — every place this is used is label-sized,
-        // so it has to clear AA as normal text. This holds 5.2:1 on cream and
-        // 4.5:1 on shell.
-        ash: "#666666",
-        // The hero spread's hairlines: the rule under the work panel's
-        // heading, the seam between the two halves, the grid the cards sit in
-        // and the frame around each caption plate. Light enough to read as a
-        // drawn edge on cream rather than as an outline around each cell — the
-        // cells share seams, so a heavier line would draw three boxes instead
-        // of one grid.
-        grid: "#C9C2B6",
+        ...Object.fromEntries(
+          Object.keys(PAPER).map((name) => [name, `var(--${name})`]),
+        ),
         // The well each project shot is matted on. The one dark ground in the
         // hero, and the reason the shots read as objects on a page rather than
         // as panels of their own: warm, so it sits with the paper tones above
         // instead of punching a hole in them.
         well: WELL,
+        // Cream that never inverts: type and dots set on the well, the scrim or
+        // a shot, which stay dark in both schemes.
+        chalk: PAPER.cream.light,
       },
       backgroundImage: {
         // The ground the Projects page mats each shot on: `well`, vignetted.
@@ -150,5 +169,11 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    ({ addBase }) =>
+      addBase({
+        ":root": paperVars("light"),
+        "@media (prefers-color-scheme: dark)": { ":root": paperVars("dark") },
+      }),
+  ],
 };
