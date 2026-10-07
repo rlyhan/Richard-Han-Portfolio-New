@@ -1,9 +1,7 @@
 // tailwind.config.js
 
-// Kept as a constant so `well` — which the Contact page's panel fills with and the
-// About page's mobile scrim in backgroundImage falls across its portrait with —
-// can't drift out of step between the two: both have to answer to the same tone,
-// not a swatch that can drift from it.
+// Kept as a constant so `well` and the About page's mobile scrim in backgroundImage,
+// which falls across its portrait in the same tone, can't drift out of step.
 const WELL = "#2A241E";
 const WELL_RGB = "42, 36, 30";
 
@@ -36,6 +34,9 @@ const PAPER = {
   // would draw three boxes instead of one grid. 1.5:1 on cream in light, 1.7:1 in
   // dark.
   grid: { light: "#C9C2B6", dark: "#3A352D" },
+  // The Contact page's title panel and its email button: the page turned inside
+  // out, with cream type on it — 18.9:1 in light, 17.2:1 in dark.
+  panel: { light: "#000000", dark: "#ECE8E1" },
 };
 
 const paperVars = (scheme) =>
