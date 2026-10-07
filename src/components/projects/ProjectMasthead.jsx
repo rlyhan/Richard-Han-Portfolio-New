@@ -16,17 +16,17 @@ const META_LINK_CLASS =
 
 const META_ICON_CLASS = "size-[0.6875rem] shrink-0 text-ash";
 
-// A write-up's masthead: the way back and the year across the top, the project's name
+// A write-up's masthead: the way back and the theme toggle across the top, the project's name
 // at display size, the line of copy the Projects page captions it with, and the facts
 // about it.
 //
 // Not PageMasthead, the Projects page's. Three things differ, and
 // all three are what makes this a write-up rather than a page of the site: the
-// line above the heading is the way back, not the name and location; the
+// line above the heading is the way back, not the location; the
 // heading is set smaller since a project's name runs longer than one word; and
 // the facts below the copy have no equivalent up there.
 const ProjectMasthead = ({ project, headingRef }) => {
-  const { name, year, category, association, description, url, award } =
+  const { name, category, association, description, url, award } =
     project;
   const backLink = useNavLink(PATHS.projects);
 
@@ -34,7 +34,7 @@ const ProjectMasthead = ({ project, headingRef }) => {
     <header className="flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12">
       <div
         className={cn(
-          "flex items-baseline justify-between gap-4",
+          "flex items-center justify-between gap-4",
           EYEBROW_LABEL_CLASS,
         )}
       >
@@ -46,10 +46,7 @@ const ProjectMasthead = ({ project, headingRef }) => {
           All projects
         </a>
 
-        <span className="flex items-center gap-4">
-          <time dateTime={String(year)}>{year}</time>
-          <ThemeToggle />
-        </span>
+        <ThemeToggle />
       </div>
 
       <h1

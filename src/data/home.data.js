@@ -12,10 +12,8 @@ export const INTRO_LINES = ["Engaging", "digital", "experiences."];
 export const INTRO_NOTE =
   "Full Stack Developer, passionate about user experience, collaboration and creativity. Currently freelancing and open to opportunities.";
 
-// The byline above the display lines: who and where, stated once in small caps so
-// the h1 underneath is free to be four lines of type rather than an introduction.
-// The name repeats at the foot of the hero at display size — this is the caption
-// version of it, and what makes the top of the page read as a masthead.
+// Who and where. The name is the nav bar's wordmark; the location is the byline,
+// the small-caps line above each page's heading.
 export const INTRO_TOPLINE = {
   name: "Richard Han",
   location: "Auckland, New Zealand",

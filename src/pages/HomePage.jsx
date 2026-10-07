@@ -16,7 +16,7 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 const NEAR_TOP_THRESHOLD = 40;
 
 const CUE_POSITION_CLASS =
-  "top-[1.35rem] justify-end pr-[1.35rem] md:top-auto md:bottom-6 md:justify-center md:pr-0";
+  "top-[1.35rem] justify-center md:top-auto md:bottom-6";
 
 // What the hero's exit throws off screen, in order — the stagger is indexed off
 // this list, so the spread runs down the left column and then takes the work
