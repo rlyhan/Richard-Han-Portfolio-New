@@ -1,6 +1,6 @@
 // The site's small-caps label voice, shared verbatim by the band heading, the
-// byline, and every write-up's facts rail. Not the same constant as the two
-// EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx — those are tuned
+// byline, and every write-up's facts and headings. Not the same constant as the
+// two EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx — those are tuned
 // per context (tracking, size) and diverge from this on purpose.
 export const EYEBROW_LABEL_CLASS =
   "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
