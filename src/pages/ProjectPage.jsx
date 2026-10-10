@@ -5,6 +5,7 @@ import ArticleParagraphs from "../components/layout/ArticleParagraphs";
 import ProjectMasthead from "../components/projects/ProjectMasthead";
 import MattedShot from "../components/common/MattedShot";
 import {
+  ARTICLE_ROW_CLASS,
   EYEBROW_LABEL_CLASS,
   IMAGE_FALLBACK_CLASS,
 } from "../components/layout/sharedClasses";
@@ -16,10 +17,7 @@ import { fitOf } from "../data/shots.data";
 
 const RAIL_VALUE_CLASS = "text-[0.8125rem] leading-[1.45] font-medium text-ink";
 
-const TECH_ITEM_CLASS = `${RAIL_VALUE_CLASS} border-t border-grid py-2.5 first:border-t-0 first:pt-0`;
-
-const ARTICLE_GUTTER_CLASS =
-  "px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]";
+const TECH_ITEM_CLASS = `${RAIL_VALUE_CLASS} whitespace-nowrap`;
 
 // One project's write-up, at /projects/<id>.
 //
@@ -33,8 +31,8 @@ const ARTICLE_GUTTER_CLASS =
 // project is data: a chunk each would be fetched on the click that opened it, where
 // this one is in hand from the first tile the viewer hovers.
 //
-// The masthead and shot are the page's chrome; the rail of facts and the copy beside
-// it are the write-up itself, so only those sit inside the <article>.
+// The masthead and shot are the page's chrome; the facts and the copy are the
+// write-up itself, so only those sit inside the <article>.
 const ProjectPage = () => {
   const { path, isArriving } = usePage();
   const headingRef = useRef(null);
@@ -80,43 +78,34 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <article className="grid grid-cols-1 bg-inverse [--ash:var(--inverse-ash)] [--grid:var(--inverse-grid)] [--ink:var(--inverse-ink)] selection:bg-inverse-ink selection:text-inverse lg:grid-cols-[minmax(0,30%)_minmax(0,70%)]">
-        <div className={cn("flex min-w-0 flex-col gap-8", ARTICLE_GUTTER_CLASS)}>
-          <div>
-            <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
+      <article className="flex flex-col bg-inverse px-[1.4rem] py-[2.625rem] [--ash:var(--inverse-ash)] [--grid:var(--inverse-grid)] [--ink:var(--inverse-ink)] selection:bg-inverse-ink selection:text-inverse md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]">
+        <div className={ARTICLE_ROW_CLASS}>
+          <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
 
-            <time
-              dateTime={String(year)}
-              className={cn("mt-3.5 block", RAIL_VALUE_CLASS)}
-            >
-              {year}
-            </time>
+          <time dateTime={String(year)} className={RAIL_VALUE_CLASS}>
+            {year}
+          </time>
+        </div>
+
+        {technologies?.length > 0 && (
+          <div className={ARTICLE_ROW_CLASS}>
+            <p className={EYEBROW_LABEL_CLASS}>Technologies</p>
+
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+              {technologies.map((technology) => (
+                <li key={technology} className={TECH_ITEM_CLASS}>
+                  {technology}
+                </li>
+              ))}
+            </ul>
           </div>
+        )}
 
-          {technologies?.length > 0 && (
-            <div>
-              <p className={EYEBROW_LABEL_CLASS}>Technologies</p>
+        {idea?.length > 0 && (
+          <ArticleParagraphs heading="The idea" paragraphs={idea} lead />
+        )}
 
-              <ul className="mt-3.5 grid">
-                {technologies.map((technology) => (
-                  <li key={technology} className={TECH_ITEM_CLASS}>
-                    {technology}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        <div
-          className={cn("flex flex-col gap-10 md:gap-14", ARTICLE_GUTTER_CLASS)}
-        >
-          {idea?.length > 0 && (
-            <ArticleParagraphs heading="The idea" paragraphs={idea} lead />
-          )}
-
-          <ArticleParagraphs heading="Work involved" paragraphs={work_involved} />
-        </div>
+        <ArticleParagraphs heading="Work involved" paragraphs={work_involved} />
       </article>
     </PageSection>
   );
