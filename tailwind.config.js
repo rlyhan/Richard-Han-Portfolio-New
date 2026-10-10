@@ -37,15 +37,10 @@ const PAPER = {
   // The Contact page's title panel and its email button: the page turned inside
   // out, with cream type on it — 18.9:1 in light, 17.2:1 in dark.
   panel: { light: "#000000", dark: "#ECE8E1" },
-  // A write-up's facts and copy: inverted like `panel` in light. In dark it
-  // stays dark, on the `shell` and `grid` of the masthead's facts above it, so
-  // the article reads as those pills' ground carried down the page. The copy
-  // takes `inverse-ink` — 21:1 in light, 15.8:1 in dark — and the labels the
-  // muted `inverse-ash`, 15.3:1 and 11:1.
-  inverse: { light: "#000000", dark: "#0F0E0B" },
-  "inverse-ink": { light: "#FFFFFF", dark: "#ECE8E1" },
-  "inverse-ash": { light: "#E2DBCF", dark: "#C9C3B9" },
-  "inverse-grid": { light: "#404040", dark: "#3A352D" },
+  // A write-up's article and the footer under it: a step lighter than the page
+  // in both schemes, a sheet laid on it. Warm rather than pure white in light,
+  // which would read cold and make the cream around it look dingy.
+  sheet: { light: "#FCFBF8", dark: "#0F0E0B" },
 };
 
 const paperVars = (scheme) =>

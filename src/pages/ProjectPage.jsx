@@ -78,7 +78,7 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <article className="flex flex-col bg-inverse px-[1.4rem] py-[2.625rem] [--ash:var(--inverse-ash)] [--grid:var(--inverse-grid)] [--ink:var(--inverse-ink)] selection:bg-inverse-ink selection:text-inverse md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]">
+      <article className="flex flex-col bg-sheet px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]">
         <div className={ARTICLE_ROW_CLASS}>
           <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
 

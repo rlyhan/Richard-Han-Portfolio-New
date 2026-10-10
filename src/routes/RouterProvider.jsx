@@ -573,7 +573,7 @@ const RouterProvider = ({ children }) => {
       // Whether this page draws the nav bar in its own layout, and so whether the
       // pinned copy waits for a floor at all rather than being free from the top.
       pageDrawsNav: Boolean(route?.hasOwnNav),
-      invertsFooter: Boolean(route?.invertsFooter),
+      footerOnSheet: Boolean(route?.footerOnSheet),
       // The floor that pinned copy answers for: it stays down until the page below
       // has taken over. Read as a selector so it's measured, not remembered.
       //
