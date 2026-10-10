@@ -106,6 +106,8 @@ const PROJECT_PAGES = PROJECTS.map(({ id, name }) => ({
   sectionId: projectSectionId(id),
   title: `${name} — Richard Han`,
   ground: "bg-cream",
+  // The write-up ends on its article's sheet, so the footer continues it.
+  footerOnSheet: true,
   load: () => import("../pages/ProjectPage.jsx"),
 }));
 

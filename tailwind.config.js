@@ -37,6 +37,10 @@ const PAPER = {
   // The Contact page's title panel and its email button: the page turned inside
   // out, with cream type on it — 18.9:1 in light, 17.2:1 in dark.
   panel: { light: "#000000", dark: "#ECE8E1" },
+  // A write-up's article and the footer under it: a step lighter than the page
+  // in both schemes, a sheet laid on it. Warm rather than pure white in light,
+  // which would read cold and make the cream around it look dingy.
+  sheet: { light: "#FCFBF8", dark: "#0F0E0B" },
 };
 
 const paperVars = (scheme) =>
