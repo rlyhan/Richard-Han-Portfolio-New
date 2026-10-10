@@ -45,7 +45,7 @@ const PAPER = {
   inverse: { light: "#000000", dark: "#D2CBBE" },
   "inverse-ink": { light: "#FFFFFF", dark: "#1F1C18" },
   "inverse-ash": { light: "#E2DBCF", dark: "#2E2A25" },
-  "inverse-grid": { light: "#4A443C", dark: "#B3AB9C" },
+  "inverse-grid": { light: "#404040", dark: "#B3AB9C" },
 };
 
 const paperVars = (scheme) =>
