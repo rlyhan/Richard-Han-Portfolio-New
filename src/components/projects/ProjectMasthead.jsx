@@ -5,7 +5,7 @@ import AwardIcon from "../icons/AwardIcon";
 import SplitLine from "../common/SplitLine";
 import ThemeToggle from "../common/Buttons/ThemeToggle";
 import { useNavLink } from "../../hooks/useNavLinks";
-import { EYEBROW_LABEL_CLASS, NOTE_TEXT_CLASS } from "../layout/sharedClasses";
+import { EYEBROW_LABEL_CLASS } from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
 
 const META_CLASS =
@@ -56,7 +56,7 @@ const ProjectMasthead = ({ project, headingRef }) => {
         <SplitLine text={name} />
       </h1>
 
-      <p className={cn("mt-7 max-w-[25rem]", NOTE_TEXT_CLASS)}>
+      <p className="mt-7 max-w-[52ch] text-base leading-[1.5] text-ink md:text-xl md:leading-[1.45]">
         {description}
       </p>
 
