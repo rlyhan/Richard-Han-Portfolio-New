@@ -107,7 +107,7 @@ const ProjectPage = () => {
 
         <div className="flex flex-col gap-10 md:gap-14">
           {idea?.length > 0 && (
-            <ArticleParagraphs heading="The idea" paragraphs={idea} />
+            <ArticleParagraphs heading="The idea" paragraphs={idea} lead />
           )}
 
           <ArticleParagraphs heading="Work involved" paragraphs={work_involved} />
