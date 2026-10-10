@@ -18,6 +18,9 @@ const RAIL_VALUE_CLASS = "text-[0.8125rem] leading-[1.45] font-medium text-ink";
 
 const TECH_ITEM_CLASS = `${RAIL_VALUE_CLASS} border-t border-grid py-2.5 first:border-t-0 first:pt-0`;
 
+const ARTICLE_GUTTER_CLASS =
+  "px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]";
+
 // One project's write-up, at /projects/<id>.
 //
 // Which project it is comes off this page's own path, not a prop — the outlet
@@ -77,8 +80,8 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <article className="grid grid-cols-1 gap-8 border-t border-grid px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem] lg:grid-cols-[minmax(0,30%)_minmax(0,70%)] lg:gap-x-10">
-        <div className="flex min-w-0 flex-col gap-8">
+      <article className="grid grid-cols-1 bg-inverse [--ash:var(--inverse-ash)] [--grid:var(--inverse-grid)] [--ink:var(--inverse-ink)] selection:bg-inverse-ink selection:text-inverse lg:grid-cols-[minmax(0,30%)_minmax(0,70%)]">
+        <div className={cn("flex min-w-0 flex-col gap-8", ARTICLE_GUTTER_CLASS)}>
           <div>
             <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
 
@@ -105,7 +108,9 @@ const ProjectPage = () => {
           )}
         </div>
 
-        <div className="flex flex-col gap-10 md:gap-14">
+        <div
+          className={cn("flex flex-col gap-10 md:gap-14", ARTICLE_GUTTER_CLASS)}
+        >
           {idea?.length > 0 && (
             <ArticleParagraphs heading="The idea" paragraphs={idea} lead />
           )}

@@ -4,7 +4,7 @@ const LEAD_TEXT_CLASS =
   "max-w-[52ch] font-urbanist text-xl leading-[1.35] font-medium tracking-[-0.01em] text-ink md:text-[1.75rem]";
 
 const BODY_TEXT_CLASS =
-  "max-w-[62ch] font-epilogue text-sm leading-[1.65] font-medium text-ink md:text-lg";
+  "max-w-[62ch] font-epilogue text-[0.9375rem] leading-[1.75] font-normal text-ink md:text-lg";
 
 const ArticleParagraphs = ({ heading, paragraphs, lead = false }) => (
   <div className="flex flex-col gap-4 md:gap-8">
