@@ -22,22 +22,22 @@ const NavMenu = ({ items, ariaLabel = "Portfolio sections" }) => {
   return (
     <nav
       aria-label={ariaLabel}
-      className="relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4"
+      className="relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4"
     >
       <a
         {...homeLink}
-        className="font-heading text-[1.5rem] leading-none tracking-[-0.015em] text-ink uppercase transition-colors hover:text-ash focus-visible:outline-ink md:py-[0.12em] md:text-[clamp(3.75rem,6vw,4.5rem)] md:leading-[0.85]"
+        className="font-heading text-[1.5rem] leading-none tracking-[-0.015em] text-ink uppercase transition-colors hover:text-ash focus-visible:outline-ink md:py-[0.12em] md:text-[clamp(2.625rem,4vw,3.125rem)] md:leading-[0.85]"
       >
         {FIRST_NAME}&nbsp; <br />
         {LAST_NAME}.
       </a>
 
-      <div className="flex flex-row justify-end gap-[0.7rem] md:flex-col md:items-end md:gap-0 md:pb-[0.3rem]">
+      <div className="flex flex-row justify-end gap-[0.7rem] md:flex-col md:items-end md:gap-0">
         {items.map(({ id, label, link }, i) => (
           <a
             key={id}
             {...link}
-            className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.8125rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.15rem,1.6vw,1.5rem)] md:leading-[1.55]"
+            className="flex -mx-[0.35rem] min-h-12 items-center px-[0.35rem] font-urbanist text-[0.8125rem] leading-[0.9] font-semibold whitespace-nowrap text-ink transition-colors hover:text-ash focus-visible:outline-ink md:mx-0 md:grid md:min-h-0 md:grid-cols-[1.6rem_minmax(0,1fr)] md:items-baseline md:px-0 md:text-[clamp(1.1rem,1.67vw,1.3rem)] md:leading-[1.55]"
           >
             <span
               aria-hidden="true"
