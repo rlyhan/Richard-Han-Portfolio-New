@@ -14,13 +14,13 @@ const WELL_RGB = "42, 36, 30";
 const PAPER = {
   // The page's ground, and the caption plate each project card's title sits on.
   cream: { light: "#F5F3EE", dark: "#141414" },
-  // The ground under the dots each page opens on: neutral grey where the
-  // reading below is paper, so the opening reads as its own surface.
+  // The ground each page opens on: neutral grey where the reading below is
+  // mist, so the opening reads as its own surface.
   fog: { light: "#D9D9D6", dark: "#222222" },
-  // The dots on fog: lighter than it in both schemes. In light that is cream,
-  // the paper the rest of the site is laid on; in dark, cream is darker than
-  // fog and would sink into it, so the dots lift off it instead.
-  dot: { light: "#F5F3EE", dark: "#454545" },
+  // The dots on fog, in dark only: there fog sits so close to mist that the
+  // dots are what sets the opening apart, where in light the step between the
+  // two greys does it alone. Chalk's warmth, dimmed.
+  dot: { light: "transparent", dark: "#6B665D" },
   // What follows a dotted opening — About's bands, the Projects list, a
   // write-up's article — and the footer under it: fog a step lighter, so the
   // dots end without the jump to cream.
@@ -49,8 +49,9 @@ const PAPER = {
   // The Contact page's title panel and its email button: dark in both schemes,
   // with chalk type on it — 12.2:1 in light, 12.6:1 in dark.
   panel: { light: "#2E2E2E", dark: "#2C2C2C" },
-  // The title panel's dots: a step lighter than the panel.
-  "panel-dot": { light: "#474747", dark: "#444444" },
+  // The title panel's dots, in dark only as fog's are: a step lighter than
+  // the panel.
+  "panel-dot": { light: "transparent", dark: "#444444" },
   // A write-up's tags, set on its dotted opening: lighter than fog in both
   // schemes, where shell and cream are lighter in light but darker in dark.
   // Warm rather than pure white in light, which would read cold beside cream.

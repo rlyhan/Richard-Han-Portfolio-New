@@ -13,9 +13,14 @@ export const ARTICLE_ROW_CLASS =
 // and max-width, and font-epilogue where the page hasn't already set it.
 export const NOTE_TEXT_CLASS = "text-[0.8125rem] leading-[1.65] text-ash";
 
+// The tiling both dot patterns share. Offset by just under half a tile, so the
+// first dot sits most of a gap in from the top and left edges and the one before
+// it falls just past them.
+export const DOT_GRID_CLASS = "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
+
 // A page's opening: all of the one-screen hero, the first screen or masthead of
 // About, Projects and the write-ups. What follows it is on mist.
-export const DOTTED_GROUND_CLASS = "bg-fog bg-dots bg-size-[1.25rem_1.25rem]";
+export const DOTTED_GROUND_CLASS = `bg-fog bg-dots ${DOT_GRID_CLASS}`;
 
 // The link wrapping a project's shot, in both the hero's cards and the
 // Projects grid's tiles.
