@@ -1,12 +1,17 @@
 import cn from "classnames";
 import Byline from "./Byline";
 import SplitLine from "../common/SplitLine";
-import { NOTE_TEXT_CLASS } from "./sharedClasses";
+import { DOTTED_GROUND_CLASS, NOTE_TEXT_CLASS } from "./sharedClasses";
 
 // The Projects page's masthead: the name/location line, then the title at display
 // size with its line of copy set beside it.
 const PageMasthead = ({ heading, note, headingRef }) => (
-  <header className="flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12">
+  <header
+    className={cn(
+      "flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12",
+      DOTTED_GROUND_CLASS,
+    )}
+  >
     <Byline />
 
     <div className="mt-14 flex flex-col md:mt-[clamp(2.375rem,7vh,5.625rem)] md:flex-row md:items-end md:justify-between md:gap-8">

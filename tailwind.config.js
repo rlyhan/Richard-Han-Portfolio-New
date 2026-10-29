@@ -13,13 +13,17 @@ const WELL_RGB = "42, 36, 30";
 const PAPER = {
   // The page's ground, and the caption plate each project card's title sits on.
   cream: { light: "#F5F3EE", dark: "#000000" },
-  // The hero's ground, under its dots: neutral grey where every other page is
-  // paper, so the front page reads as its own surface.
+  // The ground under the dots each page opens on: neutral grey where the
+  // reading below is paper, so the opening reads as its own surface.
   fog: { light: "#D9D9D6", dark: "#121212" },
-  // The hero's dots: lighter than fog in both schemes. In light that is cream,
-  // the paper every other page is laid on; in dark, cream is black and would
-  // sink into the grey, so the dots lift off it instead.
+  // The dots on fog: lighter than it in both schemes. In light that is cream,
+  // the paper the rest of the site is laid on; in dark, cream is black and
+  // would sink into the grey, so the dots lift off it instead.
   dot: { light: "#F5F3EE", dark: "#3A3A3A" },
+  // What follows a dotted opening — the Projects list, a write-up's article —
+  // and the footer under it: fog a step lighter, so the dots end without the
+  // jump to cream.
+  mist: { light: "#E8E8E5", dark: "#0A0A0A" },
   // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
   // reads as its own field.
   shell: { light: "#E8E4DD", dark: "#0F0E0B" },
@@ -31,7 +35,7 @@ const PAPER = {
   //
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
-  // the hero's fog. This holds 4.9:1 on fog, 5.5:1 on shell and 6.3:1 on cream
+  // fog. This holds 4.9:1 on fog, 5.5:1 on shell and 6.3:1 on cream
   // in light, 6.4:1, 6.6:1 and 7.2:1 in dark.
   ash: { light: "#595959", dark: "#9C968C" },
   // The hero spread's hairlines: the rule under the work panel's heading, the
@@ -44,10 +48,10 @@ const PAPER = {
   // The Contact page's title panel and its email button: the page turned inside
   // out, with cream type on it — 18.9:1 in light, 17.2:1 in dark.
   panel: { light: "#000000", dark: "#ECE8E1" },
-  // A write-up's article and the footer under it: a step lighter than the page
-  // in both schemes, a sheet laid on it. Warm rather than pure white in light,
-  // which would read cold and make the cream around it look dingy.
-  sheet: { light: "#FCFBF8", dark: "#0F0E0B" },
+  // A write-up's tags, set on its dotted opening: lighter than fog in both
+  // schemes, where shell and cream are lighter in light but darker in dark.
+  // Warm rather than pure white in light, which would read cold beside cream.
+  tag: { light: "#FCFBF8", dark: "#24221F" },
 };
 
 const paperVars = (scheme) =>
@@ -91,7 +95,7 @@ export default {
         chalk: PAPER.cream.light,
       },
       backgroundImage: {
-        // The hero's dot grid, tiled by the size set beside it.
+        // The dot grid on fog, tiled by the size set beside it.
         dots: "radial-gradient(circle, var(--dot) 1px, transparent 1.5px)",
         // The ground the Projects page mats each shot on: `well`, vignetted.
         //

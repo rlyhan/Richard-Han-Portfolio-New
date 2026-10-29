@@ -59,7 +59,7 @@ const PAGES = [
     path: "/projects",
     sectionId: "projects",
     title: "Projects — Richard Han",
-    ground: "bg-cream",
+    ground: "bg-mist",
     navLabel: "Projects",
     load: () => import("../pages/ProjectsPage.jsx"),
   },
@@ -105,9 +105,7 @@ const PROJECT_PAGES = PROJECTS.map(({ id, name }) => ({
   path: projectPathOf(id),
   sectionId: projectSectionId(id),
   title: `${name} — Richard Han`,
-  ground: "bg-cream",
-  // The write-up ends on its article's sheet, so the footer continues it.
-  footerOnSheet: true,
+  ground: "bg-mist",
   load: () => import("../pages/ProjectPage.jsx"),
 }));
 
