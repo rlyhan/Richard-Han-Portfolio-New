@@ -48,12 +48,13 @@ const PAPER = {
   // cells share seams, so a heavier line would draw three boxes instead of one
   // grid. 1.6:1 on cream in light, 1.5:1 in dark.
   grid: { light: "#C4C4C0", dark: "#45403A" },
-  // The Contact page's title panel and its email button: dark in both schemes,
-  // with chalk type on it — 12.7:1 in light, 17.2:1 in dark.
-  panel: { light: "#2E2E2E", dark: "#141414" },
-  // The title panel's dots, in dark only as fog's are: beige rather than fog's
-  // grey, the one place they carry colour, on a panel dark enough to hold it.
-  "panel-dot": { light: "transparent", dark: "#766B52" },
+  // The Contact page's title panel and its email button: the same near-black
+  // in both schemes, with chalk type on it — 17.2:1.
+  panel: { light: "#141414", dark: "#141414" },
+  // The title panel's dots: beige rather than fog's grey, the one place they
+  // carry colour, and in both schemes where fog's are dark only — the panel
+  // doesn't change with the scheme, so neither do they.
+  "panel-dot": { light: "#766B52", dark: "#766B52" },
   // The hero's work heading: near-black in both schemes, so the bar heading
   // the shots is the darkest plate on the hero.
   slate: { light: "#1C1C1C", dark: "#151515" },
