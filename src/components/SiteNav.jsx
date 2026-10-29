@@ -21,7 +21,8 @@ const SiteNav = () => {
     // and the router is what knows: the hero carries the links in its own layout
     // and Contact draws a copy of this bar, and a page that does neither has
     // nothing to be drawn twice over.
-    const { navFloorSelector, pageDrawsNav, layoutKey, swap } = useRouter();
+    const { navFloorSelector, pageDrawsNav, navGround, layoutKey, swap } =
+        useRouter();
 
     // The direction owns every moment after the first, and arriving is the first:
     // a page opens with the bar up, whichever page was left and however. Reading
@@ -70,7 +71,11 @@ const SiteNav = () => {
             // fallback for browsers without inert.
             inert={!isUp}
         >
-            <NavMenu items={navItems} ariaLabel="Site navigation" />
+            <NavMenu
+                items={navItems}
+                ariaLabel="Site navigation"
+                ground={navGround}
+            />
         </div>
     );
 };

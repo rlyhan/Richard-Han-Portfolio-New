@@ -25,8 +25,8 @@ const PAPER = {
   // warm grey, so they read as cream.
   dot: { light: "transparent", dark: "#6B665D" },
   // What follows a dotted opening — the Projects list, a write-up's article —
-  // all of About and Contact's text, and the footer under each: fog a step
-  // lighter, so the dots end without the jump to cream.
+  // Contact's text, and the footer under each: fog a step lighter, so the dots
+  // end without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#1A1A1A" },
   // The pinned nav bar: a half-step off the ground, so it reads as its own
   // field — darker than mist in light, lighter in dark.
@@ -60,6 +60,13 @@ const PAPER = {
   // the ground Contact does.
   stage: { light: "#D9D9D6", dark: "#141414" },
   "stage-dot": { light: "transparent", dark: "#766B52" },
+  // The pinned bar over those pages and About: shell in light, and in dark the
+  // mist Contact's own bar sits on, so every page below the hero is footed by
+  // Contact's bar.
+  bar: { light: "#DEDEDB", dark: "#1A1A1A" },
+  // About's ground: mist in light, and in dark Contact's near-black, a step
+  // under the bar, where mist would leave the bar level with the page.
+  deep: { light: "#E8E8E5", dark: "#141414" },
   // The hero's work heading: near-black in both schemes, so the bar heading
   // the shots is the darkest plate on the hero.
   slate: { light: "#1C1C1C", dark: "#151515" },
