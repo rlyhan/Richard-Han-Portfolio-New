@@ -117,7 +117,7 @@ const HomePage = () => {
       <PageSection
         id="home"
         contained={false}
-        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-cream text-ink"
+        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-fog bg-dots bg-size-[1.25rem_1.25rem] text-ink"
       >
         <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
           <HomeIntro

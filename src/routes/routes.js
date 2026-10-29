@@ -26,7 +26,7 @@ const PAGES = [
     // arriving, so a page never opens over the ground of the one before it. The
     // sections paint their own besides this; it answers for the frame around
     // them and for the gap before the first paint.
-    ground: "bg-cream",
+    ground: "bg-fog",
     // The hero draws the site's nav bar inside its own layout, so the pinned
     // copy has to stay down while this page holds the screen, or the same
     // furniture is drawn twice — see SiteNav, which takes the page after this one

@@ -11,8 +11,15 @@ const WELL_RGB = "42, 36, 30";
 // same name, which the plugin at the foot of this file sets for each scheme: the
 // OS's, unless the masthead's toggle has put a `data-theme` on <html>.
 const PAPER = {
-  // The hero's ground, and the caption plate each project card's title sits on.
+  // The page's ground, and the caption plate each project card's title sits on.
   cream: { light: "#F5F3EE", dark: "#000000" },
+  // The hero's ground, under its dots: neutral grey where every other page is
+  // paper, so the front page reads as its own surface.
+  fog: { light: "#D9D9D6", dark: "#121212" },
+  // The hero's dots: lighter than fog in both schemes. In light that is cream,
+  // the paper every other page is laid on; in dark, cream is black and would
+  // sink into the grey, so the dots lift off it instead.
+  dot: { light: "#F5F3EE", dark: "#3A3A3A" },
   // The bar at the foot of the hero: a half-step off the ground, so the nav reads
   // as its own field without a second line drawn under the spread.
   shell: { light: "#E8E4DD", dark: "#0F0E0B" },
@@ -22,11 +29,11 @@ const PAPER = {
   // Muted hero copy: the intro's byline and closing note, each card's number and
   // category, the spread's counter.
   //
-  // A step darker than the design's #787878, which lands at 4.0:1 on cream and
-  // 3.9:1 on shell — every place this is used is label-sized, so it has to clear
-  // AA as normal text. This holds 5.2:1 on cream and 4.5:1 on shell in light,
-  // 7.2:1 and 6.6:1 in dark.
-  ash: { light: "#666666", dark: "#9C968C" },
+  // Darker than the design's #787878 — every place this is used is label-sized,
+  // so it has to clear AA as normal text, and the darkest ground it sits on is
+  // the hero's fog. This holds 4.9:1 on fog, 5.5:1 on shell and 6.3:1 on cream
+  // in light, 6.4:1, 6.6:1 and 7.2:1 in dark.
+  ash: { light: "#595959", dark: "#9C968C" },
   // The hero spread's hairlines: the rule under the work panel's heading, the
   // seam between the two halves, the grid the cards sit in and the frame around
   // each caption plate. Light enough to read as a drawn edge on cream rather than
@@ -75,6 +82,8 @@ export default {
         chalk: PAPER.cream.light,
       },
       backgroundImage: {
+        // The hero's dot grid, tiled by the size set beside it.
+        dots: "radial-gradient(circle, var(--dot) 1px, transparent 1.5px)",
         // The ground the Projects page mats each shot on: `well`, vignetted.
         //
         // Flat `well` is right for the hero's cells, which are small enough that one
