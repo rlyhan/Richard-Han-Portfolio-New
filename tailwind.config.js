@@ -69,7 +69,7 @@ export default {
       // How far a hero card's caption plate stands in from the card's edges,
       // and the padding under the plate's last line. The hero's links share a
       // baseline with that line, so their padding is worked out from both —
-      // see HomeIntro.
+      // see HomeNav.
       spacing: {
         plate: "0.875rem",
         "plate-foot": "0.75rem",

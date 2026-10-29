@@ -83,7 +83,7 @@ const HomeWork = ({ setGridRef }) => {
   return (
     <section
       aria-label={FEATURED_LABEL}
-      className={`h-[35svh] min-h-[7.5rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:h-full md:min-h-0 md:border-t-0 md:border-l`}
+      className={`h-[35svh] min-h-[7.5rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:col-start-2 md:row-span-2 md:row-start-1 md:h-full md:min-h-0 md:border-t-0 md:border-l`}
     >
       <div ref={setGridRef} className="h-full">
         {isMdUp ? <WorkGrid /> : <WorkColumns />}

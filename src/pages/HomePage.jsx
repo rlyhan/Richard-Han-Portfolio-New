@@ -2,6 +2,7 @@ import { useCallback, useRef } from "react";
 import PageSection from "../components/layout/PageSection";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
 import HomeIntro from "../components/home/HomeIntro";
+import HomeNav from "../components/home/HomeNav";
 import HomeWork from "../components/home/HomeWork";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
@@ -62,8 +63,8 @@ const HomePage = () => {
     displayLineRefs.current[WORK_LINE_INDEX] = el;
   }, []);
   // The outro sinks in the order it's collected: the byline atop the intro panel
-  // first, then the links at its foot. Three is the ceiling here for the same
-  // reason six is above — the last has to land inside the runway.
+  // first, then the links at the hero's foot. Three is the ceiling here for the
+  // same reason six is above — the last has to land inside the runway.
   const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
   }, []);
@@ -112,15 +113,15 @@ const HomePage = () => {
         contained={false}
         additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-fog bg-dots bg-size-[1.25rem_1.25rem] text-ink"
       >
-        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
+        <div className="flex min-h-0 flex-1 flex-col md:grid md:grid-rows-[minmax(0,1fr)_auto] md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
           <HomeIntro
             headingRef={headingRef}
             setLineRef={setDisplayLine}
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}
-            setNavRef={setNavRef}
           />
           <HomeWork setGridRef={setWorkRef} />
+          <HomeNav setNavRef={setNavRef} />
         </div>
 
         <ScrollCue

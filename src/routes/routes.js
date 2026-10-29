@@ -27,8 +27,8 @@ const PAGES = [
     // sections paint their own besides this; it answers for the frame around
     // them and for the gap before the first paint.
     ground: "bg-fog",
-    // The hero carries the site's links in its own layout, at the foot of its
-    // intro, so the pinned bar has to stay down while this page holds the
+    // The hero carries the site's links in its own layout, at its bottom
+    // left, so the pinned bar has to stay down while this page holds the
     // screen, or the same links are drawn twice — see SiteNav, which takes the
     // page after this one as the floor.
     hasOwnNav: true,
