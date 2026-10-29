@@ -63,7 +63,7 @@ const WorkGrid = () => (
 const WorkColumns = () => (
   <div className="grid h-full grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
     <h2
-      className={`${HEADING_CLASS} flex items-center border-r ${GRID_BORDER_COLOR} bg-shell p-3 leading-tight`}
+      className={`${HEADING_CLASS} flex items-center border-r ${GRID_BORDER_COLOR} bg-cream p-3 leading-tight`}
     >
       {FEATURED_LABEL}
     </h2>

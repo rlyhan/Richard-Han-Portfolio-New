@@ -51,10 +51,9 @@ const PAPER = {
   panel: { light: "#2E2E2E", dark: "#2C2C2C" },
   // The title panel's dots: a step lighter than the panel.
   "panel-dot": { light: "#474747", dark: "#444444" },
-  // Fills set on fog or mist — a write-up's tags, Contact's secondary
-  // channels: lighter than both in both schemes, where shell and cream are
-  // lighter in light but darker in dark. Warm rather than pure white in light,
-  // which would read cold beside cream.
+  // A write-up's tags, set on its dotted opening: lighter than fog in both
+  // schemes, where shell and cream are lighter in light but darker in dark.
+  // Warm rather than pure white in light, which would read cold beside cream.
   tag: { light: "#FCFBF8", dark: "#34312D" },
   // The well each project shot is matted on. The one dark ground in the
   // hero, and the reason the shots read as objects on a page rather than

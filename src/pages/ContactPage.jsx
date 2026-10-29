@@ -31,8 +31,7 @@ const CHANNEL_CLASS =
 const CHANNEL_PRIMARY_CLASS =
   "border-panel bg-panel text-chalk hover:border-panel/85 hover:bg-panel/85";
 
-const CHANNEL_SECONDARY_CLASS =
-  "border-grid bg-tag hover:border-ink hover:bg-shell";
+const CHANNEL_SECONDARY_CLASS = "border-grid hover:border-ink hover:bg-shell";
 
 // A channel that leaves the site, read off the href rather than flagged in the data.
 const isExternal = (href) => href.startsWith("http");
@@ -98,7 +97,7 @@ const ContactPage = () => {
               className="size-[3.25rem] shrink-0 rounded-full border border-grid object-cover md:size-16 lg:size-[4.5rem]"
             />
 
-            <p className="max-w-[32rem] text-sm leading-normal text-ash md:text-base lg:text-lg">
+            <p className="max-w-[32rem] text-sm leading-normal text-ink md:text-base lg:text-lg">
               {CONTACT_NOTE}
             </p>
           </div>
