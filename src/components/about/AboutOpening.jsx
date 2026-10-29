@@ -62,11 +62,11 @@ const AboutOpening = ({ headingRef }) => (
     <section
       aria-labelledby="about-heading"
       className={cn(
-        "row-start-3 flex flex-col justify-center gap-4 py-5 md:col-start-2 md:row-start-3 md:pt-0 md:pb-7 lg:pb-9",
+        "row-start-3 flex flex-col justify-center gap-4 pt-8 pb-5 md:col-start-2 md:row-start-3 md:pt-6 md:pb-7 lg:pb-9",
         GUTTER_CLASS,
       )}
     >
-      <div className="grid max-w-[32rem] gap-4 text-[0.9375rem] leading-[1.65] text-ink md:text-base">
+      <div className="grid max-w-[32rem] gap-4 text-[0.9375rem] leading-[1.65] font-medium text-ink md:text-base">
         {ABOUT_BIO.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
