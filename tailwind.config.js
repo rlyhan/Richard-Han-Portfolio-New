@@ -67,9 +67,10 @@ const PAPER = {
   // About's ground: mist in light, and in dark Contact's near-black, a step
   // under the bar, where mist would leave the bar level with the page.
   deep: { light: "#E8E8E5", dark: "#141414" },
-  // The hero's work heading: near-black in both schemes, so the bar heading
-  // the shots is the darkest plate on the hero.
-  slate: { light: "#1C1C1C", dark: "#151515" },
+  // The hero's work heading: dark in both schemes, so the bar heading the
+  // shots is the darkest plate on the hero — in light no darker than the
+  // name's ink, so the bar never outweighs the name. Chalk holds 12.8:1 on it.
+  slate: { light: "#2D2D2D", dark: "#151515" },
   // Each project card's caption plate: cream in light, and in dark the work
   // heading's near-black, so the shots are headed and captioned alike there.
   // The plate's ink and ash hold 15.0:1 and 6.2:1 on it.
