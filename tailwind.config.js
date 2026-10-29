@@ -7,13 +7,16 @@ const WELL = "#2A241E";
 const WELL_RGB = "42, 36, 30";
 
 // The paper tones, each with its value in both schemes. The dark scheme inverts
-// these and leaves the frame and the scrim alone: they mat the shots, which look
+// these, all but cream, and leaves the frame and the scrim alone: they mat the shots, which look
 // the same in either scheme. The tokens read through a variable of the
 // same name, which the plugin at the foot of this file sets for each scheme: the
 // OS's, unless the masthead's toggle has put a `data-theme` on <html>.
 const PAPER = {
-  // The page's ground, and the caption plate each project card's title sits on.
-  cream: { light: "#F5F3EE", dark: "#141414" },
+  // The plates laid on the ground: each project card's caption, the hero's
+  // work heading, a write-up's tags, About's icons and interest chips. A step
+  // lighter than fog and mist in both schemes, not inverted — a near-black
+  // plate on dark grey read as a hole, not a plate.
+  cream: { light: "#F5F3EE", dark: "#252524" },
   // The ground each page opens on: neutral grey where the reading below is
   // mist, so the opening reads as its own surface.
   fog: { light: "#D9D9D6", dark: "#222222" },
@@ -28,7 +31,7 @@ const PAPER = {
   // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
   // reads as its own field.
   shell: { light: "#E8E4DD", dark: "#201F1C" },
-  // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 15.1:1 and 13.5:1
+  // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 12.6:1 and 13.5:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
   // Muted hero copy: the intro's byline and closing note, each card's number and
@@ -37,13 +40,13 @@ const PAPER = {
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
   // fog. This holds 4.9:1 on fog, 5.5:1 on shell and 6.3:1 on cream
-  // in light, 5.4:1, 5.6:1 and 6.3:1 in dark.
+  // in light, 5.4:1, 5.6:1 and 5.2:1 in dark.
   ash: { light: "#595959", dark: "#9C968C" },
   // The hero spread's hairlines: the rule under the work panel's heading, the
   // seam between the two halves, the grid the cards sit in and the frame around
   // each caption plate. Light enough to read as a drawn edge on cream rather than
   // as an outline around each cell — the cells share seams, so a heavier line
-  // would draw three boxes instead of one grid. 1.5:1 on cream in light, 1.8:1 in
+  // would draw three boxes instead of one grid. 1.5:1 on cream in light, 1.5:1 in
   // dark.
   grid: { light: "#C9C2B6", dark: "#45403A" },
   // The Contact page's title panel and its email button: dark in both schemes,
@@ -52,10 +55,6 @@ const PAPER = {
   // The title panel's dots, in dark only as fog's are: a step lighter than
   // the panel.
   "panel-dot": { light: "transparent", dark: "#444444" },
-  // A write-up's tags, set on its dotted opening: lighter than fog in both
-  // schemes, where shell and cream are lighter in light but darker in dark.
-  // Warm rather than pure white in light, which would read cold beside cream.
-  tag: { light: "#FCFBF8", dark: "#34312D" },
   // The well each project shot is matted on. The one dark ground in the
   // hero, and the reason the shots read as objects on a page rather than
   // as panels of their own: warm, so it sits with the paper tones above
@@ -95,8 +94,8 @@ export default {
         ...Object.fromEntries(
           Object.keys(PAPER).map((name) => [name, `var(--${name})`]),
         ),
-        // Cream that never inverts: type and dots set on the well, the scrim or
-        // a shot, which stay dark in both schemes.
+        // Cream that never inverts: type and dots set on a shot, the scrim or
+        // Contact's panel, which stay dark in both schemes.
         chalk: PAPER.cream.light,
       },
       backgroundImage: {
