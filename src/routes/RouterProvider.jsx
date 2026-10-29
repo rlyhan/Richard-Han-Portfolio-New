@@ -570,10 +570,10 @@ const RouterProvider = ({ children }) => {
       navigate,
       prefetch,
       registerAdvance,
-      // Whether this page draws the nav bar in its own layout, and so whether the
-      // pinned copy waits for a floor at all rather than being free from the top.
+      // Whether this page carries the nav in its own layout, and so whether the
+      // pinned bar waits for a floor at all rather than being free from the top.
       pageDrawsNav: Boolean(route?.hasOwnNav),
-      footerOnSheet: Boolean(route?.footerOnSheet),
+      navGround: route?.navGround,
       // The floor that pinned copy answers for: it stays down until the page below
       // has taken over. Read as a selector so it's measured, not remembered.
       //
@@ -581,7 +581,7 @@ const RouterProvider = ({ children }) => {
       //   bar has to stay off the hero whether the way on is a scroll or a
       //   click. Until that page is in the document the selector matches
       //   nothing, which useRevealOnScrollUp reads as a floor below
-      //   everything, so the bar never comes up over the hero's own copy.
+      //   everything, so the bar never comes up over the hero's own links.
       // - null with nothing below at all, which is Contact: it draws the bar
       //   itself and is the last page, so there's no floor to arrive at and it
       //   stays down the whole way — the scroll off its foot is the footer

@@ -6,6 +6,7 @@ import ProjectMasthead from "../components/projects/ProjectMasthead";
 import MattedShot from "../components/common/MattedShot";
 import {
   ARTICLE_ROW_CLASS,
+  DOT_GRID_CLASS,
   EYEBROW_LABEL_CLASS,
   IMAGE_FALLBACK_CLASS,
 } from "../components/layout/sharedClasses";
@@ -47,7 +48,10 @@ const ProjectPage = () => {
     <PageSection
       id={projectSectionId(id)}
       contained={false}
-      additionalClasses="flex flex-col bg-cream font-epilogue text-ink"
+      additionalClasses={cn(
+        "flex flex-col bg-stage bg-stage-dots font-epilogue text-ink",
+        DOT_GRID_CLASS,
+      )}
     >
       <ProjectMasthead project={project} headingRef={headingRef} />
 
@@ -78,7 +82,7 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <article className="flex flex-col bg-sheet px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]">
+      <article className="flex flex-col bg-mist px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]">
         <div className={ARTICLE_ROW_CLASS}>
           <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
 

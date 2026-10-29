@@ -1,22 +1,20 @@
 import { useCallback, useRef } from "react";
+import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
+import { DOTTED_GROUND_CLASS } from "../components/layout/sharedClasses";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
 import HomeIntro from "../components/home/HomeIntro";
+import HomeNav from "../components/home/HomeNav";
 import HomeWork from "../components/home/HomeWork";
-import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
-import { useNavItems } from "../hooks/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 import { useSplitReveal } from "../hooks/useSplitReveal";
 
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
 const NEAR_TOP_THRESHOLD = 40;
-
-const CUE_POSITION_CLASS =
-  "top-[1.35rem] justify-center md:top-auto md:bottom-6";
 
 // What the hero's exit throws off screen, in order — the stagger is indexed off
 // this list, so the spread runs down the left column and then takes the work
@@ -64,16 +62,13 @@ const HomePage = () => {
     displayLineRefs.current[WORK_LINE_INDEX] = el;
   }, []);
   // The outro sinks in the order it's collected: the byline atop the intro panel
-  // first, then the name and links at the foot of the hero. Three is the ceiling
-  // here for the same reason six is above — the last has to land inside the runway.
+  // first, then the links at the hero's foot. Three is the ceiling here for the
+  // same reason six is above — the last has to land inside the runway.
   const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
   }, []);
-  const setNameRef = useCallback((el) => {
-    outroLineRefs.current[1] = el;
-  }, []);
   const setNavRef = useCallback((el) => {
-    outroLineRefs.current[2] = el;
+    outroLineRefs.current[1] = el;
   }, []);
 
   const { scrollToNext, isScrollingToNext } = useHeroHandoff({
@@ -85,7 +80,7 @@ const HomePage = () => {
   });
 
   // The scroll this page leaves by, handed to the router so a nav item asking for
-  // the page below — from either copy of the bar — runs this scripted scroll
+  // the page below — from the hero's links or the pinned bar — runs this scripted scroll
   // instead of a jump. Every fade scrubbed off the way plays as it would have, and
   // a gesture mid-flight hands control straight back.
   useAdvance(scrollToNext);
@@ -103,8 +98,6 @@ const HomePage = () => {
     [navigate, onwardPath],
   );
 
-  const navItems = useNavItems();
-
   // Any scroll away from the hero retires the cue, including the one it starts
   // itself — but only where there's a runway to scroll along. Without one the
   // hero is the whole page, and the only scroll under it is the footer's slack,
@@ -117,9 +110,12 @@ const HomePage = () => {
       <PageSection
         id="home"
         contained={false}
-        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-cream text-ink"
+        additionalClasses={cn(
+          "sticky top-0 flex h-svh flex-col overflow-x-clip text-ink",
+          DOTTED_GROUND_CLASS,
+        )}
       >
-        <div className="flex min-h-0 flex-1 flex-col md:grid md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
+        <div className="flex min-h-0 flex-1 flex-col md:grid md:grid-rows-[minmax(0,1fr)_auto] md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
           <HomeIntro
             headingRef={headingRef}
             setLineRef={setDisplayLine}
@@ -127,20 +123,19 @@ const HomePage = () => {
             setToplineRef={setToplineRef}
           />
           <HomeWork setGridRef={setWorkRef} />
+          <HomeNav
+            setNavRef={setNavRef}
+            cue={
+              <ScrollCue
+                onClick={goToNextPage}
+                visible={isCueVisible}
+                label={
+                  nextPath ? "Scroll to the About page" : "Go to the About page"
+                }
+              />
+            }
+          />
         </div>
-
-        <NavMenu
-          items={navItems}
-          setNameRef={setNameRef}
-          setNavRef={setNavRef}
-        />
-
-        <ScrollCue
-          onClick={goToNextPage}
-          visible={isCueVisible}
-          label={nextPath ? "Scroll to the About page" : "Go to the About page"}
-          positionClassName={CUE_POSITION_CLASS}
-        />
       </PageSection>
 
       {nextPath && (

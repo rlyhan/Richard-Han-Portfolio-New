@@ -45,9 +45,9 @@ export function useNavLink(to) {
 }
 
 // The nav's items, built off the route table so the bar can't list a page the site
-// hasn't got — or put them in an order the scroll doesn't run in. Both copies of the
-// bar are built from this: the hero's own, and the one pinned to the viewport below
-// it (see SiteNav).
+// hasn't got — or put them in an order the scroll doesn't run in. Every list of the
+// site's pages is built from this: the hero's links, Contact's bar, and the bar
+// pinned to the viewport (see SiteNav).
 export function useNavItems() {
     const { path, navigate, prefetch } = useRouter()
 

@@ -9,7 +9,7 @@ import { EYEBROW_LABEL_CLASS } from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
 
 const META_CLASS =
-  "inline-flex items-center gap-2 border border-grid bg-shell px-3.5 py-[0.5625rem] font-epilogue text-[0.6875rem] leading-none font-medium tracking-[0.03em] text-ink uppercase";
+  "inline-flex items-center gap-2 border border-grid bg-cream px-3.5 py-[0.5625rem] font-epilogue text-[0.6875rem] leading-none font-medium tracking-[0.03em] text-ink uppercase";
 
 const META_LINK_CLASS =
   "transition-colors duration-200 hover:border-ash focus-visible:outline-ink motion-reduce:transition-none";

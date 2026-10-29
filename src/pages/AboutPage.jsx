@@ -35,7 +35,7 @@ const AboutPage = () => {
     <PageSection
       id="about"
       contained={false}
-      additionalClasses="relative z-10 flex flex-col bg-cream font-epilogue text-ink"
+      additionalClasses="relative z-10 flex flex-col bg-deep font-epilogue text-ink"
     >
       <AboutOpening headingRef={headingRef} />
 

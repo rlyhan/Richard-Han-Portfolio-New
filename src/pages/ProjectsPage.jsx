@@ -99,7 +99,10 @@ const ProjectsPage = () => {
         headingRef={headingRef}
       />
 
-      <section aria-label="Project list" className="border-t border-grid">
+      <section
+        aria-label="Project list"
+        className="border-t border-grid bg-mist"
+      >
         <ProjectsToolbar
           filters={FILTERS}
           activeFilter={activeFilter}

@@ -13,7 +13,7 @@ const AboutInterests = () => (
         key={id}
         className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-[1.125rem] border-t border-grid py-[1.375rem] first:border-t-0 first:pt-0"
       >
-        <span className="inline-flex size-[2.375rem] shrink-0 items-center justify-center border border-grid bg-shell text-ink md:size-[2.625rem]">
+        <span className="inline-flex size-[2.375rem] shrink-0 items-center justify-center border border-grid bg-cream text-ink md:size-[2.625rem]">
           <IconRenderer icon={icon} className="size-6" />
         </span>
         <div>
@@ -35,7 +35,7 @@ const AboutInterests = () => (
       {INTEREST_TAGS.map(({ id, icon, label }) => (
         <li
           key={id}
-          className="inline-flex items-center gap-[0.5625rem] border border-grid bg-shell px-[0.9375rem] py-2.5 font-urbanist text-sm leading-none font-semibold text-ink"
+          className="inline-flex items-center gap-[0.5625rem] border border-grid bg-cream px-[0.9375rem] py-2.5 font-urbanist text-sm leading-none font-semibold text-ink"
         >
           <IconRenderer icon={icon} className="size-4 text-ash" />
           {label}

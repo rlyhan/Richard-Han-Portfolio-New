@@ -2,6 +2,7 @@ import { FEATURED_LABEL, FEATURED_PROJECTS } from "../../data/home.data";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import HomeProjectCard from "./HomeProjectCard";
 import HomeProjectCarousel from "./HomeProjectCarousel";
+import { EYEBROW_LABEL_TYPE_CLASS } from "../layout/sharedClasses";
 
 export const GRID_BORDER_COLOR = "border-grid";
 
@@ -22,28 +23,28 @@ const CELLS = [
 export const EYEBROW_CLASS =
   "font-epilogue font-medium uppercase leading-none tracking-[0.18em]";
 
-const HEADING_CLASS = "font-urbanist text-base leading-none font-bold text-ink";
-
-// The masonry spread: a heading rule over three cells drawn as one grid.
+// The masonry spread: a heading bar over three cells drawn as one grid.
 //
 // The counter beside the heading states the depth of the set, which a
 // three-card spread can't say for itself — and is aria-hidden, since the
 // numbering it counts is already on each card, where read aloud it's noise.
 const WorkGrid = () => (
   <div className="grid h-full min-h-0 grid-rows-[3.375rem_minmax(0,1fr)]">
-    <header className="flex items-center justify-between gap-6 px-[clamp(1rem,1.6vw,1.75rem)]">
-      <h2 className={HEADING_CLASS}>{FEATURED_LABEL}</h2>
+    <header className="flex items-center justify-between gap-6 bg-slate px-[clamp(1rem,1.6vw,1.75rem)]">
+      <h2 className={`${EYEBROW_LABEL_TYPE_CLASS} text-chalk`}>
+        {FEATURED_LABEL}
+      </h2>
 
       <p
         aria-hidden="true"
-        className={`${EYEBROW_CLASS} text-[0.6875rem] text-ash`}
+        className={`${EYEBROW_CLASS} text-[0.6875rem] text-chalk/60`}
       >
         01 — {String(FEATURED_PROJECTS.length).padStart(2, "0")}
       </p>
     </header>
 
     <div
-      className={`grid min-h-0 grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] grid-rows-2 border-t ${GRID_BORDER_COLOR}`}
+      className="grid min-h-0 grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] grid-rows-2"
     >
       {FEATURED_PROJECTS.map((project, i) => (
         <HomeProjectCard
@@ -63,7 +64,7 @@ const WorkGrid = () => (
 const WorkColumns = () => (
   <div className="grid h-full grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
     <h2
-      className={`${HEADING_CLASS} flex items-center border-r ${GRID_BORDER_COLOR} bg-shell p-3 leading-tight`}
+      className={`${EYEBROW_LABEL_TYPE_CLASS} flex items-center bg-slate p-3 text-chalk`}
     >
       {FEATURED_LABEL}
     </h2>
@@ -83,7 +84,7 @@ const HomeWork = ({ setGridRef }) => {
   return (
     <section
       aria-label={FEATURED_LABEL}
-      className={`h-[35svh] min-h-[7.5rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:h-full md:min-h-0 md:border-t-0 md:border-l`}
+      className={`h-[35svh] min-h-[7.5rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:col-start-2 md:row-span-2 md:row-start-1 md:h-full md:min-h-0 md:border-t-0 md:border-l`}
     >
       <div ref={setGridRef} className="h-full">
         {isMdUp ? <WorkGrid /> : <WorkColumns />}

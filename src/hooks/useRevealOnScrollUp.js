@@ -21,44 +21,42 @@ const JUMP_SHARE = 1
 //   position where its top edge reaches the viewport's top. Gates arrival only —
 //   above the floor the bar won't slide in, but one already up stays up.
 //
-// - `pageDrawsBar`: whether the page already has its own copy, and so whether a
-//   floor exists at all. No copy, no floor (not zero — that would read a short
-//   page's own top as past it). A copy takes its floor from `floorSelector`; no
-//   match, or no selector, both read as a floor below everything.
+// - `pageDrawsBar`: whether the page already carries the links itself, and so
+//   whether a floor exists at all. No links of its own, no floor (not zero —
+//   that would read a short page's own top as past it). A page with its own
+//   takes its floor from `floorSelector`; no match, or no selector, both read
+//   as a floor below everything.
 //
-// - `isAboveFloor`: the hero's join. It carries its own copy of the bar, so a
-//   viewer scrolling back up already has one in hand — losing it there for the
-//   hero's copy to fade in behind would be a flicker. Above the floor the hero's
-//   bar already sits underneath, so the pinned one can leave at once instead of
-//   sliding out from under an identical twin.
+// - `isAboveFloor`: the hero's join. It carries the links itself, so a viewer
+//   scrolling back up already has them in hand. Above the floor the hero's
+//   links are on screen, so the pinned bar can leave at once instead of
+//   sliding out over them.
 //
 // - `measureKey`: re-reads the floor, and resets the bar's opening state for a
 //   new page. Pages open with the bar UP, so there's a way off it before any
-//   scroll happens — unless the page draws its own copy, where a second visible
-//   bar would double the links in the accessibility tree, so it opens DOWN
+//   scroll happens — unless the page carries its own links, where a visible
+//   bar would double them in the accessibility tree, so it opens DOWN
 //   instead (see SiteNav, same flag). The direction rule takes over from there.
 export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
     const opensRevealed = !pageDrawsBar
 
-    const [isRevealed, setIsRevealed] = useState(opensRevealed)
-    const [isAboveFloor, setIsAboveFloor] = useState(true)
-
-    // The page the bar is currently standing on. This bar outlives every page change
-    // — that is the point of it living outside the pages — so there is no unmount to
-    // return it to its opening state and it would otherwise inherit whatever the last
-    // page left it in: put away by reading down About, and so missing on the page
-    // About was left for.
+    // Whether the bar is up, kept with the page it was decided on. This bar outlives
+    // every page change — that is the point of it living outside the pages — so
+    // there is no unmount to return it to its opening state, and it would otherwise
+    // inherit whatever the last page left it in: brought up by a scroll back on
+    // About, and so standing over the hero About was left for.
     //
-    // Adjusted during render rather than in an effect, which is what React asks for
-    // when state has to follow a prop. An effect would paint the previous page's bar
-    // for a frame first, and this bar is animated — a frame of the wrong state here is
-    // a slide that starts from the wrong place.
-    const [barPage, setBarPage] = useState(measureKey)
-
-    if (barPage !== measureKey) {
-        setBarPage(measureKey)
-        setIsRevealed(opensRevealed)
-    }
+    // Read against the page rather than reset when the page changes: on any other
+    // page the decision is stale and the opening state stands, in the same render
+    // the page changes in. A reset written back during render didn't hold — the
+    // next update of this hook replayed the old page's value over it.
+    const [reveal, setReveal] = useState({
+        page: measureKey,
+        isRevealed: opensRevealed,
+    })
+    const isRevealed =
+        reveal.page === measureKey ? reveal.isRevealed : opensRevealed
+    const [isAboveFloor, setIsAboveFloor] = useState(true)
 
     useEffect(() => {
         let frame = null
@@ -107,9 +105,15 @@ export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
             if (Math.abs(delta) < SCROLL_DELTA) return
             lastY = y
 
-            setIsRevealed((wasRevealed) =>
-                delta < 0 ? wasRevealed || !aboveFloor : false,
-            )
+            setReveal((last) => {
+                const wasRevealed =
+                    last.page === measureKey ? last.isRevealed : opensRevealed
+
+                return {
+                    page: measureKey,
+                    isRevealed: delta < 0 ? wasRevealed || !aboveFloor : false,
+                }
+            })
         }
 
         const onScroll = () => {
@@ -133,7 +137,7 @@ export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
             window.removeEventListener("resize", onResize)
             if (frame !== null) cancelAnimationFrame(frame)
         }
-    }, [floorSelector, pageDrawsBar, measureKey])
+    }, [floorSelector, pageDrawsBar, opensRevealed, measureKey])
 
     return { isRevealed, isAboveFloor }
 }

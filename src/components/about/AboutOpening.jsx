@@ -25,7 +25,7 @@ const AboutOpening = ({ headingRef }) => (
   <div className="grid min-h-[calc(100svh-var(--nav-height,4rem))] grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
     <div
       className={cn(
-        "row-start-1 grid items-center border-b border-grid py-3 md:col-start-2 md:row-start-1 md:py-0",
+        "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
         GUTTER_CLASS,
       )}
     >
@@ -62,11 +62,11 @@ const AboutOpening = ({ headingRef }) => (
     <section
       aria-labelledby="about-heading"
       className={cn(
-        "row-start-3 flex flex-col justify-center gap-4 py-5 md:col-start-2 md:row-start-3 md:pt-0 md:pb-7 lg:pb-9",
+        "row-start-3 flex flex-col justify-center gap-4 pt-8 pb-5 md:col-start-2 md:row-start-3 md:pt-6 md:pb-7 lg:pb-9",
         GUTTER_CLASS,
       )}
     >
-      <div className="grid max-w-[32rem] gap-4 text-[0.9375rem] leading-[1.65] text-ink md:text-base">
+      <div className="grid max-w-[32rem] gap-4 text-[0.9375rem] leading-[1.65] font-medium text-ink md:text-base">
         {ABOUT_BIO.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
