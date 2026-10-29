@@ -17,12 +17,13 @@ const PAPER = {
   // in both schemes, not inverted — a near-black plate on dark grey read as a
   // hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#252524" },
-  // The ground each page opens on: neutral grey where the reading below is
-  // mist, so the opening reads as its own surface.
+  // The hero's ground, and in light every other opening's (see stage):
+  // neutral grey where the reading below is mist, so the opening reads as its
+  // own surface.
   fog: { light: "#D9D9D6", dark: "#222222" },
-  // The dots on fog, in dark only: there fog sits so close to mist that the
-  // dots are what sets the opening apart, where in light the step between the
-  // two greys does it alone. A warm grey, so they read as cream.
+  // The hero's dots, in dark only: there fog sits so close to mist that the
+  // dots are what gives it a surface, where in light the grey does it alone. A
+  // warm grey, so they read as cream.
   dot: { light: "transparent", dark: "#6B665D" },
   // What follows a dotted opening — the Projects list, a write-up's article —
   // all of About and Contact's text, and the footer under each: fog a step
@@ -55,6 +56,11 @@ const PAPER = {
   // carry colour, and in both schemes where fog's are dark only — the panel
   // doesn't change with the scheme, so neither do they.
   "panel-dot": { light: "#766B52", dark: "#766B52" },
+  // The Projects masthead and a write-up's opening: fog in light, and in dark
+  // Contact's panel and its beige dots, so every page below the hero opens on
+  // the ground Contact does.
+  stage: { light: "#D9D9D6", dark: "#141414" },
+  "stage-dot": { light: "transparent", dark: "#766B52" },
   // The hero's work heading: near-black in both schemes, so the bar heading
   // the shots is the darkest plate on the hero.
   slate: { light: "#1C1C1C", dark: "#151515" },
@@ -107,6 +113,8 @@ export default {
         dots: "radial-gradient(circle, var(--dot) 1px, transparent 1.5px)",
         "panel-dots":
           "radial-gradient(circle, var(--panel-dot) 1px, transparent 1.5px)",
+        "stage-dots":
+          "radial-gradient(circle, var(--stage-dot) 1px, transparent 1.5px)",
         // The ground the Projects page mats each shot on: `well`, vignetted.
         //
         // Flat `well` is right for the hero's cells, which are small enough that one

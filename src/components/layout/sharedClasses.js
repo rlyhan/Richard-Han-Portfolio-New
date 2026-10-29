@@ -23,8 +23,7 @@ export const NOTE_TEXT_CLASS =
 // it falls just past them.
 export const DOT_GRID_CLASS = "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
 
-// A page's opening: all of the one-screen hero, the masthead of Projects and
-// the write-ups. What follows it is on mist.
+// The hero's ground: fog, dotted in dark.
 export const DOTTED_GROUND_CLASS = `bg-fog bg-dots ${DOT_GRID_CLASS}`;
 
 // The link wrapping a project's shot, in both the hero's cards and the
