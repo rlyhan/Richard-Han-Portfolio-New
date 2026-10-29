@@ -34,14 +34,17 @@ const PAPER = {
   // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 12.6:1 and 13.5:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
-  // Muted hero copy: the intro's byline and closing note, each card's number and
-  // category, the spread's counter.
+  // Muted hero copy: the intro's byline, each card's number and category, the
+  // spread's counter.
   //
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
   // fog. This holds 4.9:1 on fog, 5.2:1 on shell and 6.5:1 on cream
   // in light, 5.4:1, 5.6:1 and 5.2:1 in dark.
   ash: { light: "#595959", dark: "#9C968C" },
+  // The intro's closing note: ash in dark, and in light as far off it as AA
+  // allows on fog — 4.5:1. A paragraph in ash read heavier than the name above it.
+  hush: { light: "#5F5F5F", dark: "#9C968C" },
   // The hero spread's hairlines: the seam between the two halves, the grid the
   // cards sit in and the frame around each caption plate. Light enough to read
   // as a drawn edge on cream rather than as an outline around each cell — the

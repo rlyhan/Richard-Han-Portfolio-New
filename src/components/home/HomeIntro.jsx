@@ -2,7 +2,6 @@ import cn from "classnames";
 import { INTRO_LINES, INTRO_NOTE } from "../../data/home.data";
 import Byline from "../layout/Byline";
 import SplitLine from "../common/SplitLine";
-import { NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 
 export const INTRO_GUTTER_CLASS =
   "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
@@ -45,10 +44,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
       </h1>
       <p
         ref={setNoteRef}
-        className={cn(
-          "mt-[clamp(0.95rem,3svh,1.6rem)] max-w-[25.5rem] font-epilogue md:mt-6",
-          NOTE_TEXT_CLASS,
-        )}
+        className="mt-[clamp(0.95rem,3svh,1.6rem)] max-w-[25.5rem] pr-8 font-epilogue text-[0.75rem] leading-[1.5] font-normal text-hush md:mt-6 md:pr-0 md:text-[0.9375rem] md:leading-[1.6] dark:font-medium"
       >
         {INTRO_NOTE}
       </p>

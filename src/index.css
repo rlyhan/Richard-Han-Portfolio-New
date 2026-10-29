@@ -81,6 +81,19 @@
        url(/fonts/epilogue-latin-500-normal.woff) format('woff');
 }
 
+/* The same two ways into dark as the palette's variables in tailwind.config.js:
+   the OS's scheme unless the toggle has said light, or the toggle saying dark. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) & {
+      @slot;
+    }
+  }
+  :root[data-theme="dark"] & {
+    @slot;
+  }
+}
+
 @layer base {
   :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
