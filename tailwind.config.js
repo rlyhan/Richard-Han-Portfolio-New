@@ -16,22 +16,22 @@ const PAPER = {
   // work heading, a write-up's tags, About's icons and interest chips. A step
   // lighter than fog and mist in both schemes, not inverted — a near-black
   // plate on dark grey read as a hole, not a plate.
-  cream: { light: "#F5F3EE", dark: "#252524" },
+  cream: { light: "#F7F7F5", dark: "#252524" },
   // The ground each page opens on: neutral grey where the reading below is
   // mist, so the opening reads as its own surface.
   fog: { light: "#D9D9D6", dark: "#222222" },
   // The dots on fog, in dark only: there fog sits so close to mist that the
   // dots are what sets the opening apart, where in light the step between the
-  // two greys does it alone. Chalk's warmth, dimmed.
+  // two greys does it alone. A warm grey, so they read as cream.
   dot: { light: "transparent", dark: "#6B665D" },
   // What follows a dotted opening — About's bands, the Projects list, a
   // write-up's article — and the footer under it: fog a step lighter, so the
   // dots end without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#1A1A1A" },
   // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
-  // reads as its own field.
-  shell: { light: "#E8E4DD", dark: "#201F1C" },
-  // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 12.6:1 and 13.5:1
+  // reads as its own field — darker than mist in light, lighter in dark.
+  shell: { light: "#DEDEDB", dark: "#201F1C" },
+  // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 12.6:1 and 13.5:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
   // Muted hero copy: the intro's byline and closing note, each card's number and
@@ -39,27 +39,27 @@ const PAPER = {
   //
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
-  // fog. This holds 4.9:1 on fog, 5.5:1 on shell and 6.3:1 on cream
+  // fog. This holds 4.9:1 on fog, 5.2:1 on shell and 6.5:1 on cream
   // in light, 5.4:1, 5.6:1 and 5.2:1 in dark.
   ash: { light: "#595959", dark: "#9C968C" },
   // The hero spread's hairlines: the rule under the work panel's heading, the
   // seam between the two halves, the grid the cards sit in and the frame around
-  // each caption plate. Light enough to read as a drawn edge on cream rather than
-  // as an outline around each cell — the cells share seams, so a heavier line
-  // would draw three boxes instead of one grid. 1.5:1 on cream in light, 1.5:1 in
-  // dark.
-  grid: { light: "#C9C2B6", dark: "#45403A" },
+  // each caption plate. Light enough to read as a drawn edge on cream rather
+  // than as an outline around each cell — the cells share seams, so a heavier
+  // line would draw three boxes instead of one grid. 1.6:1 on cream in light, 1.5:1 in dark.
+  grid: { light: "#C4C4C0", dark: "#45403A" },
   // The Contact page's title panel and its email button: dark in both schemes,
-  // with chalk type on it — 12.2:1 in light, 12.6:1 in dark.
+  // with chalk type on it — 12.7:1 in light, 12.6:1 in dark.
   panel: { light: "#2E2E2E", dark: "#2C2C2C" },
   // The title panel's dots, in dark only as fog's are: a step lighter than
   // the panel.
   "panel-dot": { light: "transparent", dark: "#444444" },
   // The well each project shot is matted on. The one dark ground in the
   // hero, and the reason the shots read as objects on a page rather than
-  // as panels of their own: warm, so it sits with the paper tones above
-  // instead of punching a hole in them. Deeper in dark, below fog, so the
-  // mat still reads as a frame there rather than merging with the ground.
+  // as panels of their own: warm, the one warm ground among neutral greys, so
+  // it sits with the photographs rather than punching a hole in the page.
+  // Deeper in dark, below fog, so the mat still reads as a frame there rather
+  // than merging with the ground.
   well: { light: WELL, dark: "#0E0C0A" },
 };
 
