@@ -49,13 +49,13 @@ const PAPER = {
   // grid. 1.6:1 on cream in light, 1.5:1 in dark.
   grid: { light: "#C4C4C0", dark: "#45403A" },
   // The Contact page's title panel and its email button: dark in both schemes,
-  // with chalk type on it — 12.7:1 in light, 12.6:1 in dark.
-  panel: { light: "#2E2E2E", dark: "#2C2C2C" },
-  // The title panel's dots, in dark only as fog's are: a step lighter than
-  // the panel.
-  "panel-dot": { light: "transparent", dark: "#444444" },
-  // The hero's work heading: near-black in both schemes, a step deeper than
-  // the panel, so the bar heading the shots is the darkest plate on the hero.
+  // with chalk type on it — 12.7:1 in light, 17.2:1 in dark.
+  panel: { light: "#2E2E2E", dark: "#141414" },
+  // The title panel's dots, in dark only as fog's are: beige rather than fog's
+  // grey, the one place they carry colour, on a panel dark enough to hold it.
+  "panel-dot": { light: "transparent", dark: "#766B52" },
+  // The hero's work heading: near-black in both schemes, so the bar heading
+  // the shots is the darkest plate on the hero.
   slate: { light: "#1C1C1C", dark: "#151515" },
   // The well each project shot is matted on. The one dark ground in the
   // hero, and the reason the shots read as objects on a page rather than
