@@ -51,7 +51,7 @@ const PAGES = [
     path: "/about",
     sectionId: "about",
     title: "About — Richard Han",
-    ground: "bg-cream",
+    ground: "bg-mist",
     navLabel: "About",
     load: () => import("../pages/AboutPage.jsx"),
   },
@@ -67,7 +67,7 @@ const PAGES = [
     path: "/contact",
     sectionId: "contact",
     title: "Contact — Richard Han",
-    ground: "bg-cream",
+    ground: "bg-mist",
     navLabel: "Contact",
     // As the hero carries the site's links, this page draws the nav bar inside
     // its own layout: it is one screen with no scroll, so the bar is furniture

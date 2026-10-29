@@ -13,8 +13,8 @@ export const ARTICLE_ROW_CLASS =
 // and max-width, and font-epilogue where the page hasn't already set it.
 export const NOTE_TEXT_CLASS = "text-[0.8125rem] leading-[1.65] text-ash";
 
-// A page's opening: the hero, the Projects masthead, a write-up above its article.
-// What follows each below the hero is on mist.
+// A page's opening: all of the one-screen hero, the first screen or masthead of
+// About, Projects and the write-ups. What follows it is on mist.
 export const DOTTED_GROUND_CLASS = "bg-fog bg-dots bg-size-[1.25rem_1.25rem]";
 
 // The link wrapping a project's shot, in both the hero's cards and the

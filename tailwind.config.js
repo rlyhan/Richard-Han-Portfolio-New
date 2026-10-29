@@ -20,9 +20,9 @@ const PAPER = {
   // the paper the rest of the site is laid on; in dark, cream is black and
   // would sink into the grey, so the dots lift off it instead.
   dot: { light: "#F5F3EE", dark: "#3A3A3A" },
-  // What follows a dotted opening — the Projects list, a write-up's article —
-  // and the footer under it: fog a step lighter, so the dots end without the
-  // jump to cream.
+  // What follows a dotted opening — About's bands, the Projects list, a
+  // write-up's article — and the footer under it: fog a step lighter, so the
+  // dots end without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#0A0A0A" },
   // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
   // reads as its own field.
@@ -45,12 +45,15 @@ const PAPER = {
   // would draw three boxes instead of one grid. 1.5:1 on cream in light, 1.7:1 in
   // dark.
   grid: { light: "#C9C2B6", dark: "#3A352D" },
-  // The Contact page's title panel and its email button: the page turned inside
-  // out, with cream type on it — 18.9:1 in light, 17.2:1 in dark.
-  panel: { light: "#000000", dark: "#ECE8E1" },
-  // A write-up's tags, set on its dotted opening: lighter than fog in both
-  // schemes, where shell and cream are lighter in light but darker in dark.
-  // Warm rather than pure white in light, which would read cold beside cream.
+  // The Contact page's title panel and its email button: dark in both schemes,
+  // with chalk type on it — 12.2:1 in light, 15.0:1 in dark.
+  panel: { light: "#2E2E2E", dark: "#1E1E1E" },
+  // The title panel's dots: a step lighter than the panel.
+  "panel-dot": { light: "#474747", dark: "#333333" },
+  // Fills set on fog or mist — a write-up's tags, Contact's secondary
+  // channels: lighter than both in both schemes, where shell and cream are
+  // lighter in light but darker in dark. Warm rather than pure white in light,
+  // which would read cold beside cream.
   tag: { light: "#FCFBF8", dark: "#24221F" },
 };
 
@@ -97,6 +100,8 @@ export default {
       backgroundImage: {
         // The dot grid on fog, tiled by the size set beside it.
         dots: "radial-gradient(circle, var(--dot) 1px, transparent 1.5px)",
+        "panel-dots":
+          "radial-gradient(circle, var(--panel-dot) 1px, transparent 1.5px)",
         // The ground the Projects page mats each shot on: `well`, vignetted.
         //
         // Flat `well` is right for the hero's cells, which are small enough that one

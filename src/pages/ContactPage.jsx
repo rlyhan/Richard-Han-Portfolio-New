@@ -29,9 +29,10 @@ const CHANNEL_CLASS =
 // ordered by what's worth trying, and a flag beside that order could disagree
 // with it.
 const CHANNEL_PRIMARY_CLASS =
-  "border-panel bg-panel text-cream hover:border-panel/85 hover:bg-panel/85";
+  "border-panel bg-panel text-chalk hover:border-panel/85 hover:bg-panel/85";
 
-const CHANNEL_SECONDARY_CLASS = "border-grid hover:border-ink hover:bg-shell";
+const CHANNEL_SECONDARY_CLASS =
+  "border-grid bg-tag hover:border-ink hover:bg-shell";
 
 // A channel that leaves the site, read off the href rather than flagged in the data.
 const isExternal = (href) => href.startsWith("http");
@@ -49,23 +50,23 @@ const ContactPage = () => {
     <PageSection
       id="contact"
       contained={false}
-      additionalClasses="grid h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-cream font-epilogue text-ink"
+      additionalClasses="grid h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-mist font-epilogue text-ink"
     >
       <div className="grid min-h-0 grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
         <div
           className={cn(
-            "row-start-1 grid items-center border-b border-grid py-3 md:col-start-2 md:row-start-1 md:py-0",
+            "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
             GUTTER_CLASS,
           )}
         >
           <Byline />
         </div>
 
-        <div className="relative row-start-2 h-[50svh] min-h-0 w-full bg-panel md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
+        <div className="relative row-start-2 h-[50svh] min-h-0 w-full bg-panel bg-panel-dots bg-size-[1.25rem_1.25rem] md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
           <h1
             id="contact-heading"
             className={cn(
-              "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-cream md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
+              "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-chalk md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
               GUTTER_CLASS,
             )}
             ref={headingRef}
