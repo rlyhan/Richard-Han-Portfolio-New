@@ -31,7 +31,7 @@ const HEADING_CLASS = "font-urbanist text-base leading-none font-bold text-ink";
 // numbering it counts is already on each card, where read aloud it's noise.
 const WorkGrid = () => (
   <div className="grid h-full min-h-0 grid-rows-[3.375rem_minmax(0,1fr)]">
-    <header className="flex items-center justify-between gap-6 px-[clamp(1rem,1.6vw,1.75rem)]">
+    <header className="flex items-center justify-between gap-6 bg-cream px-[clamp(1rem,1.6vw,1.75rem)]">
       <h2 className={HEADING_CLASS}>{FEATURED_LABEL}</h2>
 
       <p
