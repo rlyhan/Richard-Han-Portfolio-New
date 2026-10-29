@@ -28,8 +28,8 @@ const PAPER = {
   // all of About and Contact's text, and the footer under each: fog a step
   // lighter, so the dots end without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#1A1A1A" },
-  // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
-  // reads as its own field — darker than mist in light, lighter in dark.
+  // The pinned nav bar: a half-step off the ground, so it reads as its own
+  // field — darker than mist in light, lighter in dark.
   shell: { light: "#DEDEDB", dark: "#201F1C" },
   // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 12.6:1 and 13.5:1
   // in dark.

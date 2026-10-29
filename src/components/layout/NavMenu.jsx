@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { PATHS } from "../../routes/routes";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { INTRO_TOPLINE } from "../../data/home.data";
@@ -16,13 +17,24 @@ const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 // the other three: a wordmark that leads home is the one piece of navigation
 // every site already agrees on, and stating it twice would be the same link
 // drawn twice.
-const NavMenu = ({ items, ariaLabel = "Portfolio sections" }) => {
+//
+// `ground` is shell by default, so the pinned copy reads as its own field over
+// whatever scrolls under it. Contact's copy is part of a screen nothing scrolls
+// under, and takes the page's own ground instead.
+const NavMenu = ({
+  items,
+  ariaLabel = "Portfolio sections",
+  ground = "bg-shell",
+}) => {
   const homeLink = useNavLink(PATHS.home);
 
   return (
     <nav
       aria-label={ariaLabel}
-      className="relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid bg-shell px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4"
+      className={cn(
+        "relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4",
+        ground,
+      )}
     >
       <a
         {...homeLink}

@@ -138,7 +138,7 @@ const ContactPage = () => {
         </section>
       </div>
 
-      <NavMenu items={navItems} />
+      <NavMenu items={navItems} ground="bg-mist" />
     </PageSection>
   );
 };
