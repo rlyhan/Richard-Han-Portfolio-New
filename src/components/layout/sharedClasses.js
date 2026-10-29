@@ -11,7 +11,8 @@ export const ARTICLE_ROW_CLASS =
 
 // The body-copy voice under a heading or byline. Callers add their own margin
 // and max-width, and font-epilogue where the page hasn't already set it.
-export const NOTE_TEXT_CLASS = "text-[0.8125rem] leading-[1.65] text-ash";
+export const NOTE_TEXT_CLASS =
+  "text-[0.9375rem] leading-[1.6] font-medium text-ash";
 
 // The tiling both dot patterns share. Offset by just under half a tile, so the
 // first dot sits most of a gap in from the top and left edges and the one before
