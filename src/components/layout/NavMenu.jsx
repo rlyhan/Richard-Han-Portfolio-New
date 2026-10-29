@@ -26,7 +26,7 @@ const NavMenu = ({ items, ariaLabel = "Portfolio sections" }) => {
     >
       <a
         {...homeLink}
-        className="font-heading text-[1.5rem] leading-none text-ink transition-colors hover:text-ash focus-visible:outline-ink md:py-[0.12em] md:text-[clamp(3.75rem,6vw,4.5rem)] md:leading-[0.85]"
+        className="font-heading text-[1.5rem] leading-none tracking-[-0.015em] text-ink uppercase transition-colors hover:text-ash focus-visible:outline-ink md:py-[0.12em] md:text-[clamp(3.75rem,6vw,4.5rem)] md:leading-[0.85]"
       >
         {FIRST_NAME}&nbsp; <br />
         {LAST_NAME}.

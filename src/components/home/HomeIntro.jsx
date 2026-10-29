@@ -29,7 +29,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
       <h1
         ref={headingRef}
         id="home-heading"
-        className="font-heading text-[clamp(2.6rem,min(12.8vw,7.2svh),4.25rem)] leading-[1.02] text-ink md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
+        className="font-heading text-[clamp(2.6rem,min(12.8vw,7.2svh),4.25rem)] leading-[0.88] tracking-[-0.015em] text-ink uppercase md:leading-[0.86] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
       >
         {INTRO_LINES.map((line, i) => (
           <span
