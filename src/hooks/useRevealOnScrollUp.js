@@ -40,25 +40,23 @@ const JUMP_SHARE = 1
 export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
     const opensRevealed = !pageDrawsBar
 
-    const [isRevealed, setIsRevealed] = useState(opensRevealed)
-    const [isAboveFloor, setIsAboveFloor] = useState(true)
-
-    // The page the bar is currently standing on. This bar outlives every page change
-    // — that is the point of it living outside the pages — so there is no unmount to
-    // return it to its opening state and it would otherwise inherit whatever the last
-    // page left it in: put away by reading down About, and so missing on the page
-    // About was left for.
+    // Whether the bar is up, kept with the page it was decided on. This bar outlives
+    // every page change — that is the point of it living outside the pages — so
+    // there is no unmount to return it to its opening state, and it would otherwise
+    // inherit whatever the last page left it in: brought up by a scroll back on
+    // About, and so standing over the hero About was left for.
     //
-    // Adjusted during render rather than in an effect, which is what React asks for
-    // when state has to follow a prop. An effect would paint the previous page's bar
-    // for a frame first, and this bar is animated — a frame of the wrong state here is
-    // a slide that starts from the wrong place.
-    const [barPage, setBarPage] = useState(measureKey)
-
-    if (barPage !== measureKey) {
-        setBarPage(measureKey)
-        setIsRevealed(opensRevealed)
-    }
+    // Read against the page rather than reset when the page changes: on any other
+    // page the decision is stale and the opening state stands, in the same render
+    // the page changes in. A reset written back during render didn't hold — the
+    // next update of this hook replayed the old page's value over it.
+    const [reveal, setReveal] = useState({
+        page: measureKey,
+        isRevealed: opensRevealed,
+    })
+    const isRevealed =
+        reveal.page === measureKey ? reveal.isRevealed : opensRevealed
+    const [isAboveFloor, setIsAboveFloor] = useState(true)
 
     useEffect(() => {
         let frame = null
@@ -107,9 +105,15 @@ export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
             if (Math.abs(delta) < SCROLL_DELTA) return
             lastY = y
 
-            setIsRevealed((wasRevealed) =>
-                delta < 0 ? wasRevealed || !aboveFloor : false,
-            )
+            setReveal((last) => {
+                const wasRevealed =
+                    last.page === measureKey ? last.isRevealed : opensRevealed
+
+                return {
+                    page: measureKey,
+                    isRevealed: delta < 0 ? wasRevealed || !aboveFloor : false,
+                }
+            })
         }
 
         const onScroll = () => {
@@ -133,7 +137,7 @@ export function useRevealOnScrollUp(floorSelector, pageDrawsBar, measureKey) {
             window.removeEventListener("resize", onResize)
             if (frame !== null) cancelAnimationFrame(frame)
         }
-    }, [floorSelector, pageDrawsBar, measureKey])
+    }, [floorSelector, pageDrawsBar, opensRevealed, measureKey])
 
     return { isRevealed, isAboveFloor }
 }
