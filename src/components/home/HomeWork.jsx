@@ -64,7 +64,7 @@ const WorkGrid = () => (
 const WorkColumns = () => (
   <div className="grid h-full grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
     <h2
-      className={`${EYEBROW_LABEL_TYPE_CLASS} flex items-center border-r ${GRID_BORDER_COLOR} bg-slate p-3 text-chalk`}
+      className={`${EYEBROW_LABEL_TYPE_CLASS} flex items-center bg-slate p-3 text-chalk`}
     >
       {FEATURED_LABEL}
     </h2>

@@ -13,7 +13,7 @@ const HomeNav = ({ setNavRef, cue }) => {
       ref={setNavRef}
       aria-label="Portfolio sections"
       className={cn(
-        "flex items-center justify-between gap-6 bg-ink/15 py-3 md:col-start-1 md:items-end md:row-start-2 md:bg-transparent md:pt-0 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+2px)]",
+        "flex items-center justify-between gap-6 py-3 md:col-start-1 md:items-end md:row-start-2 md:pt-0 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+2px)]",
         INTRO_GUTTER_CLASS,
       )}
     >
