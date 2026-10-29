@@ -24,9 +24,9 @@ const PAPER = {
   // dots are what sets the opening apart, where in light the step between the
   // two greys does it alone. A warm grey, so they read as cream.
   dot: { light: "transparent", dark: "#6B665D" },
-  // What follows a dotted opening — About's bands, the Projects list, a
-  // write-up's article — and the footer under it: fog a step lighter, so the
-  // dots end without the jump to cream.
+  // What follows a dotted opening — the Projects list, a write-up's article —
+  // all of About and Contact's text, and the footer under each: fog a step
+  // lighter, so the dots end without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#1A1A1A" },
   // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
   // reads as its own field — darker than mist in light, lighter in dark.
