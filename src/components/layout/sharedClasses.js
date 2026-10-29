@@ -1,9 +1,13 @@
 // The site's small-caps label voice, shared verbatim by the band heading, the
-// byline, and every write-up's row labels. Not the same constant as the two
-// EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx — those are tuned
-// per context (tracking, size) and diverge from this on purpose.
-export const EYEBROW_LABEL_CLASS =
-  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
+// byline, the hero's work heading, and every write-up's row labels. Not the same
+// constant as the two EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx —
+// those are tuned per context (tracking, size) and diverge from this on purpose.
+//
+// The type apart from its colour, for the one label set on a dark plate.
+export const EYEBROW_LABEL_TYPE_CLASS =
+  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] uppercase";
+
+export const EYEBROW_LABEL_CLASS = `${EYEBROW_LABEL_TYPE_CLASS} text-ash`;
 
 // One row of a write-up: its label beside its content from lg, above it below.
 export const ARTICLE_ROW_CLASS =
