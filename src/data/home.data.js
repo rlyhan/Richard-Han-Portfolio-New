@@ -5,10 +5,6 @@ import { fitOf } from "./shots.data";
 // Nothing here restates a project: the cards read name and category straight off
 // projects.data, so the homepage can't drift from the Projects section below it.
 
-// Four lines, because the hero's exit throws them off the screen as four planes —
-// see useHeroHandoff.
-export const INTRO_LINES = ["Engaging", "digital", "experiences."];
-
 export const INTRO_NOTE =
   "Full Stack Developer, passionate about user experience, collaboration and creativity. Currently freelancing and open to opportunities.";
 
@@ -18,6 +14,10 @@ export const INTRO_TOPLINE = {
   name: "Richard Han",
   location: "Auckland, New Zealand",
 };
+
+// A line per word, because the hero's exit throws each line off the screen as its
+// own plane — see useHeroHandoff.
+export const INTRO_LINES = `${INTRO_TOPLINE.name}.`.split(" ");
 
 export const FEATURED_LABEL = "Featured work";
 

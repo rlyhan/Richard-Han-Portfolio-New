@@ -104,9 +104,9 @@ export default {
       // index.css for which weights of them are actually loaded.
       //
       // `heading` is the page's own; `urbanist` and `epilogue` are the hero's
-      // pair. The name at the
-      // foot of the hero is the one thing that crosses over: it keeps the
-      // page's heading face rather than the hero's display face.
+      // pair. The name is the one thing that crosses over: in the hero's h1
+      // and in the bar at its foot, it keeps the page's heading face rather
+      // than the hero's display face.
       fontFamily: {
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],
         urbanist: ["Urbanist", "system-ui", "sans-serif"],

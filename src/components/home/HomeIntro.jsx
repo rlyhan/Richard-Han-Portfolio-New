@@ -4,8 +4,8 @@ import Byline from "../layout/Byline";
 import SplitLine from "../common/SplitLine";
 import { NOTE_TEXT_CLASS } from "../layout/sharedClasses";
 
-// The left half of the hero: the display lines, the byline above them and the note
-// under them, all on the hero's paper ground.
+// The left half of the hero: the byline at the top, and the name with the note
+// under it centred in what's left, all on the hero's paper ground.
 //
 // Three planes the hero's exit moves, and they don't all leave together — see
 // useHeroHandoff. The h1's lines and the note rise (`setLineRef`, `setNoteRef`);
@@ -19,32 +19,34 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
   >
     <Byline topLineRef={setToplineRef} wrapLocationBelowMd />
 
-    <h1
-      ref={headingRef}
-      id="home-heading"
-      className="mt-[clamp(1.15rem,4.2svh,2.2rem)] font-urbanist text-[clamp(2.6rem,min(12.8vw,7.2svh),4.25rem)] leading-[1.02] font-medium text-ink md:mt-[clamp(2.4rem,7vh,5.6rem)] md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
-    >
-      {INTRO_LINES.map((line, i) => (
-        <span
-          key={line}
-          ref={(el) => {
-            setLineRef(i, el);
-          }}
-          className="block"
-        >
-          <SplitLine text={line} />
-        </span>
-      ))}
-    </h1>
-    <p
-      ref={setNoteRef}
-      className={cn(
-        "mt-auto max-w-[25.5rem] pt-[clamp(0.95rem,3svh,1.6rem)] font-epilogue md:pt-10",
-        NOTE_TEXT_CLASS,
-      )}
-    >
-      {INTRO_NOTE}
-    </p>
+    <div className="my-auto pt-[clamp(1.15rem,4.2svh,2.2rem)] md:pt-[clamp(2.4rem,7vh,5.6rem)]">
+      <h1
+        ref={headingRef}
+        id="home-heading"
+        className="font-heading text-[clamp(2.6rem,min(12.8vw,7.2svh),4.25rem)] leading-[1.02] text-ink md:leading-[0.99] md:max-wide:text-[clamp(2.6rem,4.4vw,4.25rem)] wide:text-[clamp(4.25rem,5.9vw,5.875rem)]"
+      >
+        {INTRO_LINES.map((line, i) => (
+          <span
+            key={line}
+            ref={(el) => {
+              setLineRef(i, el);
+            }}
+            className="block"
+          >
+            <SplitLine text={line} />
+          </span>
+        ))}
+      </h1>
+      <p
+        ref={setNoteRef}
+        className={cn(
+          "mt-[clamp(0.95rem,3svh,1.6rem)] max-w-[25.5rem] font-epilogue md:mt-6",
+          NOTE_TEXT_CLASS,
+        )}
+      >
+        {INTRO_NOTE}
+      </p>
+    </div>
   </section>
 );
 
