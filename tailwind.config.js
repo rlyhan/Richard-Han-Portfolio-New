@@ -20,8 +20,8 @@ const PAPER = {
   // the paper every other page is laid on; in dark, cream is black and would
   // sink into the grey, so the dots lift off it instead.
   dot: { light: "#F5F3EE", dark: "#3A3A3A" },
-  // The bar at the foot of the hero: a half-step off the ground, so the nav reads
-  // as its own field without a second line drawn under the spread.
+  // The nav bar, pinned or at Contact's foot: a half-step off the ground, so it
+  // reads as its own field.
   shell: { light: "#E8E4DD", dark: "#0F0E0B" },
   // Hero copy — 12.4:1 on cream and 10.9:1 on shell in light, 17.2:1 and 15.8:1
   // in dark.
@@ -66,6 +66,15 @@ export default {
         wide: "90rem",
       },
 
+      // How far a hero card's caption plate stands in from the card's edges,
+      // and the padding under the plate's last line. The hero's links share a
+      // baseline with that line, so their padding is worked out from both —
+      // see HomeIntro.
+      spacing: {
+        plate: "0.875rem",
+        "plate-foot": "0.75rem",
+      },
+
       // Single source of truth for the palette — index.css pulls the same
       // values back out with @apply rather than restating any hex.
       colors: {
@@ -96,8 +105,7 @@ export default {
         // the 45% centre, because the shot is matted higher in the cell than it is
         // low — the caption plate takes the foot — so a centred highlight would sit
         // under the plate instead of behind the object.
-        frame:
-          "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
+        frame: "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
         // Below md, the About page's portrait carries that page's title, and a
         // photograph is not a ground to set type on. This is what gives the words something to
         // sit against.
@@ -114,7 +122,7 @@ export default {
       //
       // `heading` is the page's own; `urbanist` and `epilogue` are the hero's
       // pair. The name is the one thing that crosses over: in the hero's h1
-      // and in the bar at its foot, it keeps the page's heading face rather
+      // and in the nav bar's wordmark, it keeps the page's heading face rather
       // than the hero's display face.
       fontFamily: {
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],
@@ -151,7 +159,10 @@ export default {
         "@media (prefers-color-scheme: dark)": {
           ':root:not([data-theme="light"])': paperVars("dark"),
         },
-        ':root[data-theme="dark"]': { ...paperVars("dark"), colorScheme: "dark" },
+        ':root[data-theme="dark"]': {
+          ...paperVars("dark"),
+          colorScheme: "dark",
+        },
         ':root[data-theme="light"]': { colorScheme: "light" },
       }),
   ],

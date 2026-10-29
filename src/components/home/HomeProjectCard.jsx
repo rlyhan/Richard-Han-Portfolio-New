@@ -56,7 +56,9 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
             ),
       )}
       style={
-        isSlide ? undefined : { animationDelay: `${index * REVEAL_STAGGER_MS}ms` }
+        isSlide
+          ? undefined
+          : { animationDelay: `${index * REVEAL_STAGGER_MS}ms` }
       }
     >
       <a
@@ -90,7 +92,7 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
             "grid-cols-[auto_minmax(0,1fr)_auto]",
             isSlide
               ? "inset-x-1.5 bottom-1.5 min-h-11 gap-x-1.5 gap-y-1 px-2 py-1.5"
-              : "inset-x-3.5 bottom-3.5 min-h-[3.625rem] gap-x-2 gap-y-1.5 px-4 pt-[0.8rem] pb-3",
+              : "inset-x-plate bottom-plate min-h-[3.625rem] gap-x-2 gap-y-1.5 px-4 pt-[0.8rem] pb-plate-foot",
           )}
         >
           <span

@@ -3,11 +3,9 @@ import PageSection from "../components/layout/PageSection";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
 import HomeIntro from "../components/home/HomeIntro";
 import HomeWork from "../components/home/HomeWork";
-import NavMenu from "../components/layout/NavMenu";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
-import { useNavItems } from "../hooks/useNavLinks";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
 import { useSplitReveal } from "../hooks/useSplitReveal";
@@ -64,16 +62,13 @@ const HomePage = () => {
     displayLineRefs.current[WORK_LINE_INDEX] = el;
   }, []);
   // The outro sinks in the order it's collected: the byline atop the intro panel
-  // first, then the name and links at the foot of the hero. Three is the ceiling
-  // here for the same reason six is above — the last has to land inside the runway.
+  // first, then the links at its foot. Three is the ceiling here for the same
+  // reason six is above — the last has to land inside the runway.
   const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
   }, []);
-  const setNameRef = useCallback((el) => {
-    outroLineRefs.current[1] = el;
-  }, []);
   const setNavRef = useCallback((el) => {
-    outroLineRefs.current[2] = el;
+    outroLineRefs.current[1] = el;
   }, []);
 
   const { scrollToNext, isScrollingToNext } = useHeroHandoff({
@@ -85,7 +80,7 @@ const HomePage = () => {
   });
 
   // The scroll this page leaves by, handed to the router so a nav item asking for
-  // the page below — from either copy of the bar — runs this scripted scroll
+  // the page below — from the hero's links or the pinned bar — runs this scripted scroll
   // instead of a jump. Every fade scrubbed off the way plays as it would have, and
   // a gesture mid-flight hands control straight back.
   useAdvance(scrollToNext);
@@ -102,8 +97,6 @@ const HomePage = () => {
     () => navigate(onwardPath),
     [navigate, onwardPath],
   );
-
-  const navItems = useNavItems();
 
   // Any scroll away from the hero retires the cue, including the one it starts
   // itself — but only where there's a runway to scroll along. Without one the
@@ -125,15 +118,10 @@ const HomePage = () => {
             setLineRef={setDisplayLine}
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}
+            setNavRef={setNavRef}
           />
           <HomeWork setGridRef={setWorkRef} />
         </div>
-
-        <NavMenu
-          items={navItems}
-          setNameRef={setNameRef}
-          setNavRef={setNavRef}
-        />
 
         <ScrollCue
           onClick={goToNextPage}

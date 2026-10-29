@@ -5,9 +5,9 @@ import { useNavItems } from "../hooks/useNavLinks";
 import { useRevealOnScrollUp } from "../hooks/useRevealOnScrollUp";
 import { useNavHeightVar } from "../hooks/useNavHeightVar";
 
-// The site's nav: the hero's own bar, pinned to the foot of the viewport for the
-// rest of the site. It replaces the bar that used to be fixed across the top —
-// one piece of furniture for the whole site rather than two.
+// The site's nav: a bar pinned to the foot of the viewport for every page but
+// the ones that carry their own links. It replaces the bar that used to be fixed
+// across the top — one piece of furniture for the whole site rather than two.
 //
 // It lives outside the pages, so a page change is not this bar being rebuilt: it
 // stays exactly where it is while the document underneath it is handed over.
@@ -15,11 +15,12 @@ import { useNavHeightVar } from "../hooks/useNavHeightVar";
 // A page opens with it up, goes down as the viewer reads forward, and comes
 // back the moment they scroll against the page; see useRevealOnScrollUp for the
 // direction rule, the opening state, and why nothing shows over a page that
-// carries a copy of this bar in its own layout.
+// carries the links in its own layout.
 const SiteNav = () => {
     // Which page this bar is standing on decides whether it has a floor and where,
-    // and the router is what knows: the hero and Contact draw a copy of this bar in
-    // their own layout, and a page that doesn't has nothing to be drawn twice over.
+    // and the router is what knows: the hero carries the links in its own layout
+    // and Contact draws a copy of this bar, and a page that does neither has
+    // nothing to be drawn twice over.
     const { navFloorSelector, pageDrawsNav, layoutKey, swap } = useRouter();
 
     // The direction owns every moment after the first, and arriving is the first:
@@ -35,9 +36,9 @@ const SiteNav = () => {
         layoutKey,
     );
 
-    // Over the copy the page draws itself — the only place the two are stacked, and
-    // the only reason any of this is conditional. A page that draws no copy is never
-    // over anything.
+    // Over the links the page carries itself — the only place the two are on
+    // screen together, and the only reason any of this is conditional. A page
+    // with no links of its own is never under this bar.
     const isOverOwnBar = pageDrawsNav && isAboveFloor;
 
     // The bar belongs to the page under it, and for the length of a swap there are

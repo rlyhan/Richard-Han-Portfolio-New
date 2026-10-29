@@ -27,12 +27,12 @@ const PAGES = [
     // sections paint their own besides this; it answers for the frame around
     // them and for the gap before the first paint.
     ground: "bg-fog",
-    // The hero draws the site's nav bar inside its own layout, so the pinned
-    // copy has to stay down while this page holds the screen, or the same
-    // furniture is drawn twice — see SiteNav, which takes the page after this one
-    // as the floor.
+    // The hero carries the site's links in its own layout, at the foot of its
+    // intro, so the pinned bar has to stay down while this page holds the
+    // screen, or the same links are drawn twice — see SiteNav, which takes the
+    // page after this one as the floor.
     hasOwnNav: true,
-    // No navLabel: the name at the foot of the bar is the way back home, and a
+    // No navLabel: the name in the pinned bar is the way back home, and a
     // "Home" item beside it would be that link drawn twice.
     //
     // `next` hands the SCROLL to the next page — the hero empties out across its
@@ -69,10 +69,10 @@ const PAGES = [
     title: "Contact — Richard Han",
     ground: "bg-cream",
     navLabel: "Contact",
-    // As the hero does, this page draws the site's nav bar inside its own layout:
-    // it is one screen with no scroll, so the bar is furniture rather than
-    // something to be found. See SiteNav, which keeps its pinned copy down over a
-    // page that draws its own.
+    // As the hero carries the site's links, this page draws the nav bar inside
+    // its own layout: it is one screen with no scroll, so the bar is furniture
+    // rather than something to be found. See SiteNav, which keeps its pinned
+    // copy down over a page that carries its own.
     hasOwnNav: true,
     load: () => import("../pages/ContactPage.jsx"),
   },
@@ -134,8 +134,8 @@ export const nextRouteOf = (route) =>
 
 // The page after this one in reading order — not the same question as `next`,
 // which is whether the SCROLL carries on into it. The pinned nav bar's floor
-// asks this one: a page that draws the bar in its own layout keeps the pinned
-// copy down until the page below is reached, whether the two are joined by a
+// asks this one: a page that carries the nav in its own layout keeps the pinned
+// bar down until the page below is reached, whether the two are joined by a
 // scroll or a swap.
 //
 // Off PAGES, so a write-up has nothing after it: the site reads through the four
