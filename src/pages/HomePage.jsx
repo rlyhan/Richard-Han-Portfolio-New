@@ -14,9 +14,6 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
 const NEAR_TOP_THRESHOLD = 40;
 
-const CUE_POSITION_CLASS =
-  "top-[1.35rem] justify-center md:top-auto md:bottom-6";
-
 // What the hero's exit throws off screen, in order — the stagger is indexed off
 // this list, so the spread runs down the left column and then takes the work
 // panel with it (see useHeroHandoff for each index's travel).
@@ -121,15 +118,19 @@ const HomePage = () => {
             setToplineRef={setToplineRef}
           />
           <HomeWork setGridRef={setWorkRef} />
-          <HomeNav setNavRef={setNavRef} />
+          <HomeNav
+            setNavRef={setNavRef}
+            cue={
+              <ScrollCue
+                onClick={goToNextPage}
+                visible={isCueVisible}
+                label={
+                  nextPath ? "Scroll to the About page" : "Go to the About page"
+                }
+              />
+            }
+          />
         </div>
-
-        <ScrollCue
-          onClick={goToNextPage}
-          visible={isCueVisible}
-          label={nextPath ? "Scroll to the About page" : "Go to the About page"}
-          positionClassName={CUE_POSITION_CLASS}
-        />
       </PageSection>
 
       {nextPath && (

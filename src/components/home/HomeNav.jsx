@@ -5,7 +5,7 @@ import { INTRO_GUTTER_CLASS } from "./HomeIntro";
 // Its own block rather than the intro's foot, so below md it can follow the work
 // panel to the bottom of the screen. From md it sits under the intro, its last line
 // on a baseline with the card plates' last line, worked out from the same tokens.
-const HomeNav = ({ setNavRef }) => {
+const HomeNav = ({ setNavRef, cue }) => {
   const navItems = useNavItems();
 
   return (
@@ -13,7 +13,7 @@ const HomeNav = ({ setNavRef }) => {
       ref={setNavRef}
       aria-label="Portfolio sections"
       className={cn(
-        "bg-ink/15 py-3 md:col-start-1 md:row-start-2 md:bg-transparent md:pt-0 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+2px)]",
+        "flex items-center justify-between gap-6 bg-ink/15 py-3 md:col-start-1 md:items-end md:row-start-2 md:bg-transparent md:pt-0 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+2px)]",
         INTRO_GUTTER_CLASS,
       )}
     >
@@ -29,6 +29,8 @@ const HomeNav = ({ setNavRef }) => {
           </li>
         ))}
       </ul>
+
+      {cue}
     </nav>
   );
 };

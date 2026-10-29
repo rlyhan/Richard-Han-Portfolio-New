@@ -23,7 +23,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
       INTRO_GUTTER_CLASS,
     )}
   >
-    <Byline topLineRef={setToplineRef} wrapLocationBelowMd />
+    <Byline topLineRef={setToplineRef} />
 
     <div className="my-auto pt-[clamp(1.15rem,4.2svh,2.2rem)] md:pt-[clamp(2.4rem,7vh,5.6rem)]">
       <h1
