@@ -70,7 +70,7 @@ const ProjectTile = ({ project, number, eager }) => {
           )}
         </div>
 
-        <div className="absolute inset-x-3.5 bottom-3.5 grid min-h-[3.625rem] grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-[0.5625rem] gap-y-1.5 border border-grid bg-cream px-4 pt-[0.8125rem] pb-3 transition-colors duration-200 group-hover:border-ash motion-reduce:transition-none">
+        <div className="absolute inset-x-3.5 bottom-3.5 grid min-h-[3.625rem] grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-[0.5625rem] gap-y-1.5 border border-grid bg-plate px-4 pt-[0.8125rem] pb-3 transition-colors duration-200 group-hover:border-ash motion-reduce:transition-none">
           <span className={cn(EYEBROW_CLASS, "text-ash")}>
             {String(number).padStart(2, "0")}
           </span>

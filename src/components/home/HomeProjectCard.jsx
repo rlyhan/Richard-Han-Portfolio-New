@@ -88,7 +88,7 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
 
         <div
           className={cn(
-            `absolute grid items-baseline border ${GRID_BORDER_COLOR} bg-cream`,
+            `absolute grid items-baseline border ${GRID_BORDER_COLOR} bg-plate`,
             "grid-cols-[auto_minmax(0,1fr)_auto]",
             isSlide
               ? "inset-x-1.5 bottom-1.5 min-h-11 gap-x-1.5 gap-y-1 px-2 py-1.5"

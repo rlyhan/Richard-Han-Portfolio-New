@@ -12,10 +12,9 @@ const WELL_RGB = "42, 36, 30";
 // same name, which the plugin at the foot of this file sets for each scheme: the
 // OS's, unless the masthead's toggle has put a `data-theme` on <html>.
 const PAPER = {
-  // The plates laid on the ground: each project card's caption, a write-up's
-  // tags, About's icons and interest chips. A step lighter than fog and mist
-  // in both schemes, not inverted — a near-black plate on dark grey read as a
-  // hole, not a plate.
+  // The plates laid on the ground: a write-up's tags, About's icons and
+  // interest chips. A step lighter than fog and mist in both schemes, not
+  // inverted — a near-black plate on dark grey read as a hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#252524" },
   // The hero's ground, and in light every other opening's (see stage):
   // neutral grey where the reading below is mist, so the opening reads as its
@@ -64,6 +63,10 @@ const PAPER = {
   // The hero's work heading: near-black in both schemes, so the bar heading
   // the shots is the darkest plate on the hero.
   slate: { light: "#1C1C1C", dark: "#151515" },
+  // Each project card's caption plate: cream in light, and in dark the work
+  // heading's near-black, so the shots are headed and captioned alike there.
+  // The plate's ink and ash hold 15.0:1 and 6.2:1 on it.
+  plate: { light: "#F7F7F5", dark: "#151515" },
   // The well each project shot is matted on. The one dark ground in the
   // hero, and the reason the shots read as objects on a page rather than
   // as panels of their own: warm, the one warm ground among neutral greys, so
