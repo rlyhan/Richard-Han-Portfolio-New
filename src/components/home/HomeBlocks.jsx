@@ -6,26 +6,20 @@ import { PATHS } from "../../routes/routes";
 
 const REVEAL_STAGGER_MS = 120;
 
-const WIDE = "col-span-2";
-const UPRIGHT = "col-span-2 row-span-2";
-const ANCHOR = "col-span-4 row-span-2";
+const ANCHOR = "col-span-2 row-span-4";
+const UPRIGHT = "row-span-6";
+const STACKED = "row-span-3";
 
-// Hand-placed on a 4 by 9 grid: each span suits the device in the shot, and the
-// order is what packs them with no holes, so a new project needs a place here.
-// The eager three are the ones index.html preloads.
+// Hand-placed on a 2 by 16 grid: each span suits the device in the shot, and the
+// order is what packs them with no holes. The eager three are the ones index.html
+// preloads.
 const MOSAIC = [
-  { src: "neatplaces.webp", span: UPRIGHT, eager: true },
-  { src: "gnetwork.webp", span: WIDE },
-  { src: "deadlyponies.webp", span: WIDE },
   { src: "thakeham.webp", span: ANCHOR, eager: true },
-  { src: "gigsoflondon.webp", span: WIDE },
+  { src: "neatplaces.webp", span: UPRIGHT, eager: true },
   { src: "touchgrass.webp", span: UPRIGHT, eager: true },
-  { src: "physicsroom.webp", span: WIDE },
-  { src: "coloursmith.webp", span: WIDE },
-  { src: "jamesdunlop.webp", span: WIDE },
+  { src: "physicsroom.webp", span: STACKED },
   { src: "studywithnz.webp", span: UPRIGHT },
-  { src: "ecc.webp", span: WIDE },
-  { src: "westcoasttas.webp", span: WIDE },
+  { src: "deadlyponies.webp", span: STACKED },
 ];
 
 const Block = ({ to, label, index, className, children }) => {
@@ -35,13 +29,13 @@ const Block = ({ to, label, index, className, children }) => {
     <a
       {...link}
       className={cn(
-        "group flex animate-project-reveal flex-col justify-end px-block-gutter pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)] focus-visible:outline-current focus-visible:-outline-offset-4 motion-reduce:animate-none",
+        "group flex animate-project-reveal flex-col justify-end pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)] focus-visible:outline-current focus-visible:-outline-offset-4 motion-reduce:animate-none",
         className,
       )}
       style={{ animationDelay: `${index * REVEAL_STAGGER_MS}ms` }}
     >
       {children}
-      <span className="font-arial text-[clamp(1.75rem,2.7vw,2.75rem)] leading-none font-normal tracking-[-0.025em] underline-offset-[0.12em] group-hover:underline">
+      <span className="px-block-gutter font-arial text-[clamp(1.75rem,2.7vw,2.75rem)] leading-none font-normal tracking-[-0.025em] underline-offset-[0.12em] group-hover:underline">
         {label}
       </span>
     </a>
@@ -57,9 +51,9 @@ const HomeBlocks = () => (
       to={PATHS.projects}
       label="Projects"
       index={0}
-      className="row-span-2 min-h-0 bg-block-projects pt-block-gutter text-ink"
+      className="row-span-2 min-h-0 bg-block-projects text-ink"
     >
-      <div className="mb-block-gutter grid min-h-0 flex-1 grid-flow-dense grid-cols-4 grid-rows-9 gap-1">
+      <div className="mb-block-gutter grid min-h-0 flex-1 grid-cols-2 grid-rows-16">
         {MOSAIC.map(({ src, span, eager }) => (
           <div key={src} className={cn("relative overflow-hidden", span)}>
             <MattedShot src={src} alt="" eager={eager} fit={fitOf(src)} />
