@@ -16,17 +16,13 @@ const PAPER = {
   // interest chips. A step lighter than fog and mist in both schemes, not
   // inverted — a near-black plate on dark grey read as a hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#252524" },
-  // The hero's ground, and in light every other opening's (see stage):
-  // neutral grey where the reading below is mist, so the opening reads as its
-  // own surface.
-  fog: { light: "#D9D9D6", dark: "#222222" },
-  // The hero's dots, in dark only: there fog sits so close to mist that the
-  // dots are what gives it a surface, where in light the grey does it alone. A
-  // warm grey, so they read as cream.
-  dot: { light: "transparent", dark: "#6B665D" },
-  // What follows a dotted opening — the Projects list, a write-up's article —
-  // Contact's text, and the footer under each: fog a step lighter, so the dots
-  // end without the jump to cream.
+  // The hero's ground, and in both schemes every other opening's tone (see stage):
+  // in light, neutral grey where the reading below is mist, so the opening reads as
+  // its own surface.
+  fog: { light: "#D9D9D6", dark: "#141414" },
+  // What follows an opening — the Projects list, a write-up's article —
+  // Contact's text, and the footer under each: fog a step lighter, so the opening
+  // ends without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#1A1A1A" },
   // The pinned nav bar: a half-step off the ground, so it reads as its own
   // field — darker than mist in light, lighter in dark.
@@ -39,7 +35,7 @@ const PAPER = {
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
   // fog. This holds 4.9:1 on fog, 5.2:1 on shell and 6.5:1 on cream
-  // in light, 5.4:1, 5.6:1 and 5.2:1 in dark.
+  // in light, 6.3:1, 5.6:1 and 5.2:1 in dark.
   ash: { light: "#595959", dark: "#9C968C" },
   // The intro's closing note: ash in dark, and in light as far off it as AA
   // allows on fog — 4.5:1. A paragraph in ash read heavier than the name above it.
@@ -53,9 +49,8 @@ const PAPER = {
   // The Contact page's title panel and its email button: the same near-black
   // in both schemes, with chalk type on it — 17.2:1.
   panel: { light: "#141414", dark: "#141414" },
-  // The title panel's dots: beige rather than fog's grey, the one place they
-  // carry colour, and in both schemes where fog's are dark only — the panel
-  // doesn't change with the scheme, so neither do they.
+  // The title panel's dots: beige, and in both schemes — the panel doesn't change
+  // with the scheme, so neither do they.
   "panel-dot": { light: "#766B52", dark: "#766B52" },
   // The Projects masthead and a write-up's opening: fog in light, and in dark
   // Contact's panel and its beige dots, so every page below the hero opens on
@@ -86,11 +81,11 @@ const PAPER = {
   // Deeper in dark, below fog, so the mat still reads as a frame there rather
   // than merging with the ground.
   well: { light: WELL, dark: "#0E0C0A" },
-  // The hero's three page blocks, a yellow, its pale tint and a dark grey. In both
-  // schemes About's yellow carries slate type, Contact's grey chalk, Projects ink.
-  "block-about": { light: "#F2C522", dark: "#E0B71F" },
-  "block-projects": { light: "#F3ECCB", dark: "#2F2C20" },
-  "block-contact": { light: "#4A4A47", dark: "#3B3B39" },
+  // The hero's three page blocks, a yellow, its pale tint and a dark grey, the same
+  // in both schemes. The yellow and its tint carry slate type, the grey chalk.
+  "block-about": { light: "#F2C522", dark: "#F2C522" },
+  "block-projects": { light: "#F3ECCB", dark: "#F3ECCB" },
+  "block-contact": { light: "#4A4A47", dark: "#4A4A47" },
 };
 
 const paperVars = (scheme) =>
@@ -129,8 +124,7 @@ export default {
         chalk: PAPER.cream.light,
       },
       backgroundImage: {
-        // The dot grid on fog, tiled by the size set beside it.
-        dots: "radial-gradient(circle, var(--dot) 1px, transparent 1.5px)",
+        // The dot grids, tiled by the size set beside them.
         "panel-dots":
           "radial-gradient(circle, var(--panel-dot) 1px, transparent 1.5px)",
         "stage-dots":

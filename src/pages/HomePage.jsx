@@ -1,7 +1,5 @@
 import { useCallback, useRef } from "react";
-import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
-import { DOTTED_GROUND_CLASS } from "../components/layout/sharedClasses";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
 import HomeIntro from "../components/home/HomeIntro";
 import HomeNav from "../components/home/HomeNav";
@@ -110,10 +108,7 @@ const HomePage = () => {
       <PageSection
         id="home"
         contained={false}
-        additionalClasses={cn(
-          "sticky top-0 flex h-svh flex-col overflow-x-clip text-ink",
-          DOTTED_GROUND_CLASS,
-        )}
+        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-fog text-ink"
       >
         <div className="flex min-h-0 flex-1 flex-col md:grid md:grid-rows-[minmax(0,1fr)_auto] md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
           <HomeIntro

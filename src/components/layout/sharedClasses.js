@@ -24,9 +24,6 @@ export const NOTE_TEXT_CLASS =
 export const DOT_GRID_CLASS =
   "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
 
-// The hero's ground: fog, dotted in dark.
-export const DOTTED_GROUND_CLASS = `bg-fog bg-dots ${DOT_GRID_CLASS}`;
-
 // The link wrapping a project's shot: the hero's cards and strips, and the
 // Projects grid's tiles.
 export const PROJECT_LINK_CLASS =

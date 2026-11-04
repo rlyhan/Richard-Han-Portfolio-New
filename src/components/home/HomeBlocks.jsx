@@ -24,7 +24,7 @@ const Strip = ({ project: { id, name, images }, eager }) => {
       {...link}
       className={cn(
         PROJECT_LINK_CLASS,
-        "relative min-h-0 flex-1 bg-block-projects text-ink transition-[flex-grow,flex-basis] duration-500 ease-out hover:grow-0 hover:basis-[min(calc(56.25cqw+3rem),70cqh)] focus-visible:grow-0 focus-visible:basis-[min(calc(56.25cqw+3rem),70cqh)] motion-reduce:transition-none",
+        "relative min-h-0 flex-1 bg-block-projects text-slate transition-[flex-grow,flex-basis] duration-500 ease-out hover:grow-0 hover:basis-[min(calc(56.25cqw+3rem),70cqh)] focus-visible:grow-0 focus-visible:basis-[min(calc(56.25cqw+3rem),70cqh)] motion-reduce:transition-none",
       )}
     >
       <span className="absolute inset-x-0 bottom-0 flex h-12 items-center px-block-gutter font-arial text-[clamp(1rem,1.35vw,1.2rem)] leading-none">
@@ -83,7 +83,7 @@ const HomeBlocks = () => (
         to={PATHS.projects}
         label="Projects"
         index={0}
-        className="bg-block-projects pt-block-gutter text-ink"
+        className="bg-block-projects pt-block-gutter text-slate"
       />
     </div>
 
