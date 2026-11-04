@@ -1,9 +1,13 @@
 import cn from "classnames";
+import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import AwardIcon from "../icons/AwardIcon";
 import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
 import {
   IMAGE_FALLBACK_CLASS,
+  PLATE_ARROW_CLASS,
+  PLATE_CLASS,
+  PLATE_TITLE_CLASS,
   PROJECT_LINK_CLASS,
 } from "../layout/sharedClasses";
 import { projectPathOf } from "../../routes/routes";
@@ -22,10 +26,6 @@ const EYEBROW_CLASS =
 // vignetted well rather than a flat one, since a flat fill reads as a slab this large
 // (see tailwind.config). The zoom is the hero's too, held to one subtle step since a
 // fourteen-cell grid only ever has one shot moving at a time under the cursor.
-//
-// The whole cell is the link to the project's write-up, and the plate's edge going to
-// `ash` is all the hover there is — for the same reason: the affordance has to be
-// something that doesn't move.
 //
 // The title stays a heading inside that link rather than becoming a span the link is
 // named by. The list is a list of projects, and a screen reader jumping the page by
@@ -63,21 +63,25 @@ const ProjectTile = ({ project, number, eager }) => {
               zoom="group-hover:scale-[1.05]"
             />
           ) : (
-            <div
-              aria-hidden="true"
-              className={IMAGE_FALLBACK_CLASS}
-            />
+            <div aria-hidden="true" className={IMAGE_FALLBACK_CLASS} />
           )}
         </div>
 
-        <div className="absolute inset-x-3.5 bottom-3.5 grid min-h-[3.625rem] grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-[0.5625rem] gap-y-1.5 border border-grid bg-plate px-4 pt-[0.8125rem] pb-3 transition-colors duration-200 group-hover:border-ash motion-reduce:transition-none">
+        <div
+          className={cn(
+            PLATE_CLASS,
+            "absolute inset-x-3.5 bottom-3.5 grid min-h-[3.625rem] grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-[0.5625rem] gap-y-1.5 px-4 pt-[0.8125rem] pb-3 [--plate-cut:1.125rem]",
+          )}
+        >
           <span className={cn(EYEBROW_CLASS, "text-ash")}>
             {String(number).padStart(2, "0")}
           </span>
 
-          <h2 className="font-urbanist truncate text-[1.1875rem] font-bold text-ink">
-            {name}
-          </h2>
+          <h2 className={cn(PLATE_TITLE_CLASS, "text-[1.1875rem]")}>{name}</h2>
+
+          <span aria-hidden="true" className={cn(PLATE_ARROW_CLASS, "h-6 w-6")}>
+            <ArrowUpRightIcon className="h-[0.95rem] w-[0.95rem]" />
+          </span>
 
           <p
             className={cn(

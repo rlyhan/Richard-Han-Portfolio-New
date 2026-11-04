@@ -34,8 +34,7 @@ const PAPER = {
   // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 12.6:1 and 13.5:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
-  // Muted hero copy: the intro's byline, each card's number and category, the
-  // spread's counter.
+  // Muted hero copy: the intro's byline, each plate's number and category.
   //
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
@@ -45,8 +44,8 @@ const PAPER = {
   // The intro's closing note: ash in dark, and in light as far off it as AA
   // allows on fog — 4.5:1. A paragraph in ash read heavier than the name above it.
   hush: { light: "#5F5F5F", dark: "#9C968C" },
-  // The hero spread's hairlines: the seam between the two halves, the grid the
-  // cards sit in and the frame around each caption plate. Light enough to read
+  // The hero spread's hairlines: the seam between the two halves and the grid the
+  // cards sit in. Light enough to read
   // as a drawn edge on cream rather than as an outline around each cell — the
   // cells share seams, so a heavier line would draw three boxes instead of one
   // grid. 1.6:1 on cream in light, 1.5:1 in dark.
@@ -70,14 +69,16 @@ const PAPER = {
   // About's ground: mist in light, and in dark Contact's near-black, a step
   // under the bar, where mist would leave the bar level with the page.
   deep: { light: "#E8E8E5", dark: "#141414" },
-  // The hero's work heading: dark in both schemes, so the bar heading the
-  // shots is the darkest plate on the hero — in light no darker than the
-  // name's ink, so the bar never outweighs the name. Chalk holds 12.8:1 on it.
-  slate: { light: "#2D2D2D", dark: "#151515" },
-  // Each project card's caption plate: cream in light, and in dark the work
-  // heading's near-black, so the shots are headed and captioned alike there.
-  // The plate's ink and ash hold 15.0:1 and 6.2:1 on it.
-  plate: { light: "#F7F7F5", dark: "#151515" },
+  // The hero's work heading: the same near-black as Contact's panel in both
+  // schemes. Chalk holds 17.2:1 on it.
+  slate: { light: "#141414", dark: "#141414" },
+  // Each project's caption plate: cream in light, and in dark the work heading's
+  // near-black, so the shots are headed and captioned alike there. Its ink and
+  // ash hold 12.8:1 and 6.5:1 in light, at least 15:1 and 6:1 in dark.
+  plate: { light: "#F7F7F5", dark: "#141414" },
+  // The hairline around each plate, which holds it off a white shot in light and
+  // off a near-black one in dark.
+  "plate-edge": { light: "#DCDCD8", dark: "#2E2E2C" },
   // The well each project shot is matted on. The one dark ground in the
   // hero, and the reason the shots read as objects on a page rather than
   // as panels of their own: warm, the one warm ground among neutral greys, so
@@ -153,14 +154,16 @@ export default {
         // — and is gone by 82%, so the subject's face is never under it.
         scrim: `linear-gradient(to top, rgba(${WELL_RGB}, 0.94) 0%, rgba(${WELL_RGB}, 0.88) 26%, rgba(${WELL_RGB}, 0.55) 44%, rgba(${WELL_RGB}, 0.16) 64%, rgba(${WELL_RGB}, 0) 82%)`,
       },
-      // Three faces, and each one has a job — see the @font-face block in
+      // Three loaded faces, and each one has a job — see the @font-face block in
       // index.css for which weights of them are actually loaded.
       //
       // `heading` is the page's own; `urbanist` and `epilogue` are the hero's
       // pair. The name is the one thing that crosses over: in the hero's h1
       // and in the nav bar's wordmark, it keeps the page's heading face rather
-      // than the hero's display face.
+      // than the hero's display face. `arial`, the titles on the project plates,
+      // comes from the system.
       fontFamily: {
+        arial: ["Arial", "Helvetica", "sans-serif"],
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],
         urbanist: ["Urbanist", "system-ui", "sans-serif"],
         epilogue: ["Epilogue", "system-ui", "sans-serif"],

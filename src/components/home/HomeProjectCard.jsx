@@ -4,10 +4,15 @@ import MattedShot from "../common/MattedShot";
 import { projectPathOf } from "../../routes/routes";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { EYEBROW_CLASS, GRID_BORDER_COLOR } from "./HomeWork";
-import { PROJECT_LINK_CLASS } from "../layout/sharedClasses";
+import {
+  PLATE_ARROW_CLASS,
+  PLATE_CLASS,
+  PLATE_TITLE_CLASS,
+  PROJECT_LINK_CLASS,
+} from "../layout/sharedClasses";
 
 // One card of the hero's spread: a dark well with the shot matted whole inside it
-// and a caption plate framed over the foot of it.
+// and a caption plate over the foot of it.
 //
 // Two variants — `grid`, a hand-placed masonry cell, and `slide`, a full-width
 // carousel track item — see HomeWork and HomeProjectCarousel.
@@ -88,11 +93,12 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
 
         <div
           className={cn(
-            `absolute grid items-baseline border ${GRID_BORDER_COLOR} bg-plate`,
+            PLATE_CLASS,
+            "absolute grid items-baseline",
             "grid-cols-[auto_minmax(0,1fr)_auto]",
             isSlide
-              ? "inset-x-1.5 bottom-1.5 min-h-11 gap-x-1.5 gap-y-1 px-2 py-1.5"
-              : "inset-x-plate bottom-plate min-h-[3.625rem] gap-x-2 gap-y-1.5 px-4 pt-[0.8rem] pb-plate-foot",
+              ? "inset-x-1.5 bottom-1.5 min-h-11 gap-x-1.5 gap-y-1 px-2 py-1.5 [--plate-cut:0.625rem]"
+              : "inset-x-plate bottom-plate min-h-[3.625rem] gap-x-2 gap-y-1.5 px-4 pt-[0.8rem] pb-plate-foot [--plate-cut:1.125rem]",
           )}
         >
           <span
@@ -107,7 +113,8 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
 
           <h3
             className={cn(
-              "font-urbanist truncate leading-[1.15] font-bold text-ink",
+              PLATE_TITLE_CLASS,
+              "leading-[1.15]",
               isSlide ? "text-[0.85rem]" : "text-[clamp(1rem,1.35vw,1.2rem)]",
             )}
           >
@@ -116,11 +123,7 @@ const HomeProjectCard = ({ project, index, position, variant = "grid" }) => {
 
           <span
             aria-hidden="true"
-            className={cn(
-              "col-start-3 row-span-2 row-start-1 grid shrink-0 place-items-center self-center text-ash",
-              "transition-[transform,color] duration-200 group-hover:-translate-y-px group-hover:translate-x-px group-hover:text-ink motion-reduce:transition-none",
-              isSlide ? "h-4 w-4" : "h-6 w-6",
-            )}
+            className={cn(PLATE_ARROW_CLASS, isSlide ? "h-4 w-4" : "h-6 w-6")}
           >
             <ArrowUpRightIcon
               className={isSlide ? "h-3 w-3" : "h-[0.95rem] w-[0.95rem]"}
