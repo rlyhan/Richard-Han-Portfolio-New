@@ -1,6 +1,6 @@
 import { FEATURED_LABEL, FEATURED_PROJECTS } from "../../data/home.data";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import HomeProjectCard from "./HomeProjectCard";
+import HomeBlocks from "./HomeBlocks";
 import HomeProjectCarousel from "./HomeProjectCarousel";
 import { EYEBROW_LABEL_TYPE_CLASS } from "../layout/sharedClasses";
 
@@ -11,52 +11,8 @@ export const GRID_BORDER_COLOR = "border-grid";
 // see useMediaQuery.
 const MD_UP = "(min-width: 768px)";
 
-// Where each cell sits. Hand-placed, not flowed: the spread is the point, and an
-// auto-placed fourth card would break it — why FEATURED_PROJECTS is fixed at
-// three.
-const CELLS = [
-  "col-start-1 row-start-1 row-end-3",
-  "col-start-2 row-start-1 row-end-2",
-  "col-start-2 row-start-2 row-end-3",
-];
-
 export const EYEBROW_CLASS =
   "font-epilogue font-medium uppercase leading-none tracking-[0.18em]";
-
-// The masonry spread: a heading bar over three cells drawn as one grid.
-//
-// The counter beside the heading states the depth of the set, which a
-// three-card spread can't say for itself — and is aria-hidden, since the
-// numbering it counts is already on each card, where read aloud it's noise.
-const WorkGrid = () => (
-  <div className="grid h-full min-h-0 grid-rows-[3.375rem_minmax(0,1fr)]">
-    <header className="flex items-center justify-between gap-6 bg-slate px-[clamp(1rem,1.6vw,1.75rem)]">
-      <h2 className={`${EYEBROW_LABEL_TYPE_CLASS} text-chalk`}>
-        {FEATURED_LABEL}
-      </h2>
-
-      <p
-        aria-hidden="true"
-        className={`${EYEBROW_CLASS} text-[0.6875rem] text-chalk/60`}
-      >
-        01 — {String(FEATURED_PROJECTS.length).padStart(2, "0")}
-      </p>
-    </header>
-
-    <div
-      className="grid min-h-0 grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] grid-rows-2"
-    >
-      {FEATURED_PROJECTS.map((project, i) => (
-        <HomeProjectCard
-          key={project.id}
-          project={project}
-          index={i}
-          position={CELLS[i]}
-        />
-      ))}
-    </div>
-  </div>
-);
 
 // The phone layout: the heading holds one column, the projects pass through
 // the other one card at a time — stacked, a third of a phone screen is too
@@ -83,11 +39,11 @@ const HomeWork = ({ setGridRef }) => {
 
   return (
     <section
-      aria-label={FEATURED_LABEL}
+      aria-label={isMdUp ? undefined : FEATURED_LABEL}
       className={`h-[35svh] min-h-[7.5rem] overflow-hidden border-t ${GRID_BORDER_COLOR} md:col-start-2 md:row-span-2 md:row-start-1 md:h-full md:min-h-0 md:border-t-0 md:border-l`}
     >
       <div ref={setGridRef} className="h-full">
-        {isMdUp ? <WorkGrid /> : <WorkColumns />}
+        {isMdUp ? <HomeBlocks /> : <WorkColumns />}
       </div>
     </section>
   );

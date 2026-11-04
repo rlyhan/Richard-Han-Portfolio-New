@@ -86,6 +86,11 @@ const PAPER = {
   // Deeper in dark, below fog, so the mat still reads as a frame there rather
   // than merging with the ground.
   well: { light: WELL, dark: "#0E0C0A" },
+  // The hero's three page blocks, a yellow, its pale tint and a dark grey. In both
+  // schemes About's yellow carries slate type, Contact's grey chalk, Projects ink.
+  "block-about": { light: "#F2C522", dark: "#E0B71F" },
+  "block-projects": { light: "#F3ECCB", dark: "#2F2C20" },
+  "block-contact": { light: "#4A4A47", dark: "#3B3B39" },
 };
 
 const paperVars = (scheme) =>
@@ -105,12 +110,12 @@ export default {
       },
 
       // How far a hero card's caption plate stands in from the card's edges,
-      // and the padding under the plate's last line. The hero's links share a
-      // baseline with that line, so their padding is worked out from both —
-      // see HomeNav.
+      // and the padding under the plate's last line. The hero's links and the
+      // labels on its page blocks stand this far off the foot too — see HomeNav.
       spacing: {
         plate: "0.875rem",
         "plate-foot": "0.75rem",
+        "block-gutter": "clamp(1rem,1.6vw,1.75rem)",
       },
 
       // Single source of truth for the palette — index.css pulls the same

@@ -4,7 +4,7 @@ import { INTRO_GUTTER_CLASS } from "./HomeIntro";
 
 // Its own block rather than the intro's foot, so below md it can follow the work
 // panel to the bottom of the screen. From md it sits under the intro, its last line
-// on a baseline with the card plates' last line, worked out from the same tokens.
+// level with the labels on HomeBlocks, worked out from the same tokens.
 const HomeNav = ({ setNavRef, cue }) => {
   const navItems = useNavItems();
 

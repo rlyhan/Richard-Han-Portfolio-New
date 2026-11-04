@@ -21,9 +21,7 @@ export const INTRO_LINES = `${INTRO_TOPLINE.name}.`.split(" ");
 
 export const FEATURED_LABEL = "Featured work";
 
-// Three, and in this order: the masonry grid is hand-placed rather than flowed, so
-// the layout below only describes these three cells. Adding a fourth here would
-// leave it unplaced.
+// The phone layout's deck of cards, in the order it swipes through them.
 //
 // Each cell names its own shot. Some are the file the Projects section shows and
 // some aren't: a card and a tile crop the same picture to very different shapes, so
