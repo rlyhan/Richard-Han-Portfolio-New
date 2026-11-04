@@ -7,7 +7,7 @@ export const INTRO_GUTTER_CLASS =
   "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
 // The left half of the hero: the byline at the top, and the name with the note
-// under it centred in what's left. The site's links under it are HomeNav's.
+// under it centred in what's left. What sits under it is HomeNav's.
 //
 // Three planes the hero's exit moves, and they don't all leave together — see
 // useHeroHandoff. The h1's lines and the note rise (`setLineRef`, `setNoteRef`);
