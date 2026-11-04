@@ -53,7 +53,7 @@ const Block = ({ to, label, index, className }) => {
       style={{ animationDelay: `${index * REVEAL_STAGGER_MS}ms` }}
     >
       <span className="flex items-center justify-between gap-3 px-block-gutter font-arial text-[clamp(1.75rem,2.7vw,2.75rem)] leading-none font-normal tracking-[-0.025em]">
-        <span className="underline-offset-[0.12em] group-hover:underline">
+        <span className="transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none">
           {label}
         </span>
         <ArrowUpRightIcon className="h-[0.8em] w-[0.8em] shrink-0 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none" />
