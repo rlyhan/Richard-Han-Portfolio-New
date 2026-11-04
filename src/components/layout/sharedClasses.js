@@ -27,7 +27,7 @@ export const DOT_GRID_CLASS =
 // The hero's ground: fog, dotted in dark.
 export const DOTTED_GROUND_CLASS = `bg-fog bg-dots ${DOT_GRID_CLASS}`;
 
-// The link wrapping a project's shot, in both the hero's cards and the
+// The link wrapping a project's shot: the hero's cards and mosaic, and the
 // Projects grid's tiles.
 export const PROJECT_LINK_CLASS =
   "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
