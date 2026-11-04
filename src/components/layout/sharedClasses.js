@@ -1,5 +1,5 @@
 // The site's small-caps label voice, shared verbatim by the band heading, the
-// byline, the hero's work heading, and every write-up's row labels. Not the same
+// hero's work heading, and every write-up's row labels. Not the same
 // constant as the two EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx —
 // those are tuned per context (tracking, size) and diverge from this on purpose.
 //

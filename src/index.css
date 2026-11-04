@@ -5,11 +5,10 @@
 
      Fjalla One  the page's headings, and the name — the hero's h1 and the
                  nav bar's wordmark
-     Urbanist    the hero's display voice — the work panel's heading,
-                 a write-up's title and its opening idea
-     Epilogue    the reading voice — the hero's byline, its closing note and
-                 every small-caps label on the spread, and the body copy on
-                 About and each write-up
+     Urbanist    the hero's display voice — its closing note, the work panel's
+                 heading, a write-up's title and its opening idea
+     Epilogue    the reading voice — every small-caps label on the spread, and
+                 the body copy on About and each write-up
 
    Only the weights actually set are here. `font-synthesis: none` below means
    an unloaded weight renders as the nearest loaded one rather than as a faked

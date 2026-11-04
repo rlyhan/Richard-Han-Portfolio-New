@@ -160,7 +160,7 @@ export default {
       // pair. The name is the one thing that crosses over: in the hero's h1
       // and in the nav bar's wordmark, it keeps the page's heading face rather
       // than the hero's display face. `arial`, the titles on the project plates,
-      // comes from the system.
+      // the hero's blocks and the byline, comes from the system.
       fontFamily: {
         arial: ["Arial", "Helvetica", "sans-serif"],
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],

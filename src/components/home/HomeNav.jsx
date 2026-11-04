@@ -33,7 +33,7 @@ const HomeNav = ({ setNavRef, cue }) => {
         </ul>
       </nav>
 
-      <small className="hidden font-epilogue text-[0.8125rem] leading-none font-medium text-ash md:block">
+      <small className="hidden font-arial text-[0.8125rem] leading-none text-ash md:block">
         {COPYRIGHT}
       </small>
 

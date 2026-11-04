@@ -44,7 +44,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (
       </h1>
       <p
         ref={setNoteRef}
-        className="mt-[clamp(0.95rem,3svh,1.6rem)] max-w-[25.5rem] pr-8 font-epilogue text-[0.75rem] leading-[1.5] font-normal text-hush md:mt-6 md:pr-0 md:text-[0.9375rem] md:leading-[1.6] dark:font-medium"
+        className="mt-[clamp(0.95rem,3svh,1.6rem)] max-w-[25.5rem] pr-8 font-urbanist text-[0.75rem] leading-[1.5] font-medium text-hush md:mt-6 md:pr-0 md:text-[0.9375rem] md:leading-[1.6]"
       >
         {INTRO_NOTE}
       </p>
