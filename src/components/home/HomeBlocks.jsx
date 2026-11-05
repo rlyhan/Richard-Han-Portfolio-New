@@ -98,7 +98,7 @@ const HomeBlocks = () => {
             to={PATHS.projects}
             label="Projects"
             index={0}
-            className="grow bg-block-projects pt-6 text-slate md:grow-0 md:pt-block-gutter"
+            className="grow border-t border-l border-grid bg-fog pt-6 text-ink md:grow-0 md:border-0 md:bg-block-projects md:pt-block-gutter md:text-slate"
           />
         </li>
 
@@ -107,7 +107,7 @@ const HomeBlocks = () => {
             to={PATHS.about}
             label="About"
             index={1}
-            className="bg-block-about pt-6 text-slate md:pt-0"
+            className="border-t border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-about md:pt-0 md:text-slate"
           />
         </li>
 
@@ -116,7 +116,7 @@ const HomeBlocks = () => {
             to={PATHS.contact}
             label="Contact"
             index={2}
-            className="bg-block-contact pt-6 text-chalk md:pt-0"
+            className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-chalk"
           />
         </li>
       </ul>
