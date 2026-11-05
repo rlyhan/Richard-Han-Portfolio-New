@@ -1,50 +1,17 @@
 import cn from "classnames";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
-import MattedShot from "../common/MattedShot";
-import { PROJECT_LINK_CLASS } from "../layout/sharedClasses";
-import PROJECTS from "../../data/projects.data";
-import { fitOf } from "../../data/shots.data";
+import HomeProjectTicker from "./HomeProjectTicker";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useNavLink } from "../../hooks/useNavLinks";
-import { PATHS, projectPathOf } from "../../routes/routes";
+import { PATHS } from "../../routes/routes";
 
 const REVEAL_CLASS = "animate-project-reveal motion-reduce:animate-none";
 const REVEAL_STAGGER_MS = 120;
 
 // md, as Tailwind has it. Read from JS rather than hidden with CSS, because an image
-// under display: none can still download, and each layout has strips of its own.
+// under display: none can still download, and the ticker is drawn in a different
+// place at each size.
 export const MD_UP = "(min-width: 768px)";
-
-// The first projects' shots, which index.html preloads.
-const EAGER_STRIPS = 3;
-
-// The shot keeps its full size throughout, centred in a window that opens over it,
-// so a hover uncovers the picture rather than rescaling it.
-const Strip = ({ project: { id, name, images }, eager }) => {
-  const link = useNavLink(projectPathOf(id));
-  const [src] = images;
-
-  return (
-    <li className="relative min-h-0 flex-1 transition-[flex-grow,flex-basis] duration-500 ease-out hover:grow-0 hover:basis-[min(calc(56.25cqw+3rem),70cqh)] has-[:focus-visible]:grow-0 has-[:focus-visible]:basis-[min(calc(56.25cqw+3rem),70cqh)] motion-reduce:transition-none">
-      <a
-        {...link}
-        className={cn(
-          PROJECT_LINK_CLASS,
-          "absolute inset-0 overflow-hidden bg-block-projects text-slate",
-        )}
-      >
-        <span className="absolute inset-x-0 bottom-0 flex h-12 items-center px-block-gutter font-arial text-[clamp(1rem,1.35vw,1.2rem)] leading-none">
-          {name}
-        </span>
-        <span className="absolute inset-0 overflow-hidden bg-block-projects transition-[bottom] duration-500 ease-out group-hover:bottom-12 group-focus-visible:bottom-12 motion-reduce:transition-none">
-          <span className="absolute inset-x-0 top-1/2 block aspect-video -translate-y-1/2 opacity-90 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
-            <MattedShot src={src} alt="" eager={eager} fit={fitOf(src)} />
-          </span>
-        </span>
-      </a>
-    </li>
-  );
-};
 
 const Block = ({ to, label, index, className }) => {
   const link = useNavLink(to);
@@ -77,21 +44,9 @@ const HomeBlocks = () => {
       <ul className="grid h-full min-h-0 grid-cols-3 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:grid-rows-2">
         <li className="order-2 flex min-h-0 flex-col md:order-none md:row-span-2">
           {isMdUp && (
-            <ul
-              aria-label="Projects"
-              className={cn(
-                "flex min-h-0 flex-1 flex-col [container-type:size]",
-                REVEAL_CLASS,
-              )}
-            >
-              {PROJECTS.map((project, i) => (
-                <Strip
-                  key={project.id}
-                  project={project}
-                  eager={i < EAGER_STRIPS}
-                />
-              ))}
-            </ul>
+            <div className={cn("min-h-0 flex-1 bg-block-projects", REVEAL_CLASS)}>
+              <HomeProjectTicker linked />
+            </div>
           )}
 
           <Block

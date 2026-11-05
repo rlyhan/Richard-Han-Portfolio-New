@@ -152,15 +152,15 @@ export default {
         sans: ["system-ui", "sans-serif"],
       },
       keyframes: {
-        // The hero's blocks and strips arriving on load. `both` holds the end
+        // The hero's blocks and ticker arriving on load. `both` holds the end
         // state, so they keep a transform once it finishes — nothing
         // inside them is positioned against the viewport, so that's free.
         //
         // It starts part-visible rather than at nothing, and that 0.25 is load
         // time rather than taste: a fully transparent element is not a largest-
         // contentful-paint candidate, so starting at 0 put this animation, plus
-        // the stagger in front of it, inside the LCP measurement — a strip's
-        // shot was decoded and waiting while the fade ran. At 0.25 the strip
+        // the stagger in front of it, inside the LCP measurement — a ticker
+        // shot was decoded and waiting while the fade ran. At 0.25 the ticker
         // counts from its first frame (`both` holds that state through the
         // stagger too), and the rise is what carries the entrance.
         "project-reveal": {

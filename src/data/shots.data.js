@@ -7,7 +7,7 @@
 // fits.
 //
 // Keyed by filename because that is what the distinction is about. The same file
-// is the hero's strip, the Projects grid's tile and the write-up's shot, and it
+// is the hero's ticker tile, the Projects grid's tile and the write-up's shot, and it
 // wants the same treatment in all three.
 const BLEED_SHOTS = new Set([
   "neatplaces.webp",

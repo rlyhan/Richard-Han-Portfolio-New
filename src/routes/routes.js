@@ -12,7 +12,7 @@ import PROJECTS from "../data/projects.data";
 //
 // The project list is imported here, not only by the pages that show it, since the
 // write-ups below are a page per project and the table can't be built without it.
-// That costs nothing — the homepage's strips read the same list, already
+// That costs nothing — the homepage's ticker reads the same list, already
 // shared between three chunks and hoisted out of all of them.
 const PAGES = [
   {

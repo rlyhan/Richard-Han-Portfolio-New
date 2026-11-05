@@ -19,7 +19,7 @@ export const NOTE_TEXT_CLASS =
 export const DOT_GRID_CLASS =
   "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
 
-// The link wrapping a project's shot: the hero's strips and the Projects grid's
+// The link wrapping a project's shot: the hero's ticker and the Projects grid's
 // tiles.
 export const PROJECT_LINK_CLASS =
   "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
