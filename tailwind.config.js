@@ -10,15 +10,15 @@ const SCRIM_RGB = "42, 36, 30";
 // OS's, unless the masthead's toggle has put a `data-theme` on <html>.
 const PAPER = {
   // The plates laid on the ground: a write-up's tags, About's icons and
-  // interest chips. A step lighter than fog and mist in both schemes, not
+  // interest chips. A step lighter than mist in both schemes, not
   // inverted — a near-black plate on dark grey read as a hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#252524" },
-  // The hero's ground, and in both schemes every other opening's tone (see stage):
-  // in light, neutral grey where the reading below is mist, so the opening reads as
-  // its own surface.
-  fog: { light: "#D9D9D6", dark: "#141414" },
+  // The hero's ground. In light, off-white rather than the other openings' grey, which
+  // dulled the photographs and clashed with the warm blocks beside it. In dark, the
+  // same tone as those openings (see stage).
+  fog: { light: "#F7F7F5", dark: "#141414" },
   // What follows an opening — the Projects list, a write-up's article —
-  // Contact's text, and the footer under each: fog a step lighter, so the opening
+  // Contact's text, and the footer under each: stage a step lighter, so the opening
   // ends without the jump to cream.
   mist: { light: "#E8E8E5", dark: "#1A1A1A" },
   // The pinned nav bar: a half-step off the ground, so it reads as its own
@@ -31,11 +31,11 @@ const PAPER = {
   //
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
-  // fog. This holds 4.9:1 on fog, 5.2:1 on shell and 6.5:1 on cream
+  // stage. This holds 4.9:1 on stage, 5.2:1 on shell and 6.5:1 on cream
   // in light, 6.3:1, 5.6:1 and 5.2:1 in dark.
   ash: { light: "#595959", dark: "#9C968C" },
-  // The intro's closing note: ash in dark, and in light as far off it as AA
-  // allows on fog — 4.5:1. A paragraph in ash read heavier than the name above it.
+  // The intro's closing note: ash in dark, and a shade lighter in light — 6:1 on
+  // fog. A paragraph in ash read heavier than the name above it.
   hush: { light: "#5F5F5F", dark: "#9C968C" },
   // The hairlines: the seam between the hero's two halves, and a write-up's rows.
   // Light enough to read as a drawn edge on cream. 1.6:1 on cream in light, 1.5:1
@@ -47,9 +47,10 @@ const PAPER = {
   // The title panel's dots: beige, and in both schemes — the panel doesn't change
   // with the scheme, so neither do they.
   "panel-dot": { light: "#766B52", dark: "#766B52" },
-  // The Projects masthead and a write-up's opening: fog in light, and in dark
-  // Contact's panel and its beige dots, so every page below the hero opens on
-  // the ground Contact does.
+  // The Projects masthead and a write-up's opening: in light, neutral grey where the
+  // reading below is mist, so the opening reads as its own surface; in dark, Contact's
+  // panel and its beige dots, so every page below the hero opens on the ground
+  // Contact does.
   stage: { light: "#D9D9D6", dark: "#141414" },
   "stage-dot": { light: "transparent", dark: "#766B52" },
   // The pinned bar over those pages and About: shell in light, and in dark the
