@@ -167,9 +167,13 @@ export default {
           from: { opacity: "0.25", transform: "translateY(1.25rem)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        ticker: {
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "project-reveal": "project-reveal 0.8s ease-out both",
+        ticker: "ticker 60s linear infinite",
       },
     },
   },
