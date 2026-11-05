@@ -25,7 +25,7 @@ const Strip = ({ project: { id, name, images }, eager }) => {
         {...link}
         className={cn(
           PROJECT_LINK_CLASS,
-          "absolute inset-0 bg-block-projects text-slate",
+          "absolute inset-0 overflow-hidden bg-block-projects text-slate",
         )}
       >
         <span className="absolute inset-x-0 bottom-0 flex h-12 items-center px-block-gutter font-arial text-[clamp(1rem,1.35vw,1.2rem)] leading-none">
