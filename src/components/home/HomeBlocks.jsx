@@ -31,8 +31,8 @@ const Strip = ({ project: { id, name, images }, eager }) => {
         <span className="absolute inset-x-0 bottom-0 flex h-12 items-center px-block-gutter font-arial text-[clamp(1rem,1.35vw,1.2rem)] leading-none">
           {name}
         </span>
-        <span className="absolute inset-0 overflow-hidden transition-[bottom] duration-500 ease-out group-hover:bottom-12 group-focus-visible:bottom-12 motion-reduce:transition-none">
-          <span className="absolute inset-x-0 top-1/2 block aspect-video -translate-y-1/2">
+        <span className="absolute inset-0 overflow-hidden bg-block-projects transition-[bottom] duration-500 ease-out group-hover:bottom-12 group-focus-visible:bottom-12 motion-reduce:transition-none">
+          <span className="absolute inset-x-0 top-1/2 block aspect-video -translate-y-1/2 opacity-90 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
             <MattedShot src={src} alt="" eager={eager} fit={fitOf(src)} />
           </span>
         </span>
