@@ -1,10 +1,7 @@
 // tailwind.config.js
 
-// Kept as a constant so `well`'s light value and the About page's mobile scrim in
-// backgroundImage, which falls across its portrait in the same tone, can't drift
-// out of step.
-const WELL = "#2A241E";
-const WELL_RGB = "42, 36, 30";
+// The warm dark of the About page's mobile scrim in backgroundImage.
+const SCRIM_RGB = "42, 36, 30";
 
 // The paper tones, each with its value in both schemes. The dark scheme inverts
 // these, all but cream, and leaves the frame and the scrim alone: they mat the shots, which look
@@ -40,11 +37,9 @@ const PAPER = {
   // The intro's closing note: ash in dark, and in light as far off it as AA
   // allows on fog — 4.5:1. A paragraph in ash read heavier than the name above it.
   hush: { light: "#5F5F5F", dark: "#9C968C" },
-  // The hero spread's hairlines: the seam between the two halves and the grid the
-  // cards sit in. Light enough to read
-  // as a drawn edge on cream rather than as an outline around each cell — the
-  // cells share seams, so a heavier line would draw three boxes instead of one
-  // grid. 1.6:1 on cream in light, 1.5:1 in dark.
+  // The hairlines: the seam between the hero's two halves, and a write-up's rows.
+  // Light enough to read as a drawn edge on cream. 1.6:1 on cream in light, 1.5:1
+  // in dark.
   grid: { light: "#C4C4C0", dark: "#45403A" },
   // The Contact page's title panel and its email button: the same near-black
   // in both schemes, with chalk type on it — 17.2:1.
@@ -64,23 +59,15 @@ const PAPER = {
   // About's ground: mist in light, and in dark Contact's near-black, a step
   // under the bar, where mist would leave the bar level with the page.
   deep: { light: "#E8E8E5", dark: "#141414" },
-  // The hero's work heading: the same near-black as Contact's panel in both
-  // schemes. Chalk holds 17.2:1 on it.
+  // The type on the hero's light blocks: the same near-black as Contact's panel in
+  // both schemes. Chalk holds 17.2:1 on it.
   slate: { light: "#141414", dark: "#141414" },
-  // Each project's caption plate: cream in light, and in dark the work heading's
-  // near-black, so the shots are headed and captioned alike there. Its ink and
-  // ash hold 12.8:1 and 6.5:1 in light, at least 15:1 and 6:1 in dark.
+  // Each project's caption plate: cream in light, and in dark slate's near-black. Its
+  // ink and ash hold 12.8:1 and 6.5:1 in light, at least 15:1 and 6:1 in dark.
   plate: { light: "#F7F7F5", dark: "#141414" },
   // The hairline around each plate, which holds it off a white shot in light and
   // off a near-black one in dark.
   "plate-edge": { light: "#DCDCD8", dark: "#2E2E2C" },
-  // The well each project shot is matted on. The one dark ground in the
-  // hero, and the reason the shots read as objects on a page rather than
-  // as panels of their own: warm, the one warm ground among neutral greys, so
-  // it sits with the photographs rather than punching a hole in the page.
-  // Deeper in dark, below fog, so the mat still reads as a frame there rather
-  // than merging with the ground.
-  well: { light: WELL, dark: "#0E0C0A" },
   // The hero's three page blocks, a yellow, its pale tint and a dark grey, the same
   // in both schemes. The yellow and its tint carry slate type, the grey chalk.
   "block-about": { light: "#F2C522", dark: "#F2C522" },
@@ -98,15 +85,14 @@ export default {
   theme: {
     extend: {
       // The hero has a second breakpoint of its own: from here up there is
-      // width enough to even out the two halves, where below it the spread
-      // takes the larger share — see Home.
+      // width enough to even out the two halves, where below it the blocks
+      // take the larger share — see Home.
       screens: {
         wide: "90rem",
       },
 
-      // How far a hero card's caption plate stands in from the card's edges,
-      // and the padding under the plate's last line. The hero's links and the
-      // labels on its page blocks stand this far off the foot too — see HomeNav.
+      // Together, how far the labels on the hero's blocks and the line beside them
+      // stand off the foot — see HomeNav.
       spacing: {
         plate: "0.875rem",
         "plate-foot": "0.75rem",
@@ -129,16 +115,13 @@ export default {
           "radial-gradient(circle, var(--panel-dot) 1px, transparent 1.5px)",
         "stage-dots":
           "radial-gradient(circle, var(--stage-dot) 1px, transparent 1.5px)",
-        // The ground the Projects page mats each shot on: `well`, vignetted.
+        // The ground the Projects page mats each shot on: a warm dark, vignetted.
         //
-        // Flat `well` is right for the hero's cells, which are small enough that one
-        // tone reads as a frame. At three-column size the same flat fill reads as a
-        // slab, so this lifts the centre and takes the corners down — which is what
-        // puts the shot in a frame rather than on a panel.
+        // At three-column size a flat fill reads as a slab, so this lifts the centre
+        // and takes the corners down — which is what puts the shot in a frame rather
+        // than on a panel.
         //
-        // The two stops sit either side of `well` in lightness, so the frame is the
-        // hero's well with light falling on it rather than a second dark tone. Off
-        // the 45% centre, because the shot is matted higher in the cell than it is
+        // Off the 45% centre, because the shot is matted higher in the cell than it is
         // low — the caption plate takes the foot — so a centred highlight would sit
         // under the plate instead of behind the object.
         frame: "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
@@ -146,12 +129,12 @@ export default {
         // photograph is not a ground to set type on. This is what gives the words something to
         // sit against.
         //
-        // `well` rather than black, so it reads as the site's own dark tone falling
+        // A warm dark rather than black, so it reads as the site's own dark tone falling
         // across the picture rather than as a grey card laid over it. It holds above
         // 0.8 through the first third, which is as high as the second line of the
         // title reaches — the stops are placed against that block, not spread evenly
         // — and is gone by 82%, so the subject's face is never under it.
-        scrim: `linear-gradient(to top, rgba(${WELL_RGB}, 0.94) 0%, rgba(${WELL_RGB}, 0.88) 26%, rgba(${WELL_RGB}, 0.55) 44%, rgba(${WELL_RGB}, 0.16) 64%, rgba(${WELL_RGB}, 0) 82%)`,
+        scrim: `linear-gradient(to top, rgba(${SCRIM_RGB}, 0.94) 0%, rgba(${SCRIM_RGB}, 0.88) 26%, rgba(${SCRIM_RGB}, 0.55) 44%, rgba(${SCRIM_RGB}, 0.16) 64%, rgba(${SCRIM_RGB}, 0) 82%)`,
       },
       // Three loaded faces, and each one has a job — see the @font-face block in
       // index.css for which weights of them are actually loaded.
@@ -169,15 +152,15 @@ export default {
         sans: ["system-ui", "sans-serif"],
       },
       keyframes: {
-        // The hero's project cards arriving on load. `both` holds the end
-        // state, so the cards keep a transform once it finishes — nothing
+        // The hero's blocks and strips arriving on load. `both` holds the end
+        // state, so they keep a transform once it finishes — nothing
         // inside them is positioned against the viewport, so that's free.
         //
         // It starts part-visible rather than at nothing, and that 0.25 is load
         // time rather than taste: a fully transparent element is not a largest-
         // contentful-paint candidate, so starting at 0 put this animation, plus
-        // the stagger in front of it, inside the LCP measurement — the card's
-        // shot was decoded and waiting while the fade ran. At 0.25 the card
+        // the stagger in front of it, inside the LCP measurement — a strip's
+        // shot was decoded and waiting while the fade ran. At 0.25 the strip
         // counts from its first frame (`both` holds that state through the
         // stagger too), and the rise is what carries the entrance.
         "project-reveal": {

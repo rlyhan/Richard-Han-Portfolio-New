@@ -14,7 +14,7 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 // the homepage wear — it draws the byline and title itself, so a masthead above
 // it would be both of those twice. See AboutOpening.
 //
-// Its own page, at /about, and its own chunk — the hero's spread and the
+// Its own page, at /about, and its own chunk — the hero's shots and the
 // project data aren't sent to someone who came here to read. The router mounts
 // it below the hero for the length of the handoff and takes the URL over once
 // it has the viewport, so the join reads as one document continuing while still

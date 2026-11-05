@@ -14,18 +14,16 @@ import { projectPathOf } from "../../routes/routes";
 import { fitOf } from "../../data/shots.data";
 
 // The Projects page's small-caps voice: each tile's number and category, and the
-// award mark inside the category line. Tighter tracking than the hero's spread — at
-// 9px in a plate this narrow, the hero's 0.18em pushes a two-word category into a
-// wrap.
+// award mark inside the category line. Tracking held tight — at 9px in a plate this
+// narrow, anything much wider pushes a two-word category into a wrap.
 const EYEBROW_CLASS =
   "font-epilogue text-[0.5625rem] font-medium uppercase leading-none tracking-[0.06em]";
 
-// The hero card's frame at three-column size — see HomeProjectCard for why most
-// shots are matted rather than cropped, and why the ones photographed in a room run
-// to the tile's edges instead. The ground differs at this size: `bg-frame`, a
-// vignetted well rather than a flat one, since a flat fill reads as a slab this large
-// (see tailwind.config). The zoom is the hero's too, held to one subtle step since a
-// fourteen-cell grid only ever has one shot moving at a time under the cursor.
+// Most shots are matted rather than cropped, and the ones photographed in a room run
+// to the tile's edges instead — see shots.data. The ground is `bg-frame`, since a flat
+// fill reads as a slab this large (see tailwind.config). The zoom is held to one subtle
+// step since a fourteen-cell grid only ever has one shot moving at a time under the
+// cursor.
 //
 // The title stays a heading inside that link rather than becoming a span the link is
 // named by. The list is a list of projects, and a screen reader jumping the page by

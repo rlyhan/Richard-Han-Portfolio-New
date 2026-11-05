@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
 import PageSection from "../components/layout/PageSection";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
+import { MD_UP } from "../components/home/HomeBlocks";
 import HomeIntro from "../components/home/HomeIntro";
 import HomeNav from "../components/home/HomeNav";
 import HomeWork from "../components/home/HomeWork";
@@ -9,6 +10,7 @@ import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useSplitReveal } from "../hooks/useSplitReveal";
 
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
@@ -60,7 +62,7 @@ const HomePage = () => {
     displayLineRefs.current[WORK_LINE_INDEX] = el;
   }, []);
   // The outro sinks in the order it's collected: the byline atop the intro panel
-  // first, then the links at the hero's foot. Three is the ceiling here for the
+  // first, then the hero's foot. Three is the ceiling here for the
   // same reason six is above — the last has to land inside the runway.
   const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
@@ -98,10 +100,18 @@ const HomePage = () => {
 
   // Any scroll away from the hero retires the cue, including the one it starts
   // itself — but only where there's a runway to scroll along. Without one the
-  // hero is the whole page, and the only scroll under it is the footer's slack,
-  // where a cue going away would read as the way to the footer, not to About.
+  // hero is the whole page, and the cue is the only way on it has.
   const isNearPageTop = useIsNearPageTop(NEAR_TOP_THRESHOLD);
   const isCueVisible = (!nextPath || isNearPageTop) && !isScrollingToNext;
+
+  const isMdUp = useMediaQuery(MD_UP);
+  const cue = (
+    <ScrollCue
+      onClick={goToNextPage}
+      visible={isCueVisible}
+      label={nextPath ? "Scroll to the About page" : "Go to the About page"}
+    />
+  );
 
   return (
     <>
@@ -117,19 +127,8 @@ const HomePage = () => {
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}
           />
-          <HomeWork setGridRef={setWorkRef} />
-          <HomeNav
-            setNavRef={setNavRef}
-            cue={
-              <ScrollCue
-                onClick={goToNextPage}
-                visible={isCueVisible}
-                label={
-                  nextPath ? "Scroll to the About page" : "Go to the About page"
-                }
-              />
-            }
-          />
+          <HomeWork setGridRef={setWorkRef} cue={isMdUp ? null : cue} />
+          <HomeNav setNavRef={setNavRef} cue={isMdUp ? cue : null} />
         </div>
       </PageSection>
 

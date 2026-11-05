@@ -11,7 +11,7 @@ export const INTRO_GUTTER_CLASS =
 //
 // Three planes the hero's exit moves, and they don't all leave together — see
 // useHeroHandoff. The h1's lines and the note rise (`setLineRef`, `setNoteRef`);
-// the byline sinks with the links (`setToplineRef`), since it reads as the
+// the byline sinks with the foot (`setToplineRef`), since it reads as the
 // page's furniture, not part of the h1. The indices belong to Home, so this
 // stays unaware of where in either stagger it lands.
 const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => (

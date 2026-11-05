@@ -7,12 +7,12 @@ import PROJECTS from "../data/projects.data";
 // tab is called. Adding a page is a record here and a component under src/pages;
 // nothing else knows the list.
 //
-// Each page is its own chunk, the point of the split: the hero's spread and its
-// carousel aren't sent to someone who came to read About.
+// Each page is its own chunk, the point of the split: the hero's shots
+// aren't sent to someone who came to read About.
 //
 // The project list is imported here, not only by the pages that show it, since the
 // write-ups below are a page per project and the table can't be built without it.
-// That costs nothing — the homepage's featured cards read the same list, already
+// That costs nothing — the homepage's strips read the same list, already
 // shared between three chunks and hoisted out of all of them.
 const PAGES = [
   {

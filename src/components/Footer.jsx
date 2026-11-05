@@ -4,7 +4,7 @@ import { PATHS } from "../routes/routes";
 
 export const COPYRIGHT = `© ${new Date().getFullYear()} Richard Han.`;
 
-// From md the homepage carries this line in its own layout — see HomeNav.
+// The homepage has no footer: from md it carries this line itself — see HomeNav.
 const Footer = () => {
   const { path } = useRouter();
 
@@ -12,7 +12,7 @@ const Footer = () => {
     <footer
       className={cn(
         "flex min-h-[var(--nav-height,4rem)] items-center justify-center px-6 py-6 text-center text-sm text-ash",
-        path === PATHS.home && "md:hidden",
+        path === PATHS.home && "hidden",
       )}
     >
       {COPYRIGHT}

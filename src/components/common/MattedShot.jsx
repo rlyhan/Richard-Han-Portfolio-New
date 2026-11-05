@@ -2,12 +2,12 @@ import cn from "classnames";
 import { SHOT_HEIGHT, SHOT_WIDTH } from "../../data/shots.data";
 
 // A project shot in its frame. Which fit it takes (`mat` or `bleed`) is a fact
-// about the artwork, not a choice the card makes — see shots.data.
+// about the artwork, not a choice the frame makes — see shots.data.
 //
 // `zoom` is optional: the scale classes for a hover zoom, with the transition
 // and its prefers-reduced-motion guard supplied here so every caller gets the
-// same one. Left off where a shot shouldn't move on hover — the carousel's
-// slides, mid-swipe.
+// same one. Left off where a shot shouldn't move on hover — the hero's
+// strips, which open around it instead.
 const MattedShot = ({ src, alt, eager, fit = "mat", zoom, className }) => (
   <img
     src={`/images/projects/${src}`}

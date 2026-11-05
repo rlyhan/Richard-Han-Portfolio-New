@@ -6,7 +6,7 @@ const BOUNCE_DISTANCE = 10;
 const BOUNCE_DURATION = 0.9;
 const FADE_DURATION = 0.35;
 
-// The hint at the end of the hero's links, handing the viewer into the page below.
+// The hint handing the viewer into the page below.
 //
 // The homepage is the one page that hands over on the scroll, so this is the
 // one place a cue belongs: everywhere else the foot of the page is the foot of

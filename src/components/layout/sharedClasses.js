@@ -1,13 +1,8 @@
-// The site's small-caps label voice, shared verbatim by the band heading, the
-// hero's work heading, and every write-up's row labels. Not the same
-// constant as the two EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx —
-// those are tuned per context (tracking, size) and diverge from this on purpose.
-//
-// The type apart from its colour, for the one label set on a dark plate.
-export const EYEBROW_LABEL_TYPE_CLASS =
-  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] uppercase";
-
-export const EYEBROW_LABEL_CLASS = `${EYEBROW_LABEL_TYPE_CLASS} text-ash`;
+// The site's small-caps label voice, shared verbatim by the band heading and every
+// write-up's row labels. Not the same constant as EYEBROW_CLASS in ProjectTile.jsx —
+// that one is tuned to its context (tracking, size) and diverges from this on purpose.
+export const EYEBROW_LABEL_CLASS =
+  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
 
 // One row of a write-up: its label beside its content from lg, above it below.
 export const ARTICLE_ROW_CLASS =
@@ -24,8 +19,8 @@ export const NOTE_TEXT_CLASS =
 export const DOT_GRID_CLASS =
   "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
 
-// The link wrapping a project's shot: the hero's cards and strips, and the
-// Projects grid's tiles.
+// The link wrapping a project's shot: the hero's strips and the Projects grid's
+// tiles.
 export const PROJECT_LINK_CLASS =
   "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
 
