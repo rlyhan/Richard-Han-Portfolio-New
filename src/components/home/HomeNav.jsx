@@ -3,12 +3,12 @@ import { COPYRIGHT } from "../Footer";
 import { INTRO_GUTTER_CLASS } from "./HomeIntro";
 
 // The foot of the intro from md: the copyright and the way on, its line level with
-// the labels on HomeBlocks, worked out from the same tokens.
+// the labels on HomeBlocks through the same `block-foot`.
 const HomeNav = ({ setNavRef, cue }) => (
   <div
     ref={setNavRef}
     className={cn(
-      "hidden justify-between gap-6 md:col-start-1 md:row-start-2 md:flex md:items-end md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
+      "hidden justify-between gap-6 md:col-start-1 md:row-start-2 md:flex md:items-end md:pb-block-foot",
       INTRO_GUTTER_CLASS,
     )}
   >

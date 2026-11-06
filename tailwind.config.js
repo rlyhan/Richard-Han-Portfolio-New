@@ -83,11 +83,10 @@ export default {
         wide: "90rem",
       },
 
-      // Together, how far the labels on the hero's blocks and the line beside them
-      // stand off the foot — see HomeNav.
+      // `block-foot`: how far the labels on the hero's blocks and the line beside
+      // them stand off the foot, so the two share a baseline — see HomeNav.
       spacing: {
-        plate: "0.875rem",
-        "plate-foot": "0.75rem",
+        "block-foot": "calc(1.625rem + 1px)",
         "block-gutter": "clamp(1rem,1.6vw,1.75rem)",
       },
 
