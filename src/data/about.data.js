@@ -2,7 +2,7 @@
 // here: those are WORK and TECH in work.data.js, which the page reads straight
 // off, so the page and the rest of the site can't drift apart on the facts.
 
-export const ABOUT_HEADING = "About.";
+export const ABOUT_HEADING = "About";
 
 // The whole of the page's own prose, and the only copy the opening carries beside
 // the title. Paragraphs rather than one string because the account turns three

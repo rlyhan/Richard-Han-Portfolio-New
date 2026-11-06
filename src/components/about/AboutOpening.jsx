@@ -3,6 +3,7 @@ import Byline from "../layout/Byline";
 import SplitLine from "../common/SplitLine";
 import { ABOUT_BIO, ABOUT_HEADING } from "../../data/about.data";
 import { PORTRAIT } from "../../data/photos.data";
+import { PAGE_TITLE_CLASS } from "../layout/sharedClasses";
 
 // The gutter the pages that band to the viewport edge carry. Stated here rather than
 // taken from ContactPage, which owns the same line: the two pages share a shape,
@@ -52,7 +53,8 @@ const AboutOpening = ({ headingRef }) => (
       ref={headingRef}
       id="about-heading"
       className={cn(
-        "relative col-start-1 row-start-2 self-end pb-5 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-medium text-chalk md:col-start-2 md:row-start-2 md:self-auto md:pt-6 md:pb-6 md:text-[clamp(1.75rem,3.6vw,2.5rem)] md:text-ink lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
+        "relative col-start-1 row-start-2 self-end pb-5 text-chalk md:col-start-2 md:row-start-2 md:self-auto md:pt-6 md:pb-6 md:text-ink",
+        PAGE_TITLE_CLASS,
         GUTTER_CLASS,
       )}
     >

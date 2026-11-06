@@ -8,6 +8,11 @@ export const EYEBROW_LABEL_CLASS =
 export const BYLINE_TEXT_CLASS =
   "font-arial text-[0.625rem] leading-[1.25] tracking-[0.06em] text-ash uppercase md:text-[0.6875rem]";
 
+// A page's title below the hero: the Projects masthead's and About's, in the
+// homepage blocks' Arial.
+export const PAGE_TITLE_CLASS =
+  "font-arial text-[clamp(2.5rem,10vw,3.25rem)] leading-none tracking-[-0.025em] md:text-[clamp(2.75rem,4.4vw,4.5rem)]";
+
 // One row of a write-up: its label beside its content from lg, above it below.
 export const ARTICLE_ROW_CLASS =
   "grid gap-3.5 border-t border-grid py-6 first:border-t-0 first:pt-0 last:pb-0 md:py-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-x-10";
