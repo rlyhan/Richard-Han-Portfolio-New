@@ -24,10 +24,10 @@ const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
             aria-pressed={isActive}
             onClick={() => onSelect(id)}
             className={cn(
-              "rounded-none border px-4 py-2 font-epilogue text-[0.6875rem] leading-none font-medium tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none",
+              "rounded-none border px-4 py-2 font-arial text-[0.6875rem] leading-none tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none",
               isActive
                 ? "border-ink bg-ink text-cream"
-                : "border-grid bg-transparent text-ash hover:border-ash hover:text-ink",
+                : "border-ash/70 bg-transparent text-ash hover:border-ash hover:text-ink",
             )}
           >
             {label}
@@ -38,7 +38,7 @@ const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
 
     <p
       aria-live="polite"
-      className="font-epilogue text-[0.6875rem] leading-none font-medium tabular-nums text-ash"
+      className="font-arial text-[0.6875rem] leading-none tracking-[0.06em] tabular-nums text-ash"
     >
       {String(shown).padStart(2, "0")} / {String(total).padStart(2, "0")}
     </p>
