@@ -1,9 +1,8 @@
 import cn from "classnames";
 import { INTRO_LINES, INTRO_NOTE } from "../../data/home.data";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { MD_UP, useMediaQuery } from "../../hooks/useMediaQuery";
 import Byline from "../layout/Byline";
 import SplitLine from "../common/SplitLine";
-import { MD_UP } from "./HomeBlocks";
 import TickerGround from "../common/TickerGround";
 
 export const INTRO_GUTTER_CLASS =

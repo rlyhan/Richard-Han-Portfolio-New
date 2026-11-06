@@ -1,5 +1,8 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react"
 
+// md, as Tailwind has it.
+export const MD_UP = "(min-width: 768px)"
+
 // True while `query` matches. For the places where a breakpoint decides which
 // markup to render rather than how one piece of markup looks — CSS can only hide
 // markup, which still mounts it and fetches its images.

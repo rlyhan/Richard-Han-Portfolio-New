@@ -1,17 +1,12 @@
 import cn from "classnames";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import ProjectTicker from "../common/ProjectTicker";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { MD_UP, useMediaQuery } from "../../hooks/useMediaQuery";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { NAV_ROUTES, PATHS } from "../../routes/routes";
 
 const REVEAL_CLASS = "animate-project-reveal motion-reduce:animate-none";
 const REVEAL_STAGGER_MS = 120;
-
-// md, as Tailwind has it. Read from JS rather than hidden with CSS, because an image
-// under display: none can still download, and the ticker is drawn in a different
-// place at each size.
-export const MD_UP = "(min-width: 768px)";
 
 // The nav bar's numbering, so a page has the same number here as in the bar.
 const numberOf = (path) =>

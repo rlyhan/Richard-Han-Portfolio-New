@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 import PageSection from "../components/layout/PageSection";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
-import HomeBlocks, { MD_UP } from "../components/home/HomeBlocks";
+import HomeBlocks from "../components/home/HomeBlocks";
 import HomeIntro from "../components/home/HomeIntro";
 import HomeFooter from "../components/home/HomeFooter";
 import { INTRO_LINES } from "../data/home.data";
@@ -9,7 +9,7 @@ import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import { MD_UP, useMediaQuery } from "../hooks/useMediaQuery";
 import { useSplitReveal } from "../hooks/useSplitReveal";
 
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
