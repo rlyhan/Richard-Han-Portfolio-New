@@ -56,7 +56,7 @@ const ProjectMasthead = ({ project, headingRef }) => {
         <SplitLine text={name} />
       </h1>
 
-      <p className="mt-7 max-w-[52ch] text-base leading-[1.5] text-ink md:text-xl md:leading-[1.45]">
+      <p className="mt-7 max-w-[52ch] font-arial text-base leading-[1.5] text-ink md:text-xl md:leading-[1.45]">
         {description}
       </p>
 

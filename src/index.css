@@ -7,8 +7,8 @@
                  nav bar's wordmark
      Urbanist    the hero's display voice — its closing note, a write-up's
                  title and its opening idea
-     Epilogue    the reading voice — the site's small-caps labels, and the
-                 body copy of each write-up
+     Epilogue    the site's small-caps labels, and the lists on About and each
+                 write-up
 
    Only the weights actually set are here. `font-synthesis: none` below means
    an unloaded weight renders as the nearest loaded one rather than as a faked
