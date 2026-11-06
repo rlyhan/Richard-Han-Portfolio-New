@@ -12,7 +12,7 @@ const PageMasthead = ({ heading, note, headingRef }) => (
     <div className="mt-14 flex flex-col md:mt-[clamp(2.375rem,7vh,5.625rem)] md:flex-row md:items-end md:justify-between md:gap-8">
       <h1
         ref={headingRef}
-        className="font-urbanist text-[clamp(3.125rem,12vw,4.25rem)] leading-[0.99] font-medium md:shrink-0 md:text-[clamp(3.375rem,5.9vw,5.875rem)]"
+        className="font-arial text-[clamp(2.5rem,10vw,3.25rem)] leading-none tracking-[-0.025em] md:shrink-0 md:text-[clamp(2.75rem,4.4vw,4.5rem)]"
       >
         <SplitLine text={heading} />
       </h1>
