@@ -49,7 +49,7 @@ const HomeBlocks = () => {
       <ul className="grid h-full min-h-0 grid-cols-3 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:grid-rows-2">
         <li className="order-2 flex min-h-0 flex-col md:order-none md:row-span-2">
           {isMdUp && (
-            <div className={cn("min-h-0 flex-1 bg-block-projects", REVEAL_CLASS)}>
+            <div className={cn("min-h-0 flex-1 bg-fog", REVEAL_CLASS)}>
               <HomeProjectTicker linked />
             </div>
           )}
