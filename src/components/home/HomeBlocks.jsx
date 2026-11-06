@@ -59,48 +59,61 @@ const Block = ({ to, label, index, isArrowAtTop, className }) => {
   );
 };
 
-const HomeBlocks = () => {
+// The right half of the hero, and below md what sits under the intro.
+//
+// `setPanelRef` hands the whole panel to the hero's exit as one plane — see Home.
+const HomeBlocks = ({ setPanelRef, cue }) => {
   const isMdUp = useMediaQuery(MD_UP);
 
   return (
-    <nav aria-label="Portfolio sections" className="h-full min-h-0">
-      <ul className="grid h-full min-h-0 grid-cols-3 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:grid-rows-2">
-        <li className="order-2 flex min-h-0 flex-col md:order-none md:row-span-2">
-          {isMdUp && (
-            <div className={cn("min-h-0 flex-1 bg-fog", REVEAL_CLASS)}>
-              <HomeProjectTicker linked />
-            </div>
-          )}
+    <section className="relative border-grid md:col-start-2 md:row-span-2 md:row-start-1 md:h-full md:min-h-0 md:overflow-hidden md:border-l">
+      {cue && (
+        <div className="absolute right-[1.4rem] bottom-full mb-3">{cue}</div>
+      )}
 
-          <Block
-            to={PATHS.projects}
-            label="Projects"
-            index={0}
-            className="grow border-t border-l border-grid bg-fog pt-6 text-ink md:grow-0 md:border-0 md:bg-block-projects md:pt-block-gutter md:text-slate"
-          />
-        </li>
-
-        <li className="order-1 grid md:order-none">
-          <Block
-            to={PATHS.about}
-            label="About"
-            index={1}
-            isArrowAtTop
-            className="border-t border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-about md:pt-0 md:text-slate md:dark:text-chalk"
-          />
-        </li>
-
-        <li className="order-3 grid md:order-none">
-          <Block
-            to={PATHS.contact}
-            label="Contact"
-            index={2}
-            isArrowAtTop
-            className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-slate md:dark:text-chalk"
-          />
-        </li>
-      </ul>
-    </nav>
+      <nav
+        ref={setPanelRef}
+        aria-label="Portfolio sections"
+        className="h-full min-h-0"
+      >
+        <ul className="grid h-full min-h-0 grid-cols-3 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:grid-rows-2">
+          <li className="order-2 flex min-h-0 flex-col md:order-none md:row-span-2">
+            {isMdUp && (
+              <div className={cn("min-h-0 flex-1 bg-fog", REVEAL_CLASS)}>
+                <HomeProjectTicker linked />
+              </div>
+            )}
+  
+            <Block
+              to={PATHS.projects}
+              label="Projects"
+              index={0}
+              className="grow border-t border-l border-grid bg-fog pt-6 text-ink md:grow-0 md:border-0 md:bg-block-projects md:pt-block-gutter md:text-slate"
+            />
+          </li>
+  
+          <li className="order-1 grid md:order-none">
+            <Block
+              to={PATHS.about}
+              label="About"
+              index={1}
+              isArrowAtTop
+              className="border-t border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-about md:pt-0 md:text-slate md:dark:text-chalk"
+            />
+          </li>
+  
+          <li className="order-3 grid md:order-none">
+            <Block
+              to={PATHS.contact}
+              label="Contact"
+              index={2}
+              isArrowAtTop
+              className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-slate md:dark:text-chalk"
+            />
+          </li>
+        </ul>
+      </nav>
+    </section>
   );
 };
 

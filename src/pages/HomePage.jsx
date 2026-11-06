@@ -1,10 +1,9 @@
 import { useCallback, useRef } from "react";
 import PageSection from "../components/layout/PageSection";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
-import { MD_UP } from "../components/home/HomeBlocks";
+import HomeBlocks, { MD_UP } from "../components/home/HomeBlocks";
 import HomeIntro from "../components/home/HomeIntro";
 import HomeNav from "../components/home/HomeNav";
-import HomeWork from "../components/home/HomeWork";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
@@ -17,14 +16,14 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 const NEAR_TOP_THRESHOLD = 40;
 
 // What the hero's exit throws off screen, in order — the stagger is indexed off
-// this list, so the spread runs down the left column and then takes the work
+// this list, so the spread runs down the left column and then takes the blocks
 // panel with it (see useHeroHandoff for each index's travel).
 //
 // Six is the ceiling: scrubbed across a unit-length timeline, a seventh would
 // push the last fade past the runway's end, leaving the takeover firing over
 // content still on screen.
 const NOTE_LINE_INDEX = INTRO_LINES.length;
-const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
+const BLOCKS_LINE_INDEX = NOTE_LINE_INDEX + 1;
 
 // The home page: the hero, and the runway it empties out across.
 //
@@ -58,8 +57,8 @@ const HomePage = () => {
   const setNoteRef = useCallback((el) => {
     displayLineRefs.current[NOTE_LINE_INDEX] = el;
   }, []);
-  const setWorkRef = useCallback((el) => {
-    displayLineRefs.current[WORK_LINE_INDEX] = el;
+  const setBlocksRef = useCallback((el) => {
+    displayLineRefs.current[BLOCKS_LINE_INDEX] = el;
   }, []);
   // The outro sinks in the order it's collected: the byline atop the intro panel
   // first, then the hero's foot. Three is the ceiling here for the
@@ -127,7 +126,7 @@ const HomePage = () => {
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}
           />
-          <HomeWork setGridRef={setWorkRef} cue={isMdUp ? null : cue} />
+          <HomeBlocks setPanelRef={setBlocksRef} cue={isMdUp ? null : cue} />
           <HomeNav setNavRef={setNavRef} cue={isMdUp ? cue : null} />
         </div>
       </PageSection>
