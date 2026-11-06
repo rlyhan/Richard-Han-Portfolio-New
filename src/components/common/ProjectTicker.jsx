@@ -21,9 +21,10 @@ const ROWS = Array.from({ length: ROW_COUNT }, (_, row) =>
 );
 
 // Eager: a lazy image in a sideways track arrives blank as it scrolls into view.
-const Tile = ({ src, aspect }) => (
+const Tile = ({ src, aspect, children }) => (
   <div className={cn("relative h-full shrink-0 overflow-hidden", aspect)}>
     <MattedShot src={src} alt="" eager fit={fitOf(src)} />
+    {children}
   </div>
 );
 
@@ -36,14 +37,11 @@ const LinkedTile = ({ project: { id, name, images }, aspect, isRepeat }) => {
       {...link}
       aria-label={name}
       tabIndex={isRepeat ? -1 : undefined}
-      className={cn(
-        PROJECT_LINK_CLASS,
-        "relative shrink-0 overflow-hidden",
-        aspect,
-      )}
+      className={cn(PROJECT_LINK_CLASS, "shrink-0")}
     >
-      <MattedShot src={src} alt="" eager fit={fitOf(src)} />
-      <span className="absolute inset-0 bg-slate/15 transition-opacity dark:bg-slate/30 duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none" />
+      <Tile src={src} aspect={aspect}>
+        <span className="absolute inset-0 bg-slate/15 transition-opacity dark:bg-slate/30 duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none" />
+      </Tile>
     </a>
   );
 };
