@@ -5,9 +5,6 @@ import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
 import {
   IMAGE_FALLBACK_CLASS,
-  PLATE_ARROW_CLASS,
-  PLATE_CLASS,
-  PLATE_TITLE_CLASS,
   PROJECT_LINK_CLASS,
 } from "../layout/sharedClasses";
 import { projectPathOf } from "../../routes/routes";
@@ -65,19 +62,19 @@ const ProjectTile = ({ project, number, eager }) => {
           )}
         </div>
 
-        <div
-          className={cn(
-            PLATE_CLASS,
-            "absolute inset-x-3.5 bottom-3.5 grid min-h-[3.625rem] grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-[0.5625rem] gap-y-1.5 px-4 pt-[0.8125rem] pb-3 [--plate-cut:1.125rem]",
-          )}
-        >
+        <div className="isolate bg-plate-edge [clip-path:polygon(0_0,100%_0,100%_calc(100%_-_var(--plate-cut)),calc(100%_-_var(--plate-cut))_100%,0_100%)] before:absolute before:inset-px before:-z-10 before:bg-plate before:[clip-path:inherit] absolute inset-x-3.5 bottom-3.5 grid min-h-[3.625rem] grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-[0.5625rem] gap-y-1.5 px-4 pt-[0.8125rem] pb-3 [--plate-cut:1.125rem]">
           <span className={cn(EYEBROW_CLASS, "text-ash")}>
             {String(number).padStart(2, "0")}
           </span>
 
-          <h2 className={cn(PLATE_TITLE_CLASS, "text-[1.1875rem]")}>{name}</h2>
+          <h2 className="truncate font-arial text-[1.1875rem] font-bold tracking-[-0.01em] text-ink">
+            {name}
+          </h2>
 
-          <span aria-hidden="true" className={cn(PLATE_ARROW_CLASS, "h-6 w-6")}>
+          <span
+            aria-hidden="true"
+            className="col-start-3 row-span-2 row-start-1 grid h-6 w-6 shrink-0 place-items-center self-center text-ash transition-[transform,color] duration-200 group-hover:-translate-y-px group-hover:translate-x-px group-hover:text-ink motion-reduce:transition-none"
+          >
             <ArrowUpRightIcon className="h-[0.95rem] w-[0.95rem]" />
           </span>
 
