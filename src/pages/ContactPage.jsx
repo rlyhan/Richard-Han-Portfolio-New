@@ -5,7 +5,7 @@ import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
 import IconRenderer from "../components/icons/IconRenderer";
 import SplitLine from "../components/common/SplitLine";
-import HomeProjectTicker from "../components/home/HomeProjectTicker";
+import TickerGround from "../components/common/TickerGround";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useSplitReveal } from "../hooks/useSplitReveal";
 import { usePage } from "../routes/RouterContext";
@@ -63,10 +63,7 @@ const ContactPage = () => {
         </div>
 
         <div className="relative isolate row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-slate md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
-          <div aria-hidden="true" className="absolute inset-0 -z-10">
-            <HomeProjectTicker />
-            <div className="absolute inset-0 bg-slate/70" />
-          </div>
+          <TickerGround />
 
           <h1
             id="contact-heading"

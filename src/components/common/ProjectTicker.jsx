@@ -1,5 +1,5 @@
 import cn from "classnames";
-import MattedShot from "../common/MattedShot";
+import MattedShot from "./MattedShot";
 import { PROJECT_LINK_CLASS } from "../layout/sharedClasses";
 import PROJECTS from "../../data/projects.data";
 import { fitOf } from "../../data/shots.data";
@@ -50,7 +50,7 @@ const LinkedTile = ({ project: { id, name, images }, aspect, isRepeat }) => {
 
 // Each row is drawn twice and travels half its own width, so the loop has no seam.
 // The repeat exists only for that, so it is kept from screen readers and the tab order.
-const HomeProjectTicker = ({ linked }) => (
+const ProjectTicker = ({ linked }) => (
   <div className="flex h-full flex-col gap-1">
     {ROWS.map((projects, row) => (
       <div key={row} className="min-h-0 flex-1 overflow-clip">
@@ -92,4 +92,4 @@ const HomeProjectTicker = ({ linked }) => (
   </div>
 );
 
-export default HomeProjectTicker;
+export default ProjectTicker;

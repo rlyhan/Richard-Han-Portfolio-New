@@ -1,6 +1,6 @@
 import cn from "classnames";
 import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
-import HomeProjectTicker from "./HomeProjectTicker";
+import ProjectTicker from "../common/ProjectTicker";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { NAV_ROUTES, PATHS } from "../../routes/routes";
@@ -80,10 +80,10 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
           <li className="order-2 flex min-h-0 flex-col md:order-none md:row-span-2">
             {isMdUp && (
               <div className={cn("min-h-0 flex-1 bg-fog", REVEAL_CLASS)}>
-                <HomeProjectTicker linked />
+                <ProjectTicker linked />
               </div>
             )}
-  
+
             <Block
               to={PATHS.projects}
               label="Projects"
@@ -91,7 +91,7 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
               className="grow border-t border-l border-grid bg-fog pt-6 text-ink md:grow-0 md:border-0 md:bg-block-projects md:pt-block-gutter md:text-slate"
             />
           </li>
-  
+
           <li className="order-1 grid md:order-none">
             <Block
               to={PATHS.about}
@@ -101,7 +101,7 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
               className="border-t border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-about md:pt-0 md:text-slate md:dark:text-chalk"
             />
           </li>
-  
+
           <li className="order-3 grid md:order-none">
             <Block
               to={PATHS.contact}

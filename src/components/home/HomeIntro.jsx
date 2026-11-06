@@ -4,7 +4,7 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import Byline from "../layout/Byline";
 import SplitLine from "../common/SplitLine";
 import { MD_UP } from "./HomeBlocks";
-import HomeProjectTicker from "./HomeProjectTicker";
+import TickerGround from "../common/TickerGround";
 
 export const INTRO_GUTTER_CLASS =
   "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
@@ -31,12 +31,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => {
       <Byline topLineRef={setToplineRef} />
 
       <div className="relative isolate -mx-[1.4rem] mt-[1.35rem] flex flex-1 flex-col justify-center px-[1.4rem] py-[clamp(1rem,3svh,2.2rem)] md:mx-0 md:my-auto md:block md:flex-none md:px-0 md:pt-[clamp(2.4rem,7vh,5.6rem)] md:pb-0">
-        {!isMdUp && (
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-slate">
-            <HomeProjectTicker />
-            <div className="absolute inset-0 bg-slate/70" />
-          </div>
-        )}
+        {!isMdUp && <TickerGround />}
 
         <h1
           ref={headingRef}
