@@ -27,7 +27,7 @@ const Block = ({ to, label, index, isArrowAtTop, className }) => {
     <a
       {...link}
       className={cn(
-        "group relative flex flex-col justify-end pb-6 focus-visible:outline-current focus-visible:-outline-offset-4 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
+        "group relative flex flex-col justify-end pb-6 transition-[filter] duration-200 hover:brightness-[0.92] focus-visible:outline-current focus-visible:-outline-offset-4 focus-visible:brightness-[0.92] motion-reduce:transition-none md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
         REVEAL_CLASS,
         className,
       )}
