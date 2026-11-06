@@ -5,7 +5,7 @@ import { INTRO_GUTTER_CLASS } from "./HomeIntro";
 // The foot of the intro from md: the copyright and the way on, its line level with
 // the labels on HomeBlocks through the same `block-foot`.
 const HomeFooter = ({ setFooterRef, cue }) => (
-  <div
+  <footer
     ref={setFooterRef}
     className={cn(
       "hidden justify-between gap-6 md:col-start-1 md:row-start-2 md:flex md:items-end md:pb-block-foot",
@@ -17,7 +17,7 @@ const HomeFooter = ({ setFooterRef, cue }) => (
     </small>
 
     {cue}
-  </div>
+  </footer>
 );
 
 export default HomeFooter;
