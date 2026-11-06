@@ -4,13 +4,13 @@ import MoonIcon from "../../icons/MoonIcon";
 import { useColorScheme } from "../../../hooks/useColorScheme";
 
 const SEGMENT_CLASS =
-  "relative grid place-items-center px-1.5 py-1 transition-colors duration-300 motion-reduce:transition-none";
+  "relative grid place-items-center p-1 md:p-1.5 transition-colors duration-300 motion-reduce:transition-none";
 
 const SELECTED_CLASS = "text-cream";
 
 const UNSELECTED_CLASS = "text-ash group-hover:text-ink";
 
-const ICON_CLASS = "size-3";
+const ICON_CLASS = "size-3 md:size-4";
 
 const ThemeToggle = () => {
   const [scheme, toggleScheme] = useColorScheme();
@@ -23,12 +23,12 @@ const ThemeToggle = () => {
       aria-checked={isDark}
       aria-label="Dark theme"
       onClick={toggleScheme}
-      className="group relative -my-1 flex shrink-0 overflow-hidden rounded-none border border-grid p-0 focus-visible:outline-ink"
+      className="group relative -my-1 flex shrink-0 overflow-hidden rounded-full border border-grid p-0 focus-visible:outline-ink"
     >
       <span
         aria-hidden="true"
         className={cn(
-          "absolute inset-y-0 left-0 w-1/2 bg-ink transition-transform duration-300 ease-[cubic-bezier(0.3,1.3,0.5,1)] motion-reduce:transition-none",
+          "absolute inset-y-0 left-0 w-1/2 rounded-full bg-ink transition-transform duration-300 ease-[cubic-bezier(0.3,1.3,0.5,1)] motion-reduce:transition-none",
           isDark && "translate-x-full",
         )}
       />
