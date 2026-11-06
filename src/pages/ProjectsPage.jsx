@@ -101,7 +101,7 @@ const ProjectsPage = () => {
 
       <section
         aria-label="Project list"
-        className="border-t border-grid bg-mist"
+        className="border-t border-grid bg-smoke"
       >
         <ProjectsToolbar
           filters={FILTERS}

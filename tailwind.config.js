@@ -19,8 +19,8 @@ const PAPER = {
   // beside them. In dark, a warm charcoal — a near-black read as a hole beside the
   // hero's deep blocks.
   fog: { light: "#F7F7F5", dark: "#1E1D1B" },
-  // What follows an opening — the Projects list, a write-up's article —
-  // Contact's text, and the footer under each. In light, the opening's off-white,
+  // What follows an opening — a write-up's article — Contact's text, and the
+  // footer under each. In light, the opening's off-white,
   // with a hairline between them. In dark, a step above the hero's charcoal, so
   // a page's deeper opening ends without the jump to cream.
   mist: { light: "#F7F7F5", dark: "#232220" },
@@ -44,8 +44,8 @@ const PAPER = {
   // Light enough to read as a drawn edge on cream. 1.6:1 on cream in light, 1.5:1
   // in dark.
   grid: { light: "#C4C4C0", dark: "#4B463F" },
-  // The opening of every page below the hero — About's, the Projects masthead, a
-  // write-up's — and the nav bar at the foot of those pages, pinned or Contact's
+  // The opening of every page below the hero — About's, a write-up's — the whole
+  // of Projects, its list included, and the nav bar at the foot of those pages, pinned or Contact's
   // own: the off-white every page shares in light, and in dark a step under the
   // hero's charcoal, so a page's opening stands apart from what follows it and its
   // bar closes it in the tone it began.

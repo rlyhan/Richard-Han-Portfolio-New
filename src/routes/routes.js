@@ -63,7 +63,7 @@ const PAGES = [
     path: "/projects",
     sectionId: "projects",
     title: "Projects — Richard Han",
-    ground: "bg-mist",
+    ground: "bg-smoke",
     // What the pinned nav bar is painted with over this page, where it isn't
     // the bar's own shell — see NavMenu.
     navGround: "bg-smoke",
