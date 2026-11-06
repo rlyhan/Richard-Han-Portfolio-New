@@ -84,7 +84,7 @@ export default {
       },
 
       // `block-foot`: how far the labels on the hero's blocks and the line beside
-      // them stand off the foot, so the two share a baseline — see HomeNav.
+      // them stand off the foot, so the two share a baseline — see HomeFooter.
       spacing: {
         "block-foot": "calc(1.625rem + 1px)",
         "block-gutter": "clamp(1rem,1.6vw,1.75rem)",

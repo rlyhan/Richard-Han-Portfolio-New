@@ -3,7 +3,7 @@ import PageSection from "../components/layout/PageSection";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
 import HomeBlocks, { MD_UP } from "../components/home/HomeBlocks";
 import HomeIntro from "../components/home/HomeIntro";
-import HomeNav from "../components/home/HomeNav";
+import HomeFooter from "../components/home/HomeFooter";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
@@ -66,7 +66,7 @@ const HomePage = () => {
   const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
   }, []);
-  const setNavRef = useCallback((el) => {
+  const setFooterRef = useCallback((el) => {
     outroLineRefs.current[1] = el;
   }, []);
 
@@ -127,7 +127,7 @@ const HomePage = () => {
             setToplineRef={setToplineRef}
           />
           <HomeBlocks setPanelRef={setBlocksRef} cue={isMdUp ? null : cue} />
-          <HomeNav setNavRef={setNavRef} cue={isMdUp ? cue : null} />
+          <HomeFooter setFooterRef={setFooterRef} cue={isMdUp ? cue : null} />
         </div>
       </PageSection>
 

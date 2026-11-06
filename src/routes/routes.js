@@ -32,7 +32,7 @@ const PAGES = [
     // drawn twice — see SiteNav, which takes the page after this one as the floor.
     hasOwnNav: true,
     // The hero is exactly one screen and ends at its own foot, which carries the
-    // copyright from md — see HomeNav. A footer under it would be a scroll past
+    // copyright from md — see HomeFooter. A footer under it would be a scroll past
     // the page to a line already shown.
     hasOwnFooter: true,
     // No navLabel: the name in the pinned bar is the way back home, and a
