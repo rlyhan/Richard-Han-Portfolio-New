@@ -125,11 +125,11 @@ export default {
       // Three loaded faces, and each one has a job — see the @font-face block in
       // index.css for which weights of them are actually loaded.
       //
-      // `heading` is the page's own; `urbanist` and `epilogue` are the hero's
+      // `heading` is the page's own; `urbanist` and `epilogue` are the display
       // pair. The name is the one thing that crosses over: in the hero's h1
       // and in the nav bar's wordmark, it keeps the page's heading face rather
-      // than the hero's display face. `arial`, the titles on the project plates,
-      // the hero's blocks and the byline, comes from the system.
+      // than the display face. `arial`, the titles on the project plates, the
+      // hero's blocks, its note and the byline, comes from the system.
       fontFamily: {
         arial: ["Arial", "Helvetica", "sans-serif"],
         heading: ['"Fjalla One"', "system-ui", "sans-serif"],
