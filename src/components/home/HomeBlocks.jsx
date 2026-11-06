@@ -3,7 +3,7 @@ import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import HomeProjectTicker from "./HomeProjectTicker";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useNavLink } from "../../hooks/useNavLinks";
-import { PATHS } from "../../routes/routes";
+import { NAV_ROUTES, PATHS } from "../../routes/routes";
 
 const REVEAL_CLASS = "animate-project-reveal motion-reduce:animate-none";
 const REVEAL_STAGGER_MS = 120;
@@ -12,6 +12,13 @@ const REVEAL_STAGGER_MS = 120;
 // under display: none can still download, and the ticker is drawn in a different
 // place at each size.
 export const MD_UP = "(min-width: 768px)";
+
+// The nav bar's numbering, so a page has the same number here as in the bar.
+const numberOf = (path) =>
+  String(NAV_ROUTES.findIndex((route) => route.path === path) + 1).padStart(
+    2,
+    "0",
+  );
 
 const Block = ({ to, label, index, isArrowAtTop, className }) => {
   const link = useNavLink(to);
@@ -27,8 +34,19 @@ const Block = ({ to, label, index, isArrowAtTop, className }) => {
       style={{ animationDelay: `${index * REVEAL_STAGGER_MS}ms` }}
     >
       <span className="flex items-center justify-between gap-1 pr-2.5 pl-[1.4rem] font-arial text-[1rem] leading-none font-normal tracking-[-0.025em] md:gap-3 md:px-block-gutter md:text-[clamp(1.75rem,2.7vw,2.75rem)]">
-        <span className="transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none">
-          {label}
+        <span className="flex items-baseline md:gap-4">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "hidden opacity-50 md:block",
+              isArrowAtTop && "md:absolute md:top-block-gutter md:left-block-gutter",
+            )}
+          >
+            {numberOf(to)}
+          </span>
+          <span className="transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none">
+            {label}
+          </span>
         </span>
         <ArrowUpRightIcon
           className={cn(
