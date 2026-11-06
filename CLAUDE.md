@@ -79,13 +79,12 @@ scroll.
 - **No file-header comment on a UI component** walking through what it is and how it's
   built. A component file opens on the import or the component itself. Non-obvious
   behaviour — the *why* behind a genuinely complicated piece of logic, like the
-  animation timing and layering rules in `HomeProjectCard.jsx` — still deserves a
+  doubled rows that let `ProjectTicker.jsx` loop without a seam — still deserves a
   comment, but prefer the fewest sentences that carry the reason, and when in doubt,
   cut rather than keep. `ProjectTile.jsx` is the calibration: one short paragraph on
-  what it borrows from `HomeProjectCard` and one on why the title is a heading,
-  nothing on the plate layout or the matting inset, because both are readable off the
-  JSX or already decided in `ProjectsPage.jsx`. `HomeProjectCard.jsx`'s current
-  comments are still more than the logic needs.
+  how its shots are framed and one on why the title is a heading, nothing on the
+  plate layout or the matting inset, because both are readable off the JSX or
+  already decided in `ProjectsPage.jsx`.
 - **No dead code behind a refactor.** When something loses its last consumer it goes in
   the same change — exports, props, slot fields, CSS tokens and design tokens included.
 - **Reproduce before fixing.** These bugs appear in `npm run dev` (StrictMode runs
@@ -103,8 +102,7 @@ scroll.
   from content or a token — a line-height pinned to a magic number, a pill or button
   given a fixed height instead of sizing from its padding and line-height. A class
   combination repeated across the file becomes a variable (as `EYEBROW_CLASS` already
-  does in `ProjectTile.jsx` and `HomeProjectCard.jsx`) instead of being retyped at
-  each call site.
+  does in `ProjectTile.jsx`) instead of being retyped at each call site.
 - **Format with Prettier before treating a change as done.** This project has no
   Prettier devDependency or config — formatting runs through the editor's Prettier
   extension on save, not a CLI script. Save through the editor (or otherwise trigger
