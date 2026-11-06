@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { COPYRIGHT } from "../Footer";
 import { INTRO_GUTTER_CLASS } from "./HomeIntro";
+import { BYLINE_TEXT_CLASS } from "../layout/sharedClasses";
 
 // The foot of the intro from md: the copyright and the way on, its line level with
 // the labels on HomeBlocks through the same `block-foot`.
@@ -12,9 +13,7 @@ const HomeFooter = ({ setFooterRef, cue }) => (
       INTRO_GUTTER_CLASS,
     )}
   >
-    <small className="font-arial text-[0.8125rem] leading-none text-ash">
-      {COPYRIGHT}
-    </small>
+    <small className={BYLINE_TEXT_CLASS}>{COPYRIGHT}</small>
 
     {cue}
   </footer>
