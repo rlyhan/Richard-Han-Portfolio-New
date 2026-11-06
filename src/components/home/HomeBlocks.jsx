@@ -75,7 +75,7 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
           <li className="order-2 flex min-h-0 flex-col md:order-none md:row-span-2">
             {isMdUp && (
               <div className={cn("min-h-0 flex-1 bg-fog", REVEAL_CLASS)}>
-                <ProjectTicker linked />
+                <ProjectTicker linked sizes="55vh" />
               </div>
             )}
 

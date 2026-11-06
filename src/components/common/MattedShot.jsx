@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { SHOT_HEIGHT, SHOT_WIDTH } from "../../data/shots.data";
+import { SHOT_HEIGHT, SHOT_WIDTH, srcSetOf } from "../../data/shots.data";
 
 // A project shot in its frame. Which fit it takes (`mat` or `bleed`) is a fact
 // about the artwork, not a choice the frame makes — see shots.data.
@@ -8,9 +8,21 @@ import { SHOT_HEIGHT, SHOT_WIDTH } from "../../data/shots.data";
 // and its prefers-reduced-motion guard supplied here so every caller gets the
 // same one. Left off where a shot shouldn't move on hover — the hero's
 // ticker, whose tiles are already moving.
-const MattedShot = ({ src, alt, eager, fit = "mat", zoom, className }) => (
+//
+// `sizes` is optional too: given one, the shot is served from its smaller copies.
+const MattedShot = ({
+  src,
+  alt,
+  eager,
+  fit = "mat",
+  zoom,
+  sizes,
+  className,
+}) => (
   <img
     src={`/images/projects/${src}`}
+    srcSet={sizes ? srcSetOf(src) : undefined}
+    sizes={sizes}
     alt={alt}
     width={SHOT_WIDTH}
     height={SHOT_HEIGHT}

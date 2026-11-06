@@ -84,8 +84,23 @@
             media: "(min-width: 768px)",
           },
         ];
+        // The homepage's are its ticker's, served at the ticker's sizes — the same
+        // set as shots.data and the sizes HomeBlocks and HomeIntro give it, or the
+        // preload is a second download rather than the first.
+        const TICKER_SHOTS = OPENING_SHOTS.map((shot) => {
+          const name = shot.href.replace(/\.webp$/, "");
+
+          return {
+            ...shot,
+            srcset: [400, 600, 800, 1200]
+              .map((width) => `${name}-${width}.webp ${width}w`)
+              .concat(`${shot.href} 1600w`)
+              .join(", "),
+            sizes: "(min-width: 768px) 55vh, 52vh",
+          };
+        });
         const PRELOADS = {
-          "/": OPENING_SHOTS,
+          "/": TICKER_SHOTS,
           "/projects": OPENING_SHOTS,
           "/about": [
             {

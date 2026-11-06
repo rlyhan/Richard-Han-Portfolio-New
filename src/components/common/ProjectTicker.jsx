@@ -21,14 +21,19 @@ const ROWS = Array.from({ length: ROW_COUNT }, (_, row) =>
 );
 
 // Eager: a lazy image in a sideways track arrives blank as it scrolls into view.
-const Tile = ({ src, aspect, children }) => (
+const Tile = ({ src, aspect, sizes, children }) => (
   <div className={cn("relative h-full shrink-0 overflow-hidden", aspect)}>
-    <MattedShot src={src} alt="" eager fit={fitOf(src)} />
+    <MattedShot src={src} alt="" eager fit={fitOf(src)} sizes={sizes} />
     {children}
   </div>
 );
 
-const LinkedTile = ({ project: { id, name, images }, aspect, isRepeat }) => {
+const LinkedTile = ({
+  project: { id, name, images },
+  aspect,
+  sizes,
+  isRepeat,
+}) => {
   const link = useNavLink(projectPathOf(id));
   const [src] = images;
 
@@ -39,7 +44,7 @@ const LinkedTile = ({ project: { id, name, images }, aspect, isRepeat }) => {
       tabIndex={isRepeat ? -1 : undefined}
       className={cn(PROJECT_LINK_CLASS, "shrink-0")}
     >
-      <Tile src={src} aspect={aspect}>
+      <Tile src={src} aspect={aspect} sizes={sizes}>
         <span className="absolute inset-0 bg-slate/15 transition-opacity dark:bg-slate/30 duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none" />
       </Tile>
     </a>
@@ -48,7 +53,10 @@ const LinkedTile = ({ project: { id, name, images }, aspect, isRepeat }) => {
 
 // Each row is drawn twice and travels half its own width, so the loop has no seam.
 // The repeat exists only for that, so it is kept from screen readers and the tab order.
-const ProjectTicker = ({ linked }) => (
+//
+// `sizes` is how wide a tile's shot is where the ticker stands, which only the
+// caller knows: a row's height, and so a shot's width, follows from its frame.
+const ProjectTicker = ({ linked, sizes }) => (
   <div className="flex h-full flex-col gap-1">
     {ROWS.map((projects, row) => (
       <div key={row} className="min-h-0 flex-1 overflow-clip">
@@ -72,6 +80,7 @@ const ProjectTicker = ({ linked }) => (
                     key={project.id}
                     project={project}
                     aspect={aspect}
+                    sizes={sizes}
                     isRepeat={copy === 1}
                   />
                 ) : (
@@ -79,6 +88,7 @@ const ProjectTicker = ({ linked }) => (
                     key={project.id}
                     src={project.images[0]}
                     aspect={aspect}
+                    sizes={sizes}
                   />
                 );
               })}

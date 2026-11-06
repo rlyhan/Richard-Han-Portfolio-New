@@ -63,7 +63,7 @@ const ContactPage = () => {
         </div>
 
         <div className="relative isolate row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-slate md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
-          <TickerGround />
+          <TickerGround sizes="(min-width: 768px) 50vh, 30vh" />
 
           <h1
             id="contact-heading"
