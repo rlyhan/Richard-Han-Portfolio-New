@@ -13,14 +13,14 @@ const REVEAL_STAGGER_MS = 120;
 // place at each size.
 export const MD_UP = "(min-width: 768px)";
 
-const Block = ({ to, label, index, className }) => {
+const Block = ({ to, label, index, isArrowAtTop, className }) => {
   const link = useNavLink(to);
 
   return (
     <a
       {...link}
       className={cn(
-        "group flex flex-col justify-end pb-6 focus-visible:outline-current focus-visible:-outline-offset-4 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
+        "group relative flex flex-col justify-end pb-6 focus-visible:outline-current focus-visible:-outline-offset-4 md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
         REVEAL_CLASS,
         className,
       )}
@@ -30,7 +30,12 @@ const Block = ({ to, label, index, className }) => {
         <span className="transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none">
           {label}
         </span>
-        <ArrowUpRightIcon className="h-[0.8em] w-[0.8em] shrink-0 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none" />
+        <ArrowUpRightIcon
+          className={cn(
+            "h-[0.8em] w-[0.8em] shrink-0 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none",
+            isArrowAtTop && "md:absolute md:top-block-gutter md:right-block-gutter",
+          )}
+        />
       </span>
     </a>
   );
@@ -62,6 +67,7 @@ const HomeBlocks = () => {
             to={PATHS.about}
             label="About"
             index={1}
+            isArrowAtTop
             className="border-t border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-about md:pt-0 md:text-slate"
           />
         </li>
@@ -71,6 +77,7 @@ const HomeBlocks = () => {
             to={PATHS.contact}
             label="Contact"
             index={2}
+            isArrowAtTop
             className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-chalk"
           />
         </li>
