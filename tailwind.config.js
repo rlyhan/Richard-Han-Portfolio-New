@@ -30,7 +30,7 @@ const PAPER = {
   // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 11.4:1 and 12.1:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
-  // Muted hero copy: the intro's byline, each plate's number and category.
+  // Muted hero copy: the intro's byline.
   //
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
@@ -53,12 +53,6 @@ const PAPER = {
   // The same near-black in both schemes: Contact's title panel and its email
   // button, and the type on the hero's light blocks. Chalk holds 17.2:1 on it.
   slate: { light: "#141414", dark: "#141414" },
-  // Each project's caption plate: cream in light, and in dark slate's near-black. Its
-  // ink and ash hold 12.8:1 and 6.5:1 in light, at least 15:1 and 6:1 in dark.
-  plate: { light: "#F7F7F5", dark: "#141414" },
-  // The hairline around each plate, which holds it off a white shot in light and
-  // off a near-black one in dark.
-  "plate-edge": { light: "#DCDCD8", dark: "#2E2E2C" },
   // The hero's three page blocks: a blue-grey, a pale sand and a deeper taupe, all
   // carrying slate type in light. In dark, About and Contact go deep and carry chalk,
   // so the sand under the ticker is the one bright block beside the near-black ground.
@@ -106,11 +100,7 @@ export default {
         // At three-column size a flat fill reads as a slab, so this lifts the centre
         // and takes the corners down — which is what puts the shot in a frame rather
         // than on a panel.
-        //
-        // Off the 45% centre, because the shot is matted higher in the cell than it is
-        // low — the caption plate takes the foot — so a centred highlight would sit
-        // under the plate instead of behind the object.
-        frame: "radial-gradient(ellipse at 50% 45%, #2D2B27 0%, #110F0C 100%)",
+        frame: "radial-gradient(ellipse at 50% 50%, #2D2B27 0%, #110F0C 100%)",
         // Below md, the About page's portrait carries that page's title, and a
         // photograph is not a ground to set type on. This is what gives the words something to
         // sit against.

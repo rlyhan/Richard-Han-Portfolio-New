@@ -17,8 +17,7 @@ export const ARTICLE_ROW_CLASS =
 export const NOTE_TEXT_CLASS =
   "font-arial text-[0.9375rem] leading-[1.6] font-medium text-ash";
 
-// The link wrapping a project's shot: the hero's ticker and the Projects grid's
-// tiles.
+// The link wrapping each shot in the hero's ticker.
 export const PROJECT_LINK_CLASS =
   "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
 
