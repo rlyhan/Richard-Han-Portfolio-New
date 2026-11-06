@@ -16,14 +16,16 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 const NEAR_TOP_THRESHOLD = 40;
 
 // What the hero's exit throws off screen, in order — the stagger is indexed off
-// this list, so the spread runs down the left column and then takes the blocks
-// panel with it (see useHeroHandoff for each index's travel).
+// this list, so the spread runs down the left column, the note above the name,
+// and then takes the blocks panel with it (see useHeroHandoff for each index's
+// travel).
 //
 // Six is the ceiling: scrubbed across a unit-length timeline, a seventh would
 // push the last fade past the runway's end, leaving the takeover firing over
 // content still on screen.
-const NOTE_LINE_INDEX = INTRO_LINES.length;
-const BLOCKS_LINE_INDEX = NOTE_LINE_INDEX + 1;
+const NOTE_LINE_INDEX = 0;
+const FIRST_NAME_LINE_INDEX = NOTE_LINE_INDEX + 1;
+const BLOCKS_LINE_INDEX = FIRST_NAME_LINE_INDEX + INTRO_LINES.length;
 
 // The home page: the hero, and the runway it empties out across.
 //
@@ -52,7 +54,7 @@ const HomePage = () => {
   // hero. The elements themselves never change identity either way, so the exit's
   // timeline keeps pointing at the right things.
   const setDisplayLine = useCallback((index, el) => {
-    displayLineRefs.current[index] = el;
+    displayLineRefs.current[FIRST_NAME_LINE_INDEX + index] = el;
   }, []);
   const setNoteRef = useCallback((el) => {
     displayLineRefs.current[NOTE_LINE_INDEX] = el;
