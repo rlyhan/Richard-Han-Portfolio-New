@@ -28,9 +28,13 @@ const PAGES = [
     // them and for the gap before the first paint.
     ground: "bg-fog",
     // The hero carries the site's links in its own layout, so the pinned bar
-    // has to stay down while this page holds the screen, or the same links are drawn twice — see SiteNav, which takes the
-    // page after this one as the floor.
+    // has to stay down while this page holds the screen, or the same links are
+    // drawn twice — see SiteNav, which takes the page after this one as the floor.
     hasOwnNav: true,
+    // The hero is exactly one screen and ends at its own foot, which carries the
+    // copyright from md — see HomeNav. A footer under it would be a scroll past
+    // the page to a line already shown.
+    hasOwnFooter: true,
     // No navLabel: the name in the pinned bar is the way back home, and a
     // "Home" item beside it would be that link drawn twice.
     //
