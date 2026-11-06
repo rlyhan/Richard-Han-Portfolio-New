@@ -11,22 +11,22 @@ const SCRIM_RGB = "42, 36, 30";
 const PAPER = {
   // The plates laid on the ground: a write-up's tags, About's icons and
   // interest chips. In light, the grounds' own off-white, so a plate is its
-  // hairline. In dark, a step lighter than mist, not inverted — a near-black
+  // hairline. In dark, a step lighter than shell, not inverted — a near-black
   // plate on dark grey read as a hole, not a plate.
-  cream: { light: "#F7F7F5", dark: "#252524" },
+  cream: { light: "#F7F7F5", dark: "#2D2C29" },
   // The hero's ground. In light, the off-white every page shares — a grey dulled the
-  // photographs and clashed with the warm blocks beside them. In dark, the same tone
-  // as the other openings (see stage).
-  fog: { light: "#F7F7F5", dark: "#141414" },
+  // photographs and clashed with the warm blocks beside them. In dark, a warm
+  // charcoal — a near-black read as a hole beside the hero's deep blocks.
+  fog: { light: "#F7F7F5", dark: "#1E1D1B" },
   // What follows an opening — the Projects list, a write-up's article —
   // Contact's text, and the footer under each. In light, the opening's off-white,
-  // with a hairline between them. In dark, stage a step lighter, so the opening
-  // ends without the jump to cream.
-  mist: { light: "#F7F7F5", dark: "#1A1A1A" },
+  // with a hairline between them. In dark, a step above the hero's charcoal, so
+  // a page's deeper opening ends without the jump to cream.
+  mist: { light: "#F7F7F5", dark: "#232220" },
   // The pinned nav bar: a half-step off the ground, so it reads as its own
   // field — darker than mist in light, lighter in dark.
-  shell: { light: "#DEDEDB", dark: "#201F1C" },
-  // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 12.6:1 and 13.5:1
+  shell: { light: "#DEDEDB", dark: "#292825" },
+  // Hero copy — 12.8:1 on cream and 10.2:1 on shell in light, 11.4:1 and 12.1:1
   // in dark.
   ink: { light: "#2D2D2D", dark: "#ECE8E1" },
   // Muted hero copy: the intro's byline, each plate's number and category.
@@ -34,7 +34,7 @@ const PAPER = {
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
   // shell. This holds 5.2:1 on shell and 6.5:1 on the off-white grounds in
-  // light, and 6.3:1, 5.6:1 and 5.2:1 on stage, shell and cream in dark.
+  // light, and 6.1:1, 5:1 and 4.8:1 on stage, shell and cream in dark.
   ash: { light: "#595959", dark: "#9C968C" },
   // The intro's closing note: ash in dark, and a shade lighter in light — 6:1 on
   // fog. A paragraph in ash read heavier than the name above it.
@@ -42,22 +42,21 @@ const PAPER = {
   // The hairlines: the seam between the hero's two halves, and a write-up's rows.
   // Light enough to read as a drawn edge on cream. 1.6:1 on cream in light, 1.5:1
   // in dark.
-  grid: { light: "#C4C4C0", dark: "#45403A" },
+  grid: { light: "#C4C4C0", dark: "#4B463F" },
   // The Contact page's title panel and its email button: the same near-black
   // in both schemes, with chalk type on it — 17.2:1.
   panel: { light: "#141414", dark: "#141414" },
-  // The Projects masthead and a write-up's opening: in light, the off-white every
-  // page shares; in dark, Contact's panel, so every page below the hero opens on
-  // the ground Contact does.
-  stage: { light: "#F7F7F5", dark: "#141414" },
-  // The pinned bar over those pages and About: in light the page's own off-white,
-  // set off by its hairline, and in dark the mist Contact's own bar sits on, so
-  // every page below the hero is footed by Contact's bar.
-  bar: { light: "#F7F7F5", dark: "#1A1A1A" },
-  // About's ground: the off-white every page shares in light, and in dark
-  // Contact's near-black, a step under the bar, where mist would leave the bar
-  // level with the page.
-  deep: { light: "#F7F7F5", dark: "#141414" },
+  // The opening of every page below the hero — About's, the Projects masthead, a
+  // write-up's: the off-white every page shares in light, and in dark a step under
+  // the hero's charcoal, so a page's opening stands apart from what follows it.
+  stage: { light: "#F7F7F5", dark: "#171614" },
+  // The nav bar at the foot of those pages, pinned or Contact's own: in light the
+  // page's off-white, set off by its hairline, and in dark the openings' deeper
+  // tone, so the bar closes a page in the tone its opening began it.
+  bar: { light: "#F7F7F5", dark: "#171614" },
+  // About's ground below its opening: the off-white every page shares in light,
+  // and the hero's charcoal in dark.
+  deep: { light: "#F7F7F5", dark: "#1E1D1B" },
   // The type on the hero's light blocks: the same near-black as Contact's panel in
   // both schemes. Chalk holds 17.2:1 on it.
   slate: { light: "#141414", dark: "#141414" },
@@ -67,11 +66,12 @@ const PAPER = {
   // The hairline around each plate, which holds it off a white shot in light and
   // off a near-black one in dark.
   "plate-edge": { light: "#DCDCD8", dark: "#2E2E2C" },
-  // The hero's three page blocks: a blue-grey, a pale sand and a deeper taupe, the
-  // same in both schemes, all carrying slate type.
-  "block-about": { light: "#9DB5D0", dark: "#9DB5D0" },
+  // The hero's three page blocks: a blue-grey, a pale sand and a deeper taupe, all
+  // carrying slate type in light. In dark, About and Contact go deep and carry chalk,
+  // so the sand under the ticker is the one bright block beside the near-black ground.
+  "block-about": { light: "#9DB5D0", dark: "#34476A" },
   "block-projects": { light: "#F6F0D3", dark: "#F6F0D3" },
-  "block-contact": { light: "#BCB09C", dark: "#BCB09C" },
+  "block-contact": { light: "#BCB09C", dark: "#5A5044" },
 };
 
 const paperVars = (scheme) =>
