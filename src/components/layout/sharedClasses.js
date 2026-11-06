@@ -6,7 +6,7 @@ export const EYEBROW_LABEL_CLASS =
 
 // The page's furniture: the byline above a heading and the hero's copyright under it.
 export const BYLINE_TEXT_CLASS =
-  "font-arial text-[0.6875rem] leading-[1.25] tracking-[0.06em] text-ash uppercase";
+  "font-arial text-[0.625rem] leading-[1.25] tracking-[0.06em] text-ash uppercase md:text-[0.6875rem]";
 
 // One row of a write-up: its label beside its content from lg, above it below.
 export const ARTICLE_ROW_CLASS =
