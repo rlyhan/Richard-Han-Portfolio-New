@@ -66,7 +66,7 @@ const AboutOpening = ({ headingRef }) => (
         GUTTER_CLASS,
       )}
     >
-      <div className="grid max-w-[32rem] gap-4 text-[0.9375rem] leading-[1.65] font-medium text-ink md:text-base">
+      <div className="grid max-w-[32rem] gap-4 font-arial text-[0.9375rem] leading-[1.65] font-medium text-ink md:text-base">
         {ABOUT_BIO.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}

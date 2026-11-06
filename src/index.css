@@ -8,7 +8,7 @@
      Urbanist    the hero's display voice — its closing note, a write-up's
                  title and its opening idea
      Epilogue    the reading voice — the site's small-caps labels, and the
-                 body copy on About and each write-up
+                 body copy of each write-up
 
    Only the weights actually set are here. `font-synthesis: none` below means
    an unloaded weight renders as the nearest loaded one rather than as a faked
@@ -22,10 +22,10 @@
    isn't painted at all on a slow connection.
 
    Epilogue is preloaded as well, though it swaps. A font is only requested once
-   text using it renders, which is after the page's chunk has mounted, and About's
-   body re-wrapping on the swap resizes the portrait beside it. Urbanist 600 is
-   preloaded for the same reason: it sets the nav links, which otherwise show
-   in the fallback and then change font in front of the viewer. */
+   text using it renders, which is after the page's chunk has mounted, and it sets
+   the labels at the top of Projects and each write-up — the filters and the tags —
+   which would otherwise show in the fallback and then change font in front of the
+   viewer. Urbanist 600 is preloaded for the same reason: it sets the nav links. */
 @font-face {
   font-family: 'Fjalla One';
   font-style: normal;

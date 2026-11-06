@@ -9,9 +9,9 @@ export const ARTICLE_ROW_CLASS =
   "grid gap-3.5 border-t border-grid py-6 first:border-t-0 first:pt-0 last:pb-0 md:py-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-x-10";
 
 // The body-copy voice under a heading or byline. Callers add their own margin
-// and max-width, and font-epilogue where the page hasn't already set it.
+// and max-width.
 export const NOTE_TEXT_CLASS =
-  "text-[0.9375rem] leading-[1.6] font-medium text-ash";
+  "font-arial text-[0.9375rem] leading-[1.6] font-medium text-ash";
 
 // The tiling both dot patterns share. Offset by just under half a tile, so the
 // first dot sits most of a gap in from the top and left edges and the one before
