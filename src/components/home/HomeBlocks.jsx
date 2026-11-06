@@ -78,7 +78,7 @@ const HomeBlocks = () => {
             label="Contact"
             index={2}
             isArrowAtTop
-            className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-chalk"
+            className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-slate"
           />
         </li>
       </ul>

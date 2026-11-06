@@ -67,11 +67,11 @@ const PAPER = {
   // The hairline around each plate, which holds it off a white shot in light and
   // off a near-black one in dark.
   "plate-edge": { light: "#DCDCD8", dark: "#2E2E2C" },
-  // The hero's three page blocks, a yellow, its pale tint and a dark grey, the same
-  // in both schemes. The yellow and its tint carry slate type, the grey chalk.
-  "block-about": { light: "#F2C522", dark: "#F2C522" },
-  "block-projects": { light: "#F3ECCB", dark: "#F3ECCB" },
-  "block-contact": { light: "#4A4A47", dark: "#4A4A47" },
+  // The hero's three page blocks: a blue-grey, a pale sand and a deeper taupe, the
+  // same in both schemes, all carrying slate type.
+  "block-about": { light: "#9DB5D0", dark: "#9DB5D0" },
+  "block-projects": { light: "#F6F0D3", dark: "#F6F0D3" },
+  "block-contact": { light: "#BCB09C", dark: "#BCB09C" },
 };
 
 const paperVars = (scheme) =>
