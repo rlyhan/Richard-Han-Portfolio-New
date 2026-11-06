@@ -7,7 +7,6 @@ import IconRenderer from "../components/icons/IconRenderer";
 import SplitLine from "../components/common/SplitLine";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useSplitReveal } from "../hooks/useSplitReveal";
-import { DOT_GRID_CLASS } from "../components/layout/sharedClasses";
 import { usePage } from "../routes/RouterContext";
 import {
   CONTACT_CHANNELS,
@@ -62,12 +61,7 @@ const ContactPage = () => {
           <Byline />
         </div>
 
-        <div
-          className={cn(
-            "relative row-start-2 h-[50svh] min-h-0 w-full bg-panel bg-panel-dots md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto",
-            DOT_GRID_CLASS,
-          )}
-        >
+        <div className="relative row-start-2 h-[50svh] min-h-0 w-full bg-panel md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
           <h1
             id="contact-heading"
             className={cn(

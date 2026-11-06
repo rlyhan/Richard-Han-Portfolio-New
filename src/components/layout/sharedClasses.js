@@ -13,12 +13,6 @@ export const ARTICLE_ROW_CLASS =
 export const NOTE_TEXT_CLASS =
   "font-arial text-[0.9375rem] leading-[1.6] font-medium text-ash";
 
-// The tiling both dot patterns share. Offset by just under half a tile, so the
-// first dot sits most of a gap in from the top and left edges and the one before
-// it falls just past them.
-export const DOT_GRID_CLASS =
-  "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
-
 // The link wrapping a project's shot: the hero's ticker and the Projects grid's
 // tiles.
 export const PROJECT_LINK_CLASS =

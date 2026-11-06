@@ -6,7 +6,6 @@ import ProjectMasthead from "../components/projects/ProjectMasthead";
 import MattedShot from "../components/common/MattedShot";
 import {
   ARTICLE_ROW_CLASS,
-  DOT_GRID_CLASS,
   EYEBROW_LABEL_CLASS,
   IMAGE_FALLBACK_CLASS,
 } from "../components/layout/sharedClasses";
@@ -48,10 +47,7 @@ const ProjectPage = () => {
     <PageSection
       id={projectSectionId(id)}
       contained={false}
-      additionalClasses={cn(
-        "flex flex-col bg-stage bg-stage-dots font-epilogue text-ink",
-        DOT_GRID_CLASS,
-      )}
+      additionalClasses="flex flex-col bg-stage font-epilogue text-ink"
     >
       <ProjectMasthead project={project} headingRef={headingRef} />
 

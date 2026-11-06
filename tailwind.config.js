@@ -46,14 +46,10 @@ const PAPER = {
   // The Contact page's title panel and its email button: the same near-black
   // in both schemes, with chalk type on it — 17.2:1.
   panel: { light: "#141414", dark: "#141414" },
-  // The title panel's dots: beige, and in both schemes — the panel doesn't change
-  // with the scheme, so neither do they.
-  "panel-dot": { light: "#766B52", dark: "#766B52" },
   // The Projects masthead and a write-up's opening: in light, the off-white every
-  // page shares; in dark, Contact's panel and its beige dots, so every page below
-  // the hero opens on the ground Contact does.
+  // page shares; in dark, Contact's panel, so every page below the hero opens on
+  // the ground Contact does.
   stage: { light: "#F7F7F5", dark: "#141414" },
-  "stage-dot": { light: "transparent", dark: "#766B52" },
   // The pinned bar over those pages and About: in light the page's own off-white,
   // set off by its hairline, and in dark the mist Contact's own bar sits on, so
   // every page below the hero is footed by Contact's bar.
@@ -108,16 +104,11 @@ export default {
         ...Object.fromEntries(
           Object.keys(PAPER).map((name) => [name, `var(--${name})`]),
         ),
-        // Cream that never inverts: type and dots set on a shot, the scrim,
+        // Cream that never inverts: type set on a shot, the scrim,
         // the panel or slate, which stay dark in both schemes.
         chalk: PAPER.cream.light,
       },
       backgroundImage: {
-        // The dot grids, tiled by the size set beside them.
-        "panel-dots":
-          "radial-gradient(circle, var(--panel-dot) 1px, transparent 1.5px)",
-        "stage-dots":
-          "radial-gradient(circle, var(--stage-dot) 1px, transparent 1.5px)",
         // The ground the Projects page mats each shot on: a warm dark, vignetted.
         //
         // At three-column size a flat fill reads as a slab, so this lifts the centre
