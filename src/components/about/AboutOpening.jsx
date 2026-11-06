@@ -22,7 +22,7 @@ const PORTRAIT_SIZES = "(min-width: 768px) 140vh, 80vh";
 // taking its own cell beside it from md, rather than one heading per
 // breakpoint — two would be two h1s and one id.
 const AboutOpening = ({ headingRef }) => (
-  <div className="grid min-h-[calc(100svh-var(--nav-height,4rem))] bg-stage grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
+  <div className="grid min-h-[calc(100svh-var(--nav-height,4rem))] bg-smoke grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
     <div
       className={cn(
         "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",

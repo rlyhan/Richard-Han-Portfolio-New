@@ -14,9 +14,10 @@ const PAPER = {
   // hairline. In dark, a step lighter than shell, not inverted — a near-black
   // plate on dark grey read as a hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#2D2C29" },
-  // The hero's ground. In light, the off-white every page shares — a grey dulled the
-  // photographs and clashed with the warm blocks beside them. In dark, a warm
-  // charcoal — a near-black read as a hole beside the hero's deep blocks.
+  // The hero's ground, and About's below its opening. In light, the off-white every
+  // page shares — a grey dulled the photographs and clashed with the warm blocks
+  // beside them. In dark, a warm charcoal — a near-black read as a hole beside the
+  // hero's deep blocks.
   fog: { light: "#F7F7F5", dark: "#1E1D1B" },
   // What follows an opening — the Projects list, a write-up's article —
   // Contact's text, and the footer under each. In light, the opening's off-white,
@@ -34,7 +35,7 @@ const PAPER = {
   // Darker than the design's #787878 — every place this is used is label-sized,
   // so it has to clear AA as normal text, and the darkest ground it sits on is
   // shell. This holds 5.2:1 on shell and 6.5:1 on the off-white grounds in
-  // light, and 6.1:1, 5:1 and 4.8:1 on stage, shell and cream in dark.
+  // light, and 6.1:1, 5:1 and 4.8:1 on smoke, shell and cream in dark.
   ash: { light: "#595959", dark: "#9C968C" },
   // The intro's closing note: ash in dark, and a shade lighter in light — 6:1 on
   // fog. A paragraph in ash read heavier than the name above it.
@@ -43,22 +44,14 @@ const PAPER = {
   // Light enough to read as a drawn edge on cream. 1.6:1 on cream in light, 1.5:1
   // in dark.
   grid: { light: "#C4C4C0", dark: "#4B463F" },
-  // The Contact page's title panel and its email button: the same near-black
-  // in both schemes, with chalk type on it — 17.2:1.
-  panel: { light: "#141414", dark: "#141414" },
   // The opening of every page below the hero — About's, the Projects masthead, a
-  // write-up's: the off-white every page shares in light, and in dark a step under
-  // the hero's charcoal, so a page's opening stands apart from what follows it.
-  stage: { light: "#F7F7F5", dark: "#171614" },
-  // The nav bar at the foot of those pages, pinned or Contact's own: in light the
-  // page's off-white, set off by its hairline, and in dark the openings' deeper
-  // tone, so the bar closes a page in the tone its opening began it.
-  bar: { light: "#F7F7F5", dark: "#171614" },
-  // About's ground below its opening: the off-white every page shares in light,
-  // and the hero's charcoal in dark.
-  deep: { light: "#F7F7F5", dark: "#1E1D1B" },
-  // The type on the hero's light blocks: the same near-black as Contact's panel in
-  // both schemes. Chalk holds 17.2:1 on it.
+  // write-up's — and the nav bar at the foot of those pages, pinned or Contact's
+  // own: the off-white every page shares in light, and in dark a step under the
+  // hero's charcoal, so a page's opening stands apart from what follows it and its
+  // bar closes it in the tone it began.
+  smoke: { light: "#F7F7F5", dark: "#171614" },
+  // The same near-black in both schemes: Contact's title panel and its email
+  // button, and the type on the hero's light blocks. Chalk holds 17.2:1 on it.
   slate: { light: "#141414", dark: "#141414" },
   // Each project's caption plate: cream in light, and in dark slate's near-black. Its
   // ink and ash hold 12.8:1 and 6.5:1 in light, at least 15:1 and 6:1 in dark.
@@ -105,7 +98,7 @@ export default {
           Object.keys(PAPER).map((name) => [name, `var(--${name})`]),
         ),
         // Cream that never inverts: type set on a shot, the scrim,
-        // the panel or slate, which stay dark in both schemes.
+        // or slate, which stays dark in both schemes.
         chalk: PAPER.cream.light,
       },
       backgroundImage: {

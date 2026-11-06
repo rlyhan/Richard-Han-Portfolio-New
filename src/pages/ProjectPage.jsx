@@ -47,7 +47,7 @@ const ProjectPage = () => {
     <PageSection
       id={projectSectionId(id)}
       contained={false}
-      additionalClasses="flex flex-col bg-stage font-epilogue text-ink"
+      additionalClasses="flex flex-col bg-smoke font-epilogue text-ink"
     >
       <ProjectMasthead project={project} headingRef={headingRef} />
 

@@ -30,7 +30,7 @@ const CHANNEL_CLASS =
 // ordered by what's worth trying, and a flag beside that order could disagree
 // with it.
 const CHANNEL_PRIMARY_CLASS =
-  "border-panel bg-panel text-chalk hover:border-panel/85 hover:bg-panel/85";
+  "border-slate bg-slate text-chalk hover:border-slate/85 hover:bg-slate/85";
 
 const CHANNEL_SECONDARY_CLASS = "border-grid hover:border-ink hover:bg-shell";
 
@@ -62,7 +62,7 @@ const ContactPage = () => {
           <Byline />
         </div>
 
-        <div className="relative isolate row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-panel md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
+        <div className="relative isolate row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-slate md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
           <div aria-hidden="true" className="absolute inset-0 -z-10">
             <HomeProjectTicker />
             <div className="absolute inset-0 bg-slate/70" />
@@ -138,7 +138,7 @@ const ContactPage = () => {
         </section>
       </div>
 
-      <NavMenu items={navItems} ground="bg-bar" />
+      <NavMenu items={navItems} ground="bg-smoke" />
     </PageSection>
   );
 };

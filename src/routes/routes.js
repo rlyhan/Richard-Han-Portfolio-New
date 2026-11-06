@@ -50,8 +50,8 @@ const PAGES = [
     path: "/about",
     sectionId: "about",
     title: "About — Richard Han",
-    ground: "bg-deep",
-    navGround: "bg-bar",
+    ground: "bg-fog",
+    navGround: "bg-smoke",
     navLabel: "About",
     load: () => import("../pages/AboutPage.jsx"),
   },
@@ -62,7 +62,7 @@ const PAGES = [
     ground: "bg-mist",
     // What the pinned nav bar is painted with over this page, where it isn't
     // the bar's own shell — see NavMenu.
-    navGround: "bg-bar",
+    navGround: "bg-smoke",
     navLabel: "Projects",
     load: () => import("../pages/ProjectsPage.jsx"),
   },
@@ -109,7 +109,7 @@ const PROJECT_PAGES = PROJECTS.map(({ id, name }) => ({
   sectionId: projectSectionId(id),
   title: `${name} — Richard Han`,
   ground: "bg-mist",
-  navGround: "bg-bar",
+  navGround: "bg-smoke",
   load: () => import("../pages/ProjectPage.jsx"),
 }));
 
