@@ -27,7 +27,7 @@ const Block = ({ to, label, index, isArrowAtTop, className }) => {
     <a
       {...link}
       className={cn(
-        "group relative flex flex-col justify-end pb-6 transition-[filter] duration-200 hover:brightness-[0.92] focus-visible:outline-current focus-visible:-outline-offset-4 focus-visible:brightness-[0.92] motion-reduce:transition-none md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
+        "group relative flex flex-col justify-end border-t border-grid bg-fog pt-6 pb-6 text-ink transition-[filter] duration-200 hover:brightness-[0.92] focus-visible:outline-current focus-visible:-outline-offset-4 focus-visible:brightness-[0.92] motion-reduce:transition-none md:border-0 md:text-slate md:pb-[calc(theme(spacing.plate)+theme(spacing.plate-foot)+1px)]",
         REVEAL_CLASS,
         className,
       )}
@@ -88,7 +88,7 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
               to={PATHS.projects}
               label="Projects"
               index={0}
-              className="grow border-t border-l border-grid bg-fog pt-6 text-ink md:grow-0 md:border-0 md:bg-block-projects md:pt-block-gutter md:text-slate"
+              className="grow border-l md:grow-0 md:bg-block-projects md:pt-block-gutter"
             />
           </li>
 
@@ -98,7 +98,7 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
               label="About"
               index={1}
               isArrowAtTop
-              className="border-t border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-about md:pt-0 md:text-slate md:dark:text-chalk"
+              className="md:bg-block-about md:pt-0 md:dark:text-chalk"
             />
           </li>
 
@@ -108,7 +108,7 @@ const HomeBlocks = ({ setPanelRef, cue }) => {
               label="Contact"
               index={2}
               isArrowAtTop
-              className="border-t border-l border-grid bg-fog pt-6 text-ink md:border-0 md:bg-block-contact md:pt-0 md:text-slate md:dark:text-chalk"
+              className="border-l md:bg-block-contact md:pt-0 md:dark:text-chalk"
             />
           </li>
         </ul>
