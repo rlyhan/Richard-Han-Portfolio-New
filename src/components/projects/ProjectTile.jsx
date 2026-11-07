@@ -3,7 +3,11 @@ import ArrowUpRightIcon from "../icons/ArrowUpRightIcon";
 import AwardIcon from "../icons/AwardIcon";
 import MattedShot from "../common/MattedShot";
 import { useNavLink } from "../../hooks/useNavLinks";
-import { IMAGE_FALLBACK_CLASS } from "../layout/sharedClasses";
+import {
+  BLOCK_ARROW_CLASS,
+  BLOCK_LABEL_HOVER_CLASS,
+  IMAGE_FALLBACK_CLASS,
+} from "../layout/sharedClasses";
 import { projectPathOf } from "../../routes/routes";
 import { fitOf } from "../../data/shots.data";
 
@@ -65,11 +69,16 @@ const ProjectTile = ({ project, number, eager }) => {
               <span aria-hidden="true" className="text-ash">
                 {String(number).padStart(2, "0")}
               </span>
-              <h2 className="truncate leading-[1.2] text-ink transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none">
+              <h2
+                className={cn(
+                  "truncate leading-[1.2] text-ink",
+                  BLOCK_LABEL_HOVER_CLASS,
+                )}
+              >
                 {name}
               </h2>
             </span>
-            <ArrowUpRightIcon className="h-[0.8em] w-[0.8em] shrink-0 text-ink transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none" />
+            <ArrowUpRightIcon className={cn(BLOCK_ARROW_CLASS, "text-ink")} />
           </div>
 
           <p

@@ -45,5 +45,13 @@ export const NOTE_TEXT_CLASS =
 export const PROJECT_LINK_CLASS =
   "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
 
+// A homepage block's label and arrow as its link is hovered, and a project tile's,
+// which is drawn like one.
+export const BLOCK_LABEL_HOVER_CLASS =
+  "transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none";
+
+export const BLOCK_ARROW_CLASS =
+  "h-[0.8em] w-[0.8em] shrink-0 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none";
+
 // The empty well shown in place of a shot a project doesn't have.
 export const IMAGE_FALLBACK_CLASS = "h-full w-full border border-grid bg-shell";

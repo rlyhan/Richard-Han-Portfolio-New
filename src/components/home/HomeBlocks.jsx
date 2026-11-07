@@ -4,6 +4,10 @@ import ProjectTicker from "../common/ProjectTicker";
 import { MD_UP, useMediaQuery } from "../../hooks/useMediaQuery";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { NAV_ROUTES, PATHS } from "../../routes/routes";
+import {
+  BLOCK_ARROW_CLASS,
+  BLOCK_LABEL_HOVER_CLASS,
+} from "../layout/sharedClasses";
 
 const REVEAL_CLASS = "animate-project-reveal motion-reduce:animate-none";
 const REVEAL_STAGGER_MS = 120;
@@ -39,13 +43,11 @@ const Block = ({ to, label, index, isArrowAtTop, className }) => {
           >
             {numberOf(to)}
           </span>
-          <span className="transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none">
-            {label}
-          </span>
+          <span className={BLOCK_LABEL_HOVER_CLASS}>{label}</span>
         </span>
         <ArrowUpRightIcon
           className={cn(
-            "h-[0.8em] w-[0.8em] shrink-0 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none",
+            BLOCK_ARROW_CLASS,
             isArrowAtTop && "md:absolute md:top-block-gutter md:right-block-gutter",
           )}
         />
