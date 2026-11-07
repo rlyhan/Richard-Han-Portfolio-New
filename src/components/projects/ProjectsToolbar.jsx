@@ -1,5 +1,6 @@
 import cn from "classnames";
 import { PAGE_GUTTER_CLASS } from "../layout/sharedClasses";
+import { twoDigit } from "../../helpers/twoDigit";
 
 // The filters and the count, on one rule above the grid.
 //
@@ -46,7 +47,7 @@ const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
       aria-live="polite"
       className="font-arial text-[0.6875rem] leading-none tracking-[0.06em] tabular-nums text-ash"
     >
-      {String(shown).padStart(2, "0")} / {String(total).padStart(2, "0")}
+      {twoDigit(shown)} / {twoDigit(total)}
     </p>
   </div>
 );

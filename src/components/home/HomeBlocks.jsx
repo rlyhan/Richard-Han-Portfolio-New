@@ -4,6 +4,7 @@ import ProjectTicker from "../common/ProjectTicker";
 import { MD_UP, useMediaQuery } from "../../hooks/useMediaQuery";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { NAV_ROUTES, PATHS } from "../../routes/routes";
+import { twoDigit } from "../../helpers/twoDigit";
 import {
   BLOCK_ARROW_CLASS,
   BLOCK_LABEL_HOVER_CLASS,
@@ -14,10 +15,7 @@ const REVEAL_STAGGER_MS = 120;
 
 // The nav bar's numbering, so a page has the same number here as in the bar.
 const numberOf = (path) =>
-  String(NAV_ROUTES.findIndex((route) => route.path === path) + 1).padStart(
-    2,
-    "0",
-  );
+  twoDigit(NAV_ROUTES.findIndex((route) => route.path === path) + 1);
 
 const Block = ({ to, label, index, isArrowAtTop, className }) => {
   const link = useNavLink(to);

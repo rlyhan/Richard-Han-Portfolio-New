@@ -3,6 +3,7 @@ import { PATHS } from "../../routes/routes";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { INTRO_TOPLINE } from "../../data/home.data";
 import { PAGE_GUTTER_CLASS } from "./sharedClasses";
+import { twoDigit } from "../../helpers/twoDigit";
 
 const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 
@@ -57,7 +58,7 @@ const NavMenu = ({
               aria-hidden="true"
               className="hidden font-epilogue text-[0.5625rem] tracking-[0.12em] text-ash md:block"
             >
-              {String(i + 1).padStart(2, "0")}
+              {twoDigit(i + 1)}
             </span>
             <span>{label}.</span>
           </a>

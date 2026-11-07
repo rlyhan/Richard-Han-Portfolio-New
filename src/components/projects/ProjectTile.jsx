@@ -10,6 +10,7 @@ import {
 } from "../layout/sharedClasses";
 import { projectPathOf } from "../../routes/routes";
 import { fitOf } from "../../data/shots.data";
+import { twoDigit } from "../../helpers/twoDigit";
 
 // The Projects page's small-caps voice: each tile's category, and the award mark
 // beside it.
@@ -67,7 +68,7 @@ const ProjectTile = ({ project, number, eager }) => {
           <div className="flex items-center justify-between gap-3 font-arial text-[1.75rem] leading-none tracking-[-0.025em] md:text-[clamp(1.5rem,2.2vw,2.25rem)]">
             <span className="flex min-w-0 items-baseline gap-3 md:gap-4">
               <span aria-hidden="true" className="text-ash">
-                {String(number).padStart(2, "0")}
+                {twoDigit(number)}
               </span>
               <h2
                 className={cn(
