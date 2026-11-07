@@ -8,10 +8,23 @@ export const EYEBROW_LABEL_CLASS =
 export const BYLINE_TEXT_CLASS =
   "font-arial text-[0.625rem] leading-[1.25] tracking-[0.06em] text-ash uppercase md:text-[0.6875rem]";
 
-// A page's title below the hero: the Projects masthead's and About's, in the
-// homepage blocks' Arial.
+// The Projects masthead's title, in the homepage blocks' Arial.
 export const PAGE_TITLE_CLASS =
   "font-arial text-[clamp(2.5rem,10vw,3.25rem)] leading-none tracking-[-0.025em] md:text-[clamp(2.75rem,4.4vw,4.5rem)]";
+
+// The gutter of the pages that band to the viewport edge: About and Contact.
+export const BAND_GUTTER_CLASS =
+  "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+
+// About's two columns from md: the portrait and the bio in its opening, and each
+// band's label and content below, so the two line up down the page.
+export const ABOUT_COLUMNS_CLASS =
+  "md:grid-cols-[minmax(0,45%)_minmax(0,55%)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]";
+
+// The display size About's section labels and its title share, so the title on
+// the portrait reads as the first of the labels down the page.
+export const BAND_LABEL_CLASS =
+  "text-[2.75rem] leading-[0.95] tracking-[-0.035em] md:text-[clamp(3rem,6vw,6.5rem)]";
 
 // One row of a write-up: its label beside its content from lg, above it below.
 export const ARTICLE_ROW_CLASS =

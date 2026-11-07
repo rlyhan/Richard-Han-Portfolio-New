@@ -19,7 +19,7 @@ export const ABOUT_BIO = [
 // with the section it belongs to. The opening is not one of them: it carries the
 // page's title itself rather than a numbered label.
 export const ABOUT_SECTIONS = {
-  experience: { id: "experience", label: "Work experience" },
+  experience: { id: "experience", label: "Work Experience" },
   technologies: { id: "technologies", label: "Technologies" },
   interests: { id: "interests", label: "Interests" },
 };

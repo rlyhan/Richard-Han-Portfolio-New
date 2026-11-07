@@ -1,6 +1,6 @@
 // tailwind.config.js
 
-// The warm dark of the About page's mobile scrim in backgroundImage.
+// The warm dark of the About page's scrim in backgroundImage.
 const SCRIM_RGB = "42, 36, 30";
 
 // The paper tones, each with its value in both schemes. The dark scheme inverts
@@ -13,7 +13,7 @@ const PAPER = {
   // hairline. In dark, a step lighter than shell, not inverted — a near-black
   // plate on dark grey read as a hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#2D2C29" },
-  // The hero's ground, and About's below its opening. In light, the off-white every
+  // The hero's ground. In light, the off-white every
   // page shares — a grey dulled the photographs and clashed with the warm blocks
   // beside them. In dark, a warm charcoal — a near-black read as a hole beside the
   // hero's deep blocks.
@@ -43,12 +43,17 @@ const PAPER = {
   // Light enough to read as a drawn edge on cream. 1.6:1 on cream in light, 1.5:1
   // in dark.
   grid: { light: "#C4C4C0", dark: "#4B463F" },
-  // The opening of every page below the hero — About's, a write-up's — the whole
-  // of Projects, its list included, and the nav bar at the foot of those pages, pinned or Contact's
+  // The opening of a write-up, the whole of Projects, its list included, and the
+  // nav bar at the foot of those pages, pinned or Contact's
   // own: the off-white every page shares in light, and in dark a step under the
   // hero's charcoal, so a page's opening stands apart from what follows it and its
   // bar closes it in the tone it began.
   smoke: { light: "#F7F7F5", dark: "#171614" },
+  // About's ground: its opening, the content half of each band beside its coloured
+  // label, and the nav bar at its foot. White in light, and in dark a near-black a
+  // notch under the hero's charcoal, so the coloured labels read as blocks laid on
+  // a sheet.
+  sheet: { light: "#FFFFFF", dark: "#141312" },
   // The same near-black in both schemes: Contact's title panel and its email
   // button, and the type on the hero's light blocks. Chalk holds 17.2:1 on it.
   slate: { light: "#141414", dark: "#141414" },
@@ -100,14 +105,14 @@ export default {
         // and takes the corners down — which is what puts the shot in a frame rather
         // than on a panel.
         frame: "radial-gradient(ellipse at 50% 50%, #2D2B27 0%, #110F0C 100%)",
-        // Below md, the About page's portrait carries that page's title, and a
+        // The About page's portrait carries that page's title, and a
         // photograph is not a ground to set type on. This is what gives the words something to
         // sit against.
         //
         // A warm dark rather than black, so it reads as the site's own dark tone falling
         // across the picture rather than as a grey card laid over it. It holds above
-        // 0.8 through the first third, which is as high as the second line of the
-        // title reaches — the stops are placed against that block, not spread evenly
+        // 0.8 through the first third, which is as high as the title reaches — the
+        // stops are placed against that block, not spread evenly
         // — and is gone by 82%, so the subject's face is never under it.
         scrim: `linear-gradient(to top, rgba(${SCRIM_RGB}, 0.94) 0%, rgba(${SCRIM_RGB}, 0.88) 26%, rgba(${SCRIM_RGB}, 0.55) 44%, rgba(${SCRIM_RGB}, 0.16) 64%, rgba(${SCRIM_RGB}, 0) 82%)`,
       },
@@ -164,6 +169,12 @@ export default {
           colorScheme: "dark",
         },
         ':root[data-theme="light"]': { colorScheme: "light" },
+      }),
+    // The light palette on one element whichever scheme is up: on a phone the
+    // About sand band stays light in dark mode, since the sand is bright in both.
+    ({ addUtilities }) =>
+      addUtilities({
+        ".scheme-light": { ...paperVars("light"), colorScheme: "light" },
       }),
   ],
 };

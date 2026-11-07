@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
 import AboutOpening from "../components/about/AboutOpening";
 import AboutExperience from "../components/about/AboutExperience";
@@ -26,6 +27,16 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 //
 // Opaque and stacked above the hero, since the hero is sticky and this page
 // covers it while the two share a document: see useHeroHandoff.
+// On a phone the content sits on its block's colour, which the page's own tones
+// weren't drawn for: `grid` all but vanishes on every block, and `ash` at label
+// size fails on the blue and the taupe. Both become a share of the ink instead.
+const BLOCK_RULE_CLASS =
+  "max-md:[--grid:color-mix(in_oklab,var(--ink)_50%,transparent)]";
+const BLOCK_MUTED_CLASS = cn(
+  "max-md:[--ash:color-mix(in_oklab,var(--ink)_85%,transparent)]",
+  BLOCK_RULE_CLASS,
+);
+
 const AboutPage = () => {
   const { isArriving } = usePage();
   const headingRef = useRef(null);
@@ -35,19 +46,37 @@ const AboutPage = () => {
     <PageSection
       id="about"
       contained={false}
-      additionalClasses="relative z-10 flex flex-col bg-fog font-epilogue text-ink"
+      additionalClasses="relative z-10 flex flex-col border-b border-grid bg-sheet font-epilogue text-ink [--grid:color-mix(in_oklab,var(--ink)_20%,transparent)]"
     >
       <AboutOpening headingRef={headingRef} />
 
-      <PageBand index="01" {...ABOUT_SECTIONS.experience}>
+      <PageBand
+        index="01"
+        tone="bg-block-about text-slate dark:text-chalk"
+        mobileTone={cn("max-md:bg-block-about", BLOCK_MUTED_CLASS)}
+        {...ABOUT_SECTIONS.experience}
+      >
         <AboutExperience />
       </PageBand>
 
-      <PageBand index="02" {...ABOUT_SECTIONS.technologies}>
+      <PageBand
+        index="02"
+        tone="bg-block-projects text-slate"
+        mobileTone={cn(
+          "max-md:bg-block-projects max-md:scheme-light",
+          BLOCK_RULE_CLASS,
+        )}
+        {...ABOUT_SECTIONS.technologies}
+      >
         <AboutTech />
       </PageBand>
 
-      <PageBand index="03" {...ABOUT_SECTIONS.interests}>
+      <PageBand
+        index="03"
+        tone="bg-block-contact text-slate dark:text-chalk"
+        mobileTone={cn("max-md:bg-block-contact", BLOCK_MUTED_CLASS)}
+        {...ABOUT_SECTIONS.interests}
+      >
         <AboutInterests />
       </PageBand>
     </PageSection>
