@@ -4,9 +4,10 @@ import SplitLine from "../common/SplitLine";
 import { ABOUT_BIO, ABOUT_HEADING } from "../../data/about.data";
 import { PORTRAIT } from "../../data/photos.data";
 import {
-  ABOUT_COLUMNS_CLASS,
-  PAGE_GUTTER_CLASS,
   BAND_LABEL_CLASS,
+  OPENING_BYLINE_CLASS,
+  OPENING_GRID_CLASS,
+  PAGE_GUTTER_CLASS,
 } from "../layout/sharedClasses";
 
 // The portrait's rendered width, for its srcset. Cropped to cover, so it follows
@@ -23,16 +24,11 @@ const PORTRAIT_SIZES = "(min-width: 768px) 140vh, 80vh";
 const AboutOpening = ({ headingRef }) => (
   <div
     className={cn(
-      "grid min-h-[calc(100svh-var(--nav-height,4rem))] grid-rows-[auto_auto_minmax(0,1fr)] bg-sheet text-ink md:grid-rows-[4rem_minmax(0,1fr)]",
-      ABOUT_COLUMNS_CLASS,
+      "min-h-[calc(100svh-var(--nav-height,4rem))] bg-sheet text-ink",
+      OPENING_GRID_CLASS,
     )}
   >
-    <div
-      className={cn(
-        "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
-        PAGE_GUTTER_CLASS,
-      )}
-    >
+    <div className={OPENING_BYLINE_CLASS}>
       <Byline />
     </div>
 

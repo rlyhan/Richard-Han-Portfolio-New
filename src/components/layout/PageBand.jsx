@@ -1,8 +1,8 @@
 import cn from "classnames";
 import {
-  ABOUT_COLUMNS_CLASS,
   PAGE_GUTTER_CLASS,
   BAND_LABEL_CLASS,
+  OPENING_COLUMNS_CLASS,
 } from "./sharedClasses";
 
 // Each half of a band carries the page's gutter and the band's vertical padding
@@ -19,7 +19,7 @@ const BAND_HALF_CLASS = cn(
 const PageBand = ({ id, index, label, tone, mobileTone, children }) => (
   <section
     aria-labelledby={`${id}-heading`}
-    className={cn("grid grid-cols-1", ABOUT_COLUMNS_CLASS)}
+    className={cn("grid grid-cols-1", OPENING_COLUMNS_CLASS)}
   >
     <div className={cn(BAND_HALF_CLASS, tone)}>
       <h2

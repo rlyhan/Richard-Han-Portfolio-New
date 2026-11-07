@@ -16,10 +16,16 @@ export const PAGE_TITLE_CLASS =
 export const PAGE_GUTTER_CLASS =
   "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
-// About's two columns from md: the portrait and the bio in its opening, and each
-// band's label and content below, so the two line up down the page.
-export const ABOUT_COLUMNS_CLASS =
+// The two columns About and Contact open on from md: the picture and the copy.
+// About's bands split on them too, so label and content line up down the page.
+export const OPENING_COLUMNS_CLASS =
   "md:grid-cols-[minmax(0,45%)_minmax(0,55%)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]";
+
+// The opening's rows: byline, picture, copy stacked below md; from md the byline
+// over the copy, beside the picture's full height.
+export const OPENING_GRID_CLASS = `grid grid-rows-[auto_auto_minmax(0,1fr)] md:grid-rows-[4rem_minmax(0,1fr)] ${OPENING_COLUMNS_CLASS}`;
+
+export const OPENING_BYLINE_CLASS = `row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0 ${PAGE_GUTTER_CLASS}`;
 
 // The display size About's section labels and its title share, so the title on
 // the portrait reads as the first of the labels down the page.

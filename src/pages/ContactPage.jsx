@@ -15,7 +15,11 @@ import {
   CONTACT_NOTE,
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
-import { PAGE_GUTTER_CLASS } from "../components/layout/sharedClasses";
+import {
+  OPENING_BYLINE_CLASS,
+  OPENING_GRID_CLASS,
+  PAGE_GUTTER_CLASS,
+} from "../components/layout/sharedClasses";
 
 // The headshot's rendered width at each breakpoint, for its srcset — the same steps
 // as its size classes below.
@@ -51,13 +55,8 @@ const ContactPage = () => {
       contained={false}
       additionalClasses="grid h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-mist font-epilogue text-ink"
     >
-      <div className="grid min-h-0 grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
-        <div
-          className={cn(
-            "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
-            PAGE_GUTTER_CLASS,
-          )}
-        >
+      <div className={cn("min-h-0", OPENING_GRID_CLASS)}>
+        <div className={OPENING_BYLINE_CLASS}>
           <Byline />
         </div>
 
