@@ -5,9 +5,9 @@ import Byline from "../components/layout/Byline";
 import NavMenu from "../components/layout/NavMenu";
 import IconRenderer from "../components/icons/IconRenderer";
 import SplitLine from "../components/common/SplitLine";
+import TickerGround from "../components/common/TickerGround";
 import { useNavItems } from "../hooks/useNavLinks";
 import { useSplitReveal } from "../hooks/useSplitReveal";
-import { DOT_GRID_CLASS } from "../components/layout/sharedClasses";
 import { usePage } from "../routes/RouterContext";
 import {
   CONTACT_CHANNELS,
@@ -15,8 +15,11 @@ import {
   CONTACT_NOTE,
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
-
-const GUTTER_CLASS ="px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+import {
+  OPENING_BYLINE_CLASS,
+  OPENING_GRID_CLASS,
+  PAGE_GUTTER_CLASS,
+} from "../components/layout/sharedClasses";
 
 // The headshot's rendered width at each breakpoint, for its srcset — the same steps
 // as its size classes below.
@@ -30,7 +33,7 @@ const CHANNEL_CLASS =
 // ordered by what's worth trying, and a flag beside that order could disagree
 // with it.
 const CHANNEL_PRIMARY_CLASS =
-  "border-panel bg-panel text-chalk hover:border-panel/85 hover:bg-panel/85";
+  "border-slate bg-slate text-chalk hover:border-slate/85 hover:bg-slate/85";
 
 const CHANNEL_SECONDARY_CLASS = "border-grid hover:border-ink hover:bg-shell";
 
@@ -52,27 +55,19 @@ const ContactPage = () => {
       contained={false}
       additionalClasses="grid h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-mist font-epilogue text-ink"
     >
-      <div className="grid min-h-0 grid-rows-[auto_auto_minmax(0,1fr)] md:grid-cols-[minmax(0,45%)_minmax(0,55%)] md:grid-rows-[4rem_minmax(0,1fr)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]">
-        <div
-          className={cn(
-            "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
-            GUTTER_CLASS,
-          )}
-        >
+      <div className={cn("min-h-0", OPENING_GRID_CLASS)}>
+        <div className={OPENING_BYLINE_CLASS}>
           <Byline />
         </div>
 
-        <div
-          className={cn(
-            "relative row-start-2 h-[50svh] min-h-0 w-full bg-panel bg-panel-dots md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto",
-            DOT_GRID_CLASS,
-          )}
-        >
+        <div className="relative isolate row-start-2 h-[50svh] min-h-0 w-full overflow-hidden bg-slate md:col-start-1 md:row-span-2 md:row-start-1 md:h-auto">
+          <TickerGround sizes="(min-width: 768px) 50vh, 30vh" />
+
           <h1
             id="contact-heading"
             className={cn(
               "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-chalk md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
-              GUTTER_CLASS,
+              PAGE_GUTTER_CLASS,
             )}
             ref={headingRef}
           >
@@ -88,7 +83,7 @@ const ContactPage = () => {
           aria-labelledby="contact-heading"
           className={cn(
             "row-start-3 flex min-h-0 flex-col justify-center py-5 md:col-start-2 md:row-start-2 md:justify-end md:pt-6 md:pb-7 lg:pb-9",
-            GUTTER_CLASS,
+            PAGE_GUTTER_CLASS,
           )}
         >
           <div className="flex items-center gap-4 md:gap-5">
@@ -103,7 +98,7 @@ const ContactPage = () => {
               className="size-[3.25rem] shrink-0 rounded-full border border-grid object-cover md:size-16 lg:size-[4.5rem]"
             />
 
-            <p className="max-w-[32rem] text-sm leading-normal text-ink md:text-base lg:text-lg">
+            <p className="max-w-[32rem] font-arial text-sm leading-normal text-ink md:text-base lg:text-lg">
               {CONTACT_NOTE}
             </p>
           </div>
@@ -138,7 +133,7 @@ const ContactPage = () => {
         </section>
       </div>
 
-      <NavMenu items={navItems} ground="bg-mist" />
+      <NavMenu items={navItems} ground="bg-smoke" />
     </PageSection>
   );
 };

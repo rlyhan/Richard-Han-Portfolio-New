@@ -7,12 +7,12 @@ import PROJECTS from "../data/projects.data";
 // tab is called. Adding a page is a record here and a component under src/pages;
 // nothing else knows the list.
 //
-// Each page is its own chunk, the point of the split: the hero's spread and its
-// carousel aren't sent to someone who came to read About.
+// Each page is its own chunk, the point of the split: the hero's shots
+// aren't sent to someone who came to read About.
 //
 // The project list is imported here, not only by the pages that show it, since the
 // write-ups below are a page per project and the table can't be built without it.
-// That costs nothing — the homepage's featured cards read the same list, already
+// That costs nothing — the homepage's ticker reads the same list, already
 // shared between three chunks and hoisted out of all of them.
 const PAGES = [
   {
@@ -27,11 +27,14 @@ const PAGES = [
     // sections paint their own besides this; it answers for the frame around
     // them and for the gap before the first paint.
     ground: "bg-fog",
-    // The hero carries the site's links in its own layout, at its bottom
-    // left, so the pinned bar has to stay down while this page holds the
-    // screen, or the same links are drawn twice — see SiteNav, which takes the
-    // page after this one as the floor.
+    // The hero carries the site's links in its own layout, so the pinned bar
+    // has to stay down while this page holds the screen, or the same links are
+    // drawn twice — see SiteNav, which takes the page after this one as the floor.
     hasOwnNav: true,
+    // The hero is exactly one screen and ends at its own foot, which carries the
+    // copyright from md — see HomeFooter. A footer under it would be a scroll past
+    // the page to a line already shown.
+    hasOwnFooter: true,
     // No navLabel: the name in the pinned bar is the way back home, and a
     // "Home" item beside it would be that link drawn twice.
     //
@@ -51,8 +54,8 @@ const PAGES = [
     path: "/about",
     sectionId: "about",
     title: "About — Richard Han",
-    ground: "bg-deep",
-    navGround: "bg-bar",
+    ground: "bg-sheet",
+    navGround: "bg-sheet",
     navLabel: "About",
     load: () => import("../pages/AboutPage.jsx"),
   },
@@ -60,10 +63,10 @@ const PAGES = [
     path: "/projects",
     sectionId: "projects",
     title: "Projects — Richard Han",
-    ground: "bg-mist",
+    ground: "bg-smoke",
     // What the pinned nav bar is painted with over this page, where it isn't
     // the bar's own shell — see NavMenu.
-    navGround: "bg-bar",
+    navGround: "bg-smoke",
     navLabel: "Projects",
     load: () => import("../pages/ProjectsPage.jsx"),
   },
@@ -110,7 +113,7 @@ const PROJECT_PAGES = PROJECTS.map(({ id, name }) => ({
   sectionId: projectSectionId(id),
   title: `${name} — Richard Han`,
   ground: "bg-mist",
-  navGround: "bg-bar",
+  navGround: "bg-smoke",
   load: () => import("../pages/ProjectPage.jsx"),
 }));
 

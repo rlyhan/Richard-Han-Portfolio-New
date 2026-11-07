@@ -6,9 +6,9 @@ import ProjectMasthead from "../components/projects/ProjectMasthead";
 import MattedShot from "../components/common/MattedShot";
 import {
   ARTICLE_ROW_CLASS,
-  DOT_GRID_CLASS,
   EYEBROW_LABEL_CLASS,
   IMAGE_FALLBACK_CLASS,
+  PAGE_GUTTER_CLASS,
 } from "../components/layout/sharedClasses";
 import { usePage } from "../routes/RouterContext";
 import { useSplitReveal } from "../hooks/useSplitReveal";
@@ -48,14 +48,13 @@ const ProjectPage = () => {
     <PageSection
       id={projectSectionId(id)}
       contained={false}
-      additionalClasses={cn(
-        "flex flex-col bg-stage bg-stage-dots font-epilogue text-ink",
-        DOT_GRID_CLASS,
-      )}
+      additionalClasses="flex flex-col bg-smoke font-epilogue text-ink"
     >
       <ProjectMasthead project={project} headingRef={headingRef} />
 
-      <figure className="px-[1.4rem] pb-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pb-[3.25rem]">
+      <figure
+        className={cn("pb-[2.625rem] md:pb-[3.25rem]", PAGE_GUTTER_CLASS)}
+      >
         <div className="relative h-[23.75rem] overflow-hidden bg-frame md:h-[clamp(21.25rem,52vw,40rem)]">
           <div
             className={cn(
@@ -82,7 +81,12 @@ const ProjectPage = () => {
         </div>
       </figure>
 
-      <article className="flex flex-col bg-mist px-[1.4rem] py-[2.625rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-[3.25rem]">
+      <article
+        className={cn(
+          "flex flex-col bg-mist py-[2.625rem] md:py-[3.25rem]",
+          PAGE_GUTTER_CLASS,
+        )}
+      >
         <div className={ARTICLE_ROW_CLASS}>
           <p className={EYEBROW_LABEL_CLASS}>Year worked on</p>
 

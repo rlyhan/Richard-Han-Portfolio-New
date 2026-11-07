@@ -7,7 +7,7 @@
 // fits.
 //
 // Keyed by filename because that is what the distinction is about. The same file
-// is the hero's card, the Projects grid's tile and the write-up's shot, and it
+// is the hero's ticker tile, the Projects grid's tile and the write-up's shot, and it
 // wants the same treatment in all three.
 const BLEED_SHOTS = new Set([
   "neatplaces.webp",
@@ -37,3 +37,19 @@ export const fitOf = (src) => (BLEED_SHOTS.has(src) ? "bleed" : "mat");
 // another size would make this per-shot data, like the fit above.
 export const SHOT_WIDTH = 1600;
 export const SHOT_HEIGHT = 900;
+
+// The smaller copies each shot is also exported at, named `<shot>-<width>.webp`,
+// with the original standing in as the largest. index.html's preloads for the
+// ticker spell out this same set, so the two change together.
+const SHOT_WIDTHS = [400, 600, 800, 1200];
+
+export const srcSetOf = (src) => {
+  const name = src.replace(/\.webp$/, "");
+
+  return [
+    ...SHOT_WIDTHS.map(
+      (width) => `/images/projects/${name}-${width}.webp ${width}w`,
+    ),
+    `/images/projects/${src} ${SHOT_WIDTH}w`,
+  ].join(", ");
+};

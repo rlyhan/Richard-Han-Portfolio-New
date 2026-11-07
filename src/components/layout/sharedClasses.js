@@ -1,36 +1,53 @@
-// The site's small-caps label voice, shared verbatim by the band heading, the
-// byline, the hero's work heading, and every write-up's row labels. Not the same
-// constant as the two EYEBROW_CLASS variants in HomeWork.jsx/ProjectTile.jsx —
-// those are tuned per context (tracking, size) and diverge from this on purpose.
-//
-// The type apart from its colour, for the one label set on a dark plate.
-export const EYEBROW_LABEL_TYPE_CLASS =
-  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] uppercase";
+// The site's small-caps label voice, shared verbatim by the band heading and every
+// write-up's row labels. Not the same constant as EYEBROW_CLASS in ProjectTile.jsx —
+// that one is tuned to its context (tracking, size) and diverges from this on purpose.
+export const EYEBROW_LABEL_CLASS =
+  "font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.06em] text-ash uppercase";
 
-export const EYEBROW_LABEL_CLASS = `${EYEBROW_LABEL_TYPE_CLASS} text-ash`;
+// The page's furniture: the byline above a heading and the hero's copyright under it.
+export const BYLINE_TEXT_CLASS =
+  "font-arial text-[0.625rem] leading-[1.25] tracking-[0.06em] text-ash uppercase md:text-[0.6875rem]";
+
+// The Projects masthead's title, in the homepage blocks' Arial.
+export const PAGE_TITLE_CLASS =
+  "font-arial text-[clamp(2.5rem,10vw,3.25rem)] leading-none tracking-[-0.025em] md:text-[clamp(2.75rem,4.4vw,4.5rem)]";
+
+// Every page's side gutter.
+export const PAGE_GUTTER_CLASS =
+  "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+
+// The two columns About and Contact open on from md: the picture and the copy.
+// About's bands split on them too, so label and content line up down the page.
+export const OPENING_COLUMNS_CLASS =
+  "md:grid-cols-[minmax(0,45%)_minmax(0,55%)] lg:grid-cols-[minmax(0,46%)_minmax(0,54%)]";
+
+// The opening's rows: byline, picture, copy stacked below md; from md the byline
+// over the copy, beside the picture's full height.
+export const OPENING_GRID_CLASS = `grid grid-rows-[auto_auto_minmax(0,1fr)] md:grid-rows-[4rem_minmax(0,1fr)] ${OPENING_COLUMNS_CLASS}`;
+
+export const OPENING_BYLINE_CLASS = `row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0 ${PAGE_GUTTER_CLASS}`;
+
+// The display size About's section labels and its title share, so the title on
+// the portrait reads as the first of the labels down the page.
+export const BAND_LABEL_CLASS =
+  "text-[2.75rem] leading-[0.95] tracking-[-0.035em] md:text-[clamp(3rem,6vw,6.5rem)]";
 
 // One row of a write-up: its label beside its content from lg, above it below.
 export const ARTICLE_ROW_CLASS =
   "grid gap-3.5 border-t border-grid py-6 first:border-t-0 first:pt-0 last:pb-0 md:py-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-x-10";
 
 // The body-copy voice under a heading or byline. Callers add their own margin
-// and max-width, and font-epilogue where the page hasn't already set it.
+// and max-width.
 export const NOTE_TEXT_CLASS =
-  "text-[0.9375rem] leading-[1.6] font-medium text-ash";
+  "font-arial text-[0.9375rem] leading-[1.6] font-medium text-ash";
 
-// The tiling both dot patterns share. Offset by just under half a tile, so the
-// first dot sits most of a gap in from the top and left edges and the one before
-// it falls just past them.
-export const DOT_GRID_CLASS = "bg-size-[1.5rem_1.5rem] bg-[position:0.6rem_0.6rem]";
+// A homepage block's label and arrow as its link is hovered, and a project tile's,
+// which is drawn like one.
+export const BLOCK_LABEL_HOVER_CLASS =
+  "transition-opacity duration-200 group-hover:opacity-60 motion-reduce:transition-none";
 
-// The hero's ground: fog, dotted in dark.
-export const DOTTED_GROUND_CLASS = `bg-fog bg-dots ${DOT_GRID_CLASS}`;
-
-// The link wrapping a project's shot, in both the hero's cards and the
-// Projects grid's tiles.
-export const PROJECT_LINK_CLASS =
-  "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
+export const BLOCK_ARROW_CLASS =
+  "h-[0.8em] w-[0.8em] shrink-0 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none";
 
 // The empty well shown in place of a shot a project doesn't have.
-export const IMAGE_FALLBACK_CLASS =
-  "h-full w-full border border-grid bg-shell";
+export const IMAGE_FALLBACK_CLASS = "h-full w-full border border-grid bg-shell";

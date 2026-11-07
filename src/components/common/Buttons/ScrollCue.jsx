@@ -6,7 +6,7 @@ const BOUNCE_DISTANCE = 10;
 const BOUNCE_DURATION = 0.9;
 const FADE_DURATION = 0.35;
 
-// The hint at the end of the hero's links, handing the viewer into the page below.
+// The hint handing the viewer into the page below.
 //
 // The homepage is the one page that hands over on the scroll, so this is the
 // one place a cue belongs: everywhere else the foot of the page is the foot of
@@ -52,7 +52,7 @@ const ScrollCue = ({ onClick, visible, label }) => {
         type="button"
         onClick={onClick}
         aria-label={label}
-        className="rounded-full border border-ink/30 p-3 text-ink backdrop-blur-sm transition-colors hover:border-ink/60 hover:bg-ink/[0.07] focus-visible:outline-ink"
+        className="rounded-full border border-chalk/40 p-3 text-chalk backdrop-blur-sm transition-colors hover:border-chalk/70 hover:bg-chalk/10 focus-visible:outline-chalk md:border-ink/30 md:text-ink md:hover:border-ink/60 md:hover:bg-ink/[0.07] md:focus-visible:outline-ink"
       >
         <span ref={arrowRef} className="block">
           <ArrowDownIcon className="h-6 w-6" />

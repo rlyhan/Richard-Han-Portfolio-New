@@ -5,8 +5,16 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#E8E8E5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1A1A1A" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="theme-color"
+      content="#F7F7F5"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#232220"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <script>
       // Before first paint, so a saved scheme doesn't open on the OS's for a frame.
@@ -67,11 +75,32 @@
       {
         const OPENING_SHOTS = [
           { href: "/images/projects/neatplaces.webp" },
-          { href: "/images/projects/thakeham.webp", media: "(min-width: 768px)" },
-          { href: "/images/projects/touchgrass.webp", media: "(min-width: 768px)" },
+          {
+            href: "/images/projects/thakeham.webp",
+            media: "(min-width: 768px)",
+          },
+          {
+            href: "/images/projects/touchgrass.webp",
+            media: "(min-width: 768px)",
+          },
         ];
+        // The homepage's are its ticker's, served at the ticker's sizes — the same
+        // set as shots.data and the sizes HomeBlocks and HomeIntro give it, or the
+        // preload is a second download rather than the first.
+        const TICKER_SHOTS = OPENING_SHOTS.map((shot) => {
+          const name = shot.href.replace(/\.webp$/, "");
+
+          return {
+            ...shot,
+            srcset: [400, 600, 800, 1200]
+              .map((width) => `${name}-${width}.webp ${width}w`)
+              .concat(`${shot.href} 1600w`)
+              .join(", "),
+            sizes: "(min-width: 768px) 55vh, 35vh",
+          };
+        });
         const PRELOADS = {
-          "/": OPENING_SHOTS,
+          "/": TICKER_SHOTS,
           "/projects": OPENING_SHOTS,
           "/about": [
             {

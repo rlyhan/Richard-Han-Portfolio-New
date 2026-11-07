@@ -1,0 +1,108 @@
+import cn from "classnames";
+import MattedShot from "./MattedShot";
+import PROJECTS from "../../data/projects.data";
+import { fitOf } from "../../data/shots.data";
+import { useNavLink } from "../../hooks/useNavLinks";
+import { projectPathOf } from "../../routes/routes";
+
+const ROW_COUNT = 3;
+
+// Widths in the row's height rather than `aspect-*`: WebKit sizes a `w-max` track
+// of aspect-ratio tiles before the rows have a height and never revisits it, so
+// on the phone hero the track was 32px wide and its -50% went nowhere.
+const ASPECTS = [
+  "w-[calc(100cqh*4/3)]",
+  "w-[calc(100cqh*16/9)]",
+  "w-[100cqh]",
+  "w-[calc(100cqh*3/2)]",
+  "w-[calc(100cqh*5/4)]",
+];
+
+const ROWS = Array.from({ length: ROW_COUNT }, (_, row) =>
+  PROJECTS.filter((_, i) => i % ROW_COUNT === row),
+);
+
+// Eager: a lazy image in a sideways track arrives blank as it scrolls into view.
+const Tile = ({ src, aspect, sizes, children }) => (
+  <div className={cn("relative h-full shrink-0 overflow-hidden", aspect)}>
+    <MattedShot src={src} alt="" eager fit={fitOf(src)} sizes={sizes} />
+    {children}
+  </div>
+);
+
+const LinkedTile = ({
+  project: { id, name, images },
+  aspect,
+  sizes,
+  isRepeat,
+}) => {
+  const link = useNavLink(projectPathOf(id));
+  const [src] = images;
+
+  return (
+    <a
+      {...link}
+      aria-label={name}
+      tabIndex={isRepeat ? -1 : undefined}
+      className="group block h-full shrink-0 focus-visible:outline-chalk focus-visible:-outline-offset-4"
+    >
+      <Tile src={src} aspect={aspect} sizes={sizes}>
+        <span className="absolute inset-0 bg-slate/15 transition-opacity dark:bg-slate/30 duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none" />
+      </Tile>
+    </a>
+  );
+};
+
+// Each row is drawn twice and travels half its own width, so the loop has no seam.
+// The repeat exists only for that, so it is kept from screen readers and the tab order.
+//
+// `sizes` is how wide a tile's shot is where the ticker stands, which only the
+// caller knows: a row's height, and so a shot's width, follows from its frame.
+const ProjectTicker = ({ linked, sizes }) => (
+  <div className="flex h-full flex-col gap-1">
+    {ROWS.map((projects, row) => (
+      <div
+        key={row}
+        className="min-h-0 flex-1 overflow-clip [container-type:size]"
+      >
+        <div
+          className={cn(
+            "flex h-full w-max animate-ticker motion-reduce:animate-none",
+            row === 1 && "[animation-direction:reverse]",
+          )}
+        >
+          {[0, 1].map((copy) => (
+            <div
+              key={copy}
+              aria-hidden={copy === 1 ? true : undefined}
+              className="flex h-full gap-1 pr-1"
+            >
+              {projects.map((project, i) => {
+                const aspect = ASPECTS[(i + row * 2) % ASPECTS.length];
+
+                return linked ? (
+                  <LinkedTile
+                    key={project.id}
+                    project={project}
+                    aspect={aspect}
+                    sizes={sizes}
+                    isRepeat={copy === 1}
+                  />
+                ) : (
+                  <Tile
+                    key={project.id}
+                    src={project.images[0]}
+                    aspect={aspect}
+                    sizes={sizes}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+export default ProjectTicker;

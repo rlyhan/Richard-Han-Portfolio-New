@@ -33,8 +33,8 @@ const buildLink = ({ to, isCurrent, navigate, prefetch }) => ({
     "aria-current": isCurrent ? "page" : undefined,
 })
 
-// One link, for anything that points at a page by name — the hero's spread pointing
-// at the work, a line of copy pointing anywhere.
+// One link, for anything that points at a page by name — the hero's blocks pointing
+// at the pages, a line of copy pointing anywhere.
 export function useNavLink(to) {
     const { path, navigate, prefetch } = useRouter()
 

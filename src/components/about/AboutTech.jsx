@@ -10,7 +10,7 @@ const AboutTech = () => (
         </h3>
         <ul className="mt-3 grid gap-1.5">
           {listItems.map((item) => (
-            <li key={item} className="text-[0.84375rem] leading-[1.45]">
+            <li key={item} className="font-arial text-[0.9375rem] leading-[1.45]">
               {item}
             </li>
           ))}

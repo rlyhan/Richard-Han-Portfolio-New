@@ -1,6 +1,4 @@
-import cn from "classnames";
 import PointList from "../layout/PointList";
-import { BAND_SPLIT_CLASS } from "../layout/PageBand";
 import { WORK } from "../../data/work.data";
 
 const AboutExperience = () => (
@@ -8,13 +6,10 @@ const AboutExperience = () => (
     {WORK.map(({ id, heading, subheading, listItems }) => (
       <article
         key={id}
-        className={cn(
-          "grid grid-cols-1 gap-3.5 border-t border-grid py-[1.625rem] first:border-t-0 first:pt-0 md:gap-y-1.5",
-          BAND_SPLIT_CLASS,
-        )}
+        className="grid gap-4 border-t border-grid py-[1.625rem] first:border-t-0 first:pt-0"
       >
         <div>
-          <h3 className="font-urbanist text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.1] font-bold text-ink">
+          <h3 className="font-arial text-[clamp(1.375rem,2vw,1.75rem)] leading-[1.15] font-bold tracking-[-0.02em] text-ink">
             {heading}
           </h3>
           <p className="mt-2 font-epilogue text-[0.6875rem] leading-[1.25] font-medium tracking-[0.02em] text-ash uppercase">
@@ -22,7 +17,9 @@ const AboutExperience = () => (
           </p>
         </div>
 
-        <PointList points={listItems} />
+        <div className="pr-6 md:pr-[clamp(2rem,10vw,10rem)]">
+          <PointList points={listItems} />
+        </div>
       </article>
     ))}
   </>

@@ -1,30 +1,31 @@
 import { useCallback, useRef } from "react";
-import cn from "classnames";
 import PageSection from "../components/layout/PageSection";
-import { DOTTED_GROUND_CLASS } from "../components/layout/sharedClasses";
 import ScrollCue from "../components/common/Buttons/ScrollCue";
+import HomeBlocks from "../components/home/HomeBlocks";
 import HomeIntro from "../components/home/HomeIntro";
-import HomeNav from "../components/home/HomeNav";
-import HomeWork from "../components/home/HomeWork";
+import HomeFooter from "../components/home/HomeFooter";
 import { INTRO_LINES } from "../data/home.data";
 import { useAdvance, usePage, useRouter } from "../routes/RouterContext";
 import { PATHS } from "../routes/routes";
 import { useHeroHandoff } from "../hooks/useHeroHandoff";
 import { useIsNearPageTop } from "../hooks/useIsNearPageTop";
+import { MD_UP, useMediaQuery } from "../hooks/useMediaQuery";
 import { useSplitReveal } from "../hooks/useSplitReveal";
 
 // Scrolled less than this, the hero still owns the viewport, so the cue still applies.
 const NEAR_TOP_THRESHOLD = 40;
 
 // What the hero's exit throws off screen, in order — the stagger is indexed off
-// this list, so the spread runs down the left column and then takes the work
-// panel with it (see useHeroHandoff for each index's travel).
+// this list, so the spread runs down the left column, the note above the name,
+// and then takes the blocks panel with it (see useHeroHandoff for each index's
+// travel).
 //
 // Six is the ceiling: scrubbed across a unit-length timeline, a seventh would
 // push the last fade past the runway's end, leaving the takeover firing over
 // content still on screen.
-const NOTE_LINE_INDEX = INTRO_LINES.length;
-const WORK_LINE_INDEX = NOTE_LINE_INDEX + 1;
+const NOTE_LINE_INDEX = 0;
+const FIRST_NAME_LINE_INDEX = NOTE_LINE_INDEX + 1;
+const BLOCKS_LINE_INDEX = FIRST_NAME_LINE_INDEX + INTRO_LINES.length;
 
 // The home page: the hero, and the runway it empties out across.
 //
@@ -53,21 +54,21 @@ const HomePage = () => {
   // hero. The elements themselves never change identity either way, so the exit's
   // timeline keeps pointing at the right things.
   const setDisplayLine = useCallback((index, el) => {
-    displayLineRefs.current[index] = el;
+    displayLineRefs.current[FIRST_NAME_LINE_INDEX + index] = el;
   }, []);
   const setNoteRef = useCallback((el) => {
     displayLineRefs.current[NOTE_LINE_INDEX] = el;
   }, []);
-  const setWorkRef = useCallback((el) => {
-    displayLineRefs.current[WORK_LINE_INDEX] = el;
+  const setBlocksRef = useCallback((el) => {
+    displayLineRefs.current[BLOCKS_LINE_INDEX] = el;
   }, []);
   // The outro sinks in the order it's collected: the byline atop the intro panel
-  // first, then the links at the hero's foot. Three is the ceiling here for the
+  // first, then the hero's foot. Three is the ceiling here for the
   // same reason six is above — the last has to land inside the runway.
   const setToplineRef = useCallback((el) => {
     outroLineRefs.current[0] = el;
   }, []);
-  const setNavRef = useCallback((el) => {
+  const setFooterRef = useCallback((el) => {
     outroLineRefs.current[1] = el;
   }, []);
 
@@ -100,20 +101,25 @@ const HomePage = () => {
 
   // Any scroll away from the hero retires the cue, including the one it starts
   // itself — but only where there's a runway to scroll along. Without one the
-  // hero is the whole page, and the only scroll under it is the footer's slack,
-  // where a cue going away would read as the way to the footer, not to About.
+  // hero is the whole page, and the cue is the only way on it has.
   const isNearPageTop = useIsNearPageTop(NEAR_TOP_THRESHOLD);
   const isCueVisible = (!nextPath || isNearPageTop) && !isScrollingToNext;
+
+  const isMdUp = useMediaQuery(MD_UP);
+  const cue = (
+    <ScrollCue
+      onClick={goToNextPage}
+      visible={isCueVisible}
+      label={nextPath ? "Scroll to the About page" : "Go to the About page"}
+    />
+  );
 
   return (
     <>
       <PageSection
         id="home"
         contained={false}
-        additionalClasses={cn(
-          "sticky top-0 flex h-svh flex-col overflow-x-clip text-ink",
-          DOTTED_GROUND_CLASS,
-        )}
+        additionalClasses="sticky top-0 flex h-svh flex-col overflow-x-clip bg-fog text-ink"
       >
         <div className="flex min-h-0 flex-1 flex-col md:grid md:grid-rows-[minmax(0,1fr)_auto] md:max-wide:grid-cols-[minmax(0,44%)_minmax(0,56%)] wide:grid-cols-[minmax(0,48%)_minmax(0,52%)]">
           <HomeIntro
@@ -122,19 +128,8 @@ const HomePage = () => {
             setNoteRef={setNoteRef}
             setToplineRef={setToplineRef}
           />
-          <HomeWork setGridRef={setWorkRef} />
-          <HomeNav
-            setNavRef={setNavRef}
-            cue={
-              <ScrollCue
-                onClick={goToNextPage}
-                visible={isCueVisible}
-                label={
-                  nextPath ? "Scroll to the About page" : "Go to the About page"
-                }
-              />
-            }
-          />
+          <HomeBlocks setPanelRef={setBlocksRef} cue={isMdUp ? null : cue} />
+          <HomeFooter setFooterRef={setFooterRef} cue={isMdUp ? cue : null} />
         </div>
       </PageSection>
 

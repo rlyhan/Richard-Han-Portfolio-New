@@ -1,4 +1,6 @@
 import cn from "classnames";
+import { PAGE_GUTTER_CLASS } from "../layout/sharedClasses";
+import { twoDigit } from "../../helpers/twoDigit";
 
 // The filters and the count, on one rule above the grid.
 //
@@ -12,7 +14,12 @@ import cn from "classnames";
 // fourteen to three. aria-live, since the change happens below the button
 // pressed and off the reading position.
 const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
-  <div className="flex items-center justify-between gap-4 border-grid px-[1.4rem] py-3.5 md:px-[clamp(1.75rem,3.2vw,3.5rem)]">
+  <div
+    className={cn(
+      "flex items-center justify-between gap-4 border-grid py-3.5",
+      PAGE_GUTTER_CLASS,
+    )}
+  >
     <div role="group" aria-label="Filter projects" className="flex gap-2">
       {filters.map(({ id, label }) => {
         const isActive = id === activeFilter;
@@ -24,10 +31,10 @@ const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
             aria-pressed={isActive}
             onClick={() => onSelect(id)}
             className={cn(
-              "rounded-none border px-4 py-2 font-epilogue text-[0.6875rem] leading-none font-medium tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none",
+              "rounded-none border px-4 py-2 font-arial text-[0.6875rem] leading-none tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none",
               isActive
                 ? "border-ink bg-ink text-cream"
-                : "border-grid bg-transparent text-ash hover:border-ash hover:text-ink",
+                : "border-ash/70 bg-transparent text-ash hover:border-ash hover:text-ink",
             )}
           >
             {label}
@@ -38,9 +45,9 @@ const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
 
     <p
       aria-live="polite"
-      className="font-epilogue text-[0.6875rem] leading-none font-medium tabular-nums text-ash"
+      className="font-arial text-[0.6875rem] leading-none tracking-[0.06em] tabular-nums text-ash"
     >
-      {String(shown).padStart(2, "0")} / {String(total).padStart(2, "0")}
+      {twoDigit(shown)} / {twoDigit(total)}
     </p>
   </div>
 );

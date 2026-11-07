@@ -13,9 +13,11 @@ import { useLenis } from "./hooks/useLenis";
 //
 // lvh, not the hero's own svh: svh is the viewport with the browser's chrome
 // showing, so on a phone with the toolbars hidden it would leave the footer peeking
-// at the bottom of that first screen. It only binds before the first page mounts —
-// every page in the site is taller than a screen once it has.
-const MAIN_MIN_HEIGHT = "min-h-lvh";
+// at the bottom of that first screen.
+//
+// Let go once the homepage is up: it is exactly one svh with no footer, so holding
+// the document at lvh would leave a blank scroll the height of the browser's chrome.
+const MAIN_MIN_HEIGHT = "min-h-lvh has-[#home]:min-h-0";
 
 function App() {
   // Root level: the scroller is the document, and only one instance may own it.

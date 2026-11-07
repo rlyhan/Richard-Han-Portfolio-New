@@ -5,7 +5,10 @@ import AwardIcon from "../icons/AwardIcon";
 import SplitLine from "../common/SplitLine";
 import ThemeToggle from "../common/Buttons/ThemeToggle";
 import { useNavLink } from "../../hooks/useNavLinks";
-import { EYEBROW_LABEL_CLASS } from "../layout/sharedClasses";
+import {
+  EYEBROW_LABEL_CLASS,
+  PAGE_GUTTER_CLASS,
+} from "../layout/sharedClasses";
 import { PATHS } from "../../routes/routes";
 
 const META_CLASS =
@@ -31,7 +34,12 @@ const ProjectMasthead = ({ project, headingRef }) => {
   const backLink = useNavLink(PATHS.projects);
 
   return (
-    <header className="flex flex-col px-[1.4rem] pt-5 pb-10 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:pt-6 md:pb-12">
+    <header
+      className={cn(
+        "flex flex-col pt-5 pb-10 md:pt-6 md:pb-12",
+        PAGE_GUTTER_CLASS,
+      )}
+    >
       <div
         className={cn(
           "flex items-center justify-between gap-4",
@@ -56,7 +64,7 @@ const ProjectMasthead = ({ project, headingRef }) => {
         <SplitLine text={name} />
       </h1>
 
-      <p className="mt-7 max-w-[52ch] text-base leading-[1.5] text-ink md:text-xl md:leading-[1.45]">
+      <p className="mt-7 max-w-[52ch] font-arial text-base leading-[1.5] text-ink md:text-xl md:leading-[1.45]">
         {description}
       </p>
 
