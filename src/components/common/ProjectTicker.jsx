@@ -8,12 +8,15 @@ import { projectPathOf } from "../../routes/routes";
 
 const ROW_COUNT = 3;
 
+// Widths in the row's height rather than `aspect-*`: WebKit sizes a `w-max` track
+// of aspect-ratio tiles before the rows have a height and never revisits it, so
+// on the phone hero the track was 32px wide and its -50% went nowhere.
 const ASPECTS = [
-  "aspect-[4/3]",
-  "aspect-video",
-  "aspect-square",
-  "aspect-[3/2]",
-  "aspect-[5/4]",
+  "w-[calc(100cqh*4/3)]",
+  "w-[calc(100cqh*16/9)]",
+  "w-[100cqh]",
+  "w-[calc(100cqh*3/2)]",
+  "w-[calc(100cqh*5/4)]",
 ];
 
 const ROWS = Array.from({ length: ROW_COUNT }, (_, row) =>
@@ -59,7 +62,10 @@ const LinkedTile = ({
 const ProjectTicker = ({ linked, sizes }) => (
   <div className="flex h-full flex-col gap-1">
     {ROWS.map((projects, row) => (
-      <div key={row} className="min-h-0 flex-1 overflow-clip">
+      <div
+        key={row}
+        className="min-h-0 flex-1 overflow-clip [container-type:size]"
+      >
         <div
           className={cn(
             "flex h-full w-max animate-ticker motion-reduce:animate-none",
