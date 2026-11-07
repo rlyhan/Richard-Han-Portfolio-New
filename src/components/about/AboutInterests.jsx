@@ -1,3 +1,4 @@
+import cn from "classnames";
 import IconRenderer from "../icons/IconRenderer";
 import { EYEBROW_LABEL_CLASS } from "../layout/sharedClasses";
 import {
@@ -6,6 +7,9 @@ import {
   INTERESTS,
 } from "../../data/about.data";
 
+const PLATE_CLASS =
+  "border border-current/30 bg-black/10 text-ink md:dark:bg-white/15";
+
 const AboutInterests = () => (
   <>
     {INTERESTS.map(({ id, icon, title, text }) => (
@@ -13,7 +17,12 @@ const AboutInterests = () => (
         key={id}
         className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-[1.125rem] border-t border-grid py-[1.375rem] first:border-t-0 first:pt-0"
       >
-        <span className="inline-flex size-[2.375rem] shrink-0 items-center justify-center border border-current/30 bg-black/10 md:dark:bg-white/15 text-ink md:size-[2.625rem]">
+        <span
+          className={cn(
+            "inline-flex size-[2.375rem] shrink-0 items-center justify-center md:size-[2.625rem]",
+            PLATE_CLASS,
+          )}
+        >
           <IconRenderer icon={icon} className="size-6" />
         </span>
         <div>
@@ -27,7 +36,7 @@ const AboutInterests = () => (
       </article>
     ))}
 
-    <p className={`mt-1.5 mb-3 ${EYEBROW_LABEL_CLASS}`}>
+    <p className={cn("mt-1.5 mb-3", EYEBROW_LABEL_CLASS)}>
       {INTEREST_TAGS_NOTE}
     </p>
 
@@ -35,7 +44,10 @@ const AboutInterests = () => (
       {INTEREST_TAGS.map(({ id, icon, label }) => (
         <li
           key={id}
-          className="inline-flex items-center gap-[0.5625rem] border border-current/30 bg-black/10 md:dark:bg-white/15 px-[0.9375rem] py-2.5 font-arial text-sm leading-none text-ink"
+          className={cn(
+            "inline-flex items-center gap-[0.5625rem] px-[0.9375rem] py-2.5 font-arial text-sm leading-none",
+            PLATE_CLASS,
+          )}
         >
           <IconRenderer icon={icon} className="size-4" />
           {label}
