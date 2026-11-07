@@ -60,9 +60,9 @@ const PAPER = {
   // carrying slate type in light. In dark, About and Contact go deep and carry
   // chalk, so the sand under the ticker is the one bright block beside the
   // near-black ground.
-  "block-about": { light: "#9DB5D0", dark: "#34476A" },
+  "block-about": { light: "#ABC5E1", dark: "#34476A" },
   "block-projects": { light: "#F6F0D3", dark: "#F6F0D3" },
-  "block-contact": { light: "#BCB09C", dark: "#5A5044" },
+  "block-contact": { light: "#C8BFAE", dark: "#5A5044" },
 };
 
 const paperVars = (scheme) =>
