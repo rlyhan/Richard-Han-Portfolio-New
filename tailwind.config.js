@@ -9,8 +9,7 @@ const SCRIM_RGB = "42, 36, 30";
 // same name, which the plugin at the foot of this file sets for each scheme: the
 // OS's, unless the masthead's toggle has put a `data-theme` on <html>.
 const PAPER = {
-  // The plates laid on the ground: a write-up's tags, About's icons and
-  // interest chips. In light, the grounds' own off-white, so a plate is its
+  // The plates laid on the ground: a write-up's tags. In light, the grounds' own off-white, so a plate is its
   // hairline. In dark, a step lighter than shell, not inverted — a near-black
   // plate on dark grey read as a hole, not a plate.
   cream: { light: "#F7F7F5", dark: "#2D2C29" },
