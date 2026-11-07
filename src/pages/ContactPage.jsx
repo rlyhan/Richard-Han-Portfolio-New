@@ -15,8 +15,7 @@ import {
   CONTACT_NOTE,
 } from "../data/contact.data";
 import { HEADSHOT } from "../data/photos.data";
-
-const GUTTER_CLASS ="px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+import { PAGE_GUTTER_CLASS } from "../components/layout/sharedClasses";
 
 // The headshot's rendered width at each breakpoint, for its srcset — the same steps
 // as its size classes below.
@@ -56,7 +55,7 @@ const ContactPage = () => {
         <div
           className={cn(
             "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
-            GUTTER_CLASS,
+            PAGE_GUTTER_CLASS,
           )}
         >
           <Byline />
@@ -69,7 +68,7 @@ const ContactPage = () => {
             id="contact-heading"
             className={cn(
               "absolute inset-x-0 top-1/2 -translate-y-1/2 font-urbanist text-[clamp(2.125rem,9vw,3rem)] leading-[0.98] font-semibold text-chalk md:text-[clamp(1.75rem,3.6vw,2.5rem)] lg:text-[clamp(2.5rem,4.2vw,3.75rem)]",
-              GUTTER_CLASS,
+              PAGE_GUTTER_CLASS,
             )}
             ref={headingRef}
           >
@@ -85,7 +84,7 @@ const ContactPage = () => {
           aria-labelledby="contact-heading"
           className={cn(
             "row-start-3 flex min-h-0 flex-col justify-center py-5 md:col-start-2 md:row-start-2 md:justify-end md:pt-6 md:pb-7 lg:pb-9",
-            GUTTER_CLASS,
+            PAGE_GUTTER_CLASS,
           )}
         >
           <div className="flex items-center gap-4 md:gap-5">

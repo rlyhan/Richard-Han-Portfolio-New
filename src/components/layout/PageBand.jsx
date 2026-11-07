@@ -1,7 +1,7 @@
 import cn from "classnames";
 import {
   ABOUT_COLUMNS_CLASS,
-  BAND_GUTTER_CLASS,
+  PAGE_GUTTER_CLASS,
   BAND_LABEL_CLASS,
 } from "./sharedClasses";
 
@@ -9,7 +9,7 @@ import {
 // itself, so the tone fills its half edge to edge.
 const BAND_HALF_CLASS = cn(
   "pt-[2.125rem] pb-[2.625rem] md:pt-[2.625rem] md:pb-[3.25rem]",
-  BAND_GUTTER_CLASS,
+  PAGE_GUTTER_CLASS,
 );
 
 // A band splits on the opening's columns: the label on a homepage block's colour

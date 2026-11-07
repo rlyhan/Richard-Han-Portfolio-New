@@ -12,8 +12,8 @@ export const BYLINE_TEXT_CLASS =
 export const PAGE_TITLE_CLASS =
   "font-arial text-[clamp(2.5rem,10vw,3.25rem)] leading-none tracking-[-0.025em] md:text-[clamp(2.75rem,4.4vw,4.5rem)]";
 
-// The gutter of the pages that band to the viewport edge: About and Contact.
-export const BAND_GUTTER_CLASS =
+// Every page's side gutter.
+export const PAGE_GUTTER_CLASS =
   "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
 
 // About's two columns from md: the portrait and the bio in its opening, and each

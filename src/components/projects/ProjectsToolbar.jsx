@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { PAGE_GUTTER_CLASS } from "../layout/sharedClasses";
 
 // The filters and the count, on one rule above the grid.
 //
@@ -12,7 +13,12 @@ import cn from "classnames";
 // fourteen to three. aria-live, since the change happens below the button
 // pressed and off the reading position.
 const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
-  <div className="flex items-center justify-between gap-4 border-grid px-[1.4rem] py-3.5 md:px-[clamp(1.75rem,3.2vw,3.5rem)]">
+  <div
+    className={cn(
+      "flex items-center justify-between gap-4 border-grid py-3.5",
+      PAGE_GUTTER_CLASS,
+    )}
+  >
     <div role="group" aria-label="Filter projects" className="flex gap-2">
       {filters.map(({ id, label }) => {
         const isActive = id === activeFilter;

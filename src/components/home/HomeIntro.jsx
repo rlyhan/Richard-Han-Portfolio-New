@@ -4,9 +4,7 @@ import { MD_UP, useMediaQuery } from "../../hooks/useMediaQuery";
 import Byline from "../layout/Byline";
 import SplitLine from "../common/SplitLine";
 import ProjectTicker from "../common/ProjectTicker";
-
-export const INTRO_GUTTER_CLASS =
-  "px-[1.4rem] md:px-[clamp(1.75rem,3.2vw,3.5rem)]";
+import { PAGE_GUTTER_CLASS } from "../layout/sharedClasses";
 
 // The left half of the hero: the byline at the top, and the name with its note.
 // Below md the ticker follows them, full-bleed down to the blocks. From md this
@@ -27,7 +25,7 @@ const HomeIntro = ({ headingRef, setLineRef, setNoteRef, setToplineRef }) => {
       aria-labelledby="home-heading"
       className={cn(
         "flex min-h-min min-w-0 flex-1 flex-col overflow-hidden pt-[1.35rem] md:col-start-1 md:row-span-2 md:row-start-1 md:grid md:min-h-0 md:grid-rows-2 md:items-start md:pt-6 md:pb-6",
-        INTRO_GUTTER_CLASS,
+        PAGE_GUTTER_CLASS,
       )}
     >
       <div className="md:col-start-1 md:row-start-1">

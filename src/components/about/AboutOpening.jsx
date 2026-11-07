@@ -5,7 +5,7 @@ import { ABOUT_BIO, ABOUT_HEADING } from "../../data/about.data";
 import { PORTRAIT } from "../../data/photos.data";
 import {
   ABOUT_COLUMNS_CLASS,
-  BAND_GUTTER_CLASS,
+  PAGE_GUTTER_CLASS,
   BAND_LABEL_CLASS,
 } from "../layout/sharedClasses";
 
@@ -30,7 +30,7 @@ const AboutOpening = ({ headingRef }) => (
     <div
       className={cn(
         "row-start-1 grid items-center py-3 md:col-start-2 md:row-start-1 md:py-0",
-        BAND_GUTTER_CLASS,
+        PAGE_GUTTER_CLASS,
       )}
     >
       <Byline />
@@ -58,7 +58,7 @@ const AboutOpening = ({ headingRef }) => (
       className={cn(
         "relative col-start-1 row-start-2 self-end pb-5 font-arial text-chalk md:row-span-2 md:row-start-1 md:pb-[2.625rem] md:text-right",
         BAND_LABEL_CLASS,
-        BAND_GUTTER_CLASS,
+        PAGE_GUTTER_CLASS,
       )}
     >
       <SplitLine text={ABOUT_HEADING} />
@@ -68,7 +68,7 @@ const AboutOpening = ({ headingRef }) => (
       aria-labelledby="about-heading"
       className={cn(
         "row-start-3 flex flex-col justify-center gap-4 border-grid pt-8 pb-5 md:col-start-2 md:row-start-2 md:border-b md:pt-6 md:pb-7 lg:pb-9",
-        BAND_GUTTER_CLASS,
+        PAGE_GUTTER_CLASS,
       )}
     >
       <div className="grid max-w-[38rem] gap-4 pr-6 font-arial text-base leading-[1.55] text-ink md:pr-0 md:text-[clamp(1rem,1.1vw,1.1875rem)]">

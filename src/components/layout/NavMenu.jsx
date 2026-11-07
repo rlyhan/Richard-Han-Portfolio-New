@@ -2,6 +2,7 @@ import cn from "classnames";
 import { PATHS } from "../../routes/routes";
 import { useNavLink } from "../../hooks/useNavLinks";
 import { INTRO_TOPLINE } from "../../data/home.data";
+import { PAGE_GUTTER_CLASS } from "./sharedClasses";
 
 const [FIRST_NAME, LAST_NAME] = INTRO_TOPLINE.name.split(" ");
 
@@ -32,7 +33,8 @@ const NavMenu = ({
     <nav
       aria-label={ariaLabel}
       className={cn(
-        "relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid px-[1.4rem] py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:px-[clamp(1.75rem,3.2vw,3.5rem)] md:py-4",
+        "relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:py-4",
+        PAGE_GUTTER_CLASS,
         ground,
       )}
     >
