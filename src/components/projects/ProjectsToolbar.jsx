@@ -31,7 +31,7 @@ const ProjectsToolbar = ({ filters, activeFilter, onSelect, shown, total }) => (
             aria-pressed={isActive}
             onClick={() => onSelect(id)}
             className={cn(
-              "rounded-none border px-4 py-2 font-arial text-[0.6875rem] leading-none tracking-[0.06em] uppercase transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none",
+              "rounded-full border px-4.5 py-2.5 font-arial text-xs leading-none tracking-[0.06em] transition-colors duration-200 focus-visible:outline-ink motion-reduce:transition-none",
               isActive
                 ? "border-ink bg-ink text-cream"
                 : "border-ash/70 bg-transparent text-ash hover:border-ash hover:text-ink",
