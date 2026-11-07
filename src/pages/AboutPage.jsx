@@ -32,10 +32,9 @@ import { useSplitReveal } from "../hooks/useSplitReveal";
 // size fails on the blue and the taupe. Both become a share of the ink instead.
 const BLOCK_RULE_CLASS =
   "max-md:[--grid:color-mix(in_oklab,var(--ink)_50%,transparent)]";
-const BLOCK_MUTED_CLASS = cn(
-  "max-md:[--ash:color-mix(in_oklab,var(--ink)_85%,transparent)]",
-  BLOCK_RULE_CLASS,
-);
+const BLOCK_ASH_CLASS =
+  "max-md:[--ash:color-mix(in_oklab,var(--ink)_85%,transparent)]";
+const BLOCK_MUTED_CLASS = cn(BLOCK_ASH_CLASS, BLOCK_RULE_CLASS);
 
 const AboutPage = () => {
   const { isArriving } = usePage();
@@ -53,7 +52,10 @@ const AboutPage = () => {
       <PageBand
         index="01"
         tone="bg-block-about text-slate dark:text-chalk"
-        mobileTone={cn("max-md:bg-block-about", BLOCK_MUTED_CLASS)}
+        mobileTone={cn(
+          "max-md:bg-block-about max-md:[--grid:color-mix(in_oklab,var(--ink)_30%,transparent)] max-md:dark:[--grid:color-mix(in_oklab,var(--ink)_50%,transparent)]",
+          BLOCK_ASH_CLASS,
+        )}
         {...ABOUT_SECTIONS.experience}
       >
         <AboutExperience />
