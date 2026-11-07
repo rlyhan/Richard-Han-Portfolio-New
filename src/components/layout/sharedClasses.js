@@ -41,10 +41,6 @@ export const ARTICLE_ROW_CLASS =
 export const NOTE_TEXT_CLASS =
   "font-arial text-[0.9375rem] leading-[1.6] font-medium text-ash";
 
-// The link wrapping each shot in the hero's ticker.
-export const PROJECT_LINK_CLASS =
-  "group block h-full focus-visible:outline-chalk focus-visible:-outline-offset-4";
-
 // A homepage block's label and arrow as its link is hovered, and a project tile's,
 // which is drawn like one.
 export const BLOCK_LABEL_HOVER_CLASS =

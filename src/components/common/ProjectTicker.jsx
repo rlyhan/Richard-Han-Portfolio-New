@@ -1,6 +1,5 @@
 import cn from "classnames";
 import MattedShot from "./MattedShot";
-import { PROJECT_LINK_CLASS } from "../layout/sharedClasses";
 import PROJECTS from "../../data/projects.data";
 import { fitOf } from "../../data/shots.data";
 import { useNavLink } from "../../hooks/useNavLinks";
@@ -45,7 +44,7 @@ const LinkedTile = ({
       {...link}
       aria-label={name}
       tabIndex={isRepeat ? -1 : undefined}
-      className={cn(PROJECT_LINK_CLASS, "shrink-0")}
+      className="group block h-full shrink-0 focus-visible:outline-chalk focus-visible:-outline-offset-4"
     >
       <Tile src={src} aspect={aspect} sizes={sizes}>
         <span className="absolute inset-0 bg-slate/15 transition-opacity dark:bg-slate/30 duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none" />
