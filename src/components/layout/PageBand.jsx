@@ -10,10 +10,6 @@ const BAND_CLASS =
 const BAND_COLUMNS_CLASS =
   "lg:grid-cols-[minmax(0,30%)_minmax(0,70%)] lg:gap-x-10 lg:gap-y-5";
 
-// The split the content register takes when it has two columns of its own.
-export const BAND_SPLIT_CLASS =
-  "md:grid-cols-[minmax(0,36%)_minmax(0,64%)] md:gap-x-8";
-
 const PageBand = ({ id, index, label, children }) => (
   <section
     aria-labelledby={`${id}-heading`}
