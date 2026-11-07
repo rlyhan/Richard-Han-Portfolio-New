@@ -56,7 +56,7 @@ const Block = ({ to, label, index, isArrowAtTop, className }) => {
 
 // The right half of the hero, and below md what sits under the intro.
 //
-// `setPanelRef` hands the whole panel to the hero's exit as one plane — see Home.
+// `setPanelRef` hands the whole panel to the hero's exit as one plane — see HomePage.
 const HomeBlocks = ({ setPanelRef, cue }) => {
   const isMdUp = useMediaQuery(MD_UP);
 
