@@ -27,7 +27,6 @@ const NavMenu = ({
   items,
   ariaLabel = "Portfolio sections",
   ground = "bg-shell",
-  className,
 }) => {
   const homeLink = useNavLink(PATHS.home);
 
@@ -38,7 +37,6 @@ const NavMenu = ({
         "relative z-10 grid min-h-[4rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-grid py-2 md:min-h-[9.75rem] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:py-4",
         PAGE_GUTTER_CLASS,
         ground,
-        className,
       )}
     >
       <a
