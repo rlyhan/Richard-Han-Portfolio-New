@@ -71,9 +71,9 @@ const SiteNav = () => {
             className={cn(
                 "fixed inset-x-0 bottom-0 z-60 md:z-30",
                 !isOverOwnBar &&
-                    "transition-[translate,opacity] duration-600 ease-out motion-reduce:transition-none max-md:transition-[translate]",
+                    "transition-[translate,opacity] duration-300 max-md:duration-600 ease-out motion-reduce:transition-none max-md:transition-[translate]",
                 isUp
-                    ? "translate-y-0 opacity-100 delay-150"
+                    ? "translate-y-0 opacity-100 max-md:delay-150"
                     : "translate-y-full opacity-0 pointer-events-none",
                 !isUp && !pageDrawsNav && "max-md:opacity-100",
             )}
