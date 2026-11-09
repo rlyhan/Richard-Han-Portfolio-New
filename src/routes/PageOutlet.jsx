@@ -7,7 +7,8 @@ import { useSwapTransition } from "./useSwapTransition"
 // bottom of the SCREEN is the new page's top. Fixed and clipped, it shows exactly the
 // screenful the page will open at, so there's nothing to reconcile when it lands —
 // the router seats the scroll at that page's top in the same frame this class goes.
-// Over the pinned nav bar and the hero's cue, the furniture it arrives on top of.
+// Over the hero's cue and, from md up, the pinned nav bar: the furniture it arrives on
+// top of. A phone's bar stays above it — see SiteNav.
 const ARRIVING = "fixed inset-0 z-50 overflow-hidden"
 
 // And a page in the document, which is no box at all. The div has to exist — it is
