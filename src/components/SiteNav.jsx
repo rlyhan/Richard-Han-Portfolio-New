@@ -16,6 +16,17 @@ import { useNavHeightVar } from "../hooks/useNavHeightVar";
 // back the moment they scroll against the page; see useRevealOnScrollUp for the
 // direction rule, the opening state, and why nothing shows over a page that
 // carries the links in its own layout.
+
+// Hangs below the bar on a phone, off the viewport and behind Safari's see-through
+// toolbar, to cover whatever shows there as the bar rises. Absolute rather than
+// padding: useNavHeightVar's measurement is the room Footer reserves.
+//
+// A phone's bar slides without fading and stays solid while it's down, so a landing
+// page's content has nothing to show through under the toolbar. Not over a page
+// drawing its own links, where a solid bar would colour the toolbar for nothing.
+const TOOLBAR_COVER_CLASS =
+    "after:absolute after:inset-x-0 after:top-full after:h-32 after:bg-inherit md:after:hidden";
+
 const SiteNav = () => {
     // Which page this bar is standing on decides whether it has a floor and where,
     // and the router is what knows: the hero carries the links in its own layout
@@ -43,10 +54,10 @@ const SiteNav = () => {
     const isOverOwnBar = pageDrawsNav && isAboveFloor;
 
     // The bar belongs to the page under it, and for the length of a swap there are
-    // two: it goes down with the page being left — behind the page rising over it,
-    // so there's nothing to see — and comes up with the one that arrives, which is
-    // the slide the viewer sees. Uncovered in place when the curtain lifts, it
-    // appears rather than arrives.
+    // two: it goes down with the page being left — behind the page rising over it
+    // from md up, over it on a phone, where it has to outrank that page to cover the
+    // toolbar — and comes up with the one that arrives, which is the slide the viewer
+    // sees. Uncovered in place when the curtain lifts, it appears rather than arrives.
     const isUp = isRevealed && !swap;
 
     const navItems = useNavItems();
@@ -58,12 +69,13 @@ const SiteNav = () => {
         <div
             ref={barRef}
             className={cn(
-                "fixed inset-x-0 bottom-0 z-30",
+                "fixed inset-x-0 bottom-0 z-60 md:z-30",
                 !isOverOwnBar &&
-                    "transition-[translate,opacity] duration-300 ease-out motion-reduce:transition-none",
+                    "transition-[translate,opacity] duration-300 max-md:duration-600 ease-out motion-reduce:transition-none max-md:transition-[translate]",
                 isUp
-                    ? "translate-y-0 opacity-100"
+                    ? "translate-y-0 opacity-100 max-md:delay-150"
                     : "translate-y-full opacity-0 pointer-events-none",
+                !isUp && !pageDrawsNav && "max-md:opacity-100",
             )}
             // As in the old header bar: a hidden bar full of links has to leave the
             // tab order too, and aria-hidden alone would hide them from a screen
@@ -75,6 +87,7 @@ const SiteNav = () => {
                 items={navItems}
                 ariaLabel="Site navigation"
                 ground={navGround}
+                className={TOOLBAR_COVER_CLASS}
             />
         </div>
     );
